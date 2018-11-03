@@ -11,18 +11,24 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        $data = [];
-
-        $user = [
-            'name' => 'Nguyen Chi',
-            'email' => 'abc@gmail.com',
-            'phone' => str_random(10),
-            'password' => bcrypt('123456'),
-            'address' => strtolower(str_random(20)),
-            'role_id' => 1
+        $data = [
+            [
+                'name' => 'Nguyen Chi',
+                'email' => 'abc@gmail.com',
+                'phone' => str_random(10),
+                'password' => bcrypt('123456'),
+                'address' => strtolower(str_random(20)),
+                'role_id' => 1
+            ],
+            [
+                'name' => 'Bach Nguyen',
+                'email' => 'bach@gmail.com',
+                'phone' => str_random(10),
+                'password' => bcrypt('123456'),
+                'address' => strtolower(str_random(20)),
+                'role_id' => 1
+            ]
         ];
-
-        $data[] = $user;
 
         for ($i = 0 ; $i < 2 ; $i++) {
             $user = [
