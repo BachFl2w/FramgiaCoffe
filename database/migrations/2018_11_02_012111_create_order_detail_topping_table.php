@@ -31,6 +31,6 @@ class CreateOrderDetailToppingTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('_order_detail__topping');
+        Schema::dropIfExists('order_detail_topping');
     }
 }
