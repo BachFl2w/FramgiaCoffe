@@ -13,7 +13,7 @@ class CreateOrderDetailToppingTable extends Migration
      */
     public function up()
     {
-        Schema::create('_order_detail__topping', function (Blueprint $table) {
+        Schema::create('order_detail_topping', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('topping_id');
             $table->foreign('topping_id')->references('id')->on('toppings');
