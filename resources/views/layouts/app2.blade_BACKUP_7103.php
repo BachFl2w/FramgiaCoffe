@@ -5,13 +5,13 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
+<<<<<<< HEAD
     <title>Amin</title>
     <meta name="description" content="Sufee Admin - HTML5 Admin Template">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+=======
     <title>{{ config('app.name', 'Laravel') }}</title>
-
+>>>>>>> 4eb4f265e598277abf92a56f54c190b3775e8e2a
 
     <link rel="shortcut icon" href="favicon.ico">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">

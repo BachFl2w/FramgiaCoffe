@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Roles;
 use Illuminate\Http\Request;
 
 class RoleController extends Controller
@@ -13,7 +14,8 @@ class RoleController extends Controller
      */
     public function index()
     {
-        //
+        $roles = Roles::all();
+        return view('admin.role_list', ['roles' => $roles]);
     }
 
     /**
@@ -80,5 +82,11 @@ class RoleController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function getDataJson()
+    {
+        $role = Roles::pluck('id', 'name');
+        return $role;
     }
 }

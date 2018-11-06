@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Images;
+use App\Products;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -13,7 +15,9 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $products_data = Products::all();
+
+        return view('admin.product_list', ['products' => $products_data]);
     }
 
     /**
@@ -80,5 +84,19 @@ class ProductController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function getDataJson()
+    {
+        $products_data = Products::all()->load('category');
+
+        return $products_data;
+    }
+
+    public function getImages(Request $request)
+    {
+        $images_data = Images::find($request->id);
+
+        return $images_data;
     }
 }

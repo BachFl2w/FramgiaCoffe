@@ -17,4 +17,9 @@ class Products extends Model
     {
         return $this->hasMany(Feedbacks::class);
     }
+
+    public function category()
+    {
+        return $this->belongsTo(Categories::class);
+    }
 }
