@@ -10,11 +10,11 @@ class OrderDetailTopings extends Model
 
     public function orderDetails()
     {
-        return $this->belongsTo(OrderDetails::class, 'order_detail_id', 'id');
+        return $this->belongsTo(OrderDetails::class);
     }
 
     public function topings()
     {
-        return $this->belongsTo(Toppings::class, 'topping_id', 'id');
+        return $this->belongsTo(Toppings::class);
     }
 }

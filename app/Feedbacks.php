@@ -10,11 +10,11 @@ class Feedbacks extends Model
 
     public function users()
     {
-        return $this->belongsTo('App\User', 'user_id', 'id');
+        return $this->belongsTo(User::class);
     }
 
     public function products()
     {
-        return $this->belongsTo('App\Products', 'product_id', 'id');
+        return $this->belongsTo(Products::class);
     }
 }

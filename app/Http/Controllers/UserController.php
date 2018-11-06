@@ -4,7 +4,13 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Roles;
+
 use Illuminate\Http\Request;
+use App\Http\Requests\UserUpdateRequest;
+use App\Http\Requests\UserStoreRequest;
+
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -29,7 +35,7 @@ class UserController extends Controller
     {
         $roles = Roles::all();
 
-        return view('', compact('roles'));
+        return view('admin.user_create', compact('roles'));
     }
 
     /**
@@ -38,47 +44,34 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserStoreRequest $request)
     {
-        $this->validate(
-            $req, [
-                'name' => 'required|max:191',
-                'email' => 'required|email|unique:users,email|max:191',
-                'password' => 'required|max:191',
-                're_password' => 'required|same:password',
-                'address' => 'required|max:191',
-                'phone' => 'required|max:11|numeric',
-                'role_id' => 'required',
-            ], [
-                'name.required' => 'Enter user name !',
-                'name.max' => 'Name must smaller 191 character !',
-                'email.max' => 'Email must smaller 191 character !',
-                'email.required' => 'Enter user name !',
-                'email.email' => 'Not is email !',
-                'email.unique' => 'Email name has exists !',
-                'password.required' => 'Enter user password !',
-                'password.max' => 'Password must smaller 191 character !',
-                're_password.required' => 'Enter re_password !',
-                're_password.same' => 'Password not same !',
-                'address.required' => 'Enter user address !',
-                'address.max' => 'Address must smaller 191 character !',
-                'phone.required' => 'Enter user phone number !',
-                'phone.max' => 'Phone must smaller 11 number !',
-                'phone.numeric' => 'Phone must be numeric !',
-                'role_id.required' => 'Select role !',
-            ]
-        );
-
         $user = new User;
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = $request->password;
-        $user->address = $request->address;
-        $user->phone = $request->phone;
-        $user->role_id = $request->role_id;
+        $user->name     = $request->name;
+        $user->email    = $request->email;
+        $user->password = Hash::make($request->password);
+        $user->address  = $request->address;
+        $user->phone    = $request->phone;
+        $user->role_id  = $request->role;
+
+        if ($request->hasFile('avatar')) {
+            $file = $request->file('avatar');
+            $name = $file->getClientOriginalName();
+            $newName = str_random(4) . '_' . $name;
+
+            // kiem tra de tranh trung lap ten file
+            while (file_exists('images/avatar/' . $newName)) {
+                $newName = str_random(4) . '_' . $name;
+            }
+
+            $file->move('images/avatar/', $newName);
+
+            $user->image = $newName;
+        }
+
         $user->save();
 
-        return view('')->with('success', 'Create user successfully !');
+        return back()->with('success', 'Create user successfully !');
     }
 
     /**
@@ -115,47 +108,38 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UserUpdateRequest $request, $id)
     {
-        $this->validate(
-            $req, [
-                'name' => 'required|max:191',
-                'email' => 'required|email|unique:users,email|max:191',
-                'password' => 'required|max:191',
-                're_password' => 'required|same:password',
-                'address' => 'required|max:191',
-                'phone' => 'required|max:11|numeric',
-                'role_id' => 'required',
-            ], [
-                'name.required' => 'Enter user name !',
-                'name.max' => 'Name must smaller 191 character !',
-                'email.max' => 'Email must smaller 191 character !',
-                'email.required' => 'Enter user name !',
-                'email.email' => 'Not is email !',
-                'email.unique' => 'Email name has exists !',
-                'password.required' => 'Enter user password !',
-                'password.max' => 'Password must smaller 191 character !',
-                're_password.required' => 'Enter re_password !',
-                're_password.same' => 'Password not same !',
-                'address.required' => 'Enter user address !',
-                'address.max' => 'Address must smaller 191 character !',
-                'phone.required' => 'Enter user phone number !',
-                'phone.max' => 'Phone must smaller 11 number !',
-                'phone.numeric' => 'Phone must be numeric !',
-                'role_id.required' => 'Select role !',
-            ]
-        );
-
-        $user = new User;
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = $request->password;
+        $user = User::find($id);
+        $user->name    = $request->name;
+        $user->email   = $request->email;
         $user->address = $request->address;
-        $user->phone = $request->phone;
-        $user->role_id = $request->role_id;
+        $user->phone   = $request->phone;
+        $user->role_id = $request->role;
+        if ($request->new_password != '') {
+            $user->password = Hash::make($request->new_password);
+        }
+
+        if ($request->hasFile('avatar')) {
+            $file = $request->file('avatar');
+            $name = $file->getClientOriginalName();
+            $newName = str_random(4) . '_' . $name;
+
+            // kiem tra de tranh trung lap ten file
+            while (file_exists('images/avatar/' . $newName)) {
+                $newName = str_random(4) . '_' . $name;
+            }
+
+            unlink('images/avatar/' . $user->image);
+
+            $file->move('images/avatar/', $newName);
+
+            $user->image = $newName;
+        }
+
         $user->save();
 
-        return view('')->with('success', 'Update user successfully !');
+        return back()->with('success', 'Update user successfully !');
     }
 
     /**
@@ -169,6 +153,6 @@ class UserController extends Controller
         $user = User::find($id);
         $user->delete();
 
-        return view('')->with('success', 'Delete user successfully !');
+        return back()->with('success', 'Delete user successfully !');
     }
 }

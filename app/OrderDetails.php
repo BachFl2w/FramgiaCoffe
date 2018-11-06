@@ -10,21 +10,21 @@ class OrderDetails extends Model
 
     public function products()
     {
-        return $this->belongsTo('App\Products', 'product_id', 'id');
+        return $this->belongsTo(Products::class);
     }
 
     public function orders()
     {
-        return $this->belongsTo(Orders::class, 'order_id', 'id');
+        return $this->belongsTo(Orders::class);
     }
 
     public function orderDetailTopings()
     {
-        return $this->hasMany(OrderDetailTopings::class, 'order_detail_id', 'id');
+        return $this->hasMany(OrderDetailTopings::class);
     }
 
     public function sizes()
     {
-        return $this->belongsTo(Sizes::class, 'size_id', 'id');
+        return $this->belongsTo(Sizes::class);
     }
 }
