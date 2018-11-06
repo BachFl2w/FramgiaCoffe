@@ -18,3 +18,24 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::group(['prefix' => 'admin'], function() {
+
+    Route::group(['prefix' => 'role'], function () {
+
+        Route::get('list', 'RoleController@index')->name('admin.role.index');
+
+        Route::get('json', 'RoleController@getDataJson')->name('admin.role.json');
+
+    });
+
+    Route::group(['prefix' => 'product'], function () {
+
+        Route::get('list', 'ProductController@index')->name('admin.product.index');
+
+        Route::get('json', 'ProductController@getDataJson')->name('admin.product.json');
+
+        Route::get('{id}/images', 'ProductController@getImages')->name('admin.product.images');
+
+    });
+});
