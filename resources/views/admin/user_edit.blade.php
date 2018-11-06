@@ -26,20 +26,20 @@
                     <input type="email" id="new_password" name="new_password" required="" class="form-control">
                 </div>
                 <div class="form-group">
-                    <label for="re_" class="px-1 form-control-label">Re-password</label>
-                    <input type="email" id="" required="" class="form-control">
+                    <label for="re_password" class="px-1 form-control-label">Re-password</label>
+                    <input type="email" id="re_password" name="re_password" required="" class="form-control">
                 </div>
                 <div class="form-group">
-                    <label for="" class="px-1  form-control-label">Addess</label>
-                    <input type="email" id="" required="" class="form-control" value="{{$user->name}}">
+                    <label for="address" class="px-1  form-control-label">Addess</label>
+                    <input type="email" id="address" name="address" required="" class="form-control" value="{{$user->name}}">
                 </div>
                 <div class="form-group">
-                    <label for="" class="px-1  form-control-label">Phone</label>
-                    <input type="number" id="" required="" class="form-control" value="{{$user->name}}">
+                    <label for="phone" class="px-1  form-control-label">Phone</label>
+                    <input type="number" id="phone" name="phone" required="" class="form-control" value="{{$user->name}}">
                 </div>
                 <div class="form-group">
                     <label for="" class="px-1  form-control-label">Permission</label>
-                    <select name="select" id="select" class="form-control">
+                    <select name="role" id="select" class="form-control">
                         @foreach ($roles as $r)
                             <option
                                 value="{{$r->id}}"
