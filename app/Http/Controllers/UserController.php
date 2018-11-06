@@ -116,6 +116,7 @@ class UserController extends Controller
         $user->address = $request->address;
         $user->phone   = $request->phone;
         $user->role_id = $request->role;
+
         if ($request->new_password != '') {
             $user->password = Hash::make($request->new_password);
         }
@@ -126,11 +127,13 @@ class UserController extends Controller
             $newName = str_random(4) . '_' . $name;
 
             // kiem tra de tranh trung lap ten file
-            while (file_exists('images/avatar/' . $newName)) {
+            while (file_exists('images/avatar' . $newName)) {
                 $newName = str_random(4) . '_' . $name;
             }
 
-            unlink('images/avatar/' . $user->image);
+            if (file_exists('images/avatar/' . $user->image) && $user->image) {
+                unlink('images/avatar/' . $user->image);
+            }
 
             $file->move('images/avatar/', $newName);
 

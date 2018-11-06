@@ -44,11 +44,11 @@ Route::group(['prefix' => 'admin'], function() {
     });
 
     Route::group(['prefix' => 'feedback'], function() {
-        Route::get('index', 'FeedbackController@index')->name('admin.user.index');
+        Route::get('index', 'FeedbackController@index')->name('admin.feedback.index');
 
-        Route::get('edit/{id}', 'FeedbackController@edit')->name('admin.user.edit');
+        Route::get('edit/{id}', 'FeedbackController@edit')->name('admin.feedback.edit');
 
-        Route::post('update/{id}', 'FeedbackController@update')->name('admin.user.update');
+        Route::post('update/{id}', 'FeedbackController@update')->name('admin.feedback.update');
     });
 
     Route::group(['prefix' => 'product'], function () {

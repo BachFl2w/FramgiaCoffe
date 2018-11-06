@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="{{ asset('admin_template/assets/css/flag-icon.min.css') }}">
     <link rel="stylesheet" href="{{ asset('admin_template/assets/css/cs-skin-elastic.css') }}">
     <link rel="stylesheet" href="{{ asset('admin_template/assets/css/lib/datatable/dataTables.bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('admin_template/assets/css/lib/datatable/buttons.dataTables.bootstrap.min.css') }}">
     <!-- <link rel="stylesheet" href="assets/css/bootstrap-select.less"> -->
     <link rel="stylesheet" href="{{ asset('admin_template/assets/scss/style.css') }}">
 
@@ -40,7 +41,7 @@
             <div class="col-sm-4">
                 <div class="page-header float-left">
                     <div class="page-title">
-                        <h1>@yield('page-title')</h1>
+                        <h1>Dashboard</h1>
                     </div>
                 </div>
             </div>
@@ -48,7 +49,7 @@
                 <div class="page-header float-right">
                     <div class="page-title">
                         <ol class="breadcrumb text-right">
-                            <li class="active">Dashboard</li>
+                            @yield('page-title')
                         </ol>
                     </div>
                 </div>

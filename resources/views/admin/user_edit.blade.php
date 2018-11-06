@@ -1,7 +1,9 @@
 @extends('layouts.app2')
 
 @section('page-title')
-    <a href="{{route('admin.user.index')}}">List User</a> / <span>Edit</span>
+    <li><a href="{{route('admin.user.index')}}">Dashboard</a></li>
+    <li><a href="{{route('admin.user.index')}}">User</a></li>
+    <li class="active">Edit</li>
 @endsection
 
 @section('content')
@@ -61,7 +63,11 @@
                 <div class="form-group">
                     <label for="avatar" class="px-1 form-control-label">Avatar</label>
                     <input type="file" id="avatar" name="avatar">
-                    <p><img src="{{ asset('images/avatar/'.$user->image) }}" height="100px"></p>
+                    @if ($user->image)
+                        <p><img src="{{ asset('images/avatar/'.$user->image) }}" height="100px"></p>
+                    @else
+                        <p>User hasn't avatar !</p>
+                    @endif
                 </div>
                 <div class="form-group">
                     <label for="role" class="px-1 form-control-label">Permission</label>
