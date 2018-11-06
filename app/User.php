@@ -28,9 +28,9 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function roles()
+    public function role()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Roles::class);
     }
 
     public function orders()

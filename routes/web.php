@@ -29,6 +29,14 @@ Route::group(['prefix' => 'admin'], function() {
 
     });
 
+    Route::group(['prefix' => 'user'], function() {
+        Route::get('index', 'UserController@index')->name('admin.user.index');
+
+        Route::get('edit/{id}', 'UserController@edit')->name('admin.user.edit');
+
+        Route::get('update/{id}', 'UserController@update')->name('admin.user.update');
+    });
+
     Route::group(['prefix' => 'product'], function () {
 
         Route::get('list', 'ProductController@index')->name('admin.product.index');

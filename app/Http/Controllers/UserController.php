@@ -15,9 +15,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        $user = User::all();
+        $user = User::all()->load('role');
 
-        return view('', compact('user'));
+        return view('admin.user_list', compact('user'));
     }
 
     /**
@@ -91,7 +91,7 @@ class UserController extends Controller
     {
         $user = User::find($id);
 
-        return view('', compact('user'));
+        return view('admin.user_show', compact('user'));
     }
 
     /**
@@ -105,7 +105,7 @@ class UserController extends Controller
         $user = User::find($id);
         $roles = Roles::all();
 
-        return view('', compact('user', 'roles'));
+        return view('admin.user_edit', compact('user', 'roles'));
     }
 
     /**
