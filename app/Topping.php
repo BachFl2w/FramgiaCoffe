@@ -4,12 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Toppings extends Model
+class Topping extends Model
 {
     protected $table = 'toppings';
 
     public function orderDetailToppings()
     {
-        return $this->belongsToMany(OrderDetails::class);
+        return $this->belongsToMany(OrderDetail::class);
     }
 }

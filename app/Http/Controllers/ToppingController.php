@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Toppings;
+use App\Topping;
 use Illuminate\Http\Request;
 
 class TopingController extends Controller
@@ -35,7 +35,7 @@ class TopingController extends Controller
      */
     public function store(Request $request)
     {
-        $topping = new Toppings();
+        $topping = new Topping();
 
         $topping->name = $request->name;
 
@@ -77,7 +77,7 @@ class TopingController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $topping = Toppings::find($id);
+        $topping = Topping::find($id);
 
         $topping->name = $request->name;
 
@@ -96,14 +96,14 @@ class TopingController extends Controller
      */
     public function destroy($id)
     {
-        $topping = Toppings::find($id);
+        $topping = Topping::find($id);
 
         $topping->delete();
     }
 
     public function getDataJson()
     {
-        $data_topping = Toppings::all();
+        $data_topping = Topping::all();
 
         return $data_topping;
     }

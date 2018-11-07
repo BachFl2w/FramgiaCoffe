@@ -4,22 +4,22 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Products extends Model
+class Product extends Model
 {
     protected $table = 'products';
 
     public function images()
     {
-        $this->hasMany(Images::class);
+        $this->hasMany(Image::class);
     }
 
     public function feedbacks()
     {
-        return $this->hasMany(Feedbacks::class);
+        return $this->hasMany(Feedback::class);
     }
 
     public function category()
     {
-        return $this->belongsTo(Categories::class);
+        return $this->belongsTo(Category::class);
     }
 }

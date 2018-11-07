@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductRequest;
-use App\Images;
-use App\Products;
+use App\Image;
+use App\Product;
 use Illuminate\Http\Request;
-use Intervention\Image\ImageManagerStatic as Image;
+use Intervention\Image\ImageManagerStatic as Images;
 
 class ProductController extends Controller
 {
@@ -17,7 +17,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products_data = Products::all();
+        $products_data = Product::all();
 
         return view('admin.product_list', ['products' => $products_data]);
     }
@@ -40,7 +40,7 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request)
     {
-         $product = new Products();
+         $product = new Product();
 
          $product->name = $request->name;
 
@@ -100,7 +100,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $product = Products::find($id);
+        $product = Product::find($id);
 
         $product->name = $request->name;
 
@@ -123,14 +123,14 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        $product = Products::find($id);
+        $product = Product::find($id);
 
         $product->delete();
     }
 
     public function getDataJson()
     {
-        $products_data = Products::all()->load('category');
+        $products_data = Product::all()->load('category');
 
         return $products_data;
     }
@@ -138,7 +138,7 @@ class ProductController extends Controller
     public function getImages(Request $request)
     {
         $product_id = $request->id;
-        $images_data = Images::where('product_id',$product_id)->get();
+        $images_data = Image::where('product_id',$product_id)->get();
 
         return $images_data;
     }

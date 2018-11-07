@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Feedbacks extends Model
+class Feedback extends Model
 {
     protected $table = 'feedbacks';
 
@@ -15,6 +15,6 @@ class Feedbacks extends Model
 
     public function products()
     {
-        return $this->belongsTo(Products::class);
+        return $this->belongsTo(Product::class);
     }
 }

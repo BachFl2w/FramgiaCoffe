@@ -8,8 +8,10 @@
                 <div class="card-header">{{ __('Login') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('login') }}">
-                        @csrf
+                    <form method="POST" action="{{ route('admin.postLogin') }}">
+                        {{-- @csrf --}}
+
+                        <input type="hidden" name="_token" value="{{csrf_token()}}" placeholder="">
 
                         <div class="form-group row">
                             <label for="email" class="col-sm-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
@@ -36,6 +38,10 @@
                                         <strong>{{ $errors->first('password') }}</strong>
                                     </span>
                                 @endif
+
+                                @if (session('fail'))
+                                    <strong style="color: #761b18">{{session('fail')}}</strong>
+                                @endif
                             </div>
                         </div>
 
@@ -53,7 +59,7 @@
 
                         <div class="form-group row mb-0">
                             <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn btn-outline-primary">
                                     {{ __('Login') }}
                                 </button>
 
@@ -62,8 +68,9 @@
                                 </a>
                             </div>
                         </div>
+
                     </form>
-                </div>
+                </div> {{-- end body --}}
             </div>
         </div>
     </div>

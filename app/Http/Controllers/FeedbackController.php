@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\User;
-use App\Products;
-use App\Feedbacks;
+use App\Product;
+use App\Feedback;
 use Illuminate\Http\Request;
 
 class FeedbackController extends Controller
@@ -16,7 +16,7 @@ class FeedbackController extends Controller
      */
     public function index()
     {
-        $feedbacks = Feedbacks::all()->load('users', 'products');
+        $feedbacks = Feedback::all()->load('users', 'products');
     }
 
     /**

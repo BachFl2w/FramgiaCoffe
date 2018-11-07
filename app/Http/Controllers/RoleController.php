@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Roles;
+use App\Role;
 use Illuminate\Http\Request;
 
 class RoleController extends Controller
@@ -14,7 +14,7 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $roles = Roles::all();
+        $roles = Role::all();
         return view('admin.role_list', ['roles' => $roles]);
     }
 
@@ -36,7 +36,7 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        $role = new Roles();
+        $role = new Role();
 
         $role->name = $request->name;
 
@@ -74,7 +74,7 @@ class RoleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $role = Roles::find($id);
+        $role = Role::find($id);
 
         $role->name = $request->name;
 
@@ -89,14 +89,14 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
-        $role = Roles::find($id);
+        $role = Role::find($id);
 
         $role->delete();
     }
 
     public function getDataJson()
     {
-        $roles = Roles::all();
+        $roles = Role::all();
 
         return $roles;
     }

@@ -4,27 +4,27 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class OrderDetails extends Model
+class OrderDetail extends Model
 {
     protected $table = 'order_details';
 
     public function products()
     {
-        return $this->belongsTo(Products::class);
+        return $this->belongsTo(Product::class);
     }
 
     public function orders()
     {
-        return $this->belongsTo(Orders::class);
+        return $this->belongsTo(Order::class);
     }
 
     public function orderDetailTopings()
     {
-        return $this->hasMany(OrderDetailTopings::class);
+        return $this->hasMany(OrderDetailToping::class);
     }
 
     public function sizes()
     {
-        return $this->belongsTo(Sizes::class);
+        return $this->belongsTo(Size::class);
     }
 }

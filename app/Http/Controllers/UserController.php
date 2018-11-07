@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use Session;
 use App\User;
-use App\Roles;
+use App\Role;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\UserUpdateRequest;
-use App\Http\Requests\UserStoreRequest;
-
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\UserUpdateRequest;
+use App\Http\Requests\UserStoreRequest;
 
 class UserController extends Controller
 {
@@ -116,6 +116,7 @@ class UserController extends Controller
         $user->address = $request->address;
         $user->phone   = $request->phone;
         $user->role_id = $request->role;
+
         if ($request->new_password != '') {
             $user->password = Hash::make($request->new_password);
         }
@@ -126,11 +127,13 @@ class UserController extends Controller
             $newName = str_random(4) . '_' . $name;
 
             // kiem tra de tranh trung lap ten file
-            while (file_exists('images/avatar/' . $newName)) {
+            while (file_exists('images/avatar' . $newName)) {
                 $newName = str_random(4) . '_' . $name;
             }
 
-            unlink('images/avatar/' . $user->image);
+            if (file_exists('images/avatar/' . $user->image) && $user->image) {
+                unlink('images/avatar/' . $user->image);
+            }
 
             $file->move('images/avatar/', $newName);
 
@@ -154,5 +157,19 @@ class UserController extends Controller
         $user->delete();
 
         return back()->with('success', 'Delete user successfully !');
+    }
+
+    public function loginAdmin(Request $request)
+    {
+        $data = [
+            'email' => $request->email,
+            'password' => $request->password,
+        ];
+
+        if (Auth::attempt($data)) {
+            return redirect('admin/user/index');
+        }
+
+        return back()->with('fail', 'Email or password is true !');
     }
 }

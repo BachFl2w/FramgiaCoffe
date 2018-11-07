@@ -1,10 +1,12 @@
 @extends('layouts.app2')
 
 @section('page-title')
-    List User
+    <li><a href="{{route('admin.user.index')}}">Dashboard</a></li>
+    <li class="active">List</li>
 @endsection
 
 @section('content')
+
 @if (session('success'))
     <div class="sufee-alert alert with-close alert-success alert-dismissible fade show">
         {{session('success')}}
@@ -13,6 +15,7 @@
         </button>
     </div>
 @endif
+
 <div class="animated fadeIn">
     <div class="rows">
         <div class="col-md-12">
@@ -55,8 +58,8 @@
                                     </td>
                                     <td>{{ $u->role->name }}</td>
                                     <td>
-                                        <a href="{{route('admin.user.edit', $u->id)}}" class="btn btn-outline-primary" title="View"><i class="fa fa-edit"></i></a>
-                                        <a href="{{route('admin.user.destroy', $u->id)}}" class="btn btn-outline-danger" title="Delete"><i class="fa fa-edit"></i></a>
+                                        <a href="{{route('admin.user.edit', $u->id)}}" class="btn btn-outline-primary" title="Edit"><i class="fa fa-edit"></i></a>
+                                        <a href="{{route('admin.user.destroy', $u->id)}}" class="btn btn-outline-danger" title="Delete"><i class="fa fa-trash-o"></i></a>
                                     </td>
                                 </tr>
                             @endforeach
@@ -71,9 +74,26 @@
 @endsection
 
 @section('script')
+    {{-- <script src="{{ asset('js/customer.js') }}"></script> --}}
+    <script src="{{ asset('admin_template/assets/js/vendor/jquery-2.1.4.min.js')}}"></script>
+    {{-- <script src="{{ asset('admin_template/assets/js/popper.min.js')}}"></script> --}}
+    {{-- <script src="{{ asset('admin_template/assets/js/plugins.js')}}"></script> --}}
+    <script src="{{ asset('admin_template/assets/js/main.js')}}"></script>
+    <script src="{{ asset('admin_template/assets/js/lib/data-table/datatables.min.js') }}"></script>
+    <script src="{{ asset('admin_template/assets/js/lib/data-table/dataTables.bootstrap.min.js') }}"></script>
+    <script src="{{ asset('admin_template/assets/js/lib/data-table/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('admin_template/assets/js/lib/data-table/buttons.bootstrap.min.js') }}"></script>
+    <script src="{{ asset('admin_template/assets/js/lib/data-table/jszip.min.js') }}"></script>
+    {{-- <script src="{{ asset('admin_template/assets/js/lib/data-table/pdfmake.min.js') }}"></script> --}}
+    <script src="{{ asset('admin_template/assets/js/lib/data-table/vfs_fonts.js') }}"></script>
+    <script src="{{ asset('admin_template/assets/js/lib/data-table/buttons.html5.min.js') }}"></script>
+    <script src="{{ asset('admin_template/assets/js/lib/data-table/buttons.print.min.js') }}"></script>
+    <script src="{{ asset('admin_template/assets/js/lib/data-table/buttons.colVis.min.js') }}"></script>
+    <script src="{{ asset('admin_template/assets/js/lib/data-table/datatables-init.js') }}"></script>
+
     <script type="text/javascript">
         $(document).ready(function() {
-          $('#bootstrap-data-table-export').DataTable();
+            $('#bootstrap-data-table-export').DataTable();
         } );
     </script>
 @endsection
