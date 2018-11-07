@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Toppings;
 use Illuminate\Http\Request;
 
 class TopingController extends Controller
@@ -13,7 +14,7 @@ class TopingController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.topping_list');
     }
 
     /**
@@ -34,7 +35,15 @@ class TopingController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $topping = new Toppings();
+
+        $topping->name = $request->name;
+
+        $topping->price = $request->price;
+
+        $topping->quantity = $request->quantity;
+
+        $topping->save();
     }
 
     /**
@@ -68,7 +77,15 @@ class TopingController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $topping = Toppings::find($id);
+
+        $topping->name = $request->name;
+
+        $topping->price = $request->price;
+
+        $topping->quantity = $request->quantity;
+
+        $topping->save();
     }
 
     /**
@@ -79,6 +96,15 @@ class TopingController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $topping = Toppings::find($id);
+
+        $topping->delete();
+    }
+
+    public function getDataJson()
+    {
+        $data_topping = Toppings::all();
+
+        return $data_topping;
     }
 }

@@ -16,6 +16,7 @@ class UsersTableSeeder extends Seeder
                 'name' => 'Nguyen Chi',
                 'email' => 'abc@gmail.com',
                 'phone' => str_random(10),
+                'phone' => '',
                 'password' => bcrypt('123456'),
                 'address' => strtolower(str_random(20)),
                 'role_id' => 1

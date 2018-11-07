@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProductRequest;
 use App\Images;
 use App\Products;
 use Illuminate\Http\Request;
+use Intervention\Image\ImageManagerStatic as Image;
 
 class ProductController extends Controller
 {
@@ -36,9 +38,35 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
-        //
+         $product = new Products();
+
+         $product->name = $request->name;
+
+         $product->price = $request->price;
+
+         $product->quantity = $request->quantity;
+
+         $product->category_id = $request->category_id;
+
+         $product->description = $request->description;
+
+         $product->save();
+
+        // $image = $request->file('image');
+
+        // $filename = $image->getClientOriginalName();
+
+        // $image_resize = Image::make($image->getRealPath());
+
+        // $image_resize->resize(600, 348);
+
+        // $thumbPath = public_path() . '/images/product';
+
+        // $image_resize->move($thumbPath, $hashname);
+//        $product->id;
+
     }
 
     /**
@@ -72,7 +100,19 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $product = Products::find($id);
+
+        $product->name = $request->name;
+
+        $product->price = $request->price;
+
+        $product->quantity = $request->quantity;
+
+        $product->category_id = $request->category_id;
+
+        $product->description = $request->description;
+
+        $product->save();
     }
 
     /**
@@ -83,7 +123,9 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $product = Products::find($id);
+
+        $product->delete();
     }
 
     public function getDataJson()
@@ -95,8 +137,25 @@ class ProductController extends Controller
 
     public function getImages(Request $request)
     {
-        $images_data = Images::find($request->id);
+        $product_id = $request->id;
+        $images_data = Images::where('product_id',$product_id)->get();
 
         return $images_data;
+    }
+
+    public function uploadImage(Request $request)
+    {
+        $images = $request->images;
+        $product_id = $request->product_id;
+        if($request->hasFile('images'))
+        {
+            return 'Co';
+        }
+        else{
+            return 'Ko';
+        }
+
+
+
     }
 }

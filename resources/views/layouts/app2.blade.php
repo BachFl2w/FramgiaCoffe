@@ -3,15 +3,46 @@
 <head>
     @routes()
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
-
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Sufee Admin - HTML5 Admin Template</title>
     <meta name="description" content="Sufee Admin - HTML5 Admin Template">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+{{-- <<<<<<< Updated upstream
     <link rel="apple-touch-icon" href="{{ asset('admin_template/apple-icon.png') }}">
     <link rel="shortcut icon" href="{{ asset('admin_template/favicon.ico') }}">
+=======
+    <title>{{ config('app.name', 'Laravel') }}</title>
+
+
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/themify-icons.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/flag-icon.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }} ">
+    <link rel="stylesheet" href="{{ asset('css/style1.css') }} ">
+
+    <link href="{{ asset('css/dataTables.bootstrap4.min.css') }}">
+
+    <link rel="stylesheet" href="{{ asset('css/customer.css') }}">
+   
+    <script src="{{ asset('js/app.js') }}"></script>
+
+    <script src="{{ asset('js/jquery.min.js') }}" type="text/javascript"></script>
+
+    <script src="{{ asset('js/jquery.dataTables.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/dataTables.bootstrap4.js') }}" defer></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
+    <script src="{{ asset('js/plugins.js') }}"></script>
+    <script src="{{ asset('js/dashboard.js') }}"></script>
+    <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
+    <script> CKEDITOR.replace('ckeditor'); </script>
+>>>>>>> Stashed changes --}}
 
     <link rel="stylesheet" href="{{ asset('admin_template/assets/css/normalize.css') }}">
     <link rel="stylesheet" href="{{ asset('admin_template/assets/css/bootstrap.min.css') }}">
@@ -22,6 +53,8 @@
     <link rel="stylesheet" href="{{ asset('admin_template/assets/css/lib/datatable/dataTables.bootstrap.min.css') }}">
     <!-- <link rel="stylesheet" href="assets/css/bootstrap-select.less"> -->
     <link rel="stylesheet" href="{{ asset('admin_template/assets/scss/style.css') }}">
+    @yield('css')
+    <link rel="stylesheet" href="{{ asset('css/customer.css') }}">
 
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
 
@@ -263,7 +296,7 @@
 
     @yield('script')
 
-    <script src="{{ asset('js/customer.js') }}"></script>
+    
     <script src="{{ asset('admin_template/assets/js/vendor/jquery-2.1.4.min.js')}}"></script>
     <script src="{{ asset('admin_template/assets/js/popper.min.js')}}"></script>
     <script src="{{ asset('admin_template/assets/js/plugins.js')}}"></script>
@@ -281,5 +314,9 @@
     <script src="{{ asset('admin_template/assets/js/lib/data-table/buttons.print.min.js') }}"></script>
     <script src="{{ asset('admin_template/assets/js/lib/data-table/buttons.colVis.min.js') }}"></script>
     <script src="{{ asset('admin_template/assets/js/lib/data-table/datatables-init.js') }}"></script>
+
+
+    <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
+    <script src="{{ asset('js/customer.js') }}" ></script>
 </body>
 </html>

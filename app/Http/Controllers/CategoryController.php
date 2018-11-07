@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Categories;
+use App\Http\Requests\CategoryRequest;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -13,7 +15,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $categories_data = Categories::all();
+
+        return view('admin.category_list', ['categories' => $categories_data]);
     }
 
     /**
@@ -32,9 +36,13 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
-        //
+        $category = new Categories();
+
+        $category->name = $request->name;
+
+        $category->save();
     }
 
     /**
@@ -66,9 +74,13 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CategoryRequest $request, $id)
     {
-        //
+        $category =  Categories::find($id);
+
+        $category->name = $request->name;
+
+        $category->save();
     }
 
     /**
@@ -79,6 +91,15 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $category = Categories::find($id);
+
+        $category->delete();
+    }
+
+    public function getDataJson()
+    {
+        $categories_data = Categories::all();
+
+        return $categories_data;
     }
 }

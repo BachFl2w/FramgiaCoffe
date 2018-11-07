@@ -36,7 +36,11 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $role = new Roles();
+
+        $role->name = $request->name;
+
+        $role->save();
     }
 
     /**
@@ -70,7 +74,11 @@ class RoleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $role = Roles::find($id);
+
+        $role->name = $request->name;
+
+        $role->save();
     }
 
     /**
@@ -81,12 +89,15 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $role = Roles::find($id);
+
+        $role->delete();
     }
 
     public function getDataJson()
     {
-        $role = Roles::pluck('id', 'name');
-        return $role;
+        $roles = Roles::all();
+
+        return $roles;
     }
 }
