@@ -30,11 +30,11 @@ class User extends Authenticatable
 
     public function role()
     {
-        return $this->belongsTo(Roles::class);
+        return $this->belongsTo(Role::class);
     }
 
     public function orders()
     {
-        return $this->hasMany(Orders::class);
+        return $this->hasMany(Order::class);
     }
 }
