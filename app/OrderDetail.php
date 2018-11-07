@@ -8,7 +8,7 @@ class OrderDetail extends Model
 {
     protected $table = 'order_details';
 
-    public function products()
+    public function product()
     {
         return $this->belongsTo(Product::class);
     }
@@ -23,7 +23,7 @@ class OrderDetail extends Model
         return $this->hasMany(OrderDetailToping::class);
     }
 
-    public function sizes()
+    public function size()
     {
         return $this->belongsTo(Size::class);
     }

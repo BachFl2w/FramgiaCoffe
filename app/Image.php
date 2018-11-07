@@ -8,7 +8,7 @@ class Image extends Model
 {
     protected $table = 'images';
 
-    public function products()
+    public function product()
     {
         return $this->belongsTo(Product::class);
     }

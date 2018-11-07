@@ -8,13 +8,13 @@ class OrderDetailToping extends Model
 {
     protected $table = 'order_detail_toping';
 
-    public function orderDetails()
+    public function orderDetail()
     {
-        return $this->belongsTo(OrderDetails::class);
+        return $this->belongsTo(OrderDetail::class);
     }
 
-    public function topings()
+    public function toping()
     {
-        return $this->belongsTo(Toppings::class);
+        return $this->belongsTo(Topping::class);
     }
 }

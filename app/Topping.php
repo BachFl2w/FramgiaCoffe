@@ -8,7 +8,7 @@ class Topping extends Model
 {
     protected $table = 'toppings';
 
-    public function orderDetailToppings()
+    public function orderDetailTopping()
     {
         return $this->belongsToMany(OrderDetail::class);
     }
