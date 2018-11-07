@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="no-js">
 <head>
     @routes()
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="{{ asset('admin_template/assets/css/cs-skin-elastic.css') }}">
     <link rel="stylesheet" href="{{ asset('admin_template/assets/css/lib/datatable/dataTables.bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('admin_template/assets/css/lib/datatable/buttons.dataTables.bootstrap.min.css') }}">
-    <!-- <link rel="stylesheet" href="assets/css/bootstrap-select.less"> -->
+    {{-- <link rel="stylesheet" href="assets/css/bootstrap-select.less"> --}}
     <link rel="stylesheet" href="{{ asset('admin_template/assets/scss/style.css') }}">
 
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
@@ -64,5 +64,13 @@
     </div><!-- /#right-panel -->
 
     @yield('script')
+
+    <script src="{{asset('assets/js/vendor/jquery-2.1.4.min.js')}}"></script>
+    <script src="{{asset('assets/js/popper.min.js')}}"></script>
+    <script src="{{asset('assets/js/plugins.js')}}"></script>
+    <script src="{{asset('assets/js/main.js')}}"></script>
+        <!--  Chart js -->
+    <script src="{{asset('assets/js/lib/chart-js/Chart.bundle.js')}}"></script>
+    <script src="{{asset('assets/js/lib/chart-js/chartjs-init.js')}}"></script>
 </body>
 </html>

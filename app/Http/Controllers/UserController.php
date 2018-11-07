@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use Session;
 use App\User;
 use App\Roles;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\UserUpdateRequest;
-use App\Http\Requests\UserStoreRequest;
-
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\UserUpdateRequest;
+use App\Http\Requests\UserStoreRequest;
 
 class UserController extends Controller
 {
@@ -157,5 +157,19 @@ class UserController extends Controller
         $user->delete();
 
         return back()->with('success', 'Delete user successfully !');
+    }
+
+    public function loginAdmin(Request $request)
+    {
+        $data = [
+            'email' => $request->email,
+            'password' => $request->password,
+        ];
+
+        if (Auth::attempt($data)) {
+            return redirect('admin/user/index');
+        }
+
+        return back()->with('fail', 'Email or password is true !');
     }
 }
