@@ -68,13 +68,17 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin'], function() {
 
         Route::get('index', 'ProductController@index')->name('admin.product.index');
 
-        Route::get('json', 'ProductController@getDataJson')->name('admin.product.json');
+        Route::get('getDataJson', 'ProductController@getDataJson')->name('admin.product.json');
 
         Route::post('store', 'ProductController@store')->name('admin.product.store');
 
         Route::get('{id}/images', 'ProductController@getImages')->name('admin.product.images');
 
         Route::post('upload-image', 'ProductController@uploadImage')->name('admin.product.uploadimage');
+
+        Route::get('show/{id}', 'ProductController@show')->name('admin.product.show');
+
+        Route::post('update/{id}', 'ProductController@update')->name('admin.product.update');
 
     });
 

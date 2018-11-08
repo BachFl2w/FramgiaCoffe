@@ -6,7 +6,9 @@ use App\Http\Requests\ProductRequest;
 use App\Image;
 use App\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Intervention\Image\ImageManagerStatic as Images;
+use function MongoDB\BSON\toJSON;
 
 class ProductController extends Controller
 {
@@ -77,7 +79,16 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        //
+        $product = DB::table('products')
+            ->join('images','products.id','=','images.product_id')
+            ->join('categories','products.category_id', 'categories.id')
+            ->select('products.id', 'products.name as name', 'price', 'quantity', 'description', 'images.name as main_image', 'categories.id as category_id')
+            ->where([
+                ['images.active', '=', 1],
+                ['products.id', '=', $id],
+            ])->get();
+
+        return $product;
     }
 
     /**
@@ -130,7 +141,7 @@ class ProductController extends Controller
 
     public function getDataJson()
     {
-        $products_data = Product::all()->load('category');
+         $products_data = Product::with('category')->get();
 
         return $products_data;
     }

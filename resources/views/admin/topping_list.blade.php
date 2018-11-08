@@ -20,9 +20,9 @@
                     <tr>
                         <th>ID</th>
                         <th>Topping</th>
-                        <th>Price</th>
-                        <th>Quantity</th>
-                        <th>Action</th>
+                        <th>Giá</th>
+                        <th>Số lượng</th>
+                        <th></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -42,8 +42,8 @@
         </div>
     </div>
 
-    <div class="modal fade" id="ToppingModal" role="dialog" aria-labelledby="ToppingModalTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal fade" id="ToppingModal" tabindex="-1" role="dialog"  aria-hidden="true" data-backdrop="false">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLongTitle">Thêm mới topping</h5>
