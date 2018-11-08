@@ -23,6 +23,8 @@ Route::post('login_admin', 'UserController@loginAdmin')->name('admin.postLogin')
 
 Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin'], function() {
 
+    Route::get('logout', 'UserController@logoutAdmin')->name('admin.logout');
+
     Route::group(['prefix' => 'role'], function () {
 
         Route::get('index', 'RoleController@index')->name('admin.role.index');
@@ -49,13 +51,15 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin'], function() {
 
         Route::post('update/{id}', 'UserController@update')->name('admin.user.update');
 
-        Route::get('destroy/{id}', 'UserController@destroy')->name('admin.user.destroy');
+        Route::get('/destroy/{id}', 'UserController@destroy')->name('admin.user.destroy');
     });
 
     Route::group(['prefix' => 'feedback'], function() {
         Route::get('index', 'FeedbackController@index')->name('admin.feedback.index');
 
         Route::get('edit/{id}', 'FeedbackController@edit')->name('admin.feedback.edit');
+
+        Route::post('send_mail', 'FeedbackController@send')->name('admin.feedback.send_mail');
 
         Route::post('update/{id}', 'FeedbackController@update')->name('admin.feedback.update');
     });

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Product;
 use App\Feedback;
+use App\Mail\SendEmail;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 
 class FeedbackController extends Controller
@@ -18,6 +20,23 @@ class FeedbackController extends Controller
     {
         $feedbacks = Feedback::all()->load('user', 'product');
         return view('admin.feedback_list', ['feedbacks' => $feedbacks]);
+    }
+
+    public function send(Request $request)
+    {
+        $content = $request->content;
+        $reciver = $request->email;
+
+        Mail::to($reciver)->send($content);
+
+        if (Mail::to($reciver)->send($content)) {
+            $feedback = Feedback::find($request->feedback_id);
+            $feedback->status = 1;
+
+            return back()->with('success', 'SendEmail done !');
+        }
+
+        return back()->with('fail', 'SendEmail fail !');
     }
 
     /**

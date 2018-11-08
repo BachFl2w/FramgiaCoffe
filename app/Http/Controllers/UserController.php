@@ -153,10 +153,16 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $user = User::find($id);
-        $user->delete();
+        $userRole = Auth::user();
 
-        return back()->with('success', 'Delete user successfully !');
+        if ($userRole->role_id == 1) {
+            $user = User::find($id);
+            $user->delete();
+
+            return back()->with('success', 'Delete user successfully !');
+        }
+
+        return back()->with('fail', 'Dont have permission !');
     }
 
     public function loginAdmin(Request $request)
@@ -171,5 +177,12 @@ class UserController extends Controller
         }
 
         return back()->with('fail', 'Email or password is true !');
+    }
+
+    public function logoutAdmin()
+    {
+        Auth::logout();
+
+        return redirect(route('login'));
     }
 }

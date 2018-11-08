@@ -12,29 +12,42 @@
             </div>
 
             <div class="card-body">
-                <table class="table table-bordered" id="admin_role_list">
-                    <tr>
-                        <th>ID</th>
-                        <th>Người dùng</th>
-                        <th>Sản phẩm </th>
-                        <th>Nội dung</th>
-                        <th>Trang thái</th>
-                    </tr>
-                    @foreach($feedbacks as $feedback)
+                <table class="table table-bordered" id="bootstrap-data-table">
+                    <thead>
                         <tr>
-                            <td>{{ $feedback->id }}</td>
-                            <td>{{ $feedback->user->name }}</td>
-                            <td>{{ $feedback->product->name }}</td>
-                            <td>{{ $feedback->content }}</td>
-                            <td>{{ $feedback->status }}</td>
-                            <td>
-                                <button class="btn btn-outline-primary" title="show"><i class="fa fa-edit"></i></button>
-                                <button title="Delete" class="btn btn-outline-danger"><i class="fa fa-edit"></i></button>
-                            </td>
+                            <th scope="col">ID</th>
+                            <th scope="col">Người dùng</th>
+                            <th scope="col">Sản phẩm </th>
+                            <th scope="col">Nội dung</th>
+                            <th scope="col">Trang thái</th>
+                            <th scope="col">Action</th>
                         </tr>
-                    @endforeach
+                    </thead>
+                    <tbody>
+                        @foreach($feedbacks as $feedback)
+                            <tr>
+                                <td scope="row">{{ $feedback->id }}</td>
+                                <td>{{ $feedback->user->name }}</td>
+                                <td>{{ $feedback->product->name }}</td>
+                                <td>{{ $feedback->content }}</td>
+                                <td>{{ $feedback->status }}</td>
+                                <td>
+                                    <button type="button" class="btn btn-outline-primary" title="Respone"><i class="fa fa-edit"></i></button>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
                 </table>
             </div>
         </div>
     </div>
+@endsection
+
+@section('script')
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#bootstrap-data-table').DataTable();
+        } );
+    </script>
 @endsection
