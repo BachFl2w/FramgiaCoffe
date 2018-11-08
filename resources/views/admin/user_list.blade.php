@@ -51,7 +51,7 @@
                                     <td>{{ $u->phone }}</td>
                                     <td>
                                         @if ($u->image)
-                                        <img src="{{ asset('images/avatar/'.$u->image) }}" height="100px">
+                                        <img src="{{ asset('images/'.$u->image) }}" height="100px">
                                         @else
                                             {{'null'}}
                                         @endif

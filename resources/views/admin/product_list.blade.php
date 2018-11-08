@@ -18,11 +18,12 @@
                     <tr>
                         <th>ID</th>
                         <th>Sản Phẩm</th>
+                        <th>Só lượng</th>
                         <th>Ảnh</th>
                         <th>Giá</th>
                         <th>Miêu tả</th>
                         <th>Thể Loại</th>
-                        <th>Action</th>
+                        <th></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -52,42 +53,42 @@
                                 <div class="text">Caption Text</div>
                             </div> --}}
                         </div>
-                        <div class="image-button">
-                            <a class="image-prev" onclick="plusSlides(-1)">&#10094;</a>
-                            <a class="image-next" onclick="plusSlides(1)">&#10095;</a>
+                        <div class="image-button" id="image-button">
+                            <a class="image-prev" id="image-prev" >&#10094;</a>
+                            <a class="image-next" id="image-next" >&#10095;</a>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" id="addImageProduct" class="btn btn-primary">Thêm ảnh</button>
                     <input type="file" id="file_image_product" name="images[]" multiple hidden="hidden">
-                    <button type="button" id="main_image_button" class="btn btn-primary">Chọn làm ảnh chính</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" id="main_image_button" class="btn btn-primary">Chọn làm ảnh đại diện</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Thoát</button>
                 </div>
             </div>
         </div>
     </div>
 
 
-    <div class="modal fade" id="ProductModal" tabindex="-1" role="dialog" aria-labelledby="CreateProductModalTitle" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
+    <div class="modal fade" id="ProductModal" tabindex="-1" data-backdrop="false" role="dialog" aria-labelledby="CreateProductModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-lg model-big" >
             <div class="modal-content">
 
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Thông tin sản phẩm</h5>
+                        <h5 class="modal-title" id="titleModalProduct">Thông Tin Sản Phẩm</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    {{--<form action="{{ route('admin.product.store') }}" method="post" enctype="multipart/form-data" id="create_form_product">--}}
+
                     <div class="modal-body">
                         <div class="row">
-                            {{--<div class="col-5">--}}
-                                {{--<p class="text">Chon anh</p>--}}
-                                {{--<img id="image_review_create" class="img-thumbnail">--}}
-                                {{--<input type="file" id="product_image" name="image">--}}
-                            {{--</div>--}}
-                            <div class="col-12">
+                            <div class="col-5">
+                                <p class="text" id="choose_image_product_modal"></p>
+                                <img id="image_review_create" class="img-thumbnail">
+                                <input type="file" id="product_image" name="image">
+                            </div>
+                            <div class="col-7">
                                 @csrf
                                 <div class="form-group" id="group_product_id">
                                     <label for="id" class="pr-1 form-control-label">ID</label>
@@ -117,7 +118,7 @@
                             <div class="col-lg-12">
                                 <div class="form-group">
                                     <label for="" class="px-1  form-control-label">Miêu tả</label>
-                                    <textarea id="ckeditor" name="ckeditor" class="form-control ckeditor"></textarea>
+                                    <textarea id="ckeditor_product_descrition" name="ckeditor" class="form-control ckeditor"></textarea>
                                 </div>
                             </div>
                         </div>
