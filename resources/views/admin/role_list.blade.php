@@ -104,8 +104,7 @@
                                     <td scope="row">{{ $role->id }}</td>
                                     <td>{{ $role->name }}</td>
                                     <td>
-                                        <button class="btn btn-outline-primary" title="show"><i class="fa fa-edit"></i></button>
-                                        <button title="Delete" class="btn btn-outline-danger"><i class="fa fa-edit"></i></button>
+                                        <button title="edit" class="btn btn-outline-danger"><i class="fa fa-edit"></i></button>
                                     </td>
                                 </tr>
                             @endforeach
@@ -119,7 +118,7 @@
 @endsection
 
 @section('script')
-    
+
     <script type="text/javascript">
         $(document).ready(function() {
             $('#bootstrap-data-table-export').DataTable();

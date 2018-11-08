@@ -62,7 +62,7 @@
                                     <td>{{ $u->phone }}</td>
                                     <td>
                                         @if ($u->image)
-                                        <img src="{{ asset('images/avatar/'.$u->image) }}" height="100px">
+                                            <img src="{{ asset('images/avatar/'.$u->image) }}" height="100px">
                                         @else
                                             {{'null'}}
                                         @endif
@@ -73,8 +73,21 @@
                                         <a href="{{ route('admin.user.destroy', $u->id) }}" onclick="return confirm('Delete ?');" class="btn btn-outline-danger" title="Delete"><i class="fa fa-trash-o"></i></a>
                                     </td>
                                 </tr>
+
                             @endforeach
                         </tbody>
+                        <tfoot>
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Address</th>
+                                <th scope="col">Phone</th>
+                                <th scope="col">Avatar</th>
+                                <th scope="col">Role</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </tfoot>
                     </table>
                 </div>
             </div>
