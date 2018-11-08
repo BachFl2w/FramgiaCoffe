@@ -16,7 +16,8 @@ class FeedbackController extends Controller
      */
     public function index()
     {
-        $feedbacks = Feedback::all()->load('users', 'products');
+        $feedbacks = Feedback::all()->load('user', 'product');
+        return view('admin.feedback_list', ['feedbacks' => $feedbacks]);
     }
 
     /**

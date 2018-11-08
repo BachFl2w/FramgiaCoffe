@@ -33,7 +33,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        $roles = Roles::all();
+        $roles = Role::all();
 
         return view('admin.user_create', compact('roles'));
     }

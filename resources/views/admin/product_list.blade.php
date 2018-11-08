@@ -1,5 +1,7 @@
 @extends('layouts.app2')
-
+@section('css')
+<link rel="stylesheet" href="{{ asset('css/customer.css') }}">
+@endsection
 @section('content')
     <div class="container-fluid">
         <div class="card">
@@ -24,23 +26,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    {{-- @foreach($products as $product)
-                        <tr>
-                            <td>{{ $product->id }}</td>
-                            <td>{{ $product->name }}</td>
-                            <td>
-                                <a href="" aria-hidden="true" data-toggle="modal" data-target="#UpdateImageModal" data-id="{{ $product->id }}"><i class="fa fa-picture-o fa-3x" ></i>
-                                </a>
-                            </td>
-                            <td>{{ $product->price }}</td>
-                            <td>{{ $product->description }}</td>
-                            <td>{{ $product->category->name }}</td>
-                            <td>
-                                <button class="btn btn-outline-primary"><i class="fa fa-edit"></i></button>
-                                <button class="btn btn-outline-danger"><i class="fa fa-trash"></i></button>
-                            </td>
-                        </tr>
-                    @endforeach --}}
+                    
                     </tbody>
                 </table>
             </div>
