@@ -7,18 +7,29 @@
 
 @section('content')
 
-@if (session('success'))
-    <div class="sufee-alert alert with-close alert-success alert-dismissible fade show">
-        {{session('success')}}
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">×</span>
-        </button>
-    </div>
-@endif
 
 <div class="animated fadeIn">
+
     <div class="rows">
         <div class="col-md-12">
+            @if (session('success'))
+                <div class="sufee-alert alert with-close alert-success alert-dismissible fade show">
+                    {{session('success')}}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+            @endif
+
+            @if (session('fail'))
+                <div class="sufee-alert alert with-close alert-danger alert-dismissible fade show">
+                    {{session('fail')}}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+            @endif
+
             <div class="card">
                 <div class="card-header">
                     <strong class="card-title">Quản Lý User</strong>
@@ -51,7 +62,7 @@
                                     <td>{{ $u->phone }}</td>
                                     <td>
                                         @if ($u->image)
-                                        <img src="{{ asset('images/'.$u->image) }}" height="100px">
+                                            <img src="{{ asset('images/avatar/'.$u->image) }}" height="100px">
                                         @else
                                             {{'null'}}
                                         @endif
@@ -59,11 +70,24 @@
                                     <td>{{ $u->role->name }}</td>
                                     <td>
                                         <a href="{{route('admin.user.edit', $u->id)}}" class="btn btn-outline-primary" title="Edit"><i class="fa fa-edit"></i></a>
-                                        <a href="{{route('admin.user.destroy', $u->id)}}" class="btn btn-outline-danger" title="Delete"><i class="fa fa-trash-o"></i></a>
+                                        <a href="{{ route('admin.user.destroy', $u->id) }}" onclick="return confirm('Delete ?');" class="btn btn-outline-danger" title="Delete"><i class="fa fa-trash-o"></i></a>
                                     </td>
                                 </tr>
+
                             @endforeach
                         </tbody>
+                        <tfoot>
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Address</th>
+                                <th scope="col">Phone</th>
+                                <th scope="col">Avatar</th>
+                                <th scope="col">Role</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </tfoot>
                     </table>
                 </div>
             </div>

@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -13,7 +15,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        view()->composer('layouts/header', function($view) {
+            if (Auth::check())
+            {
+                $currentUser = User::find(Auth::id());
+                $view->with('currentUser', $currentUser);
+            }
+        });
     }
 
     /**

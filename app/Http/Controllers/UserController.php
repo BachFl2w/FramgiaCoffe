@@ -82,7 +82,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = User::find($id);
+        $user = User::where('role_id', $id)->get();
 
         return view('admin.user_show', compact('user'));
     }
@@ -96,7 +96,7 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::find($id);
-        $roles = Roles::all();
+        $roles = Role::all();
 
         return view('admin.user_edit', compact('user', 'roles'));
     }
@@ -111,6 +111,12 @@ class UserController extends Controller
     public function update(UserUpdateRequest $request, $id)
     {
         $user = User::find($id);
+        $currentUser = User(Auth::id());
+
+        if ($user->role_id == 1 && $currentUser->role_id != 1) {
+            return back()->with('fail', 'Delete user fail !');
+        }
+
         $user->name    = $request->name;
         $user->email   = $request->email;
         $user->address = $request->address;
@@ -154,9 +160,16 @@ class UserController extends Controller
     public function destroy($id)
     {
         $user = User::find($id);
-        $user->delete();
+        $currentUser = User::find(Auth::id());
 
-        return back()->with('success', 'Delete user successfully !');
+        if ($currentUser->role_id == 1 && $user->role_id != 1) {
+            $user = User::find($id);
+            $user->delete();
+
+            return back()->with('success', 'Delete user successfully !');
+        }
+
+        return back()->with('fail', 'Dont have permission !');
     }
 
     public function loginAdmin(Request $request)
@@ -171,5 +184,12 @@ class UserController extends Controller
         }
 
         return back()->with('fail', 'Email or password is true !');
+    }
+
+    public function logoutAdmin()
+    {
+        Auth::logout();
+
+        return redirect(route('login'));
     }
 }
