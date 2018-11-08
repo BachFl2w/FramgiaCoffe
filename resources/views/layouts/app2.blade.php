@@ -28,7 +28,7 @@
     <link rel="stylesheet" href="{{ asset('admin_template/assets/css/lib/datatable/buttons.dataTables.bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('admin_template/assets/scss/style.css') }}">
     @yield('css')
-    
+
 
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
 
@@ -67,9 +67,8 @@
         </div> <!-- .content -->
     </div><!-- /#right-panel -->
 
-    @yield('script')
 
-    
+
     <script src="{{ asset('admin_template/assets/js/vendor/jquery-2.1.4.min.js')}}"></script>
     <script src="{{ asset('admin_template/assets/js/popper.min.js')}}"></script>
     <script src="{{ asset('admin_template/assets/js/plugins.js')}}"></script>
@@ -92,8 +91,7 @@
     <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
     <script src="{{ asset('js/customer.js') }}" ></script>
 
-    <script src="{{asset('assets/js/lib/chart-js/Chart.bundle.js')}}"></script>
-    <script src="{{asset('assets/js/lib/chart-js/chartjs-init.js')}}"></script>
+    @yield('script')
 
 </body>
 </html>
