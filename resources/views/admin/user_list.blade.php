@@ -49,6 +49,7 @@
                                 <th scope="col">Phone</th>
                                 <th scope="col">Avatar</th>
                                 <th scope="col">Role</th>
+                                <th scope="col">Active</th>
                                 <th scope="col">Action</th>
                             </tr>
                         </thead>
@@ -68,6 +69,11 @@
                                         @endif
                                     </td>
                                     <td>{{ $u->role->name }}</td>
+                                    <td>
+                                        @if ($u->active == 1)
+                                            {{'Active'}}
+                                        @endif
+                                    </td>
                                     <td>
                                         <a href="{{route('admin.user.edit', $u->id)}}" class="btn btn-outline-primary" title="Edit"><i class="fa fa-edit"></i></a>
                                         <a href="{{ route('admin.user.destroy', $u->id) }}" onclick="return confirm('Delete ?');" class="btn btn-outline-danger" title="Delete"><i class="fa fa-trash-o"></i></a>

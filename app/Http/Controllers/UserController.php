@@ -9,6 +9,7 @@ use App\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+
 use App\Http\Requests\UserUpdateRequest;
 use App\Http\Requests\UserStoreRequest;
 
@@ -54,12 +55,17 @@ class UserController extends Controller
         $user->phone    = $request->phone;
         $user->role_id  = $request->role;
 
+        if ($request->role_id == 1 || $request->role_id == 2) {
+            $user->active   = 0;
+        } else {
+            $user->active   = 1;
+        }
+
         if ($request->hasFile('avatar')) {
             $file = $request->file('avatar');
             $name = $file->getClientOriginalName();
             $newName = str_random(4) . '_' . $name;
 
-            // kiem tra de tranh trung lap ten file
             while (file_exists('images/avatar/' . $newName)) {
                 $newName = str_random(4) . '_' . $name;
             }
@@ -96,35 +102,51 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::find($id);
-        $roles = Role::all();
+        $currentUser = User::find(Auth::id());
 
-        return view('admin.user_edit', compact('user', 'roles'));
+        if ($currentUser->role_id == 1) {
+            if ($user->role_id == 1 && $currentUser->email != $user->email) {
+                return back()->with('fail', 'You can not edit this account !');
+            }
+
+            return view('admin.user_edit', compact('user'));
+        } else {
+            if ($currentUser->email != $user->email) {
+                return back()->with('fail', 'You can not edit this account !');
+            }
+
+            return view('admin.user_edit', compact('user'));
+        }
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(UserUpdateRequest $request, $id)
     {
         $user = User::find($id);
-        $currentUser = User(Auth::id());
+        $currentUser = User::find(Auth::id());
 
-        if ($user->role_id == 1 && $currentUser->role_id != 1) {
-            return back()->with('fail', 'Delete user fail !');
+        if ($currentUser->role_id == 1) {
+            if ($user->role_id == 1 && $currentUser->email != $user->email) {
+                return back()->with('fail', 'You can not edit this account !');
+            }
+        } else {
+            if ($currentUser->email != $user->email) {
+                return back()->with('fail', 'You can not edit this account !');
+            }
         }
 
         $user->name    = $request->name;
-        $user->email   = $request->email;
         $user->address = $request->address;
         $user->phone   = $request->phone;
-        $user->role_id = $request->role;
 
-        if ($request->new_password != '') {
-            $user->password = Hash::make($request->new_password);
+        if ($request->has('password')) {
+            $user->password = Hash::make($request->password);
         }
 
         if ($request->hasFile('avatar')) {
@@ -183,7 +205,7 @@ class UserController extends Controller
             return redirect('admin/user/index');
         }
 
-        return back()->with('fail', 'Email or password is true !');
+        return back()->with('fail', 'Email or password is not true !');
     }
 
     public function logoutAdmin()

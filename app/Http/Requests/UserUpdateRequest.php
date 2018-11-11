@@ -24,34 +24,28 @@ class UserUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'         => 'required|max:191',
-            'email'        => 'required|email|max:191',
-            'new_password' => 'max:191',
-            're_password'  => 'same:new_password',
-            'address'      => 'required|max:191',
-            'phone'        => 'required|min:10|max:11',
-            'role'         => 'required',
-            'avatar'       => 'mimes:jpeg,png,jpg',
+            'name' => 'required|max:191',
+            'password' => 'nullable|min:6|max:191',
+            're_password' => 'same:password',
+            'address' => 'required|max:191',
+            'phone' => 'required|digits_between:9,11',
+            'avatar' => 'mimes:jpeg,png,jpg',
         ];
     }
 
     public function messages()
     {
         return [
-            'name.required'         => 'Enter user name !',
-            'name.max'              => 'Name must smaller 191 character !',
-            'email.max'             => 'Email must smaller 191 character !',
-            'email.required'        => 'Enter user name !',
-            'email.email'           => 'Not is email !',
-            'new_password.max'      => 'Password must smaller 191 character !',
-            're_password.same'      => 'Password not same !',
-            'address.required'      => 'Enter user address !',
-            'address.max'           => 'Address must smaller 191 character !',
-            'phone.required'        => 'Enter user phone number !',
-            'phone.max'             => 'Phone must smaller 11 number !',
-            'phone.min'             => 'Phone must at least 10 number !',
-            'role.required'         => 'Select role !',
-            'avatar.mimes'          => 'Extension is not true !',
+            'name.required' => 'Enter user name !',
+            'name.max' => 'Name must smaller 191 character !',
+            'password.max' => 'Password must smaller 191 character !',
+            'password.min' => 'Password must at least 6 character !',
+            're_password.same' => 'Password not same !',
+            'address.required' => 'Enter user address !',
+            'address.max' => 'Address must smaller 191 character !',
+            'phone.required' => 'Enter user phone number !',
+            'phone.digits_between' => 'Phone must smaller 11 and at least 9 number !',
+            'avatar.mimes' => 'Extension is not true !',
         ];
     }
 }
