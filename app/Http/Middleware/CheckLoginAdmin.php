@@ -20,14 +20,19 @@ class CheckLoginAdmin
 
             $user = Auth::user();
 
-            if ($user->role_id == 1 || $user->role_id == 2) {
-                return $next($request);
-            } else {
+            if ($user->role_id == 3) {
                 Auth::logout();
-                return redirect('login');
+                return redirect('login')->with('fail', 'You are not Administrator !');
+            } else {
+                if ($user->active != 1) {
+                    Auth::logout();
+                    return redirect('login')->with('fail', 'Your account is awaiting approval !');
+                }
+
+                return $next($request);
             }
         }
 
-        return redirect('login');
+        return redirect('login')->with('fail', 'You must login first !');
     }
 }

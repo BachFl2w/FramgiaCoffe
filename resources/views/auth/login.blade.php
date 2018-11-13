@@ -40,7 +40,7 @@
                                 @endif
 
                                 @if (session('fail'))
-                                    <strong style="color: #761b18">{{session('fail')}}</strong>
+                                    <strong class="text-danger">{{session('fail')}}</strong>
                                 @endif
                             </div>
                         </div>

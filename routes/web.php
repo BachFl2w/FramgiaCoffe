@@ -25,7 +25,7 @@ Route::group(['prefix' => 'admin'], function() {
 
     Route::get('/', 'HomeController@index')->name('admin.index');
 
-    // Route::get('logout', 'UserController@logoutAdmin')->name('admin.logout');
+    Route::get('logout', 'UserController@logoutAdmin')->name('admin.logout');
 
     Route::group(['prefix' => 'role'], function () {
 

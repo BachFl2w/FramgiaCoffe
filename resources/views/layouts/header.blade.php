@@ -77,23 +77,16 @@
         <div class="col-sm-5">
             <div class="user-area dropdown float-right">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img class="user-avatar rounded-circle border" src="{{ asset('images/' . $currentUser->image) }}" style= alt="User Avatar">
+                    @if ($currentUser->image)
+                        <img class="user-avatar rounded-circle" src="{{ asset('images/avatar/' . $currentUser->image) }}" alt="User Avatar">
+                    @else
+                        <img class="user-avatar rounded-circle" src="{{ asset('images/default.jpeg') }}" alt="User Avatar">
+                    @endif
                 </a>
 
                 <div class="user-menu dropdown-menu">
-                        <a class="nav-link" href="#"><i class="fa fa-user"></i> {{ $currentUser->name }}</a>
-
-                        {{-- <a class="nav-link" href="#"><i class="fa fa-noti"></i> Notifications <span class="count">13</span></a> --}}
-
-                        <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                            {{ trans('auth.form.title_logout') }}
-                        </a>
-
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                            @csrf
-                        </form>
+                    <a class="nav-link" href="{{ route('admin.user.edit', $currentUser->id) }}"><i class="fa fa-user"></i> {{ $currentUser->name }}</a>
+                    <a class="nav-link" href="{{ route('admin.logout') }}"><i class="fa fa-power -off"></i>Logout</a>
                 </div>
             </div>
 

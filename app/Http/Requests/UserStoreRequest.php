@@ -23,15 +23,15 @@ class UserStoreRequest extends FormRequest
      */
     public function rules()
     {
-        // update
         return [
-            'name'         => 'required|max:191',
-            'new_password' => 'max:191',
-            're_password'  => 'same:password',
-            'address'      => 'required|max:191',
-            'phone'        => 'required|min:10|max:11',
-            'role'         => 'required',
-            'avatar'       => 'mimes:jpg,png,jpeg'
+            'name'        => 'required|max:191',
+            'email'       => 'required|email|unique:users,email|max:191',
+            'password'    => 'required|min:6|max:50',
+            're_password' => 'same:password',
+            'address'     => 'required|max:191',
+            'phone'       => 'required|min:10|max:11',
+            'role'        => 'required',
+            'avatar'      => 'mimes:jpg,png,jpeg',
         ];
     }
 
@@ -41,6 +41,10 @@ class UserStoreRequest extends FormRequest
         return [
             'name.required'        => 'Enter user name !',
             'name.max'             => 'Name must smaller 191 character !',
+            'email.required'       => 'Enter your email !',
+            'email.email'          => 'Not is a email !',
+            'email.unique'         => 'This email has taken !',
+            'email.max'            => 'Email must less than 191 character !',
             'password.required'    => 'Enter user password !',
             'password.max'         => 'Password must smaller 191 character !',
             're_password.required' => 'Enter re_password !',
