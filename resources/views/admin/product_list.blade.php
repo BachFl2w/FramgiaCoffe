@@ -60,8 +60,10 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" id="addImageProduct" class="btn btn-primary">Thêm ảnh</button>
-                    <input type="file" id="file_image_product" name="images[]" multiple hidden="hidden">
+                    <form method="post" enctype="multipart/form-data" id="add_more_image_form">
+                        <button type="button" id="addImageProduct" class="btn btn-primary">Thêm ảnh</button>
+                        <input type="file" id="file_image_product" name="images[]" multiple hidden="hidden">
+                    </form>
                     <button type="button" id="main_image_button" class="btn btn-primary">Chọn làm ảnh đại diện</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Thoát</button>
                 </div>
@@ -73,7 +75,8 @@
     <div class="modal fade" id="ProductModal" tabindex="-1" data-backdrop="false" role="dialog" aria-labelledby="CreateProductModalTitle" aria-hidden="true">
         <div class="modal-dialog modal-lg model-big" >
             <div class="modal-content">
-
+                <form method="post" id="add_product_form" enctype="multipart/form-data">
+                    @csrf
                     <div class="modal-header">
                         <h5 class="modal-title" id="titleModalProduct">Thông Tin Sản Phẩm</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -89,7 +92,6 @@
                                 <input type="file" id="product_image" name="image">
                             </div>
                             <div class="col-7">
-                                @csrf
                                 <div class="form-group" id="group_product_id">
                                     <label for="id" class="pr-1 form-control-label">ID</label>
                                     <input type="text" name="id" required class="form-control" placeholder="ID sản phẩm" id="product_id">
@@ -117,7 +119,7 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="form-group">
-                                    <label for="" class="px-1  form-control-label">Miêu tả</label>
+                                    <label for="" class="px-1 form-control-label">Miêu tả</label>
                                     <textarea id="ckeditor_product_descrition" name="ckeditor" class="form-control ckeditor"></textarea>
                                 </div>
                             </div>
@@ -127,7 +129,7 @@
                         <input type="button" class="btn btn-primary" id="btnSubmitProduct" value="Thêm sản phẩm">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
                     </div>
-                    {{--</form>--}}
+                </form>
             </div>
         </div>
     </div>

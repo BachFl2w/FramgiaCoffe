@@ -25,18 +25,7 @@
                         <th></th>
                     </tr>
                     </thead>
-                    <tbody>
-                    {{-- @foreach($roles as $role)
-                        <tr>
-                            <td>{{ $role->id }}</td>
-                            <td>{{ $role->name }}</td>
-                            <td>
-                                <button class="btn btn-outline-primary" title="show"><i class="fa fa-edit"></i></button>
-                                <button title="Delete" class="btn btn-outline-danger"><i class="fa fa-edit"></i></button>
-                            </td>
-                        </tr>
-                    @endforeach --}}
-                    </tbody>
+                    <tbody></tbody>
                 </table>
             </div>
         </div>

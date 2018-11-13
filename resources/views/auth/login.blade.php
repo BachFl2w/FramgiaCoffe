@@ -8,7 +8,7 @@
                 <div class="card-header">{{ __('Login') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('admin.postLogin') }}">
+                    <form method="POST" action="{{ route('login') }}">
                         {{-- @csrf --}}
 
                         <input type="hidden" name="_token" value="{{csrf_token()}}" placeholder="">

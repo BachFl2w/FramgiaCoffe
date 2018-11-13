@@ -8,7 +8,6 @@ use App\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Intervention\Image\ImageManagerStatic as Images;
-use function MongoDB\BSON\toJSON;
 
 class ProductController extends Controller
 {
@@ -19,9 +18,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products_data = Product::all();
-
-        return view('admin.product_list', ['products' => $products_data]);
+        return view('admin.product_list');
     }
 
     /**
@@ -42,32 +39,35 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request)
     {
-         $product = new Product();
+        $product = new Product();
 
-         $product->name = $request->name;
+        $product->name = $request->name;
 
-         $product->price = $request->price;
+        $product->price = $request->price;
 
-         $product->quantity = $request->quantity;
+        $product->quantity = $request->quantity;
 
-         $product->category_id = $request->category_id;
+        $product->category_id = $request->category_id;
 
-         $product->description = $request->description;
+        $product->description = $request->description;
 
-         $product->save();
+        $product->save();
 
-        // $image = $request->file('image');
+        $image = $request->file('image');
 
-        // $filename = $image->getClientOriginalName();
+        $filename = $product->name . '_' . $image->getClientOriginalName();
 
-        // $image_resize = Image::make($image->getRealPath());
+        $path = public_path('images/product/' . $filename);
 
-        // $image_resize->resize(600, 348);
+        $image_resize = Images::make($image->getRealPath())->resize(600, 348)->save($path);
 
-        // $thumbPath = public_path() . '/images/product';
+        $img = new Image();
 
-        // $image_resize->move($thumbPath, $hashname);
-//        $product->id;
+        $img->name = $filename;
+
+        $img->product_id = $product->id;
+
+        $img->save();
 
     }
 
@@ -82,11 +82,13 @@ class ProductController extends Controller
         $product = DB::table('products')
             ->join('images','products.id','=','images.product_id')
             ->join('categories','products.category_id', 'categories.id')
-            ->select('products.id', 'products.name as name', 'price', 'quantity', 'description', 'images.name as main_image', 'categories.id as category_id')
+            ->select('products.id', 'products.name as name', 'price', 'quantity', 'description', 'images.name as main_image', 'categories.id as category_id', 'active')
             ->where([
-                ['images.active', '=', 1],
-                ['products.id', '=', $id],
-            ])->get();
+                'products.id', '=', $id,
+            ])
+            ->orderBy('active', 'desc')
+            ->orderBy('images.product_id', 'desc')
+            ->get();
 
         return $product;
     }
@@ -111,7 +113,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $product = Product::find($id);
+        $product = Product::findOrFail($id);
 
         $product->name = $request->name;
 
@@ -134,7 +136,7 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        $product = Product::find($id);
+        $product = Product::findOrFail($id);
 
         $product->delete();
     }
@@ -149,24 +151,58 @@ class ProductController extends Controller
     public function getImages(Request $request)
     {
         $product_id = $request->id;
+
         $images_data = Image::where('product_id',$product_id)->get();
 
         return $images_data;
     }
 
-    public function uploadImage(Request $request)
+    public function uploadMoreImage(Request $request)
     {
-        $images = $request->images;
+        $images = $request->file('images');
+
         $product_id = $request->product_id;
-        if($request->hasFile('images'))
-        {
-            return 'Co';
+
+        $product = Product::findOrFail($product_id);
+
+        foreach ($images as $image) {
+
+            $filename = $product->name . '_' . $image->getClientOriginalName();
+
+            $path = public_path('images/product/' . $filename);
+
+            $image_resize = Images::make($image->getRealPath())->resize(600, 348)->save($path);
+
+            $img = new Image();
+
+            $img->name = $filename;
+
+            $img->product_id = $product->id;
+
+            $img->save();
         }
-        else{
-            return 'Ko';
+    }
+
+    public function changMainImage(Request $request)
+    {
+        $productId = $request->image_id;
+
+        $mainImageId = $request->product_id;
+
+        $currentMainImage = Image::where('product_id', $productId)->where('active', 1)->first();
+
+        if ($currentMainImage != null) {
+
+            $currentMainImage->active = 0;
+
+            $currentMainImage->save();
         }
+        
+        $image = Image::findOrFail($mainImageId)->where('product_id', $productId)->first();
 
+        $image->active = 1;
 
-
+        $image->save();
+ 
     }
 }
