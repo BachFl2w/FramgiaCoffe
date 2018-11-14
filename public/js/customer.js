@@ -1,7 +1,7 @@
-$.noConflict();
+// $.noConflict();
 
 jQuery(document).ready(function($) {
-    
+
 
     // "use strict";
 
@@ -97,7 +97,6 @@ jQuery(document).ready(function($) {
 
         if (id != '') {
             url = route('admin.category.update', { id: id });
-
         }
 
         $.ajax({
@@ -299,16 +298,19 @@ jQuery(document).ready(function($) {
 
         var price = row.find('td:eq(2)').text();
 
-        var quantity = row.find('td:eq(3)').text();
-
         $('#topping_id').val(id);
 
-        $('#topping_name').val(name);
+        $.ajax({
+            url: route('admin.topping.show', { id: id }),
+            success: function(data) {
 
-        $('#topping_price').val(price);
+                $('#topping_name').val(data.name);
 
-        $('#topping_quantity').val(quantity);
+                $('#topping_price').val(data.price);
 
+                $('#topping_quantity').val(data.quantity);
+            }
+        })
     });
 
     $('#btnSubmitTopping').click(function() {
@@ -415,6 +417,8 @@ jQuery(document).ready(function($) {
 
         $('#product_name').val('');
 
+        $('#product_id').val('');
+
         $('#product_price').val('');
 
         $('#product_quantity').val('');
@@ -484,7 +488,9 @@ jQuery(document).ready(function($) {
 
             success: function(data) {
 
-                var data = data[0]
+                var data = data[0];
+
+                console.log(data);
 
                 $('#product_category').val(data.category_id);
 
@@ -496,8 +502,8 @@ jQuery(document).ready(function($) {
 
                 CKEDITOR.instances['ckeditor_product_descrition'].setData(data.description);
 
-                $('#image_review_create').attr('src', 'http://127.0.0.1:8000/images/product/' + data.main_image );
-           },
+                $('#image_review_create').attr('src', 'http://127.0.0.1:8000/images/product/' + data.main_image);
+            },
         });
 
         $('#product_id').val(id);
@@ -523,52 +529,42 @@ jQuery(document).ready(function($) {
         }
     });
 
-    $('#btnSubmitProduct').click(function(e) {
+    $('#btnSubmitProduct').click(function(event) {
 
-        e.preventDefault();
+        event.preventDefault();
 
         var id = $('#product_id').val();
 
         var url = route('admin.product.store');
 
         if (id != '') {
+
             url = route('admin.product.update', { id: id });
         }
+        var form = new FormData($('form#add_product_form')[0]);
 
-        var product = {
-            'name': $('#product_name').val(),
-            'price': $('#product_price').val(),
-            'quantity': $('#product_quantity').val(),
-            'category_id': $('#product_category').val(),
-            'description': CKEDITOR.instances['ckeditor_product_descrition'].document.getBody().getText()
-        };
-
-        console.log(product)
-
-        var image = $('#product_image')[0].files;
-
-        var formData = new FormData();
-
-        formData.append(product, product);
-
-        formData.append;
+        form.append('description', CKEDITOR.instances['ckeditor_product_descrition'].getData());
 
         $.ajax({
             method: 'post',
-            data: formData,
+            data: form,
             url: url,
+            contentType: false,
+            processData: false,
+            cache: false,
             success: function(res) {
                 product_table.ajax.reload();
                 $('#ProductModal').modal().hide();
             },
-            error: function(xhr, status, error) {
-                var err = eval('(" + xhr.responseText + ")');
-                alert(err.Message);
+            error: function(res) {
+                console.log(res)
             },
         });
     });
 
     $('#admin_product_list tbody').on('click', '#showImageProduct', function() {
+
+        $('#image_product_id').val('');
 
         $('#images-container .images').empty();
 
@@ -592,17 +588,10 @@ jQuery(document).ready(function($) {
 
                 var div_images = '';
 
-                var name_image_current = ''
+                var name_image_current = '';
 
-                if (arr.length == 0) {
+                if (arr.length > 0) {
 
-                    $('#main-image-button').hide();
-
-                    div_images = '<h3 class="text-center">No Image</h3>';
-
-                    $('#images-container .images').append(div_images);
-
-                } else {
                     arr.forEach(function(element, index) {
 
                         var url_image = "http://127.0.0.1:8000/images/product/" + element[1].name;
@@ -614,9 +603,9 @@ jQuery(document).ready(function($) {
                             '</div>';
                     });
 
-                    if (arr.length > 1)
-
+                    if (arr.length > 1) {
                         $('#image-button').show();
+                    }
 
                     name_image_current = '<input id="image_current_id" value="' + arr[0][1].name + '" hidden>';
 
@@ -626,11 +615,11 @@ jQuery(document).ready(function($) {
 
                     var slideIndex = 1;
 
-                    currentSlide(slideIndex);
+                    showSlides(1);
 
                     $('#image-prev').click(function() {
 
-                        showSlides(slideIndex += -1);
+                        showSlides(slideIndex -= 1);
                     });
 
                     $('#image-next').click(function() {
@@ -638,26 +627,24 @@ jQuery(document).ready(function($) {
                         showSlides(slideIndex += 1);
                     });
 
-                    function currentSlide(n) {
-                        showSlides(slideIndex = n);
-                    }
-
                     function showSlides(n) {
-
-                        var i;
 
                         var slides = document.getElementsByClassName("mySlides");
 
                         if (n > slides.length) {
+
                             slideIndex = 1;
                         }
 
                         if (n < 1) {
+
                             slideIndex = slides.length;
+
                         }
 
-                        for (i = 0; i < slides.length; i++) {
-                            slides[i].style.display = "none";
+                        for ($i = 0; $i < slides.length; $i++) {
+
+                            slides[$i].style.display = "none";
                         }
 
                         slides[slideIndex - 1].style.display = "block";
@@ -665,6 +652,14 @@ jQuery(document).ready(function($) {
                         $('#image_current_id').val(arr[slideIndex - 1][1].id);
 
                     }
+
+                } else {
+
+                    $('#main-image-button').hide();
+
+                    div_images = '<h3 class="text-center">No Image</h3>';
+
+                    // $('#images-container .images').append(div_images);
                 }
             },
             error: function(res) {
@@ -679,15 +674,11 @@ jQuery(document).ready(function($) {
 
     $('#file_image_product').change(function() {
 
-        var form = new FormData();
+        var product_id = $('#image_product_id').val();
+
+        var form = new FormData($('form#add_more_image_form')[0]);
 
         form.append('product_id', product_id);
-
-        form.append('images', images);
-
-        var images = ('#file_image_product')[0].files;
-
-        var product_id = $('#image_product_id').val();
 
         $.ajax({
             cache: false,
@@ -697,19 +688,38 @@ jQuery(document).ready(function($) {
             type: 'post',
             data: form,
             success: function(res) {
-                console.log(res);
+                $('#UpdateImageModal').modal('hide');
             },
             error: function(res) {
                 console.log(res)
             }
-        })
+        });
     });
 
     $('#main_image_button').click(function(event) {
 
-        var id_main_picture = $('#image_current_id').val();
+        var main_picture_id = $('#image_current_id').val();
 
-        alert('Da chon anh co id: ' + id_main_picture + ' la anh dai dien');
+        var product_id = $('#image_product_id').val();
+
+        $.ajax({
+                url: route('admin.product.change_main_image'),
+                type: 'post',
+                dataType: '',
+                data: {
+                    'image_id': main_picture_id,
+                    'product_id': product_id,
+                },
+            })
+            .done(function(res) {
+                console.log("picture: " + product_id + " doi image co id: " + main_picture_id + " lam anh chinh");
+            })
+            .fail(function(res) {
+                console.log(res);
+            })
+            .always(function() {
+                console.log("complete");
+            });
 
     })
 });

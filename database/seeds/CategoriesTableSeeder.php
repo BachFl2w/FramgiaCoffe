@@ -13,11 +13,7 @@ class CategoriesTableSeeder extends Seeder
     {
         $data = [
             [
-                'name' => 'Nước Giải Khát',
-            ], [
-                'name' => 'Nước Tăng Lực',
-            ], [
-                'name' => 'Caffee',
+                'name' => 'Cafe',
             ], [
                 'name' => 'Trà',
             ], [

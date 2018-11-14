@@ -11,17 +11,18 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', function() {
+    return view('index');
+});
 
-Route::post('login_admin', 'UserController@loginAdmin')->name('admin.postLogin');
+// Route::post('login_admin', 'UserController@loginAdmin')->name('admin.postLogin');
 
-Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin'], function() {
+Route::group(['prefix' => 'admin'], function() {
+
+    Route::get('/', 'HomeController@index')->name('admin.index');
 
     Route::get('logout', 'UserController@logoutAdmin')->name('admin.logout');
 
@@ -74,11 +75,13 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin'], function() {
 
         Route::get('{id}/images', 'ProductController@getImages')->name('admin.product.images');
 
-        Route::post('upload-image', 'ProductController@uploadImage')->name('admin.product.uploadimage');
+        Route::post('upload-image', 'ProductController@uploadMoreImage')->name('admin.product.uploadimage');
 
         Route::get('show/{id}', 'ProductController@show')->name('admin.product.show');
 
         Route::post('update/{id}', 'ProductController@update')->name('admin.product.update');
+
+        Route::post('change-main-image', 'ProductController@changMainImage')->name('admin.product.change_main_image');
 
     });
 
@@ -106,5 +109,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin'], function() {
         Route::post('update/{id}', 'TopingController@update')->name('admin.topping.update');
 
         Route::get('destroy/{id}', 'TopingController@destroy')->name('admin.topping.destroy');
+
+        Route::get('show/{id}', 'TopingController@show')->name('admin.topping.show');
     });
 });
