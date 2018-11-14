@@ -54,7 +54,9 @@ class TopingController extends Controller
      */
     public function show($id)
     {
-        //
+        $topping = Topping::find($id);
+
+        return $topping;
     }
 
     /**

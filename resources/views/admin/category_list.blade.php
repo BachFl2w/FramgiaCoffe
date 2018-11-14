@@ -19,9 +19,7 @@
                             <th>Action</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        
-                    </tbody>
+                    <tbody></tbody>
                 </table>
             </div>
         </div>
@@ -43,7 +41,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="name" class="px-1  form-control-label">Thể loại</label>
+                        <label for="name" class="px-1 form-control-label">Thể loại</label>
                         <input type="text" id="category_name" required class="form-control">
                     </div>
                 </div>
