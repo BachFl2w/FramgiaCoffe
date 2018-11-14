@@ -3,18 +3,32 @@
 namespace App\Http\Controllers;
 
 use Session;
+
 use App\User;
 use App\Role;
+use App\Repositories\Repository;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 
+use Illuminate\Http\Request;
 use App\Http\Requests\UserUpdateRequest;
 use App\Http\Requests\UserStoreRequest;
 
+
 class UserController extends Controller
 {
+
+    protected $userModel;
+    protected $roleModel;
+
+    public function __construct(User $userModel, Role $roleModel)
+    {
+        // set the model
+        $this->userModel = new Repository($userModel);
+        $this->roleModel = new Repository($roleModel);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -22,7 +36,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $user = User::all()->load('role');
+        $user = $this->userModel->all()->load('role');
 
         return view('admin.user_list', compact('user'));
     }
@@ -34,7 +48,11 @@ class UserController extends Controller
      */
     public function create()
     {
-        $roles = Role::all();
+        if (Auth::user()->role_id != 1) {
+            return back()->with('fail', __('You dont have permission !'));
+        }
+
+        $roles = $this->roleModel->all();
 
         return view('admin.user_create', compact('roles'));
     }
@@ -47,18 +65,8 @@ class UserController extends Controller
      */
     public function store(UserStoreRequest $request)
     {
-        $user = new User;
-        $user->name     = $request->name;
-        $user->email    = $request->email;
-        $user->password = Hash::make($request->password);
-        $user->address  = $request->address;
-        $user->phone    = $request->phone;
-        $user->role_id  = $request->role;
-
-        if ($request->role_id == 1 || $request->role_id == 2) {
-            $user->active   = 0;
-        } else {
-            $user->active   = 1;
+        if (Auth::user()->role_id == 1) {
+            return back()->with('fail', __('You dont have permission !'));
         }
 
         if ($request->hasFile('avatar')) {
@@ -66,31 +74,29 @@ class UserController extends Controller
             $name = $file->getClientOriginalName();
             $newName = str_random(4) . '_' . $name;
 
-            while (file_exists('images/avatar/' . $newName)) {
+            while (file_exists(config('image_path.avatar') . $newName)) {
                 $newName = str_random(4) . '_' . $name;
             }
 
-            $file->move('images/avatar/', $newName);
+            $file->move(config('image_path.avatar'), $newName);
 
-            $user->image = $newName;
+            $image = $newName;
+        } else {
+            $image = null;
         }
 
-        $user->save();
+        $this->userModel->create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'address' => $request->address,
+            'phone' => $request->phone,
+            'role_id' => $request->role,
+            'active' => 1,
+            'image' => $image,
+        ]);
 
-        return back()->with('success', 'Create user successfully !');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        $user = User::where('role_id', $id)->get();
-
-        return view('admin.user_show', compact('user'));
+        return back()->with('success', __('Create successfully !'));
     }
 
     /**
@@ -101,18 +107,20 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $user = User::find($id);
-        $currentUser = User::find(Auth::id());
+        $user = User::findOrFail($id);
+        $currentUser = Auth::user();
 
         if ($currentUser->role_id == 1) {
+
             if ($user->role_id == 1 && $currentUser->email != $user->email) {
-                return back()->with('fail', 'You can not edit this account !');
+                return back()->with('fail', __('You dont have permission !'));
             }
 
             return view('admin.user_edit', compact('user'));
         } else {
+
             if ($currentUser->email != $user->email) {
-                return back()->with('fail', 'You can not edit this account !');
+                return back()->with('fail', __('You dont have permission !'));
             }
 
             return view('admin.user_edit', compact('user'));
@@ -128,26 +136,26 @@ class UserController extends Controller
      */
     public function update(UserUpdateRequest $request, $id)
     {
-        $user = User::find($id);
-        $currentUser = User::find(Auth::id());
+        $user = User::findOrFail($id);
+        $currentUser = Auth::user();
 
         if ($currentUser->role_id == 1) {
             if ($user->role_id == 1 && $currentUser->email != $user->email) {
-                return back()->with('fail', 'You can not edit this account !');
+                return back()->with('fail', __('You can not edit this account !'));
             }
         } else {
             if ($currentUser->email != $user->email) {
-                return back()->with('fail', 'You can not edit this account !');
+                return back()->with('fail', __('You can not edit this account !'));
             }
         }
 
-        $user->name    = $request->name;
-        $user->address = $request->address;
-        $user->phone   = $request->phone;
+        $password = $user->password;
 
         if ($request->has('password')) {
-            $user->password = Hash::make($request->password);
+            $password = Hash::make($request->password);
         }
+
+        $newName = null;
 
         if ($request->hasFile('avatar')) {
             $file = $request->file('avatar');
@@ -155,22 +163,29 @@ class UserController extends Controller
             $newName = str_random(4) . '_' . $name;
 
             // kiem tra de tranh trung lap ten file
-            while (file_exists('images/avatar' . $newName)) {
+            while (file_exists(config('image_path.avatar') . $newName)) {
                 $newName = str_random(4) . '_' . $name;
             }
 
-            if (file_exists('images/avatar/' . $user->image) && $user->image) {
-                unlink('images/avatar/' . $user->image);
+            if (file_exists(config('image_path.avatar') . $user->image) && $user->image) {
+                unlink(config('image_path.avatar') . $user->image);
             }
 
-            $file->move('images/avatar/', $newName);
-
-            $user->image = $newName;
+            $file->move(config('image_path.avatar'), $newName);
         }
 
-        $user->save();
+        $this->userModel->update(
+            [
+                'name' => $request->name,
+                'address' => $request->address,
+                'phone' => $request->phone,
+                'image' => $newName,
+                'password' => $password,
+            ],
+            $id
+        );
 
-        return back()->with('success', 'Update user successfully !');
+        return back()->with('success', __('Update successfully !'));
     }
 
     /**
@@ -181,17 +196,17 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $user = User::find($id);
-        $currentUser = User::find(Auth::id());
+        $user = User::findOrFail($id);
+        $currentUser = Auth::user();
 
         if ($currentUser->role_id == 1 && $user->role_id != 1) {
             $user = User::find($id);
             $user->delete();
 
-            return back()->with('success', 'Delete user successfully !');
+            return back()->with('success', __('Delete successfully !'));
         }
 
-        return back()->with('fail', 'Dont have permission !');
+        return back()->with('fail', __('Dont have permission !'));
     }
 
     public function loginAdmin(Request $request)
@@ -205,7 +220,7 @@ class UserController extends Controller
             return redirect('admin/user/index');
         }
 
-        return back()->with('fail', 'Email or password is not true !');
+        return back()->with('fail', __('Email or password is not true !'));
     }
 
     public function logoutAdmin()

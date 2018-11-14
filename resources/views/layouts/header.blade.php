@@ -84,8 +84,9 @@
                     @endif
                 </a>
 
-                <div class="user-menu dropdown-menu">
-                    <a class="nav-link" href="{{ route('admin.user.edit', $currentUser->id) }}"><i class="fa fa-user"></i> {{ $currentUser->name }}</a>
+                <div class="user-menu dropdown-menu" >
+                    <a class="nav-link" href="{{ route('admin.user.edit', $currentUser->id) }}">
+                        <i class="fa fa-user">{{ $currentUser->name }}</i></a>
                     <a class="nav-link" href="{{ route('admin.logout') }}"><i class="fa fa-power -off"></i>Logout</a>
                 </div>
             </div>

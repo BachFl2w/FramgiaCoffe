@@ -2,7 +2,7 @@
 
 @section('page-title')
     <li><a href="{{route('admin.user.index')}}">Dashboard</a></li>
-    <li><a href="{{route('admin.user.index')}}">User</a></li>
+    <li><a href="{{route('admin.user.index')}}">User list</a></li>
     <li class="active">Edit</li>
 @endsection
 
@@ -50,15 +50,15 @@
 
         <form action="{{ route('admin.user.update', $user->id) }}" method="post" enctype="multipart/form-data">
             <div class="card-body">
-                <input type="hidden" name="_token" value="{{csrf_token()}}">
+                <input type="hidden" name="_token" id="_token" value="{{csrf_token()}}">
 
                 <div class="col-sm-4">
                     <div class="form-group row">
                         <div class="col-sm-12">
                             @if ($user->image)
-                                <p><img src="{{ asset('images/avatar/'.$user->image) }}" class="shadow bg-white user-avatar rounded-circle" width="95%"></p>
+                                <p><img src="{{ asset('images/avatar/'.$user->image) }}" class="shadow bg-white user-avatar rounded-circle" width="100%"></p>
                             @else
-                                <p><img src="{{ asset('images/default.jpeg') }}" alt="User Avatar" class="shadow bg-white" width="95%"></p>
+                                <p><img src="{{ asset('images/default.jpeg') }}" alt="User Avatar" class="shadow bg-white user-avatar rounded-circle" width="100%"></p>
                             @endif
                             @if (Auth::id() == $user->id)
                                 <p><input type="file" id="avatar" name="avatar"></p>
@@ -110,7 +110,7 @@
                                 </div>
                                 <div class="col-sm-9">
                                     <div class="form-group">
-                                        <button type="submit" class="btn btn-outline-info">Update Information</button>
+                                        <button type="submit" class="btn btn-outline-info" id="submit">Update Information</button>
                                         <button type="reset" class="btn btn-warning">Reset</button>
                                     </div>
                                 </div>
@@ -154,4 +154,40 @@
         </form>
     </div>
 </div>
+@endsection
+
+@section('script')
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<script type="text/javascript">
+    // $('#submit').click(function() {
+    //     $.ajax({
+    //         type: 'post',
+    //         url: "",
+    //         data:{
+    //             '_token': $('input[name=_token]').val(),
+    //             'name': $('#name').val(),
+    //             'address': $('#address').val(),
+    //             'phone': $('#phone').val(),
+    //         },
+    //         success:function(data) {
+    //             // window.location.reload();
+    //         },
+    //     });
+    // });
+
+    // $("button").click(function(){
+    //     $.getJSON("", function(result){
+    //         $.each(result, function(i, field){
+    //             $("div").append(field + " ");
+    //         });
+    //     });
+    // });
+
+    // $("#submit").click(function(){
+    //     console.log(load(""));
+    // });
+</script>
+
 @endsection

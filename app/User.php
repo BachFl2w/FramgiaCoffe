@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Http\Requests\UserStoreRequest;
 
 class User extends Authenticatable
 {
@@ -16,7 +17,14 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'address', 'phone', 'role_id', 'active'
+        'name',
+        'email',
+        'password',
+        'address',
+        'phone',
+        'role_id',
+        'active',
+        'image'
     ];
 
     /**

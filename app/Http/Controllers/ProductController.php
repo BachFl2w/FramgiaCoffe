@@ -8,7 +8,6 @@ use App\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Intervention\Image\ImageManagerStatic as Images;
-use function MongoDB\BSON\toJSON;
 
 class ProductController extends Controller
 {
@@ -19,9 +18,9 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products_data = Product::all();
+        $productsData = Product::all();
 
-        return view('admin.product_list', ['products' => $products_data]);
+        return view('admin.product_list', compact('productsData'));
     }
 
     /**
@@ -42,33 +41,19 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request)
     {
-         $product = new Product();
+        $product = new Product();
 
-         $product->name = $request->name;
+        $product->name = $request->name;
 
-         $product->price = $request->price;
+        $product->price = $request->price;
 
-         $product->quantity = $request->quantity;
+        $product->quantity = $request->quantity;
 
-         $product->category_id = $request->category_id;
+        $product->category_id = $request->category_id;
 
-         $product->description = $request->description;
+        $product->description = $request->description;
 
-         $product->save();
-
-        // $image = $request->file('image');
-
-        // $filename = $image->getClientOriginalName();
-
-        // $image_resize = Image::make($image->getRealPath());
-
-        // $image_resize->resize(600, 348);
-
-        // $thumbPath = public_path() . '/images/product';
-
-        // $image_resize->move($thumbPath, $hashname);
-//        $product->id;
-
+        $product->save();
     }
 
     /**
@@ -165,8 +150,5 @@ class ProductController extends Controller
         else{
             return 'Ko';
         }
-
-
-
     }
 }
