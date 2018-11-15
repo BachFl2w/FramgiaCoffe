@@ -77,7 +77,7 @@
                     { data: 'id' },
                     { data: 'user_id' },
                     { data: 'receiver' },
-                    { 
+                    {
                         data: 'order_time',
                         render: function(data, type, row){
                         if(type === "sort" || type === "type"){
@@ -88,22 +88,24 @@
                     },
                     { data: 'order_place' },
                     { data: 'order_phone' },
-                    { 
+                    {
                         data: 'status',
                         render: function(data, type, row){
                             if(data == 0)
                                 return 'Chưa xử lý';
-                            else 
+                            else
                                 return 'Đã xử lý';
                         }
                     },
                     { data: 'note' },
                     {
-                        data: null,
-                        defaultContent: [
-                            '<button class="btn btn-outline-primary" title="Update" data-toggle="modal" data-target="#OrderModal" id="btnUpdateOrder"><i class="fa fa-edit"></i></button> ' +
+                        data: 'id',
+                        render: function(data)
+                        {
+                            var url = route('admin.detail.index', {id: data});
+                            return '<a class="btn btn-outline-primary" href="'+ url +'"><i class="fa fa-info fa-4"></i></a> ' +
                             '<button class="btn btn-outline-danger" title="Delete" id="btnOrderorder"><i class="fa fa-trash-o"></i></button> '
-                        ],
+                        }
                     },
                 ],
             });

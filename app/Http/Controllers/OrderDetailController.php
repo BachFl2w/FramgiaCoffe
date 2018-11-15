@@ -13,7 +13,7 @@ class OrderDetailController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.order_detail');
     }
 
     /**
@@ -45,7 +45,9 @@ class OrderDetailController extends Controller
      */
     public function show($id)
     {
-        //
+        $orders = Order::with('OrderDetails')->where('id', '=', $id)->get();
+
+        return $orders;
     }
 
     /**
