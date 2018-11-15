@@ -1,6 +1,7 @@
 @extends('layouts.app2')
 @section('css')
 <link rel="stylesheet" href="{{ asset('css/customer.css') }}">
+
 @endsection
 @section('content')
     <div class="container-fluid">
@@ -23,7 +24,7 @@
                         <th>Giá</th>
                         <th>Miêu tả</th>
                         <th>Thể Loại</th>
-                        <th></th>
+                        <th>Chức Năng</th>
                     </tr>
                     </thead>
                     <tbody>
