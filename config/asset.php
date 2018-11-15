@@ -4,5 +4,5 @@ return [
 		'avatar' => 'images/avatars/',
 		'product' => 'images/products/',
 	],
-	
+
 ];
