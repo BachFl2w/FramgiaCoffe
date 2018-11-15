@@ -19,9 +19,9 @@ Auth::routes();
 
 // Route::get('/home', 'HomeController@index')->name('admin.home');
 
-// Route::post('login_admin', 'UserController@loginAdmin')->name('admin.postLogin');
+Route::post('login_admin', 'UserController@loginAdmin')->name('admin.postLogin');
 
-Route::group(['prefix' => 'admin'], function() {
+Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin'], function() {
 
     Route::get('/', 'HomeController@index')->name('admin.index');
 
