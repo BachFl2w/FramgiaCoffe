@@ -112,4 +112,23 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin'], function() {
 
         Route::get('show/{id}', 'TopingController@show')->name('admin.topping.show');
     });
+
+    Route::group(['prefix' => 'order'], function() {
+
+        Route::get('json', 'OrderController@getDataJson')->name('admin.order.json');
+
+        Route::get('index', 'OrderController@index')->name('admin.order.index');
+
+        Route::get('detail/index/{id}', 'OrderDetailController@index')->name('admin.detail.index');
+
+        Route::get('detail/{id_order}', 'OrderDetailController@show')->name('admin.detail.json');
+
+        // Route::post('store', 'TopingController@store')->name('admin.topping.store');
+
+        // Route::post('update/{id}', 'TopingController@update')->name('admin.topping.update');
+
+        // Route::get('destroy/{id}', 'TopingController@destroy')->name('admin.topping.destroy');
+
+        // Route::get('show/{id}', 'TopingController@show')->name('admin.topping.show');
+    });
 });

@@ -22,7 +22,7 @@
                         <th>Topping</th>
                         <th>Giá</th>
                         <th>Số lượng</th>
-                        <th></th>
+                        <th>Chức Năng</th>
                     </tr>
                     </thead>
                     <tbody></tbody>

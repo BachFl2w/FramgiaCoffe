@@ -143,7 +143,7 @@ class ProductController extends Controller
 
     public function getDataJson()
     {
-         $products_data = Product::with('category')->get();
+        $products_data = Product::with('category')->get();
 
         return $products_data;
     }

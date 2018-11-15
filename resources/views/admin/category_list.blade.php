@@ -16,7 +16,7 @@
                         <tr>
                             <th>ID</th>
                             <th>Thể loại</th>
-                            <th>Action</th>
+                            <th>Chức Năng</th>
                         </tr>
                     </thead>
                     <tbody></tbody>
