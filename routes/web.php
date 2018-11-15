@@ -119,6 +119,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin'], function() {
 
         Route::get('index', 'OrderController@index')->name('admin.order.index');
 
+        Route::get('detail/index/{id}', 'OrderDetailController@index')->name('admin.detail.index');
+
+        Route::get('detail/{id_order}', 'OrderDetailController@show')->name('admin.detail.json');
+
         // Route::post('store', 'TopingController@store')->name('admin.topping.store');
 
         // Route::post('update/{id}', 'TopingController@update')->name('admin.topping.update');

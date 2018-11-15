@@ -395,9 +395,12 @@ jQuery(document).ready(function($) {
                 data: 'price',
                 render: $.fn.dataTable.render.number(',')
             },
+            { data: 'description' },
             {
                 data: 'description',
-                render: $.fn.dataTable.render.ellipsis()
+                render: function ( data, type, row ) {
+                    return data.substr( 0, 40 ) + "...";
+                }
             },
             { data: 'category.name' },
             {
