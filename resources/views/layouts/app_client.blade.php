@@ -8,7 +8,7 @@
     <meta name="keywords" content="pizza, delivery food, fast food, sushi, take away, chinese, italian food">
     <meta name="description" content="">
     <meta name="author" content="Ansonika">
-    <title>QuickFood - Quality delivery or take away food</title>
+    <title>Smart Drink</title>
 
     <!-- Favicons-->
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
@@ -41,7 +41,7 @@
         <div class="row">
             <div class="col--md-4 col-sm-4 col-xs-4">
                 <a href="index.html" id="logo">
-                <img src="{{ asset('images/framgia.png') }}" width="190" height="30" alt="" data-retina="true" class="hidden-xs">
+                <img src="{{ asset('images/framgia-logo.png') }}" width="190" height="30" alt="" data-retina="true" class="hidden-xs">
                 <img src="img/logo_mobile.png" width="59" height="23" alt="" data-retina="true" class="hidden-lg hidden-md hidden-sm">
                 </a>
             </div>
@@ -53,12 +53,7 @@
                 </div>
                 <a href="#" class="open_close" id="close_in"><i class="icon_close"></i></a>
                  <ul>
-                    <li class="submenu">
-                    <a href="javascript:void(0);" class="show-submenu">Trang Chủ<i class="icon-down-open-mini"></i></a>
-                    <ul>
-                        <li><a href="">Home Video background</a></li>
-                    </ul>
-                    </li>
+                    <li><a href="#">Trang chủ</a></li>
                     <li><a href="">Giỏ hàng</a></li>
                     <li class="submenu">
                     <a href="javascript:void(0);" class="show-submenu">Sản phẩm<i class="icon-down-open-mini"></i></a>
@@ -67,7 +62,6 @@
                     </ul>
                     </li>
                     <li><a href="#">Về chúng tôi</a></li>
-                    <li><a href="#">Faq</a></li>
                     <li class="submenu">
                     <a href="javascript:void(0);" class="show-submenu">Hóa đơn<i class="icon-down-open-mini"></i></a>
                     <ul>

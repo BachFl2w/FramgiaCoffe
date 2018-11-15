@@ -252,7 +252,6 @@
                 <div class="btn_1">Read more</div>
                 </a>
             </div>
-      </div><!-- End row -->
-    </div><!-- End container -->
-
+      </div>
+    </div>
 @endsection

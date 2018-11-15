@@ -18,7 +18,7 @@ Route::get('/', function() {
     return view('index');
 });
 
-// Route::post('login_admin', 'UserController@loginAdmin')->name('admin.postLogin');
+Route::post('login_admin', 'UserController@loginAdmin')->name('admin.postLogin');
 
 Route::group(['prefix' => 'admin'], function() {
 
