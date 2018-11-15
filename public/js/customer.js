@@ -395,7 +395,10 @@ jQuery(document).ready(function($) {
                 data: 'price',
                 render: $.fn.dataTable.render.number(',')
             },
-            { data: 'description' },
+            {
+                data: 'description',
+                render: $.fn.dataTable.render.ellipsis()
+            },
             { data: 'category.name' },
             {
                 data: null,
@@ -720,6 +723,5 @@ jQuery(document).ready(function($) {
             .always(function() {
                 console.log("complete");
             });
-
     })
 });

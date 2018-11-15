@@ -36,13 +36,8 @@
                     <a href="{{ route('admin.topping.index') }}"> <i class="menu-icon ti-email"></i>Quản lý topping </a>
                 </li>
                 <h3 class="menu-title">Quản lý hóa đơn</h3><!-- /.menu-title -->
-                <li class="menu-item-has-children dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-glass"></i>Quản lý hóa đơn</a>
-                    <ul class="sub-menu children dropdown-menu">
-                        <li><i class="menu-icon fa fa-sign-in"></i><a href="page-login.html">Login</a></li>
-                        <li><i class="menu-icon fa fa-sign-in"></i><a href="page-register.html">Register</a></li>
-                        <li><i class="menu-icon fa fa-paper-plane"></i><a href="pages-forget.html">Forget Pass</a></li>
-                    </ul>
+                <li>
+                    <a href="{{ route('admin.order.index') }}"> <i class="menu-icon ti-email"></i>Quản lý hóa đơn </a>
                 </li>
 
                 <h3 class="menu-title">Thống kê</h3><!-- /.menu-title -->
