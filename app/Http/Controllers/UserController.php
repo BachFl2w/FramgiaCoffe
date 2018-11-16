@@ -74,11 +74,11 @@ class UserController extends Controller
             $name = $file->getClientOriginalName();
             $newName = str_random(4) . '_' . $name;
 
-            while (file_exists(config('image_path.avatar') . $newName)) {
+            while (file_exists(config('asset.image_path.avatar') . $newName)) {
                 $newName = str_random(4) . '_' . $name;
             }
 
-            $file->move(config('image_path.avatar'), $newName);
+            $file->move(config('asset.image_path.avatar'), $newName);
 
             $image = $newName;
         } else {
@@ -162,15 +162,15 @@ class UserController extends Controller
             $newName = str_random(4) . '_' . $name;
 
             // kiem tra de tranh trung lap ten file
-            while (file_exists(config('image_path.avatar') . $newName)) {
+            while (file_exists(config('asset.image_path.avatar') . $newName)) {
                 $newName = str_random(4) . '_' . $name;
             }
 
-            if (file_exists(config('image_path.avatar') . $user->image) && $user->image) {
-                unlink(config('image_path.avatar') . $user->image);
+            if (file_exists(config('asset.image_path.avatar') . $user->image)) {
+                unlink(config('asset.image_path.avatar') . $user->image);
             }
 
-            $file->move(config('image_path.avatar'), $newName);
+            $file->move(config('asset.image_path.avatar'), $newName);
         }
 
         $this->userModel->update(

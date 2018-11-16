@@ -38,40 +38,46 @@
         @endforeach
     @endif
 
-    <div class="card">
-
-        <div class="card-header">
-            @if (Auth::id() == $user->id)
-                Your infomation
-            @else
-                User infomation
-            @endif
-        </div>
-
         <form action="{{ route('admin.user.update', $user->id) }}" method="post" enctype="multipart/form-data">
             <div class="card-body">
                 <input type="hidden" name="_token" id="_token" value="{{csrf_token()}}">
 
-                <div class="col-sm-4">
-                    <div class="form-group row">
-                        <div class="col-sm-12">
-                            @if ($user->image)
-                                <p><img src="{{ asset(config('asset.image_path.avatar') .$user->image) }}" class="shadow bg-white user-avatar rounded-circle" width="100%"></p>
-                            @else
-                                <p><img src="{{ asset('images/default.jpeg') }}" alt="User Avatar" class="shadow bg-white user-avatar rounded-circle" width="100%"></p>
-                            @endif
-                            @if (Auth::id() == $user->id)
-                                <p><input type="file" id="avatar" name="avatar"></p>
-                                <button type="submit" class="btn btn-primary btn-lg btn-block">Change Avatar</button>
-                            @endif
+                <div class="col-md-5">
+                    <div class="card">
+                        <div class="card-header bg-info text-white">
+                            <strong class="card-title mb-3">Profile Card</strong>
                         </div>
+                        <div class="card-body">
+                            <div class="mx-auto d-block text-center">
+                                <input type="file" id="avatar" name="avatar" class="d-none">
+                                <label for="avatar">
+                                    @if ($user->image)
+                                        <img class="rounded-circle mx-auto d-block" src="{{ asset(config('asset.image_path.avatar') . $user->image) }}" alt="Card image cap">
+                                    @else
+                                        <img class="rounded-circle mx-auto d-block" src="{{ asset('images/default.jpeg') }}" alt="Card image cap">
+                                    @endif
+                                </label>
+                                <h5 class="text-sm-center mt-2 mb-1"> {{ $user->name }} </h5>
+                                <div class="location text-sm-center"><i class="fa fa-map-marker"></i> {{ $user->address }}</div>
+                            </div>
+                            <hr>
+                            <div class="card-text text-sm-center">
+                                <a href="#"><i class="fa fa-facebook pr-1"></i></a>
+                                <a href="#"><i class="fa fa-twitter pr-1"></i></a>
+                                <a href="#"><i class="fa fa-linkedin pr-1"></i></a>
+                                <a href="#"><i class="fa fa-pinterest pr-1"></i></a>
+                            </div>
+                        </div>
+                        @if (Auth::id() == $user->id)
+                            <button type="submit" class="btn btn-outline-info btn-lg btn-block">Change Avatar</button>
+                        @endif
                     </div>
                 </div>
 
                 <div class="col-sm-7">
                     <div class="card">
-                        <div class="card-header">
-                            Base infomation
+                        <div class="card-header bg-info text-white">
+                            <strong class="card-title mb-3">Base infomation</strong>
                         </div>
                         <div class="card-body">
                             <div class="form-group row">
@@ -104,23 +110,15 @@
                                     <input type="email" id="email" readonly name="email" class="form-control" value="{{$user->role->name}}">
                                 </div>
                             </div>
-                            <div class="form-group row">
-                                <div class="col-sm-3">
-
-                                </div>
-                                <div class="col-sm-9">
-                                    <div class="form-group">
-                                        <button type="submit" class="btn btn-outline-info" id="submit">Update Information</button>
-                                        <button type="reset" class="btn btn-warning">Reset</button>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
+                        @if (Auth::id() == $user->id)
+                            <button type="submit" class="btn btn-outline-info btn-lg btn-block">Update Information</button>
+                        @endif
                     </div>
                     @if (Auth::id() == $user->id || in_array($user->role_id, [2, 3]))
                         <div class="card">
-                            <div class="card-header">
-                                Change password
+                            <div class="card-header bg-info text-white">
+                                <strong class="card-title mb-3">Change password</strong>
                             </div>
                             <div class="card-body">
                                 <div class="form-group row">
@@ -135,59 +133,20 @@
                                         <input type="password" id="re_password" name="re_password" value="" class="form-control">
                                     </div>
                                 </div>
-                                <div class="form-group row">
-                                    <div class="col-sm-3">
-
-                                    </div>
-                                    <div class="col-sm-9">
-                                        <div class="form-group">
-                                            <button type="submit" class="btn btn-outline-info">Change password</button>
-                                            <button type="reset" class="btn btn-warning">Reset</button>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
+                            @if (Auth::id() == $user->id)
+                                <button type="submit" class="btn btn-outline-info btn-lg btn-block">Change password</button>
+                            @endif
                         </div>
                     @endif
                 </div>
             </div>
         </form>
-    </div>
 </div>
 @endsection
 
 @section('script')
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
-<script type="text/javascript">
-    // $('#submit').click(function() {
-    //     $.ajax({
-    //         type: 'post',
-    //         url: "",
-    //         data:{
-    //             '_token': $('input[name=_token]').val(),
-    //             'name': $('#name').val(),
-    //             'address': $('#address').val(),
-    //             'phone': $('#phone').val(),
-    //         },
-    //         success:function(data) {
-    //             // window.location.reload();
-    //         },
-    //     });
-    // });
-
-    // $("button").click(function(){
-    //     $.getJSON("", function(result){
-    //         $.each(result, function(i, field){
-    //             $("div").append(field + " ");
-    //         });
-    //     });
-    // });
-
-    // $("#submit").click(function(){
-    //     console.log(load(""));
-    // });
-</script>
 
 @endsection

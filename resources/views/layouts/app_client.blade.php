@@ -19,7 +19,7 @@
 
     <link href='https://fonts.googleapis.com/css?family=Lato:400,700,900,400italic,700italic,300,300italic' rel='stylesheet' type='text/css'>
     <link href="{{ asset('css/base.css') }}" rel="stylesheet">
-    
+
     <link href="{{ asset('css/morphext.css') }}" rel="stylesheet">
 
 </head>
@@ -41,15 +41,15 @@
         <div class="row">
             <div class="col--md-4 col-sm-4 col-xs-4">
                 <a href="index.html" id="logo">
-                <img src="{{ asset('images/framgia-logo.png') }}" width="190" height="30" alt="" data-retina="true" class="hidden-xs">
-                <img src="img/logo_mobile.png" width="59" height="23" alt="" data-retina="true" class="hidden-lg hidden-md hidden-sm">
+                <img src="{{ asset('images/framgia-logo.png') }}" height="30" alt="" data-retina="true" class="hidden-xs">
+                <img src="{{ asset('images/framgia-logo.png') }}" height="23" alt="" data-retina="true" class="hidden-lg hidden-md hidden-sm">
                 </a>
             </div>
             <nav class="col--md-8 col-sm-8 col-xs-8">
             <a class="cmn-toggle-switch cmn-toggle-switch__htx open_close" href="javascript:void(0);"><span>Menu mobile</span></a>
             <div class="main-menu">
                 <div id="header_menu">
-                    <img src="img/logo.png" width="190" height="23" alt="" data-retina="true">
+                    <img src="{{ asset('images/framgia-logo.png') }}" height="23" alt="" data-retina="true">
                 </div>
                 <a href="#" class="open_close" id="close_in"><i class="icon_close"></i></a>
                  <ul>
@@ -77,7 +77,7 @@
     </div><!-- End container -->
     </header>
     <!-- End Header =============================================== -->
-    
+
     <!-- SubHeader =============================================== -->
     <section class="parallax-window" id="home" data-parallax="scroll" data-image-src="{{ asset('images/image_background1.jpg') }}" data-natural-width="1400" data-natural-height="550">
     <div id="subheader">
@@ -107,11 +107,11 @@
         </ul>
     </div>
     </section>
-    
+
     @yield('page_position')
 
     @yield('content')
-    
+
     <!-- Footer ================================================== -->
     <footer>
     <div class="container">
@@ -191,7 +191,7 @@
 
 <div class="layer"></div><!-- Mobile menu overlay mask -->
 
-<!-- Login modal -->   
+<!-- Login modal -->
 <div class="modal fade" id="login_2" tabindex="-1" role="dialog" aria-labelledby="myLogin" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content modal-popup">
@@ -207,9 +207,9 @@
 				</form>
 			</div>
 		</div>
-	</div><!-- End modal -->   
-    
-<!-- Register modal -->   
+	</div><!-- End modal -->
+
+<!-- Register modal -->
 <div class="modal fade" id="register" tabindex="-1" role="dialog" aria-labelledby="myRegister" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content modal-popup">
@@ -233,7 +233,7 @@
 			</div>
 		</div>
 	</div>
-    
+
 <!-- COMMON SCRIPTS -->
 <script src="{{ asset('js/jquery-2.2.4.min.js') }}"></script>
 <script src="{{ asset('js/common_scripts_min.js') }}"></script>
