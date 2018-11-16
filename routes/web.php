@@ -48,7 +48,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin'], function() {
 
         Route::post('store', 'UserController@store')->name('admin.user.store');
 
-        Route::get('edit/{id}', 'UserController@edit')->name('admin.user.edit');
+        Route::get('edit/{user}', 'UserController@edit')->name('admin.user.edit');
 
         Route::post('update/{id}', 'UserController@update')->name('admin.user.update');
 

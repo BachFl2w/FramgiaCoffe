@@ -395,7 +395,6 @@ jQuery(document).ready(function($) {
                 data: 'price',
                 render: $.fn.dataTable.render.number(',')
             },
-            { data: 'description' },
             {
                 data: 'description',
                 render: function ( data, type, row ) {

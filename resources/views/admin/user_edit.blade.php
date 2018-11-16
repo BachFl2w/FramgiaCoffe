@@ -56,7 +56,7 @@
                     <div class="form-group row">
                         <div class="col-sm-12">
                             @if ($user->image)
-                                <p><img src="{{ asset('images/avatar/'.$user->image) }}" class="shadow bg-white user-avatar rounded-circle" width="100%"></p>
+                                <p><img src="{{ asset(config('asset.image_path.avatar') .$user->image) }}" class="shadow bg-white user-avatar rounded-circle" width="100%"></p>
                             @else
                                 <p><img src="{{ asset('images/default.jpeg') }}" alt="User Avatar" class="shadow bg-white user-avatar rounded-circle" width="100%"></p>
                             @endif
