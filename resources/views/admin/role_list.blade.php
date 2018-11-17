@@ -84,9 +84,6 @@
             <div class="card">
                 <div class="card-header">
                     <strong class="card-title">Quản Lý Vai Trò</strong>
-                    <div class="float-right">
-                        <button class="btn btn-outline-info" title="show">Create</button>
-                    </div>
                 </div>
 
                 <div class="card-body">
@@ -95,7 +92,6 @@
                             <tr>
                                 <th scope="col">ID</th>
                                 <th scope="col">Role</th>
-                                <th scope="col">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -103,9 +99,6 @@
                                 <tr>
                                     <td scope="row">{{ $role->id }}</td>
                                     <td>{{ $role->name }}</td>
-                                    <td>
-                                        <button title="edit" class="btn btn-outline-danger"><i class="fa fa-edit"></i></button>
-                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>

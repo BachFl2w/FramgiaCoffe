@@ -132,3 +132,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin'], function() {
         // Route::get('show/{id}', 'TopingController@show')->name('admin.topping.show');
     });
 });
+
+Route::group(['middleware' => 'userLogin'], function() {
+    Route::get('', function() {
+        //
+    });
+});

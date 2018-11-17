@@ -150,11 +150,15 @@ class UserController extends Controller
 
         $password = $user->password;
 
-        if ($request->has('password')) {
+        if ($request->password != '') {
             $password = Hash::make($request->password);
         }
 
-        $newName = null;
+        if (!$user->image) {
+            $newName = null;
+        } else {
+            $newName = $user->image;
+        }
 
         if ($request->hasFile('avatar')) {
             $file = $request->file('avatar');
@@ -166,7 +170,7 @@ class UserController extends Controller
                 $newName = str_random(4) . '_' . $name;
             }
 
-            if (file_exists(config('asset.image_path.avatar') . $user->image)) {
+            if (file_exists(config('asset.image_path.avatar') . $user->image) && $user->image) {
                 unlink(config('asset.image_path.avatar') . $user->image);
             }
 
@@ -206,7 +210,7 @@ class UserController extends Controller
             return back()->with('success', __('Delete successfully !'));
         }
 
-        return back()->with('fail', __('Dont have permission !'));
+        return back()->with('fail', __('You dont have permission !'));
     }
 
     public function loginAdmin(Request $request)
