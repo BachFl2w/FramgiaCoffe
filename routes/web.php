@@ -53,6 +53,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin'], function() {
         Route::post('update/{id}', 'UserController@update')->name('admin.user.update');
 
         Route::get('/destroy/{id}', 'UserController@destroy')->name('admin.user.destroy');
+
+        Route::post('active/{user}', 'UserController@active')->name('admin.user.active');
     });
 
     Route::group(['prefix' => 'feedback'], function() {

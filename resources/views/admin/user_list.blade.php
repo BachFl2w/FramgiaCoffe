@@ -49,8 +49,8 @@
                                 <th scope="col">{{ __('message.phone') }}</th>
                                 <th scope="col">{{ __('message.avatar') }}</th>
                                 <th scope="col">{{ __('message.role') }}</th>
-                                <th scope="col">{{ __('message.active') }}</th>
-                                <th scope="col">{{ __('message.action') }}</th>
+                                <th scope="col">Active</th>
+                                <th scope="col">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -70,9 +70,17 @@
                                     </td>
                                     <td>{{ $u->role->name }}</td>
                                     <td>
-                                        @if ($u->active == 1)
-                                            {{'Active'}}
-                                        @endif
+                                        {!! Form::open(['route' => ['admin.user.active', $u->id] , 'method' => 'post']) !!}
+                                            <label class="switch switch-3d switch-primary mr-3" for="active_user{{$u->id}}">
+                                                <input type="checkbox" class="switch-input" @if ($u->active == 1)
+                                                    {{ 'checked' }}
+                                                @else
+                                                    {{''}}
+                                                @endif
+                                            ><span class="switch-label"></span> <span class="switch-handle"></span>
+                                            </label>
+                                            {!! Form::submit('', ['id' => 'active_user' . $u->id, 'class' => 'd-none']) !!}
+                                        {!! Form::close() !!}
                                     </td>
                                     <td>
                                         <a href="{{route('admin.user.edit', $u->id)}}" class="btn btn-outline-primary" title="Edit"><i class="fa fa-edit"></i></a>

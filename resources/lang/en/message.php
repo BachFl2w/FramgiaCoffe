@@ -57,13 +57,14 @@ return [
     'fail' => [
         'login' => 'Email or passwrod is not true !',
         'permission' => 'You dont have permission !',
+        'approval' => 'Your account is pending approval !',
+        'check' => 'You must login first !',
     ],
 
     'create' => 'Create',
     'update' => 'Update',
     'delete' => 'Delete',
     'action' => 'Action',
-    'active' => 'Active',
 
     // User
     'login' => 'Login',

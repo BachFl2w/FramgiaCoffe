@@ -191,6 +191,33 @@ class UserController extends Controller
         return back()->with('success', __('message.success.update'));
     }
 
+    public function active(User $user)
+    {
+        $currentUser = Auth::user();
+        $active = 0;
+
+        if ($currentUser->role_id == 1) {
+            if ($user->role_id == 1 && $user->active == 1) {
+                return back()->with('fail', __('message.fail.permission'));
+            }
+
+            if ($user->active == 0) {
+                $active = 1;
+            }
+        } else {
+            return back()->with('fail', __('message.fail.permission'));
+        }
+
+        $this->userModel->update(
+            [
+                'active' => $active,
+            ],
+            $user->id
+        );
+
+        return back()->with('success', __('message.success.update'));
+    }
+
     /**
      * Remove the specified resource from storage.
      *
