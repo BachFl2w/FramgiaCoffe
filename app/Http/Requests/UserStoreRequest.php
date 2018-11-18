@@ -39,7 +39,7 @@ class UserStoreRequest extends FormRequest
     {
         // update
         return [
-            'name.required'        => 'Enter user name !',
+            'name.required'        => __('validation.required', ['attribute' => 'name']),
             'name.max'             => 'Name must smaller 191 character !',
             'email.required'       => 'Enter your email !',
             'email.email'          => 'Not is a email !',

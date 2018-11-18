@@ -5,14 +5,14 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
+                <div class="card-header">{{ __('message.login') }}</div>
 
                 <div class="card-body">
                     {{ Form::open(['method' => 'POST', 'route' => 'admin.postLogin' ]) }}
                         @csrf
 
                         <div class="form-group row">
-                            {{ Form::label('email', __('E-Mail Address'), ['class' => 'col-sm-4 col-form-label text-md-right']) }}
+                            {{ Form::label('email', __('message.email'), ['class' => 'col-sm-4 col-form-label text-md-right']) }}
                             <div class="col-md-6">
                                 {{ Form::email('email', old('email'), ['required', 'autofocus', 'class' => 'form-control' . $errors->has('email') ? ' is-invalid' : '']) }}
 
@@ -25,7 +25,7 @@
                         </div>
 
                         <div class="form-group row">
-                            {{ Form::label('password', __('Password'), ['class' => 'col-sm-4 col-form-label text-md-right']) }}
+                            {{ Form::label('password', __('message.password.password'), ['class' => 'col-sm-4 col-form-label text-md-right']) }}
                             <div class="col-md-6">
                                 {{ Form::password('password', old('password'), ['required', 'class' => 'form-control' . $errors->has('email') ? ' is-invalid' : '']) }}
 
@@ -50,7 +50,7 @@
                                     <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
                                     {{ Form::checkbox('remember', 'value', false, ['class' => 'form-check-input']) }}
 
-                                    {{ Form::label('remember', __('Remember Me'), ['class' => 'form-check-label']) }}
+                                    {{ Form::label('remember', __('message.remember'), ['class' => 'form-check-label']) }}
 
                                 </div>
                             </div>
@@ -58,10 +58,10 @@
 
                         <div class="form-group row mb-0">
                             <div class="col-md-8 offset-md-4">
-                                {{ Form::submit(__('Login'), ['class' => 'btn btn-primary']) }}
+                                {{ Form::submit(__('message.login'), ['class' => 'btn btn-primary']) }}
 
                                 <a class="btn btn-link" href="{{ route('password.request') }}">
-                                    {{ __('Forgot Your Password?') }}
+                                    {{ __('message.password.forgot') }}
                                 </a>
                             </div>
                         </div>

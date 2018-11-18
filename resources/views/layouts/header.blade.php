@@ -4,7 +4,7 @@
     <div class="header-menu">
 
         <div class="col-sm-7">
-            <a id="menuToggle" class="menutoggle pull-left"><i class="fa fa fa-tasks"></i></a>
+            {{-- <a id="menuToggle" class="menutoggle pull-left"><i class="fa fa fa-tasks"></i></a> --}}
             <div class="header-left">
                 <div class="dropdown for-notification">
                   <button class="btn btn-secondary dropdown-toggle" type="button" id="notification" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -103,7 +103,6 @@
             </div>
 
         </div>
-
     </div>
 
 </header><!-- /header -->

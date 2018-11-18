@@ -34,38 +34,39 @@
         <div class="card-header">Create User</div>
 
         <div class="card-body">
-            <form action="{{ route('admin.user.store') }}" method="post" class="form" enctype="multipart/form-data">
+            {!! Form::open(['route' => 'admin.user.store', 'method' => 'post', 'class' => 'form', 'file' => true]) !!}
                 <input type="hidden" name="_token" value="{{csrf_token()}}">
                 <div class="form-group">
-                    <label for="name" class="pr-1  form-control-label">Name</label>
-                    <input type="text" id="name" name="name"  class="form-control">
+                    {!! Form::label('name', __('Name'), ['class' => 'pr-1 form-control-label']) !!}
+                    {!! Form::text('name', '', ['class' => 'form-control']) !!}
                 </div>
                 <div class="form-group">
-                    <label for="email" class="px-1  form-control-label">Email</label>
-                    <input type="email" id="email" name="email" class="form-control">
+                    {!! Form::label('email', __('Email'), ['class' => 'pr-1 form-control-label']) !!}
+                    {!! Form::text('email', '', ['class' => 'form-control']) !!}
                 </div>
                 <div class="form-group">
-                    <label for="password" class="px-1  form-control-label">Password</label>
-                    <input type="password" id="password" name="password" class="form-control">
+                    {!! Form::label('password', __('Password'), ['class' => 'pr-1 form-control-label']) !!}
+                    {!! Form::password('password', ['class' => 'form-control']) !!}
                 </div>
                 <div class="form-group">
-                    <label for="re_password" class="px-1 form-control-label">Re-password</label>
-                    <input type="password" id="re_password" name="re_password" class="form-control">
+                    {!! Form::label('re_password', __('Re-Password'), ['class' => 'pr-1 form-control-label']) !!}
+                    {!! Form::password('re_password', ['class' => 'form-control']) !!}
                 </div>
                 <div class="form-group">
-                    <label for="address" class="px-1  form-control-label">Addess</label>
-                    <input type="text" id="address" name="address"  class="form-control"">
+                    {!! Form::label('address', __('Addess'), ['class' => 'pr-1 form-control-label']) !!}
+                    {!! Form::text('address', '', ['class' => 'form-control']) !!}
                 </div>
                 <div class="form-group">
-                    <label for="phone" class="px-1 form-control-label">Phone</label>
-                    <input type="number" id="phone" name="phone"  class="form-control">
+                    {!! Form::label('phone', __('Phone'), ['class' => 'pr-1 form-control-label']) !!}
+                    {!! Form::number('phone', '', ['class' => 'form-control']) !!}
                 </div>
                 <div class="form-group">
-                    <label for="avatar" class="px-1 form-control-label">Avatar</label>
-                    <input type="file" id="avatar" name="avatar">
+                    {!! Form::label('avatar', __('Avatar'), ['class' => 'pr-1 form-control-label']) !!}
+                    {!! Form::file('avatar', ['id' => 'avatar']) !!}
                 </div>
                 <div class="form-group">
                     <label for="role" class="px-1 form-control-label">Permission</label>
+                    {!! Form::label('role', __('Permission'), ['class' => 'pr-1 form-control-label']) !!}
                     <select name="role" id="role" class="form-control">
                         @foreach ($roles as $r)
                             <option value="{{$r->id}}">{{ $r->name }}</option>
@@ -74,10 +75,10 @@
                 </div>
                 <br>
                 <div class="form-group float-right">
-                    <button type="submit" class="btn btn-outline-success">Create</button>
-                    <button type="reset" class="btn btn-warning">Reset</button>
+                    {!! Form::submit(__('Create'), ['class' => 'btn btn-outline-success']) !!}
+                    {!! Form::reset(__('Reset'), ['class' => 'btn btn-warning']) !!}
                 </div>
-            </form>
+            {!! Form::close() !!}
         </div>
     </div>
 </div>

@@ -1,7 +1,7 @@
 @extends('layouts.app2')
 
 @section('page-title')
-    <li><a href="{{route('admin.user.index')}}">Dashboard</a></li>
+    <li><a href="{{route('admin.user.index')}}">{{ __('message.title.dashboard') }}</a></li>
     <li class="active">List</li>
 @endsection
 
@@ -32,7 +32,7 @@
 
             <div class="card">
                 <div class="card-header">
-                    <strong class="card-title">Quản Lý User</strong>
+                    <strong class="card-title">{{ __('message.user') }}</strong>
                     <div class="float-right">
                         <a href="{{ route('admin.user.create') }}" class="btn btn-outline-info" title="show">Create</a>
                     </div>
@@ -43,14 +43,14 @@
                         <thead>
                             <tr>
                                 <th scope="col">ID</th>
-                                <th scope="col">Name</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Addess</th>
-                                <th scope="col">Phone</th>
-                                <th scope="col">Avatar</th>
-                                <th scope="col">Role</th>
-                                <th scope="col">Active</th>
-                                <th scope="col">Action</th>
+                                <th scope="col">{{ __('message.name') }}</th>
+                                <th scope="col">{{ __('message.email') }}</th>
+                                <th scope="col">{{ __('message.address') }}</th>
+                                <th scope="col">{{ __('message.phone') }}</th>
+                                <th scope="col">{{ __('message.avatar') }}</th>
+                                <th scope="col">{{ __('message.role') }}</th>
+                                <th scope="col">{{ __('message.active') }}</th>
+                                <th scope="col">{{ __('message.action') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -82,18 +82,6 @@
 
                             @endforeach
                         </tbody>
-                        <tfoot>
-                            <tr>
-                                <th scope="col">ID</th>
-                                <th scope="col">Name</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Address</th>
-                                <th scope="col">Phone</th>
-                                <th scope="col">Avatar</th>
-                                <th scope="col">Role</th>
-                                <th scope="col">Action</th>
-                            </tr>
-                        </tfoot>
                     </table>
                 </div>
             </div>

@@ -15,7 +15,7 @@ class RoleController extends Controller
     public function index()
     {
         $roles = Role::all();
-        return view('admin.role_list', ['roles' => $roles]);
+        return view('admin.role_list', compact('roles'));
     }
 
     /**
@@ -74,7 +74,7 @@ class RoleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $role = Role::find($id);
+        $role = Role::findOrFail($id);
 
         $role->name = $request->name;
 
@@ -89,7 +89,7 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
-        $role = Role::find($id);
+        $role = Role::findOrFail($id);
 
         $role->delete();
     }

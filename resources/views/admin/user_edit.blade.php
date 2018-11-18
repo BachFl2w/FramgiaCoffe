@@ -38,9 +38,9 @@
         @endforeach
     @endif
 
-    {!! Form::open(['method' => 'post', 'route' => ['admin.user.update', $user->id], 'enctype' => 'multipart/form-data']) !!}
+    {!! Form::open(['method' => 'post', 'route' => ['admin.user.update', $user->id], 'files' => true]) !!}
         <div class="card-body row">
-            <input type="hidden" name="_token" id="_token" value="{{csrf_token()}}">
+            @csrf
 
             <div class="col-md-5">
                 <div class="card">
@@ -49,8 +49,7 @@
                     </div>
                     <div class="card-body">
                         <div class="mx-auto d-block text-center">
-                            {{-- <input type="file" id="avatar" name="avatar" class="d-none"> --}}
-                            {!! Form::file('avatar', ['class' => 'd-none']) !!}
+                            {!! Form::file('avatar', ['class' => 'd-none', 'id' => 'avatar']) !!}
                             <label for="avatar">
                                 @if ($user->image)
                                     <img class="rounded-circle mx-auto d-block" src="{{ asset(config('asset.image_path.avatar') . $user->image) }}" alt="Card image cap">
@@ -70,7 +69,6 @@
                         </div>
                     </div>
                     @if (Auth::id() == $user->id)
-                        <button type="submit" class="btn btn-outline-info btn-lg btn-block">{{ __('Change Avatar') }}</button>
                         {!! Form::submit(__('Change Avatar'), ['class' => 'btn btn-outline-info btn-lg btn-block']) !!}
                     @endif
                 </div>
@@ -83,38 +81,38 @@
                     </div>
                     <div class="card-body">
                         <div class="form-group row">
-                            <label for="name" class="col-sm-3 col-form-label ">{{ __('Name') }}</label>
+                            {!! Form::label('name', __('Name'), ['class' => 'col-sm-3 col-form-label']) !!}
                             <div class="col-sm-9">
-                                <input type="text" id="name" name="name" class="form-control" value="{{$user->name}}">
+                                {!! Form::text('name', $user->name, ['class' => 'form-control']) !!}
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="email" class="col-sm-3 col-form-label ">{{ __('Name') }}</label>
+                            {!! Form::label('email', __('Email'), ['class' => 'col-sm-3 col-form-label']) !!}
                             <div class="col-sm-9">
-                                <input type="email" id="email" readonly name="email" class="form-control" value="{{$user->email}}">
+                                {!! Form::email('email', $user->email, ['readonly', 'class' => 'form-control']) !!}
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="address" class="col-sm-3 col-form-label ">{{ __('Addess') }}</label>
+                            {!! Form::label('address', __('Addess'), ['class' => 'col-sm-3 col-form-label']) !!}
                             <div class="col-sm-9">
-                                <input type="text" id="address" name="address"  class="form-control" value="{{$user->address}}">
+                                {!! Form::text('address', $user->address, ['class' => 'form-control']) !!}
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="phone" class="col-sm-3 col-form-label ">{{ __('Phone') }}</label>
+                            {!! Form::label('phone', __('Phone'), ['class' => 'col-sm-3 col-form-label']) !!}
                             <div class="col-sm-9">
-                                <input type="number" id="phone" name="phone" class="form-control" value="{{$user->phone}}">
+                                {!! Form::number('phone', $user->phone, ['class' => 'form-control']) !!}
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="role" class="col-sm-3 col-form-label ">{{ __('Permission') }}</label>
+                            {!! Form::label('permission', __('Permission'), ['class' => 'col-sm-3 col-form-label']) !!}
                             <div class="col-sm-4">
-                                <input type="text" id="permission" readonly name="permission" class="form-control" value="{{$user->role->name}}">
+                                {!! Form::text('permission', $user->role->name, ['readonly' ,'class' => 'form-control']) !!}
                             </div>
                         </div>
                     </div>
                     @if (Auth::id() == $user->id)
-                        <button type="submit" class="btn btn-outline-info btn-lg btn-block">{{ __('Update Information') }}</button>
+                        {!! Form::submit(__('Update Information'), ['class' => 'btn btn-outline-info btn-lg btn-block']) !!}
                     @endif
                 </div>
                 @if (Auth::id() == $user->id || in_array($user->role_id, [2, 3]))
@@ -124,31 +122,27 @@
                         </div>
                         <div class="card-body">
                             <div class="form-group row">
-                                {{-- <label for="password" class="col-sm-3 col-form-label ">{{ __('New password') }}</label> --}}
-                                {!! Form::label('password', {{ __('New password') }}, ['class' => 'col-sm-3 col-form-label']) !!}
+                                {!! Form::label('password', __('New password'), ['class' => 'col-sm-3 col-form-label']) !!}
                                 <div class="col-sm-9">
-                                    {{-- <input type="password" id="password" name="password" value="" class="form-control"> --}}
-                                    {!! Form::password('password', '',['class' => 'form-control']) !!}
+                                    {!! Form::password('password', ['class' => 'form-control']) !!}
                                 </div>
                             </div>
                             <div class="form-group row">
-                                {{-- <label for="re_password" class="col-sm-3 col-form-label ">{{ __('Re-password') }}</label> --}}
                                 {!! Form::label('re_password', __('Re-password'), ['class' => 'col-sm-3 col-form-label']) !!}
                                 <div class="col-sm-9">
-                                    {{-- <input type="password" id="re_password" name="re_password" value="" class="form-control"> --}}
-                                    {!! Form::password('re_password', '',['class' => 'form-control']) !!}
+                                    {!! Form::password('re_password', ['class' => 'form-control']) !!}
                                 </div>
                             </div>
                         </div>
                         @if (Auth::id() == $user->id)
-                            {{-- <button type="submit" class="btn btn-outline-info btn-lg btn-block">{{ __('Change password') }}</button> --}}
-                            {!! Form::submit(__('Change password'), ['class' => 'btn btn-outline-info btn-lg btn-block']) !!}
+                            <button type="submit" class="btn btn-outline-info btn-lg btn-block">{{ __('Change password') }}</button>
+                            {{-- {!! Form::submit(__('Change password'), ['class' => 'btn btn-outline-info btn-lg btn-block']) !!} --}}
                         @endif
                     </div>
                 @endif
             </div>
         </div>
-    {!! Form::close() !!}
+    {{-- {!! Form::close() !!} --}}
 </div>
 @endsection
 

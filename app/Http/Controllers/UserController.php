@@ -49,7 +49,7 @@ class UserController extends Controller
     public function create()
     {
         if (Auth::user()->role_id != 1) {
-            return back()->with('fail', __('You dont have permission !'));
+            return back()->with('fail', __('message.fail.permission'));
         }
 
         $roles = $this->roleModel->all();
@@ -66,7 +66,7 @@ class UserController extends Controller
     public function store(UserStoreRequest $request)
     {
         if (Auth::user()->role_id == 1) {
-            return back()->with('fail', __('You dont have permission !'));
+            return back()->with('fail', __('message.fail.permission'));
         }
 
         if ($request->hasFile('avatar')) {
@@ -96,7 +96,7 @@ class UserController extends Controller
             'image' => $image,
         ]);
 
-        return back()->with('success', __('Create successfully !'));
+        return back()->with('success', __('message.success.create'));
     }
 
     /**
@@ -112,14 +112,14 @@ class UserController extends Controller
         if ($currentUser->role_id == 1) {
 
             if ($user->role_id == 1 && $currentUser->email != $user->email) {
-                return back()->with('fail', __('You dont have permission !'));
+                return back()->with('fail', __('message.fail.permission'));
             }
 
             return view('admin.user_edit', compact('user'));
         } else {
 
             if ($currentUser->email != $user->email) {
-                return back()->with('fail', __('You dont have permission !'));
+                return back()->with('fail', __('message.fail.permission'));
             }
 
             return view('admin.user_edit', compact('user'));
@@ -140,11 +140,11 @@ class UserController extends Controller
 
         if ($currentUser->role_id == 1) {
             if ($user->role_id == 1 && $currentUser->email != $user->email) {
-                return back()->with('fail', __('You can not edit this account !'));
+                return back()->with('fail', __('message.fail.permission'));
             }
         } else {
             if ($currentUser->email != $user->email) {
-                return back()->with('fail', __('You can not edit this account !'));
+                return back()->with('fail', __('message.fail.permission'));
             }
         }
 
@@ -188,7 +188,7 @@ class UserController extends Controller
             $id
         );
 
-        return back()->with('success', __('Update successfully !'));
+        return back()->with('success', __('message.success.update'));
     }
 
     /**
@@ -199,18 +199,17 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        User::findOrFail($id);
-        $user = User::find($id);
+        $user = User::findOrFail($id);
         $currentUser = Auth::user();
 
         if ($currentUser->role_id == 1 && $user->role_id != 1) {
             $user = User::find($id);
             $user->delete();
 
-            return back()->with('success', __('Delete successfully !'));
+            return back()->with('success', __('message.success.delete'));
         }
 
-        return back()->with('fail', __('You dont have permission !'));
+        return back()->with('fail', __('message.fail.permission'));
     }
 
     public function loginAdmin(Request $request)
@@ -224,7 +223,7 @@ class UserController extends Controller
             return redirect('admin/user/index');
         }
 
-        return back()->with('fail', __('Email or password is not true !'));
+        return back()->with('fail', __('message.fail.login'));
     }
 
     public function logoutAdmin()

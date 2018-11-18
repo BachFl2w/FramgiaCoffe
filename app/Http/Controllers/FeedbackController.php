@@ -23,23 +23,6 @@ class FeedbackController extends Controller
         return view('admin.feedback_list', compact('feedbacks'));
     }
 
-    public function send(Request $request)
-    {
-        $content = $request->content;
-        $reciver = $request->email;
-
-        Mail::to($reciver)->send($content);
-
-        if (Mail::to($reciver)->send($content)) {
-            $feedback = Feedback::find($request->feedback_id);
-            $feedback->status = 1;
-
-            return back()->with('success', 'SendEmail done !');
-        }
-
-        return back()->with('fail', 'SendEmail fail !');
-    }
-
     /**
      * Show the form for creating a new resource.
      *

@@ -22,17 +22,17 @@ class CheckLoginAdmin
 
             if ($user->role_id == 3) {
                 Auth::logout();
-                return redirect('login')->with('fail', 'You are not Administrator !');
+                return redirect('login')->with('fail', __('message.fail.check'));
             } else {
                 if ($user->active != 1) {
                     Auth::logout();
-                    return redirect('login')->with('fail', 'Your account is awaiting approval !');
+                    return redirect('login')->with('fail', __('message.fail.approval'));
                 }
 
                 return $next($request);
             }
         }
 
-        return redirect('login')->with('fail', 'You must login first !');
+        return redirect('login')->with('fail', __('message.fail.check'));
     }
 }
