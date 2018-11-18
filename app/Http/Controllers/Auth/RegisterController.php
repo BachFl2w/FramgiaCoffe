@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
@@ -28,7 +29,17 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/admin/user/index';
+    // protected $redirectTo = '/admin/user/index';
+    protected function redirectTo()
+    {
+        if (Auth::user()) {
+            if (Auth::user()->role_id == 3) {
+                return '/home';
+            }
+        }
+
+        return '/admin/user/index';
+    }
 
     /**
      * Create a new controller instance.

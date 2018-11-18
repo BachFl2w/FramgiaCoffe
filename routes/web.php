@@ -14,15 +14,20 @@
 
 Auth::routes();
 
-Route::get('/', function() {
+Route::get('home', function() {
     return view('index');
+})->name('home');
+
+// Route::get('change-language/{language}', 'HomeController@changeLanguage')->name('user.change-language');
+
+Route::group(['middleware' => 'locale'], function() {
+    Route::get('change-language/{language}', 'HomeController@changeLanguage')->name('user.change-language');
 });
 
-Route::post('login_admin', 'UserController@loginAdmin')->name('admin.postLogin');
+Route::post('login', 'UserController@login')->name('postLogin');
+Route::get('logout', 'UserController@logoutUser')->name('logout');
 
 Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin'], function() {
-
-    Route::get('/', 'HomeController@index')->name('admin.index');
 
     Route::get('logout', 'UserController@logoutAdmin')->name('admin.logout');
 
@@ -135,8 +140,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin'], function() {
     });
 });
 
-Route::group(['middleware' => 'userLogin'], function() {
-    Route::get('', function() {
-        //
-    });
-});
+// Route::group(['middleware' => 'userLogin'], function() {
+//     Route::get('', function() {
+//         //
+//     });
+// });

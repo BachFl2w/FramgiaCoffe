@@ -17,25 +17,28 @@ return [
         'dashboard' => 'Dashboard',
         'system' => 'System',
         'business' => 'Business',
-        'product' => 'Product',
         'topping' => 'Topping',
-        'order' => 'Order',
-        'statistics' => 'Statistics',
         'feedback' => 'Feedback',
         'home' => 'Home',
         'about' => 'About Us',
         'paid' => 'Paid',
+        'unpaid' => 'Unpaid',
         'cart' => 'Cart',
+        'contact' => 'Contact',
+        'news' => 'Newsletter',
+        'setting' => 'Settings',
     ],
 
     'index' => [
+        'statistics' => 'Statistics',
         'method' => 'How we work',
         'search' => 'Easy to search',
+        'search_placeholder' => 'Enter product or category ...',
         'feedback' => 'Send me feedback',
         'pay' => 'Convinient Pay',
         'criteria' => 'Criteria',
         'delivery' => 'Express delivery',
-        'delivery.time' => 'Delivery time',
+        'delivery_time' => 'Delivery time',
         'best' => 'Best selling',
         'popular' => 'Popular',
         'count' => 'More :number user using',
@@ -43,6 +46,7 @@ return [
         'work' => 'Work with Us',
         'restaurant' => 'Submit your Restaurant',
         'driver' => 'We are looking for a Driver',
+        'rotating' => 'Quality,Express delivery,Fair Price',
     ],
 
     // sucess
@@ -65,14 +69,15 @@ return [
     'update' => 'Update',
     'delete' => 'Delete',
     'action' => 'Action',
+    'submit' => 'Submit',
 
     // User
     'login' => 'Login',
-    'submit' => 'Submit',
     'logout' => 'Logout',
     'register' => 'Register',
     'user' => 'User',
     'name' => 'Name',
+    'profile' => 'Profile',
     'avatar' => 'Avatar',
     'email' => 'E-Mail Address',
     'address' => 'Address',
@@ -104,4 +109,7 @@ return [
     'shipper' => 'Shipper',
 
     'payments' => 'Secure payments with',
+
+    'product' => 'Product',
+    'order' => 'Order',
 ];

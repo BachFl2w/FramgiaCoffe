@@ -15,10 +15,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests\UserUpdateRequest;
 use App\Http\Requests\UserStoreRequest;
 
-
 class UserController extends Controller
 {
-
     protected $userModel;
     protected $roleModel;
 
@@ -230,7 +228,6 @@ class UserController extends Controller
         $currentUser = Auth::user();
 
         if ($currentUser->role_id == 1 && $user->role_id != 1) {
-            $user = User::find($id);
             $user->delete();
 
             return back()->with('success', __('message.success.delete'));
@@ -239,7 +236,7 @@ class UserController extends Controller
         return back()->with('fail', __('message.fail.permission'));
     }
 
-    public function loginAdmin(Request $request)
+    public function login(Request $request)
     {
         $data = [
             'email' => $request->email,
@@ -247,6 +244,10 @@ class UserController extends Controller
         ];
 
         if (Auth::attempt($data)) {
+            if (Auth::user()->role_id == 3) {
+                return redirect('home');
+            }
+
             return redirect('admin/user/index');
         }
 
@@ -258,5 +259,12 @@ class UserController extends Controller
         Auth::logout();
 
         return redirect(route('login'));
+    }
+
+    public function logoutUser()
+    {
+        Auth::logout();
+
+        return redirect(route('home'));
     }
 }
