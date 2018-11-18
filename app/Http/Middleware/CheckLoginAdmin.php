@@ -22,7 +22,7 @@ class CheckLoginAdmin
 
             if ($user->role_id == 3) {
                 Auth::logout();
-                return redirect('login')->with('fail', __('message.fail.check'));
+                return redirect('login')->with('fail', __('message.fail.permission'));
             } else {
                 if ($user->active != 1) {
                     Auth::logout();

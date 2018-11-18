@@ -19,7 +19,6 @@ class CreateOrderDetailToppingTable extends Migration
             $table->foreign('topping_id')->references('id')->on('toppings');
             $table->unsignedInteger('order_detail_id');
             $table->foreign('order_detail_id')->references('id')->on('order_details');
-            $table->unsignedInteger('quantity');
             $table->timestamps();
         });
     }

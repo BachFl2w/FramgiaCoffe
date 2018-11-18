@@ -5,53 +5,38 @@
          <div class="container margin_60">
 
          <div class="main_title">
-            <h2 class="nomargin_top" style="padding-top:0;font-family: 'Times New Roman', Times, serif">Phưong pháp hoạt động</h2>
-            <p>
-                Cum doctus civibus efficiantur in imperdiet deterruisset.
-            </p>
+            <h2 class="nomargin_top">{{ __('message.index.method') }}</h2>
         </div>
         <div class="row">
             <div class="col-md-3">
                 <div class="box_home" id="one">
                     <span>1</span>
-                    <h3>Dễ dàng tìm kiếm</h3>
-                    <p>
-                        Tìm kiếm và tra cứu một cách dễ dàng.
-                    </p>
+                    <h3>{{ __('message.index.search') }}</h3>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="box_home" id="two">
                     <span>2</span>
-                    <h3>Tiếp thu ý kiến</h3>
-                    <p>
-                        Luôn lắng nghe ý kiến của khách hàng.
-                    </p>
+                    <h3>{{ __('message.index.feedback') }}</h3>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="box_home" id="three">
                     <span>3</span>
-                    <h3>Thanh toán tiện lợi</h3>
-                    <p>
-                        Thanh toán qua thẻ ngân hàng hoặc shipcode.
-                    </p>
+                    <h3>{{ __('message.index.pay') }}</h3>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="box_home" id="four">
                     <span>4</span>
-                    <h3>Giao hàng nhanh chóng</h3>
-                    <p>
-                        Giao hàng chỉ trong vòng vài tiếng?
-                    </p>
+                    <h3>{{ __('message.index.delivery') }}</h3>
                 </div>
             </div>
         </div><!-- End row -->
 
         <div id="delivery_time" class="hidden-xs">
             <strong><span>1</span> <span>5 '</span></strong>
-            <h4>Thời gian giao hàng!</h4>
+            <h4>{{ __('message.index.delivery_time') }}</h4>
         </div>
         </div><!-- End container -->
 
@@ -59,16 +44,13 @@
     <div class="container margin_60">
 
         <div class="main_title">
-            <h2 class="nomargin_top">Các sản phẩm bán chạy</h2>
-            <p>
-                Được đánh gía cao trong thời gian qua.
-            </p>
+            <h2 class="nomargin_top">{{ __('message.index.best') }}</h2>
         </div>
 
         <div class="row">
             <div class="col-md-6">
                 <a href="detail_page.html" class="strip_list">
-                <div class="ribbon_1">Popular</div>
+                <div class="ribbon_1">{{ __('message.index.popular') }}</div>
                     <div class="desc">
                         <div class="thumb_strip">
                             <img src="{{ asset('images/product/1-1.jpg') }}" alt="">
@@ -90,7 +72,7 @@
                     </div><!-- End desc-->
                 </a><!-- End strip_list-->
                <a href="detail_page.html" class="strip_list">
-               <div class="ribbon_1">Popular</div>
+               <div class="ribbon_1">{{ __('message.index.popular') }}</div>
                     <div class="desc">
                         <div class="thumb_strip">
                             <img src="{{ asset('images/product/1-1.jpg') }}" alt="">
@@ -112,7 +94,7 @@
                     </div><!-- End desc-->
                 </a><!-- End strip_list-->
                 <a href="detail_page.html" class="strip_list">
-                <div class="ribbon_1">Popular</div>
+                <div class="ribbon_1">{{ __('message.index.popular') }}</div>
                     <div class="desc">
                         <div class="thumb_strip">
                             <img src="{{ asset('images/product/1-1.jpg') }}" alt="">
@@ -136,7 +118,7 @@
             </div><!-- End col-md-6-->
             <div class="col-md-6">
                 <a href="detail_page.html" class="strip_list">
-                <div class="ribbon_1">Popular</div>
+                <div class="ribbon_1">{{ __('message.index.popular') }}</div>
                     <div class="desc">
                         <div class="thumb_strip">
                             <img src="{{ asset('images/product/1-1.jpg') }}" alt="">
@@ -158,7 +140,7 @@
                     </div><!-- End desc-->
                 </a><!-- End strip_list-->
                 <a href="detail_page.html" class="strip_list">
-                <div class="ribbon_1">Popular</div>
+                <div class="ribbon_1">{{ __('message.index.popular') }}</div>
                     <div class="desc">
                         <div class="thumb_strip">
                             <img src="{{ asset('images/product/1-1.jpg') }}" alt="">
@@ -180,7 +162,7 @@
                     </div><!-- End desc-->
                 </a><!-- End strip_list-->
                 <a href="detail_page.html" class="strip_list">
-                <div class="ribbon_1">Popular</div>
+                <div class="ribbon_1">{{ __('message.index.popular') }}</div>
                     <div class="desc">
                         <div class="thumb_strip">
                             <img src="{{ asset('images/product/1-1.jpg') }}" alt="">
@@ -209,9 +191,8 @@
 
        <div class="high_light">
       	<div class="container">
-      		<h3>Hơn 200 khách hàng đã tin tưởng và sử dụng</h3>
-            <p>Sự tin tưởng chỉ có được với sự phục vụ tận tình và chân thành.</p>
-            <a href="list_page.html">Các phản hồi</a>
+      		<h3>{{ __('message.index.count', ['number' => 200]) }}</h3>
+            <a href="list_page.html">{{ __('message.title.feedback') }}</a>
         </div><!-- End container -->
       </div><!-- End hight_light -->
 
@@ -219,10 +200,7 @@
     <div class="parallax-content">
         <div class="sub_content">
             <i class="icon_mug"></i>
-            <h3>We also deliver to your office</h3>
-            <p>
-                Ridiculus sociosqu cursus neque cursus curae ante scelerisque vehicula.
-            </p>
+            <h3>{{ __('message.index.office') }}</h3>
         </div><!-- End sub_content -->
     </div><!-- End subheader -->
     </section><!-- End section -->
@@ -230,16 +208,13 @@
 
 	<div class="container margin_60">
       <div class="main_title margin_mobile">
-            <h2 class="nomargin_top">Work with Us</h2>
-            <p>
-                Cum doctus civibus efficiantur in imperdiet deterruisset.
-            </p>
+            <h2 class="nomargin_top">{{ __('message.index.work') }}</h2>
         </div>
       	<div class="row">
             <div class="col-md-4 col-md-offset-2">
             	<a class="box_work" href="submit_restaurant.html">
                 <img src="img/submit_restaurant.jpg" width="848" height="480" alt="" class="img-responsive">
-                <h3>Submit your Restaurant<span>Start to earn customers</span></h3>
+                <h3>{{ __('message.index.restaurant') }}</h3>
                 <p>Lorem ipsum dolor sit amet, ut virtute fabellas vix, no pri falli eloquentiam adversarium. Ea legere labore eam. Et eum sumo ocurreret, eos ei saepe oratio omittantur, legere eligendi partiendo pro te.</p>
                 <div class="btn_1">Read more</div>
                 </a>
@@ -247,7 +222,7 @@
             <div class="col-md-4">
             	<a class="box_work" href="submit_driver.html">
                 <img src="img/delivery.jpg" width="848" height="480" alt="" class="img-responsive">
-				<h3>We are looking for a Driver<span>Start to earn money</span></h3>
+				<h3>{{ __('message.index.driver') }}</h3>
                 <p>Lorem ipsum dolor sit amet, ut virtute fabellas vix, no pri falli eloquentiam adversarium. Ea legere labore eam. Et eum sumo ocurreret, eos ei saepe oratio omittantur, legere eligendi partiendo pro te.</p>
                 <div class="btn_1">Read more</div>
                 </a>

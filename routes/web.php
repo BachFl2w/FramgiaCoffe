@@ -14,15 +14,21 @@
 
 Auth::routes();
 
-Route::get('/', function() {
+Route::get('home', function() {
     return view('index');
+})->name('home');
+
+// Route::get('change-language/{language}', 'HomeController@changeLanguage')->name('user.change-language');
+
+Route::group(['middleware' => 'locale'], function() {
+    Route::get('change-language/{language}', 'HomeController@changeLanguage')->name('user.change-language');
 });
 
-Route::post('login_admin', 'UserController@loginAdmin')->name('admin.postLogin');
+Route::post('login', 'UserController@login')->name('postLogin');
+Route::get('logout', 'UserController@logoutUser')->name('logout');
+
 
 Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin'], function() {
-
-    Route::get('/', 'HomeController@index')->name('admin.index');
 
     Route::get('logout', 'UserController@logoutAdmin')->name('admin.logout');
 
@@ -115,28 +121,24 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin'], function() {
         Route::get('show/{id}', 'TopingController@show')->name('admin.topping.show');
     });
 
-    Route::group(['prefix' => 'order'], function() {
+    Route::group(['prefix' => 'order', 'as' => 'admin.order.'], function() {
 
-        Route::get('json', 'OrderController@getDataJson')->name('admin.order.json');
+        Route::get('index', 'OrderController@index')->name('index');
 
-        Route::get('index', 'OrderController@index')->name('admin.order.index');
+        Route::get('json', 'OrderController@listOrderJson')->name('list.json');
 
-        Route::get('detail/index/{id}', 'OrderDetailController@index')->name('admin.detail.index');
+        Route::get('/{id}/detail','OrderDetailController@show')->name('detail');
 
-        Route::get('detail/{id_order}', 'OrderDetailController@show')->name('admin.detail.json');
+        Route::get('detail', 'OrderDetailController@showDetail')->name('detail.show');
 
-        // Route::post('store', 'TopingController@store')->name('admin.topping.store');
+        Route::get('detail/update-quantity', 'OrderDetailController@updateQuantity')->name('detail.update_quantity');
 
-        // Route::post('update/{id}', 'TopingController@update')->name('admin.topping.update');
-
-        // Route::get('destroy/{id}', 'TopingController@destroy')->name('admin.topping.destroy');
-
-        // Route::get('show/{id}', 'TopingController@show')->name('admin.topping.show');
+        Route::get('{id}/detail/json', 'OrderDetailController@showJson')->name('detail.json');
     });
 });
 
-Route::group(['middleware' => 'userLogin'], function() {
-    Route::get('', function() {
-        //
-    });
-});
+// Route::group(['middleware' => 'userLogin'], function() {
+//     Route::get('', function() {
+//         //
+//     });
+// });

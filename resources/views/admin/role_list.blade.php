@@ -78,9 +78,9 @@
     </div>
 @endif
 
-<div class="animated fadeIn">
+<div class="animated ">
     <div class="rows">
-        <div class="col-md-12">
+        <div class="">
             <div class="card">
                 <div class="card-header">
                     <strong class="card-title">Quản Lý Vai Trò</strong>

@@ -5,7 +5,9 @@
 @endsection
 
 @section('content')
-    <div class="container-fluid">
+
+<div class="animated">
+    <div class="rows">
         <div class="card">
             <div class="card-header">
                 {{__('Quản Lý Topping')}}
@@ -30,6 +32,7 @@
             </div>
         </div>
     </div>
+</div>
 
     <div class="modal fade" id="ToppingModal" tabindex="-1" role="dialog"  aria-hidden="true" data-backdrop="false">
         <div class="modal-dialog modal-dialog-centered">
@@ -67,5 +70,4 @@
                 </div>
             </div>
         </div>
-    </div>
 @endsection

@@ -1,39 +1,36 @@
 @extends('layouts.app2')
-@section('css')
-<link rel="stylesheet" href="{{ asset('css/customer.css') }}">
 
-@endsection
 @section('content')
-    <div class="container-fluid">
+<div class="animated">
+    <div class="rows">
         <div class="card">
             <div class="card-header">
                 {{ __('Quản Lý Sản Phẩm')}}
 
                 <button class="float-right btn btn-outline-primary" data-toggle="modal"
-                 data-target="#ProductModal" id="btnCreateProduct">Create</button>
+                     data-target="#ProductModal" id="btnCreateProduct">Create</button>
             </div>
 
             <div class="card-body">
                 <table class="table table-bordered" id="admin_product_list">
                     <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Sản Phẩm</th>
-                        <th>Só lượng</th>
-                        <th>Ảnh</th>
-                        <th>Giá</th>
-                        <th>Miêu tả</th>
-                        <th>Thể Loại</th>
-                        <th>Chức Năng</th>
-                    </tr>
+                        <tr>
+                            <th>ID</th>
+                            <th>Sản Phẩm</th>
+                            <th>Só lượng</th>
+                            <th>Ảnh</th>
+                            <th>Giá</th>
+                            <th>Miêu tả</th>
+                            <th>Thể Loại</th>
+                            <th>Chức Năng</th>
+                        </tr>
                     </thead>
-                    <tbody>
-                    
-                    </tbody>
+                    <tbody></tbody>
                 </table>
             </div>
         </div>
     </div>
+</div>
 
     <div class="modal fade" id="UpdateImageModal" role="dialog" aria-labelledby="UpdateImageModalTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -121,7 +118,7 @@
                             <div class="col-lg-12">
                                 <div class="form-group">
                                     <label for="" class="px-1 form-control-label">Miêu tả</label>
-                                    <textarea id="ckeditor_product_descrition" name="ckeditor" class="form-control ckeditor"></textarea>
+                                    <textarea id="product_descrition" name="ckeditor" class="form-control"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -133,6 +130,4 @@
                 </form>
             </div>
         </div>
-    </div>
-
 @endsection

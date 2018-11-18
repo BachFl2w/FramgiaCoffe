@@ -1,7 +1,8 @@
 @extends('layouts.app2')
 
 @section('content')
-    <div class="container-fluid">
+<div class="animated">
+    <div class="rows">
         <div class="card">
             <div class="card-header">
                 {{ __('Quản Lý Đơn Hàng ') }}
@@ -28,6 +29,7 @@
             </div>
         </div>
     </div>
+</div>
 
     <div class="modal fade" id="OrderModal" data-backdrop="false" role="dialog" aria-labelledby="OrderModalTitle" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
@@ -58,7 +60,6 @@
     </div>
 @endsection
 @section('script')
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
     <script type="text/javascript">
         jQuery(document).ready(function($) {
             $.ajaxSetup({
@@ -69,7 +70,7 @@
 
             var order_table = $('#admin_order_list').DataTable({
                 ajax: {
-                    url: route('admin.order.json'),
+                    url: route('admin.order.list.json'),
                     dataSrc: '',
                     type: 'get',
                 },
@@ -102,7 +103,7 @@
                         data: 'id',
                         render: function(data)
                         {
-                            var url = route('admin.detail.index', {id: data});
+                            var url = route('admin.order.detail', {id: data});
                             return '<a class="btn btn-outline-primary" href="'+ url +'"><i class="fa fa-info fa-4"></i></a> ' +
                             '<button class="btn btn-outline-danger" title="Delete" id="btnOrderorder"><i class="fa fa-trash-o"></i></button> '
                         }

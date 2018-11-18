@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Order;
+use App\OrderDetail;
+use App\Image;
 use Illuminate\Http\Request;
 
 class OrderDetailController extends Controller
@@ -45,9 +48,49 @@ class OrderDetailController extends Controller
      */
     public function show($id)
     {
-        $orders = Order::with('OrderDetails')->where('id', '=', $id)->get();
+        $order = Order::findOrFail($id);
 
-        return $orders;
+        $orderDetails = OrderDetail::with('product', 'size', 'toppings')->where('order_id', $id)->get();
+
+        $index = 0;
+
+        $images = [];
+
+        foreach ($orderDetails as $orderDetail) {
+
+            $product_id = $orderDetail->product->id;
+
+            $image = Image::where('product_id', $product_id)->where('active', 1)->first();
+
+            if ($image != null) {
+
+                $orderDetails[$index]->image = $image->name;
+            }
+            else {
+
+                $image = Image::where('product_id', $product_id)->orderBy('id','DESC')->first();
+
+                $orderDetails[$index]->image = $image->name;
+            }
+
+            $priceProduct = $orderDetail->product->price * (1 + $orderDetail->size->percent) * $orderDetail->quantity;
+
+            $priceTopping = 0;
+
+            foreach ($orderDetail->toppings as $topping) {
+
+                $priceTopping += $topping->price ;
+
+            }
+
+            $orderDetails[$index]->price = $priceProduct + $priceTopping;
+
+            $orderDetails[$index]->status = $order->status;
+
+            $index ++;
+        }
+
+        return view('admin.order_detail', compact('orderDetails', 'order'));
     }
 
     /**
@@ -83,4 +126,120 @@ class OrderDetailController extends Controller
     {
         //
     }
+
+    public function updateQuantity(Request $request)
+    {
+        $orderDetail = OrderDetail::findOrFail($request->id);
+
+        $orderDetail->quantity = $request->quantity;
+
+        $orderDetail->save();
+    }
+
+    public function showJson($id)
+    {
+        $order = Order::findOrFail($id);
+
+        $orderDetails = OrderDetail::with('product', 'size', 'toppings')->where('order_id', $id)->get();
+
+        $index = 0;
+
+        $images = [];
+
+        foreach ($orderDetails as $orderDetail) {
+
+            $product_id = $orderDetail->product->id;
+
+            $image = Image::where('product_id', $product_id)->where('active', 1)->first();
+
+            if ($image != null) {
+
+                $orderDetails[$index]->image = $image->name;
+            }
+            else {
+
+                $image = Image::where('product_id', $product_id)->orderBy('id','DESC')->first();
+
+                $orderDetails[$index]->image = $image->name;
+            }
+
+            $priceProduct = $orderDetail->product->price * (1 + $orderDetail->size->percent) * $orderDetail->quantity;
+
+            $priceTopping = 0;
+
+            foreach ($orderDetail->toppings as $topping) {
+
+                $priceTopping += $topping->price ;
+
+            }
+
+            $orderDetails[$index]->price = $priceProduct + $priceTopping;
+
+            $orderDetails[$index]->status = $order->status;
+
+            $index ++;
+        }
+
+        return $orderDetails;
+    }
+
+    public function showDetail(Request $request)
+    {
+        $order_id = $request->order_id;
+
+        $detail_id = $request->detail_id;
+
+        $order = Order::findOrFail($order_id);
+
+        $orderDetails = OrderDetail::with('product', 'size', 'toppings')->where('order_id', $order_id)->get();
+
+        $index = 0;
+
+        foreach ($orderDetails as $orderDetail) {
+
+            $product_id = $orderDetail->product->id;
+
+            $image = Image::where('product_id', $product_id)->where('active', 1)->first();
+
+            if ($image != null) {
+
+                $orderDetails[$index]->image = $image->name;
+            }
+            else {
+
+                $image = Image::where('product_id', $product_id)->orderBy('id','DESC')->first();
+
+                $orderDetails[$index]->image = $image->name;
+            }
+
+            $priceProduct = $orderDetail->product->price * (1 + $orderDetail->size->percent) * $orderDetail->quantity;
+
+            $priceTopping = 0;
+
+            foreach ($orderDetail->toppings as $topping) {
+
+                $priceTopping += $topping->price ;
+
+            }
+
+            $orderDetails[$index]->price = $priceProduct + $priceTopping;
+
+            $index ++;
+        }
+
+        $orderDetailResult = null;
+
+        foreach ($orderDetails as $orderDetail) {
+
+            if($orderDetail->id == $detail_id) {
+
+                $orderDetailResult = $orderDetail;
+
+                break;
+            }
+        }
+
+        return $orderDetailResult;
+    }
+
 }

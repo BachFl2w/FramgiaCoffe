@@ -1,8 +1,5 @@
 jQuery(document).ready(function($) {
 
-    /**
-     * setup ajax
-     */
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
@@ -369,8 +366,8 @@ jQuery(document).ready(function($) {
             },
             {
                 data: 'description',
-                render: function ( data, type, row ) {
-                    return data.substr( 0, 40 ) + "...";
+                render: function(data, type, row) {
+                    return data.substr(0, 40) + "...";
                 }
             },
             { data: 'category.name' },
@@ -699,5 +696,5 @@ jQuery(document).ready(function($) {
             .always(function() {
                 console.log("complete");
             });
-    })
+    });
 });

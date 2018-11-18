@@ -79,16 +79,16 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        $product = DB::table('products')
-            ->join('images','products.id','=','images.product_id')
-            ->join('categories','products.category_id', 'categories.id')
-            ->select('products.id', 'products.name as name', 'price', 'quantity', 'description', 'images.name as main_image', 'categories.id as category_id', 'active')
-            ->where([
-                'products.id', '=', $id,
-            ])
-            ->orderBy('active', 'desc')
-            ->orderBy('images.product_id', 'desc')
-            ->get();
+        // $product = DB::table('products')
+        //     ->join('images', 'products.id', '=', 'images.product_id')
+        //     ->join('categories', 'products.category_id', 'categories.id')
+        //     ->select('products.id', 'products.name as name', 'price', 'quantity', 'description', 'images.name as main_image', 'categories.id as category_id', 'active')
+        //     ->where('products.id', '=', $id)
+        //     ->orderBy('active', 'desc')
+        //     ->orderBy('images.product_id', 'desc')
+        //     ->get();
+
+        $product = Product::where('id','=', $id)->with('images')->get();
 
         return $product;
     }

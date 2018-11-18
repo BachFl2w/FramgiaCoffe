@@ -18,9 +18,9 @@ class OrderDetail extends Model
         return $this->belongsTo(Order::class);
     }
 
-    public function orderDetailTopings()
+    public function toppings()
     {
-        return $this->hasMany(OrderDetailToping::class);
+        return $this->belongsToMany(Topping::class);
     }
 
     public function size()

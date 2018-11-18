@@ -8,7 +8,7 @@
                 <div class="card-header">{{ __('message.login') }}</div>
 
                 <div class="card-body">
-                    {{ Form::open(['method' => 'POST', 'route' => 'admin.postLogin' ]) }}
+                    {{ Form::open(['method' => 'POST', 'route' => 'postLogin' ]) }}
                         @csrf
 
                         <div class="form-group row">
