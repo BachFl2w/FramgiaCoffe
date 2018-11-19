@@ -1,17 +1,21 @@
 @extends('layouts.app2')
 
 @section('page-title')
-    Dashboard
+    <li><a href="{{route('admin.user.index')}}">Dashboard</a></li>
+    <li><a href="{{route('admin.user.index')}}">{{ __('message.topping') }}</a></li>
+    <li class="active">{{ __('message.topping.update') }}</li>
 @endsection
 
 @section('content')
-    <div class="container-fluid">
+
+<div class="animated">
+    <div class="rows">
         <div class="card">
             <div class="card-header">
-                {{__('Quản Lý Topping')}}
-
-                <button class="float-right btn btn-outline-primary" data-toggle="modal"
-                        data-target="#ToppingModal" id="btnCreateTopping">Create</button>
+                <strong class="card-title">{{ __('message.topping') }}</strong>
+                <div class="float-right">
+                    <a href="{{ route('admin.topping.create') }}" class="btn btn-outline-info" title="show">{{ __('message.create') }}</a>
+                </div>
             </div>
 
             <div class="card-body">
@@ -20,52 +24,35 @@
                     <tr>
                         <th>ID</th>
                         <th>Topping</th>
-                        <th>Giá</th>
-                        <th>Số lượng</th>
-                        <th>Chức Năng</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Action</th>
                     </tr>
                     </thead>
-                    <tbody></tbody>
+                    <tbody>
+                        @foreach ($toppings as $topping)
+                            <tr>
+                                <td>{{ $topping->id }}</td>
+                                <td>{{ $topping->name }}</td>
+                                <td>{{ $topping->price }}</td>
+                                <td>{{ $topping->quantity }}</td>
+                                <td>
+                                    <a href="{{ route('admin.topping.edit', ['id' => $topping->id]) }}" class="btn btn-outline-primary"><i class="fa fa-edit"></i></a>
+                                    <a href="{{ route('admin.topping.destroy', ['id' => $topping->id]) }}" onclick="return confirm('Delete this one? ')" class="btn btn-outline-danger"><i class="fa fa-trash"></i></a>
+                            </tr>
+                        @endforeach
+                    </tbody>
                 </table>
             </div>
         </div>
     </div>
+</div>
+@endsection
 
-    <div class="modal fade" id="ToppingModal" tabindex="-1" role="dialog"  aria-hidden="true" data-backdrop="false">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Thêm mới topping</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group" id="topping_group_id">
-                        <label for="id" class="px-1 form-control-label">ID</label>
-                        <input type="text" id="topping_id" required class="form-control">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="name" class="px-1 form-control-label">Topping</label>
-                        <input type="text" id="topping_name" required class="form-control">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="name" class="px-1 form-control-label">Price</label>
-                        <input type="number" id="topping_price" required class="form-control">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="name" class="px-1 form-control-label">Quantity</label>
-                        <input type="number" id="topping_quantity" required class="form-control">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" id="btnSubmitTopping">Xác Nhận</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy bỏ</button>
-                </div>
-            </div>
-        </div>
-    </div>
+@section('script')
+<script type="text/javascript">
+    jQuery(document).ready(function($) {
+        $('#admin_topping_list').DataTable();
+    });
+</script>
 @endsection

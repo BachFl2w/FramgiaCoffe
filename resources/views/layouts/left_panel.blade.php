@@ -12,42 +12,43 @@
         <div id="main-menu" class="main-menu collapse navbar-collapse">
             <ul class="nav navbar-nav">
                 <li class="active">
-                    <a href="index.html"> <i class="menu-icon fa fa-dashboard"></i>Dashboard </a>
+                    <a href="index.html"> <i class="menu-icon fa fa-dashboard"></i>{{ __('Dashboard') }}</a>
                 </li>
-                <h3 class="menu-title">Quản lý hệ thống</h3><!-- /.menu-title -->
+                <h3 class="menu-title">{{ __('Manager System') }}</h3><!-- /.menu-title -->
                 <li>
-                    <a href="{{ route('admin.user.index') }}"> <i class="menu-icon ti-user"></i>Quản lý người dùng </a>
+                    <a href="{{ route('admin.user.index') }}"> <i class="menu-icon ti-user"></i>{{ __('Manager User') }}</a>
                 </li>
                 <li>
-                    <a href="{{ route('admin.role.index') }}"> <i class="menu-icon ti-user"></i>Quản lý Vai trò </a>
+                    <a href="{{ route('admin.role.index') }}"> <i class="menu-icon ti-user"></i>{{ __('Manager Role') }}</a>
                 </li>
-
-                <h3 class="menu-title">Quản lý kinh doanh</h3><!-- /.menu-title -->
-
                 <li>
-                    <a href="{{ route('admin.category.index') }}"> <i class="menu-icon ti-email"></i>Quản lý loại sản phẩm </a>
+                    <a href="{{ route('admin.feedback.index')}}"> <i class="menu-icon ti-email"></i>{{ __('Manager Feedback') }}</a>
                 </li>
 
-                <li>
-                    <a href="{{ route('admin.product.index') }}"> <i class="menu-icon ti-email"></i>Quản lý sản phẩm </a>
-                </li>
+                <h3 class="menu-title">{{ __('Manager Business') }}</h3><!-- /.menu-title -->
 
                 <li>
-                    <a href="{{ route('admin.topping.index') }}"> <i class="menu-icon ti-email"></i>Quản lý topping </a>
-                </li>
-                <h3 class="menu-title">Quản lý hóa đơn</h3><!-- /.menu-title -->
-                <li>
-                    <a href="{{ route('admin.order.index') }}"> <i class="menu-icon ti-email"></i>Quản lý hóa đơn </a>
-                </li>
-
-                <h3 class="menu-title">Thống kê</h3><!-- /.menu-title -->
-                <li>
-                    <a href="widgets.html"> <i class="menu-icon ti-email"></i>Thống kê hóa đơn </a>
+                    <a href="{{ route('admin.category.index') }}"> <i class="menu-icon ti-email"></i>{{ __('Manager Category') }}</a>
                 </li>
 
                 <li>
-                    <a href="{{ route('admin.feedback.index')}}"> <i class="menu-icon ti-email"></i>Quản lý phản hồi </a>
+                    <a href="{{ route('admin.product.index') }}"> <i class="menu-icon ti-email"></i>{{ __('Manager Product') }}</a>
                 </li>
+
+                <li>
+                    <a href="{{ route('admin.topping.index') }}"> <i class="menu-icon ti-email"></i>{{ __('Manager Topping') }}</a>
+                </li>
+                <h3 class="menu-title">{{ __('Manager Bill') }}</h3><!-- /.menu-title -->
+                <li>
+                    <a href="{{ route('admin.order.index') }}"> <i class="menu-icon ti-email"></i>{{ __('Manager Bill') }}</a>
+                </li>
+
+                <h3 class="menu-title">{{ __('Statistical') }}</h3><!-- /.menu-title -->
+                <li>
+                    <a href="widgets.html"> <i class="menu-icon ti-email"></i>{{ __('Statistical Bill') }}</a>
+                </li>
+
+                
             </ul>
         </div><!-- /.navbar-collapse -->
     </nav>

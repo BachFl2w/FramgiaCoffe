@@ -149,6 +149,8 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         Tightenco\Ziggy\ZiggyServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
+        Unisharp\Ckeditor\ServiceProvider::class,
+        RealRashid\SweetAlert\SweetAlertServiceProvider::class,
 
 
 
@@ -219,6 +221,7 @@ return [
         'Html'         => Collective\Html\HtmlFacade::class,
         'Debugbar'     => Barryvdh\Debugbar\Facade::class,
         'Image'        => Intervention\Image\Facades\Image::class,
+        'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
     ],
 
 ];

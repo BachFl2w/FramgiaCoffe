@@ -22,6 +22,7 @@ class CreateProductsTable extends Migration
             $table->foreign('category_id')->references('id')->on('categories');
             $table->unsignedInteger('quantity');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -27,6 +27,8 @@ Route::group(['middleware' => 'locale'], function() {
 Route::post('login', 'UserController@login')->name('postLogin');
 Route::get('logout', 'UserController@logoutUser')->name('logout');
 
+
+
 Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin'], function() {
 
     Route::get('logout', 'UserController@logoutAdmin')->name('admin.logout');
@@ -76,29 +78,29 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin'], function() {
 
         Route::get('index', 'ProductController@index')->name('admin.product.index');
 
-        Route::get('getDataJson', 'ProductController@getDataJson')->name('admin.product.json');
+        Route::get('create', 'ProductController@create')->name('admin.product.create');
 
         Route::post('store', 'ProductController@store')->name('admin.product.store');
 
-        Route::get('{id}/images', 'ProductController@getImages')->name('admin.product.images');
+        ROute::get('edit/{id}', 'ProductController@edit')->name('admin.product.edit');
 
-        Route::post('upload-image', 'ProductController@uploadMoreImage')->name('admin.product.uploadimage');
+        Route::get('detail/json/{id}', 'ProductController@productJson')->name('admin.product.detail.json');
 
-        Route::get('show/{id}', 'ProductController@show')->name('admin.product.show');
+        Route::put('update/{id}', 'ProductController@update')->name('admin.product.update');
 
-        Route::post('update/{id}', 'ProductController@update')->name('admin.product.update');
-
-        Route::post('change-main-image', 'ProductController@changMainImage')->name('admin.product.change_main_image');
+        ROute::get('destroy/{id}', 'ProductController@destroy')->name('admin.product.destroy');
 
     });
 
     Route::group(['prefix' => 'category'], function() {
 
-        Route::get('json', 'CategoryController@getDataJson')->name('admin.category.json');
-
         Route::get('index', 'CategoryController@index')->name('admin.category.index');
 
+        Route::get('create', 'CategoryController@create')->name('admin.category.create');
+
         Route::post('store', 'CategoryController@store')->name('admin.category.store');
+
+        Route::get('edit/{id}', 'CategoryController@edit')->name('admin.category.edit');
 
         Route::post('update/{id}', 'CategoryController@update')->name('admin.category.update');
 
@@ -111,32 +113,36 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin'], function() {
 
         Route::get('index', 'TopingController@index')->name('admin.topping.index');
 
+        Route::get('create', 'TopingController@create')->name('admin.topping.create');
+
         Route::post('store', 'TopingController@store')->name('admin.topping.store');
 
         Route::post('update/{id}', 'TopingController@update')->name('admin.topping.update');
 
         Route::get('destroy/{id}', 'TopingController@destroy')->name('admin.topping.destroy');
 
-        Route::get('show/{id}', 'TopingController@show')->name('admin.topping.show');
+        Route::get('edit/{id}', 'TopingController@edit')->name('admin.topping.edit');
     });
 
     Route::group(['prefix' => 'order'], function() {
 
-        Route::get('json', 'OrderController@getDataJson')->name('admin.order.json');
-
         Route::get('index', 'OrderController@index')->name('admin.order.index');
 
-        Route::get('detail/index/{id}', 'OrderDetailController@index')->name('admin.detail.index');
+        Route::get('edit/{id}', 'OrderController@edit')->name('admin.order.edit');
 
-        Route::get('detail/{id_order}', 'OrderDetailController@show')->name('admin.detail.json');
+        // Route::get('json', 'OrderController@listOrderJson')->name('list.json');
 
-        // Route::post('store', 'TopingController@store')->name('admin.topping.store');
+        Route::get('/{id}/detail','OrderDetailController@show')->name('admin.order.detail.json');
 
-        // Route::post('update/{id}', 'TopingController@update')->name('admin.topping.update');
+        // Route::get('detail', 'OrderDetailController@showDetail')->name('detail.show');
 
-        // Route::get('destroy/{id}', 'TopingController@destroy')->name('admin.topping.destroy');
+        // Route::get('detail/update-quantity', 'OrderDetailController@updateQuantity')->name('detail.update_quantity');
 
-        // Route::get('show/{id}', 'TopingController@show')->name('admin.topping.show');
+        // Route::get('{id}/detail/json', 'OrderDetailController@showJson')->name('detail.json');
+
+        Route::post('update/{id}', 'OrderController@update')->name('admin.order.update');
+
+        Route::get('delete/{id}', 'OrderController@destroy')->name('admin.order.destroy');
     });
 });
 
@@ -145,3 +151,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin'], function() {
 //         //
 //     });
 // });
+
+Route::get('demo', function() {
+    return view('layouts.index2');
+});

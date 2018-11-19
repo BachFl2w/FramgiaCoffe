@@ -6,6 +6,8 @@ use App\Category;
 use App\Http\Requests\CategoryRequest;
 use Illuminate\Http\Request;
 
+use RealRashid\SweetAlert\Facades\Aler;
+
 class CategoryController extends Controller
 {
     /**
@@ -27,7 +29,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.category_create');
     }
 
     /**
@@ -43,6 +45,10 @@ class CategoryController extends Controller
         $category->name = $request->name;
 
         $category->save();
+
+        toast('Your Post as been submited!','success','top-right');
+
+        return redirect()->route('admin.category.index');
     }
 
     /**
@@ -64,7 +70,9 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $category = Category::findOrFail($id);
+
+        return view('admin.category_update', compact('category'));
     }
 
     /**
@@ -76,11 +84,13 @@ class CategoryController extends Controller
      */
     public function update(CategoryRequest $request, $id)
     {
-        $category =  Category::find($id);
+        $category =  Category::findOrFail($id);
 
         $category->name = $request->name;
 
         $category->save();
+
+        return redirect()->route('admin.category.index')->with('success', __('message.success.create'));
     }
 
     /**
@@ -91,15 +101,10 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        $category = Category::find($id);
+        $category = Category::findOrFail($id);
 
         $category->delete();
-    }
 
-    public function getDataJson()
-    {
-        $categories_data = Category::all();
-
-        return $categories_data;
+        return redirect()->route('admin.category.index')->with('success', __('message.success.delete'));
     }
 }

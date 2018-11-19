@@ -21,9 +21,10 @@ class CreateOrdersTable extends Migration
             $table->timestamp('order_time');
             $table->string('order_place');
             $table->string('order_phone');
-            $table->unsignedTinyInteger('status');
+            $table->TinyInteger('status');
             $table->text('note');
             $table->timestamps();
+            $table->softDeletes();  
         });
     }
 

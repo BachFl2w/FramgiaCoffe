@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProductRequest;
 use App\Image;
 use App\Product;
+use App\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Intervention\Image\ImageManagerStatic as Images;
 
 class ProductController extends Controller
@@ -18,7 +20,25 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return view('admin.product_list');
+        $products = Product::with('category')->get();
+
+        $index = 0;
+
+        foreach ($products as $product) {
+
+            $images = Image::where('product_id', $product->id)->orderBy('active', 'desc')->orderBy('id', 'desc')->get();
+            $image = null;
+            if (count($images) != 0) {
+
+                $image = $images[0]->name;
+            }
+
+            $products[$index]->image = $image;
+
+            $index ++;
+        }
+        
+        return view('admin.product_list', compact('products'));
     }
 
     /**
@@ -28,7 +48,10 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        
+        $categories = Category::pluck('name', 'id');
+
+        return view('admin.product_create', compact('categories'));
     }
 
     /**
@@ -69,6 +92,7 @@ class ProductController extends Controller
 
         $img->save();
 
+        return route('admin.product.index');
     }
 
     /**
@@ -79,18 +103,7 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        $product = DB::table('products')
-            ->join('images','products.id','=','images.product_id')
-            ->join('categories','products.category_id', 'categories.id')
-            ->select('products.id', 'products.name as name', 'price', 'quantity', 'description', 'images.name as main_image', 'categories.id as category_id', 'active')
-            ->where([
-                'products.id', '=', $id,
-            ])
-            ->orderBy('active', 'desc')
-            ->orderBy('images.product_id', 'desc')
-            ->get();
-
-        return $product;
+        
     }
 
     /**
@@ -101,7 +114,36 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        //
+        $product = Product::findOrFail($id);
+
+        $images = Image::where('product_id', $product->id)->orderBy('active', 'desc')->orderBy('id', 'desc')->get();
+        $image = null;
+        if (count($images) != 0) {
+
+            $image = $images[0]->name;
+        }
+
+        $product->image = $image;
+
+        $categories = Category::pluck('name', 'id');
+
+        return view('admin.product_update', compact('product', 'categories'));
+    }
+
+    public function productJson($id)
+    {
+        $product = Product::findOrFail($id);
+
+        $images = Image::where('product_id', $product->id)->orderBy('active', 'desc')->orderBy('id', 'desc')->get();
+        $image = null;
+        if (count($images) != 0) {
+
+            $image = $images[0]->name;
+        }
+
+        $product->image = $image;
+
+        return $product;
     }
 
     /**
@@ -111,7 +153,7 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ProductRequest $request, $id)
     {
         $product = Product::findOrFail($id);
 
@@ -126,6 +168,27 @@ class ProductController extends Controller
         $product->description = $request->description;
 
         $product->save();
+
+        $image = $request->file('image');
+
+        if ($image != null) {
+            
+            $filename = $product->name . '_' . $image->getClientOriginalName();
+
+            $path = public_path('images/products/' . $filename);
+
+            $image_resize = Images::make($image->getRealPath())->resize(600, 348)->save($path);
+
+            $img = new Image();
+
+            $img->name = $filename;
+
+            $img->product_id = $product->id;
+
+            $img->save();
+        }
+
+        return redirect()->route('admin.product.index');
     }
 
     /**
@@ -139,20 +202,22 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
 
         $product->delete();
+
+        return redirect()->route('admin.product.index');
     }
 
-    public function getDataJson()
+    public function getMainImage($product_id)
     {
-        $products_data = Product::with('category')->get();
+        $image = Image::where('product_id', $product_id)->where('active', 1)->get();
 
-        return $products_data;
+        return $image;
     }
 
     public function getImages(Request $request)
     {
         $product_id = $request->id;
 
-        $images_data = Image::where('product_id',$product_id)->get();
+        $images_data = Image::where('product_id', $product_id)->get();
 
         return $images_data;
     }

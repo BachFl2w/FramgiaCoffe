@@ -86,18 +86,22 @@
 
                 <div class="user-menu dropdown-menu" >
                     <a class="nav-link" href="{{ route('admin.user.edit', $currentUser->id) }}">
-                        <i class="fa fa-user">{{ $currentUser->name }}</i></a>
+                        <i class="fa fa-user"></i>{{ $currentUser->name }}
+                    </a>
                     <a class="nav-link" href="{{ route('admin.logout') }}"><i class="fa fa-power -off"></i>Logout</a>
                 </div>
             </div>
 
             <div class="language-select dropdown" id="language-select">
                 <a class="dropdown-toggle" href="#" data-toggle="dropdown" id="language" aria-haspopup="true" aria-expanded="true">
-                    <i class="flag-icon flag-icon-vn"></i>
+                    {{-- <i class="flag-icon flag-icon-vn"></i> --}}
+                    <img src="{{ asset('images/en_flat.png') }}" class="img-fluid">
                 </a>
                 <div class="dropdown-menu" aria-labelledby="language" >
                     <div class="dropdown-item">
-                        <span class="flag-icon flag-icon-us"></span>
+                        <a href="">
+                            <img src="{{ asset('images/vn_flat.png') }}" class="img-fluid">
+                        </a>
                     </div>
                 </div>
             </div>

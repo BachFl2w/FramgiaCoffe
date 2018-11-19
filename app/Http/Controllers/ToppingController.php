@@ -14,7 +14,9 @@ class TopingController extends Controller
      */
     public function index()
     {
-        return view('admin.topping_list');
+        $toppings = Topping::all();
+
+        return view('admin.topping_list', compact('toppings'));
     }
 
     /**
@@ -24,7 +26,7 @@ class TopingController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.topping_create');
     }
 
     /**
@@ -44,6 +46,8 @@ class TopingController extends Controller
         $topping->quantity = $request->quantity;
 
         $topping->save();
+
+        return redirect()->route('admin.topping.index');
     }
 
     /**
@@ -54,10 +58,8 @@ class TopingController extends Controller
      */
     public function show($id)
     {
-        $topping = Topping::find($id);
-
-        return $topping;
-    }
+        
+    }  
 
     /**
      * Show the form for editing the specified resource.
@@ -67,7 +69,9 @@ class TopingController extends Controller
      */
     public function edit($id)
     {
-        //
+        $topping = Topping::findOrFail($id);
+
+        return view('admin.topping_update', compact('topping'));
     }
 
     /**
@@ -79,7 +83,7 @@ class TopingController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $topping = Topping::find($id);
+        $topping = Topping::findOrFail($id);
 
         $topping->name = $request->name;
 
@@ -88,6 +92,8 @@ class TopingController extends Controller
         $topping->quantity = $request->quantity;
 
         $topping->save();
+
+        return redirect()->route('admin.topping.index');
     }
 
     /**
@@ -98,9 +104,11 @@ class TopingController extends Controller
      */
     public function destroy($id)
     {
-        $topping = Topping::find($id);
+        $topping = Topping::findOrFail($id);
 
         $topping->delete();
+
+        return redirect()->route('admin.topping.index');
     }
 
     public function getDataJson()

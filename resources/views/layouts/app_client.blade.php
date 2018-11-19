@@ -81,10 +81,10 @@
                         </li>
                     @endif
                 </ul>
-            </div><!-- End main-menu -->
+            </div>
             </nav>
-        </div><!-- End row -->
-    </div><!-- End container -->
+        </div>
+    </div>
     </header>
     <!-- End Header =============================================== -->
 
