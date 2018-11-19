@@ -58,7 +58,8 @@
                     <li class="submenu">
                     <a href="javascript:void(0);" class="show-submenu">{{ __('message.product') }}<i class="icon-down-open-mini"></i></a>
                     <ul>
-                        <li><a href="">Row listing</a></li>
+                        <li><a href="{{ route('client.list_product') }}">{{ __('message.hot_product') }}</a></li>
+                        <li><a href="">{{ __('message.new_product') }}</a></li>
                     </ul>
                     </li>
                     <li><a href="#">{{ __('message.title.about') }}</a></li>
@@ -81,10 +82,10 @@
                         </li>
                     @endif
                 </ul>
-            </div><!-- End main-menu -->
+            </div>
             </nav>
-        </div><!-- End row -->
-    </div><!-- End container -->
+        </div>
+    </div>
     </header>
     <!-- End Header =============================================== -->
 
@@ -108,8 +109,8 @@
     </div><!-- End subheader -->
     <div id="count" class="hidden-xs">
         <ul>
-            <li><span class="number">200</span> {{ __('message.product') }}</li>
-            <li><span class="number">15</span> {{ __('message.category') }}</li>
+            <li><span class="number">{{ $number_product }}</span> {{ __('message.product') }}</li>
+            <li><span class="number">{{ $number_category }}</span> {{ __('message.category') }}</li>
             <li><span class="number">5</span> {{ __('message.shipper') }}</li>
         </ul>
     </div>

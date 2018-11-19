@@ -18,6 +18,7 @@ class CreateSizesTable extends Migration
             $table->string('name');
             $table->float('percent');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

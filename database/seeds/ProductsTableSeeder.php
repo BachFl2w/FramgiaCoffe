@@ -51,6 +51,30 @@ class ProductsTableSeeder extends Seeder
             ],
         ];
 
+        $faker = Faker\Factory::create();
+
+        $limit = 50;
+
+        for ($i = 0; $i < $limit; $i++) {
+             $data[] = [
+                'name' => $faker->lexify('Trà Sữa ???'),
+                'price' => $faker->numberBetween(1, 9999),
+                'description' => $faker->text,
+                'category_id' => random_int(1, 4),
+                'quantity' => $faker->numberBetween(1, 100),
+            ];
+        }
+
+        for ($i = 0; $i < $limit; $i++) {
+             $data[] = [
+                'name' => $faker->lexify('Nước ???'),
+                'price' => $faker->numberBetween(1, 400),
+                'description' => $faker->text,
+                'category_id' => random_int(1, 4),
+                'quantity' => $faker->numberBetween(1, 100),
+            ];
+        }
+
         DB::table('products')->insert($data);
     }
 }

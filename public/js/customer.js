@@ -1,32 +1,4 @@
-// $.noConflict();
-
 jQuery(document).ready(function($) {
-
-
-    // "use strict";
-
-    // [].slice.call(document.querySelectorAll('select.cs-select')).forEach(function(el) {
-    //     new SelectFx(el);
-    // });
-
-    // jQuery('.selectpicker').selectpicker;
-
-
-    // $('#menuToggle').on('click', function(event) {
-    //     $('body').toggleClass('open');
-    // });
-
-    // $('.search-trigger').on('click', function(event) {
-    //     event.preventDefault();
-    //     event.stopPropagation();
-    //     $('.search-trigger').parent('.header-left').addClass('open');
-    // });
-
-    // $('.search-close').on('click', function(event) {
-    //     event.preventDefault();
-    //     event.stopPropagation();
-    //     $('.search-trigger').parent('.header-left').removeClass('open');
-    // });
 
     /**
      * setup ajax
@@ -493,9 +465,9 @@ jQuery(document).ready(function($) {
 
             success: function(data) {
 
-                var data = data[0];
-
                 console.log(data);
+
+                var data = data[0];
 
                 $('#product_category').val(data.category_id);
 
@@ -507,7 +479,9 @@ jQuery(document).ready(function($) {
 
                 CKEDITOR.instances['ckeditor_product_descrition'].setData(data.description);
 
-                $('#image_review_create').attr('src', 'http://127.0.0.1:8000/images/product/' + data.main_image);
+                var image = data[0].images;
+
+                $('#image_review_create').attr('src', 'http://127.0.0.1:8000/images/products/' + data.main_image);
             },
         });
 
@@ -599,7 +573,7 @@ jQuery(document).ready(function($) {
 
                     arr.forEach(function(element, index) {
 
-                        var url_image = "http://127.0.0.1:8000/images/product/" + element[1].name;
+                        var url_image = "http://127.0.0.1:8000/images/products/" + element[1].name;
 
                         div_images += '<div class="mySlides">' +
                             '<div class="numbertext">' + (index + 1) + ' / ' + arr.length + '</div>' +

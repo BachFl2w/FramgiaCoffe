@@ -1,138 +1,65 @@
 @extends('layouts.app2')
-@section('css')
-<link rel="stylesheet" href="{{ asset('css/customer.css') }}">
 
+@section('page-title')
+    <li><a href="{{route('admin.user.index')}}">{{ __('message.title.dashboard') }}</a></li>
+    <li class="active">List</li>
 @endsection
+
 @section('content')
-    <div class="container-fluid">
-        <div class="card">
-            <div class="card-header">
-                {{ __('Quản Lý Sản Phẩm')}}
-
-                <button class="float-right btn btn-outline-primary" data-toggle="modal"
-                 data-target="#ProductModal" id="btnCreateProduct">Create</button>
-            </div>
-
-            <div class="card-body">
-                <table class="table table-bordered" id="admin_product_list">
-                    <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Sản Phẩm</th>
-                        <th>Só lượng</th>
-                        <th>Ảnh</th>
-                        <th>Giá</th>
-                        <th>Miêu tả</th>
-                        <th>Thể Loại</th>
-                        <th>Chức Năng</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="UpdateImageModal" role="dialog" aria-labelledby="UpdateImageModalTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Ảnh sản phẩm</h5>
-                    <input id="image_product_id" hidden="hidden">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="images-container" id="images-container">
-                        <div class="images">
-                            {{-- <div class="mySlides">
-                                <div class="numbertext">1 / 3</div> 
-                                <img src="{{ asset('images/product/1.jpg') }}" style="width:100%">
-                                <div class="text">Caption Text</div>
-                            </div> --}}
-                        </div>
-                        <div class="image-button" id="image-button">
-                            <a class="image-prev" id="image-prev" >&#10094;</a>
-                            <a class="image-next" id="image-next" >&#10095;</a>
-                        </div>
+<div class="animated fadeIn">
+    <div class="rows">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <strong class="card-title">{{ __('message.product') }}</strong>
+                    <div class="float-right">
+                        <a href="{{ route('admin.product.create') }}" class="btn btn-outline-info" title="show">{{ __('message.create') }}</a>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <form method="post" enctype="multipart/form-data" id="add_more_image_form">
-                        <button type="button" id="addImageProduct" class="btn btn-primary">Thêm ảnh</button>
-                        <input type="file" id="file_image_product" name="images[]" multiple hidden="hidden">
-                    </form>
-                    <button type="button" id="main_image_button" class="btn btn-primary">Chọn làm ảnh đại diện</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Thoát</button>
+                <div class="card-body">
+                    <div class="table-responsive m-t-40">
+                        <table class="table table-striped table-bordered" id="admin_product_list">
+                            <thead>
+                                <tr>
+                                    <th>{{ __('message.id') }}</th>
+                                    <th>{{ __('message.product') }}</th>
+                                    <th>{{ __('message.quantity') }}</th>
+                                    <th>{{ __('message.image') }}</th>
+                                    <th>{{ __('message.price') }}</th>
+                                    <th>{{ __('message.description') }}</th>
+                                    <th>{{ __('message.category') }}</th>
+                                    <th>{{ __('message.action') }}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($products as $product)
+                                    <tr>
+                                        <td>{{ $product->id }}</td>
+                                        <td>{{ $product->name }}</td>
+                                        <td>{{ number_format($product->quantity) }}</td>
+                                        <td><img width="80%" src="{{ asset('images/products/' . $product->image) }}"></td>
+                                        <td>{{ number_format($product->price) }}</td>
+                                        <td>{{ str_limit($product->description, $limit = 30, $end = '...') }}</td>
+                                        <td>{{ $product->category->name }}</td>
+                                        <td>
+                                            <a href="{{ route('admin.product.edit', ['id' => $product->id]) }}" class="btn btn-outline-primary"><i class="fa fa-edit"></i></a>
+                                            <a href="{{ route('admin.product.destroy', ['id' => $product->id]) }}" class="btn btn-outline-danger"><i class="fa fa-trash"></i></a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
-
-    <div class="modal fade" id="ProductModal" tabindex="-1" data-backdrop="false" role="dialog" aria-labelledby="CreateProductModalTitle" aria-hidden="true">
-        <div class="modal-dialog modal-lg model-big" >
-            <div class="modal-content">
-                <form method="post" id="add_product_form" enctype="multipart/form-data">
-                    @csrf
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="titleModalProduct">Thông Tin Sản Phẩm</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-5">
-                                <p class="text" id="choose_image_product_modal"></p>
-                                <img id="image_review_create" class="img-thumbnail">
-                                <input type="file" id="product_image" name="image">
-                            </div>
-                            <div class="col-7">
-                                <div class="form-group" id="group_product_id">
-                                    <label for="id" class="pr-1 form-control-label">ID</label>
-                                    <input type="text" name="id" required class="form-control" placeholder="ID sản phẩm" id="product_id">
-                                </div>
-                                <div class="form-group">
-                                    <label for="name" class="pr-1 form-control-label">Sản Phẩm</label>
-                                    <input type="text" name="name" required class="form-control" placeholder="Tên sản phẩm" id="product_name">
-                                </div>
-                                <div class="form-group">
-                                    <label for="" class="px-1 form-control-label">Giá</label>
-                                    <input type="number" name="price" required class="form-control" placeholder="Giá sản phẩm" id="product_price">
-                                </div>
-                                <div class="form-group">
-                                     <label for="" class="px-1 form-control-label">Số lượng</label>
-                                    <input type="number" name="quantity" required class="form-control" placeholder="Số lượng sản phẩm" id="product_quantity">
-                                </div>
-                                <div class="form-group">
-                                    <label for="" class="px-1 form-control-label">Thể loại</label>
-                                    <select class="form-control" required id="product_category" name="category_id">
-                                        <option value="" class="" hidden>--Chọn thể loại--</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="form-group">
-                                    <label for="" class="px-1 form-control-label">Miêu tả</label>
-                                    <textarea id="ckeditor_product_descrition" name="ckeditor" class="form-control ckeditor"></textarea>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <input type="button" class="btn btn-primary" id="btnSubmitProduct" value="Thêm sản phẩm">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
+</div>
+@endsection
+@section('script')
+<script type="text/javascript">
+    jQuery(document).ready(function($) {
+        $('#admin_product_list').DataTable();
+    });
+</script>
 @endsection

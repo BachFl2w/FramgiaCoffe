@@ -1,10 +1,16 @@
 @extends('layouts.app2')
 
+@section('page-title')
+    <li><a href="{{route('admin.user.index')}}">{{ __('message.title.dashboard') }}</a></li>
+    <li class="active">List</li>
+@endsection
+
 @section('content')
-    <div class="container-fluid">
+<div class="animated">
+    <div class="rows">
         <div class="card">
             <div class="card-header">
-                {{ __('Quản Lý Đơn Hàng ') }}
+                {{ __('Manager Order') }}
 
             </div>
 
@@ -12,105 +18,45 @@
                 <table class="table table-bordered" id="admin_order_list">
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Mã Khách Hàng</th>
-                            <th>Tên Người nhận</th>
-                            <th>Thời Gian Đặt Hàng</th>
-                            <th>Địa Điểm Đặt Hàng</th>
-                            <th>Điện Thoại Đặt Hàng</th>
-                            <th>Trạng Thái</th>
-                            <th>Ghi Chú</th>
-                            <th>Chức Năng</th>
+                            <th>{{ __('message.id') }}</th>
+                            <th>{{ __('message.order_title.receiver') }}</th>
+                            <th>{{ __('message.order_title.time_order') }}</th>
+                            <th>{{ __('message.order_title.address_order') }}</th>
+                            <th>{{ __('message.order_title.phone_order') }}</th>
+                            <th>{{ __('message.order_title.status') }}</th>
+                            <th>{{ __('message.order_title.note') }}</th>
+                            <th>{{ __('message.action') }}</th>
                         </tr>
                     </thead>
-                    <tbody></tbody>
+                    <tbody>
+                        @foreach ($orders as $order)
+                            <tr>
+                            <td>{{ $order->id }}</td>
+                            <td>{{ $order->receiver }}</td>
+                            <td>{{ $order->order_time }}</td>
+                            <td>{{ $order->order_place }}</td>
+                            <td>{{ $order->order_phone }}</td>
+                            <td>{{ $order->status }}</td>
+                            <td>{{ $order->note }}</td>
+                            <td>
+                                <a href="{{ route('admin.order.edit', ['id' => $order->id]) }}" class="btn btn-outline-primary"><i class="fa fa-edit"></i></a>
+                                <a href="{{ route('admin.order.destroy', ['id' => $order->id]) }}" onclick="return confirm('Delete this one? ')" class="btn btn-outline-danger"><i class="fa fa-trash"></i></a>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
                 </table>
             </div>
         </div>
     </div>
+</div>
 
-    <div class="modal fade" id="OrderModal" data-backdrop="false" role="dialog" aria-labelledby="OrderModalTitle" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="orderModalTitle">Hóa đơn</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group" id="order_group_id">
-                        <label for="id" class="px-1 form-control-label">ID</label>
-                        <input type="text" id="order_id" required class="form-control">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="name" class="px-1 form-control-label">Thể loại</label>
-                        <input type="text" id="order_name" required class="form-control">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" id="btnSubmitorder">Xác Nhận</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy bỏ</button>
-                </div>
-            </div>
-        </div>
-    </div>
 @endsection
 @section('script')
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
     <script type="text/javascript">
         jQuery(document).ready(function($) {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                },
-            });
-
-            var order_table = $('#admin_order_list').DataTable({
-                ajax: {
-                    url: route('admin.order.json'),
-                    dataSrc: '',
-                    type: 'get',
-                },
-                columns: [
-                    { data: 'id' },
-                    { data: 'user_id' },
-                    { data: 'receiver' },
-                    {
-                        data: 'order_time',
-                        render: function(data, type, row){
-                        if(type === "sort" || type === "type"){
-                            return data;
-                        }
-                        return moment(data).format("DD-MM-YYYY HH:mm");
-                    }
-                    },
-                    { data: 'order_place' },
-                    { data: 'order_phone' },
-                    {
-                        data: 'status',
-                        render: function(data, type, row){
-                            if(data == 0)
-                                return 'Chưa xử lý';
-                            else
-                                return 'Đã xử lý';
-                        }
-                    },
-                    { data: 'note' },
-                    {
-                        data: 'id',
-                        render: function(data)
-                        {
-                            var url = route('admin.detail.index', {id: data});
-                            return '<a class="btn btn-outline-primary" href="'+ url +'"><i class="fa fa-info fa-4"></i></a> ' +
-                            '<button class="btn btn-outline-danger" title="Delete" id="btnOrderorder"><i class="fa fa-trash-o"></i></button> '
-                        }
-                    },
-                ],
-            });
-
-
+            
+            var order_table = $('#admin_order_list').DataTable(); 
         });
     </script>
 @endsection

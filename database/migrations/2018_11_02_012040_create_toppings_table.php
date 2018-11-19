@@ -19,6 +19,7 @@ class CreateToppingsTable extends Migration
             $table->unsignedInteger('price');
             $table->unsignedInteger('quantity');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

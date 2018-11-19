@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 
 use App\Order;
+use App\OrderDetail;
+use App\Image;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -15,7 +17,9 @@ class OrderController extends Controller
      */
     public function index()
     {
-        return view('admin.order_list');
+        $orders = Order::all();
+
+        return view('admin.order_list', compact('orders'));
     }
 
     /**
@@ -25,7 +29,7 @@ class OrderController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -47,7 +51,7 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-        //
+        
     }
 
     /**
@@ -58,7 +62,49 @@ class OrderController extends Controller
      */
     public function edit($id)
     {
-        //
+        $order = Order::findOrFail($id);
+
+        $orderDetails = OrderDetail::with('product', 'size', 'toppings')->where('order_id', $id)->get();
+
+        $index = 0;
+
+        $images = [];
+
+        foreach ($orderDetails as $orderDetail) {
+
+            $product_id = $orderDetail->product->id;
+
+            $image = Image::where('product_id', $product_id)->where('active', 1)->first();
+
+            if ($image != null) {
+
+                $orderDetails[$index]->image = $image->name;
+            }
+            else {
+
+                $image = Image::where('product_id', $product_id)->orderBy('id','DESC')->first();
+
+                $orderDetails[$index]->image = $image->name;
+            }
+
+            $priceProduct = $orderDetail->product->price * (1 + $orderDetail->size->percent) * $orderDetail->quantity;
+
+            $priceTopping = 0;
+
+            foreach ($orderDetail->toppings as $topping) {
+
+                $priceTopping += $topping->price ;
+
+            }
+
+            $orderDetails[$index]->price = $priceProduct + $priceTopping;
+
+            $orderDetails[$index]->status = $order->status;
+
+            $index ++;
+        }
+
+        return view('admin.order_detail', compact('orderDetails', 'order'));
     }
 
     /**
@@ -70,7 +116,16 @@ class OrderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $order = Order::findOrFail($id);
+        $order->receiver = $request->receiver;
+        $order->order_phone = $request->order_phone;
+        $order->order_time = $request->order_time;
+        $order->order_place = $request->order_place;
+        $order->note = $request->note;
+        $order->status = $request->status;
+        $order->save();
+
+        return redirect()->route('admin.order.edit', ['id' => $id]);
     }
 
     /**
@@ -81,13 +136,10 @@ class OrderController extends Controller
      */
     public function destroy($id)
     {
-        //
-    }
+        $order = Order::findOrFail($id);
 
-    public function getDataJson()
-    {
-        $orders = Order::all();
+        $order->delete();
 
-        return $orders;
+        return redirect()->route('admin.order.index');
     }
 }

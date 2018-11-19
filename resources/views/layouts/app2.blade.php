@@ -16,81 +16,51 @@
 
 
     <link rel="shortcut icon" href="favicon.ico">
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
-    <link rel="stylesheet" href="{{ asset('admin_template/assets/css/normalize.css') }}">
-    <link rel="stylesheet" href="{{ asset('admin_template/assets/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('admin_template/assets/css/font-awesome.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('admin_template/assets/css/themify-icons.css') }}">
-    <link rel="stylesheet" href="{{ asset('admin_template/assets/css/flag-icon.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('admin_template/assets/css/cs-skin-elastic.css') }}">
-    <link rel="stylesheet" href="{{ asset('admin_template/assets/css/lib/datatable/dataTables.bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('admin_template/assets/css/lib/datatable/buttons.dataTables.bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('admin_template/assets/scss/style.css') }}">
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    
     @yield('css')
 
 
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
+    {{-- <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'> --}}
 
 </head>
 <body>
+    <div id="app">
+        @include('layouts.left_panel')
 
-    @include('layouts.left_panel')
+        <div id="right-panel" class="right-panel">
 
-    <div id="right-panel" class="right-panel">
+            @include('layouts.header')
 
-        @include('layouts.header')
-
-        <div class="breadcrumbs">
-            <div class="col-sm-4">
-                <div class="page-header float-left">
-                    <div class="page-title">
-                        <h1>Dashboard</h1>
+            <div class="breadcrumbs">
+                <div class="col-sm-4">
+                    <div class="page-header float-left">
+                        <div class="page-title">
+                            <h1>Dashboard</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-8">
+                    <div class="page-header float-right">
+                        <div class="page-title">
+                            <ol class="breadcrumb text-right">
+                                @yield('page-title')
+                            </ol>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-sm-8">
-                <div class="page-header float-right">
-                    <div class="page-title">
-                        <ol class="breadcrumb text-right">
-                            @yield('page-title')
-                        </ol>
-                    </div>
-                </div>
+
+            <div class="content mt-3">
+
+                @yield('content')
+
             </div>
         </div>
+    </div>
 
-        <div class="content mt-3">
-
-            @yield('content')
-
-        </div> <!-- .content -->
-    </div><!-- /#right-panel -->
-
-
-
-    <script src="{{ asset('admin_template/assets/js/vendor/jquery-2.1.4.min.js')}}"></script>
-    <script src="{{ asset('admin_template/assets/js/popper.min.js')}}"></script>
-    <script src="{{ asset('admin_template/assets/js/plugins.js')}}"></script>
-    <script src="{{ asset('admin_template/assets/js/main.js')}}"></script>
-
-
-    <script src="{{ asset('admin_template/assets/js/lib/data-table/datatables.min.js') }}"></script>
-    <script src="{{ asset('admin_template/assets/js/lib/data-table/dataTables.bootstrap.min.js') }}"></script>
-    <script src="{{ asset('admin_template/assets/js/lib/data-table/dataTables.buttons.min.js') }}"></script>
-    <script src="{{ asset('admin_template/assets/js/lib/data-table/buttons.bootstrap.min.js') }}"></script>
-    <script src="{{ asset('admin_template/assets/js/lib/data-table/jszip.min.js') }}"></script>
-    <script src="{{ asset('admin_template/assets/js/lib/data-table/pdfmake.min.js') }}"></script>
-    <script src="{{ asset('admin_template/assets/js/lib/data-table/vfs_fonts.js') }}"></script>
-    <script src="{{ asset('admin_template/assets/js/lib/data-table/buttons.html5.min.js') }}"></script>
-    <script src="{{ asset('admin_template/assets/js/lib/data-table/buttons.print.min.js') }}"></script>
-    <script src="{{ asset('admin_template/assets/js/lib/data-table/buttons.colVis.min.js') }}"></script>
-    <script src="{{ asset('admin_template/assets/js/lib/data-table/datatables-init.js') }}"></script>
-
-
-    <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
-    <script src="{{ asset('js/customer.js') }}" ></script>
-
+    <script src="{{ asset('js/app.js') }}"></script>
     @yield('script')
 
 </body>

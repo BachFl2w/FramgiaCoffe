@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use App\User;
+use App\Product;
+use App\Category;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
 
@@ -29,6 +31,16 @@ class AppServiceProvider extends ServiceProvider
             } else {
                 $view->with('currentUser', 'Guest');
             }
+        });
+
+        view()->composer('layouts/app_client', function($view) {
+            $number_product = Product::all()->count();
+            $view->with('number_product', $number_product);
+        });
+
+        view()->composer('layouts/app_client', function($view) {
+            $number_category = Category::all()->count();
+            $view->with('number_category', $number_category);
         });
     }
 

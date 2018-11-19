@@ -3,14 +3,19 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
+    use SoftDeletes;
+
     protected $table = 'products';
+
+    protected $dates = ['deleted_at'];
 
     public function images()
     {
-        $this->hasMany(Image::class);
+        return $this->hasMany(Image::class);
     }
 
     public function feedbacks()
@@ -20,6 +25,6 @@ class Product extends Model
 
     public function category()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(Category::class)->withTrashed();
     }
 }

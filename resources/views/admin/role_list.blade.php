@@ -78,8 +78,8 @@
     </div>
 @endif
 
-<div class="animated fadeIn">
-    <div class="rows">
+<div class="animated ">
+    <div class="row">
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
