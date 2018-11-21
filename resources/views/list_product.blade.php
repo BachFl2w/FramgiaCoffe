@@ -70,7 +70,7 @@
 								<option value="" selected>Sort by ranking</option>
 								<option value="lower">Lowest ranking</option>
 								<option value="higher">Highest ranking</option>
-							</select>
+							</select> 
 						</div>
 					</div>
 					<div class="col-md-9 col-sm-9 hidden-xs">

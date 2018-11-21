@@ -60,7 +60,7 @@
                                 <div class="rating">
                                     <i class="icon_star voted"></i><i class="icon_star voted"></i><i
                                         class="icon_star voted"></i><i class="icon_star voted"></i><i
-                                        class="icon_star"></i>
+                                        class="icon_star"></i> 
                                 </div>
                                 <h3>{{ $product->name }}</h3>
                                 <div class="type">
