@@ -153,16 +153,6 @@ return [
     'hot_product' => 'Hot Product',
     'new_product' => 'New Product',
     'order' => 'Order',
-<<<<<<< HEAD
     'orderList' => 'Order List',
     'topping' => 'Topping',
-
-
-||||||| merged common ancestors
-=======
-    'topping' => 'Topping',
-
-
-
->>>>>>> 5701f99984f412f1c3dd49011ade54c21c2c9734
-];
+]

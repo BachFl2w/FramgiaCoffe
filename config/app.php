@@ -221,12 +221,6 @@ return [
         'Html'         => Collective\Html\HtmlFacade::class,
         'Debugbar'     => Barryvdh\Debugbar\Facade::class,
         'Image'        => Intervention\Image\Facades\Image::class,
-<<<<<<< HEAD
-        'Alert'        => RealRashid\SweetAlert\Facades\Alert::class,
-||||||| merged common ancestors
-=======
-        'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
->>>>>>> 5701f99984f412f1c3dd49011ade54c21c2c9734
     ],
 
 ];
