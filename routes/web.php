@@ -27,7 +27,6 @@ Route::group(['middleware' => 'locale'], function() {
 Route::post('login', 'UserController@login')->name('postLogin');
 Route::get('logout', 'UserController@logoutUser')->name('logout');
 
-
 Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin'], function() {
 
     Route::get('logout', 'UserController@logoutAdmin')->name('admin.logout');
@@ -81,13 +80,13 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin'], function() {
 
         Route::post('store', 'ProductController@store')->name('admin.product.store');
 
-        ROute::get('edit/{id}', 'ProductController@edit')->name('admin.product.edit');
+        Route::get('edit/{id}', 'ProductController@edit')->name('admin.product.edit');
 
         Route::get('detail/json/{id}', 'ProductController@productJson')->name('admin.product.detail.json');
 
         Route::put('update/{id}', 'ProductController@update')->name('admin.product.update');
 
-        ROute::get('destroy/{id}', 'ProductController@destroy')->name('admin.product.destroy');
+        Route::get('destroy/{id}', 'ProductController@destroy')->name('admin.product.destroy');
 
     });
 
@@ -101,7 +100,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin'], function() {
 
         Route::get('edit/{id}', 'CategoryController@edit')->name('admin.category.edit');
 
-        Route::post('update/{user}', 'CategoryController@update')->name('admin.category.update');
+        Route::post('update/{id}', 'CategoryController@update')->name('admin.category.update');
 
         Route::get('destroy/{id}', 'CategoryController@destroy')->name('admin.category.destroy');
     });
@@ -150,6 +149,13 @@ Route::group(['prefix' => 'user', 'middleware' => 'userLogin'], function() {
     Route::post('update/{user}', 'UserController@update')->name('user.update');
 });
 
-Route::get('demo', function() {
-    return view('layouts.index2');
-});
+
+// Route::group(['middleware' => 'userLogin'], function() {
+//     Route::get('', function() {
+//         //
+//     });
+// });
+
+Route::get('/', 'ClientController@index')->name('client.index');
+
+Route::get('/list-product', 'ClientController@listProduct')->name('client.list_product');
