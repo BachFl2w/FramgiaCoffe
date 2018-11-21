@@ -34,8 +34,7 @@
             <div class="card-header">Create User</div>
 
             <div class="card-body">
-                {!! Form::open(['route' => 'admin.user.store', 'method' => 'post', 'class' => 'form', 'file' => true]) !!}
-                <input type="hidden" name="_token" value="{{csrf_token()}}">
+                {!! Form::open(['route' => 'admin.user.store', 'method' => 'post', 'class' => 'form', 'files' => true]) !!}
                 <div class="form-group">
                     {!! Form::label('name', __('Name'), ['class' => 'pr-1 form-control-label']) !!}
                     {!! Form::text('name', '', ['class' => 'form-control']) !!}

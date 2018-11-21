@@ -55,7 +55,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin'], function() {
 
         Route::get('edit/{user}', 'UserController@edit')->name('admin.user.edit');
 
-        Route::post('update/{id}', 'UserController@update')->name('admin.user.update');
+        Route::post('update/{user}', 'UserController@update')->name('admin.user.update');
 
         Route::get('/destroy/{id}', 'UserController@destroy')->name('admin.user.destroy');
 

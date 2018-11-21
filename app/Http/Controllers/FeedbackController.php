@@ -8,9 +8,22 @@ use App\Feedback;
 use App\Mail\SendEmail;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
+use App\Repositories\Repository;
 
 class FeedbackController extends Controller
 {
+    protected $userModel;
+    protected $productModel;
+    protected $feedbackModel;
+
+    public function __construct(Feedback $feedbackModel, User $userModel, Product $productModel)
+    {
+        // set the model
+        $this->userModel = new Repository($userModel);
+        $this->productModel = new Repository($productModel);
+        $this->feedbackModel = new Repository($feedbackModel);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -28,43 +41,22 @@ class FeedbackController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function store(Request $request, User $user, Product $product)
     {
-        //
+        if ($request == '') {
+            return back()->with('fail', __('message.fail.feedback'));
+        }
+
+        $this->feedbackModel->create([
+            'user_id' => $user->id,
+            'product_id' => $product->id,
+            'content' => $request->content,
+            'status' => 0,
+        ]);
+
+        return back()->with('success', __('message.success.send'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -73,19 +65,12 @@ class FeedbackController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Feedback $feedback)
     {
-        //
-    }
+        $this->feedbackModel->update([
+            'status' => 1
+        ]);
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return back()->with('success', __('message.success.feedback'));
     }
 }

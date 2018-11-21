@@ -85,6 +85,21 @@
                         {!! Form::submit(__('message.submit'), ['class' => 'btn_full_outline']) !!}
                     </div>
                 {!! Form::close() !!}
+{{--                 <hr>
+                {!! Form::open() !!}
+                <h2>{{ __('message.feedback') }}</h2>
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12">
+                            <div class="form-group">
+                                {!! Form::label('name', __('message.content')) !!}
+                                {!! Form::textarea('name', '', ['class' => 'form-control']) !!}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        {!! Form::submit(__('message.send'), ['class' => 'btn_full_outline']) !!}
+                    </div>
+                {!! Form::close() !!} --}}
             </div><!-- End box_style_1 -->
 
             @if (session('success'))

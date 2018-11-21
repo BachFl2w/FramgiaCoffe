@@ -29,7 +29,7 @@ class UserUpdateRequest extends FormRequest
             're_password' => 'same:password',
             'address' => 'required|max:191',
             'phone' => 'required|digits_between:9,11',
-            'avatar' => 'mimes:jpeg,png,jpg',
+            'avatar' => 'mimes:jpeg,png,jpg|nullable',
         ];
     }
 

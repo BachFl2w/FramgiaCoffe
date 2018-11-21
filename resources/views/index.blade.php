@@ -54,7 +54,7 @@
             </div>
 
             <div class="row">
-                @foreach($data as $product)
+                {{-- @foreach($data as $product)
                     <div class="col-md-6">
                         <a href="detail_page.html" class="strip_list">
                             <div class="ribbon_1">{{ __('message.index.popular') }}</div>
@@ -83,7 +83,7 @@
                             </div><!-- End desc-->
                         </a>
                     </div>
-                @endforeach
+                @endforeach --}}
             </div><!-- End row -->
 
         </div><!-- End container -->

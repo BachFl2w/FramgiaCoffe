@@ -63,7 +63,7 @@ class UserController extends Controller
      */
     public function store(UserStoreRequest $request)
     {
-        if (Auth::user()->role_id == 1) {
+        if (Auth::user()->role_id != 1) {
             return back()->with('fail', __('message.fail.permission'));
         }
 
@@ -115,12 +115,12 @@ class UserController extends Controller
 
             return view('admin.user_edit', compact('user'));
         } else {
-
-            if ($currentUser->email != $user->email && $user->role_id == 2) {
-                return back()->with('fail', __('message.fail.permission'));
-            } elseif ($currentUser->role_id == 3) {
-                // return user logged
+            if ($currentUser->role_id == 3) {
                 return view('profile', compact('user'));
+            }
+
+            if ($currentUser->email != $user->email) {
+                return back()->with('fail', __('message.fail.permission'));
             }
 
             return view('admin.user_edit', compact('user'));
@@ -131,7 +131,6 @@ class UserController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(UserUpdateRequest $request, User $user)
@@ -154,11 +153,7 @@ class UserController extends Controller
             $password = Hash::make($request->password);
         }
 
-        if (!$user->image) {
-            $newName = null;
-        } else {
-            $newName = $user->image;
-        }
+        $newName = $user->image;
 
         if ($request->hasFile('avatar')) {
             $file = $request->file('avatar');
@@ -184,6 +179,7 @@ class UserController extends Controller
                 'phone' => $request->phone,
                 'image' => $newName,
                 'password' => $password,
+                'image' => $newName,
             ],
             $user->id
         );
@@ -224,9 +220,8 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
-        $user = User::findOrFail($id);
         $currentUser = Auth::user();
 
         if ($currentUser->role_id == 1 && $user->role_id != 1) {
@@ -258,6 +253,7 @@ class UserController extends Controller
 
     public function logoutAdmin()
     {
+
         Auth::logout();
 
         return redirect(route('login'));

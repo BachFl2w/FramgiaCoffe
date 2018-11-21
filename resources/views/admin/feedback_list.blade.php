@@ -20,7 +20,6 @@
                             <th scope="col">Sản phẩm </th>
                             <th scope="col">Nội dung</th>
                             <th scope="col">Trang thái</th>
-                            <th scope="col">Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -32,7 +31,17 @@
                                 <td>{{ $feedback->content }}</td>
                                 <td>{{ $feedback->status }}</td>
                                 <td>
-                                    <button type="button" class="btn btn-outline-primary" title="Respone"><i class="fa fa-edit"></i></button>
+                                    {!! Form::open(['route' => ['admin.user.active', $feedback->id] , 'method' => 'post']) !!}
+                                        <label class="switch switch-3d switch-primary mr-3" for="active_user{{ $feedback->id }}">
+                                            <input type="checkbox" class="switch-input"
+                                                @if ($feedback->status == 1)
+                                                    {{ 'checked' }}
+                                                @endif
+                                            >
+                                        <span class="switch-label"></span> <span class="switch-handle"></span>
+                                        </label>
+                                        {!! Form::submit('', ['id' => 'active_user' . $feedback->id, 'class' => 'd-none']) !!}
+                                    {!! Form::close() !!}
                                 </td>
                             </tr>
                         @endforeach
