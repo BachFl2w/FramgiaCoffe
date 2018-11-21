@@ -150,11 +150,9 @@ Route::group(['prefix' => 'user', 'middleware' => 'userLogin'], function() {
 });
 
 
-// Route::group(['middleware' => 'userLogin'], function() {
-//     Route::get('', function() {
-//         //
-//     });
-// });
+Route::group(['middleware' => 'userLogin'], function() {
+    Route::get('edit/{user}', 'UserController@edit')->name('user.edit');
+});
 
 Route::get('/', 'ClientController@index')->name('client.index');
 
