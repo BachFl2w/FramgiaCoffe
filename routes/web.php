@@ -128,15 +128,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin'], function() {
 
         Route::get('edit/{id}', 'OrderController@edit')->name('admin.order.edit');
 
-        // Route::get('json', 'OrderController@listOrderJson')->name('list.json');
-
         Route::get('/{id}/detail','OrderDetailController@show')->name('admin.order.detail.json');
-
-        // Route::get('detail', 'OrderDetailController@showDetail')->name('detail.show');
-
-        // Route::get('detail/update-quantity', 'OrderDetailController@updateQuantity')->name('detail.update_quantity');
-
-        // Route::get('{id}/detail/json', 'OrderDetailController@showJson')->name('detail.json');
 
         Route::post('update/{id}', 'OrderController@update')->name('admin.order.update');
 

@@ -2,8 +2,6 @@
 
 @section('page_position')
     <li><a href="#0">Home</a></li>
-    <li><a href="#0">Hot Product</a></li>
-    <li>Page active</li>
 @endsection
 
 @section('content')

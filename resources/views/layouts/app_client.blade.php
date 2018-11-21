@@ -40,7 +40,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col--md-4 col-sm-4 col-xs-4">
-                <a href="index.html" id="logo">
+                <a href="{{ route('client.index') }}" id="logo">
                 <img src="{{ asset('images/framgia-logo.png') }}" height="30" alt="" data-retina="true" class="hidden-xs">
                 <img src="{{ asset('images/framgia-logo.png') }}" height="23" alt="" data-retina="true" class="hidden-lg hidden-md hidden-sm">
                 </a>
