@@ -1,5 +1,11 @@
 @extends('layouts.app_client')
 
+@section('page_position')
+    <li><a href="#0">Home</a></li>
+    <li><a href="#0">Hot Product</a></li>
+    <li>Page active</li>
+@endsection
+
 @section('content')
     <!-- Content ================================================== -->
     <div class="container margin_60">
@@ -60,7 +66,7 @@
                                 <div class="rating">
                                     <i class="icon_star voted"></i><i class="icon_star voted"></i><i
                                         class="icon_star voted"></i><i class="icon_star voted"></i><i
-                                        class="icon_star"></i> 
+                                        class="icon_star"></i>
                                 </div>
                                 <h3>{{ $product->name }}</h3>
                                 <div class="type">

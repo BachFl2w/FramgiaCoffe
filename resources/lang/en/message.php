@@ -155,4 +155,4 @@ return [
     'order' => 'Order',
     'orderList' => 'Order List',
     'topping' => 'Topping',
-]
+];
