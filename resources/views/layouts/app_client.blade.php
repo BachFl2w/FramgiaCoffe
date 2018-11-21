@@ -75,7 +75,7 @@
                         <li class="submenu">
                             <a href="javascript:void(0);" class="show-submenu">{{ $currentUser->name }}<i class="icon-down-open-mini"></i></a>
                             <ul>
-                                <li><a href="#">{{ __('message.profile') }}</a></li>
+                                <li><a href="{{ route('user.edit', $currentUser->id) }}">{{ __('message.profile') }}</a></li>
                                 <li><a href="{{ route('logout') }}">{{ __('message.logout') }}</a></li>
                             </ul>
                         </li>
@@ -115,7 +115,14 @@
     </div>
     </section>
 
-    @yield('page_position')
+    <div id="position">
+        <div class="container">
+            <ul>
+                @yield('position')
+            </ul>
+            <a href="#0" class="search-overlay-menu-btn"><i class="icon-search-6"></i> {{ __('message.index.search') }}</a>
+        </div>
+    </div><!-- Position -->
 
     @yield('content')
 

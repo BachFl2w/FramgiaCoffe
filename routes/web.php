@@ -28,7 +28,6 @@ Route::post('login', 'UserController@login')->name('postLogin');
 Route::get('logout', 'UserController@logoutUser')->name('logout');
 
 
-
 Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin'], function() {
 
     Route::get('logout', 'UserController@logoutAdmin')->name('admin.logout');
@@ -102,7 +101,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin'], function() {
 
         Route::get('edit/{id}', 'CategoryController@edit')->name('admin.category.edit');
 
-        Route::post('update/{id}', 'CategoryController@update')->name('admin.category.update');
+        Route::post('update/{user}', 'CategoryController@update')->name('admin.category.update');
 
         Route::get('destroy/{id}', 'CategoryController@destroy')->name('admin.category.destroy');
     });
@@ -146,11 +145,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin'], function() {
     });
 });
 
-// Route::group(['middleware' => 'userLogin'], function() {
-//     Route::get('', function() {
-//         //
-//     });
-// });
+Route::group(['prefix' => 'user', 'middleware' => 'userLogin'], function() {
+    Route::get('profile/{user}', 'UserController@edit')->name('user.edit');
+    Route::post('update/{user}', 'UserController@update')->name('user.update');
+});
 
 Route::get('demo', function() {
     return view('layouts.index2');

@@ -63,6 +63,7 @@ return [
         'permission' => 'You dont have permission !',
         'approval' => 'Your account is pending approval !',
         'check' => 'You must login first !',
+        'active' => 'You account was block !',
     ],
 
     'create' => 'Create',
@@ -82,6 +83,7 @@ return [
     'logout' => 'Logout',
     'register' => 'Register',
     'user' => 'User',
+    'info' => 'Infomation',
     'name' => 'Name',
     'profile' => 'Profile',
     'avatar' => 'Avatar',
@@ -90,6 +92,7 @@ return [
     'phone' => 'Phone',
     'password' => [
         'password' => 'Password',
+        'change' => 'Change password',
         'confirm' => 'Confirm Password',
         'forgot' => 'Forgot Your Password ?',
         'reset' => 'Reset Password',
@@ -148,6 +151,7 @@ return [
 
     'product' => 'Product',
     'order' => 'Order',
+    'orderList' => 'Order List',
     'topping' => 'Topping',
 
 

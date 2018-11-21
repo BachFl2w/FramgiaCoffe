@@ -116,8 +116,11 @@ class UserController extends Controller
             return view('admin.user_edit', compact('user'));
         } else {
 
-            if ($currentUser->email != $user->email) {
+            if ($currentUser->email != $user->email && $user->role_id == 2) {
                 return back()->with('fail', __('message.fail.permission'));
+            } elseif ($currentUser->role_id == 3) {
+                // return user logged
+                return view('profile', compact('user'));
             }
 
             return view('admin.user_edit', compact('user'));
@@ -131,9 +134,8 @@ class UserController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UserUpdateRequest $request, $id)
+    public function update(UserUpdateRequest $request, User $user)
     {
-        $user = User::findOrFail($id);
         $currentUser = Auth::user();
 
         if ($currentUser->role_id == 1) {
@@ -183,7 +185,7 @@ class UserController extends Controller
                 'image' => $newName,
                 'password' => $password,
             ],
-            $id
+            $user->id
         );
 
         return back()->with('success', __('message.success.update'));
