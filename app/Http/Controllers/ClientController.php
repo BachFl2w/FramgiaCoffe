@@ -48,7 +48,7 @@ class ClientController extends Controller
     }
 
     public function listProduct() {
-        
+
         return view('list_product');
     }
 }

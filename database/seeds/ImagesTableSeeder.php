@@ -26,7 +26,7 @@ class ImagesTableSeeder extends Seeder
                 'product_id' => 4,
             ], [
                 'name' => '11.jpg',
-                'product_id' => 2,
+                'product_id' => 7,
             ], [
                 'name' => '12.jpg',
                 'product_id' => 3,
@@ -38,10 +38,13 @@ class ImagesTableSeeder extends Seeder
                 'product_id' => 2,
             ], [
                 'name' => '3.jpg',
-                'product_id' => 1,
+                'product_id' => 8,
             ], [
                 'name' => '6.jpg',
                 'product_id' => 3,
+            ], [
+                'name' => '10.jpg',
+                'product_id' => 9,
             ]
         ];
 
