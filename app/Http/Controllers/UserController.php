@@ -115,12 +115,13 @@ class UserController extends Controller
 
             return view('admin.user_edit', compact('user'));
         } else {
-            if ($currentUser->role_id == 3) {
-                return view('profile', compact('user'));
-            }
 
             if ($currentUser->email != $user->email) {
                 return back()->with('fail', __('message.fail.permission'));
+            }
+
+            if ($currentUser->role_id == 3) {
+                return view('profile', compact('user'));
             }
 
             return view('admin.user_edit', compact('user'));

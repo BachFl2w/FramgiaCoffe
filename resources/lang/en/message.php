@@ -77,6 +77,7 @@ return [
     'name' => 'Name',
     'price' => 'Price',
     'quantity' => 'Quantity',
+    'help' => 'Need Help ?',
 
     // User
     'login' => 'Login',
