@@ -116,7 +116,7 @@
                     </ul>
                     <li><a href="#">{{ __('message.title.about') }}</a></li>
                     </li>
-                    @if (!$currentUser)
+                    @if (!Auth::id())
                         <li><a href="#0" data-toggle="modal" data-target="#login_2">{{ __('message.login') }}</a></li>
                     @else
                         <li class="submenu">

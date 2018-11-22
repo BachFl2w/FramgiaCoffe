@@ -13,6 +13,7 @@ use App\OrderDetailToping;
 use App\OrderDetail;
 use App\Order;
 use App\Topping;
+use App\Product;
 
 use Session;
 use Hash;
@@ -45,6 +46,24 @@ class CartController extends Controller
     }
 
     // delete 1 product
+    public function minus(Product $product)
+    {
+        $oldCart = Session('cart') ? Session::get('cart') : null ;
+
+        if ($oldCart) {
+            $cart = new Cart($oldCart);
+            $cart->reduceByOne($product->id);
+
+            if (count($cart->items) == 0) {
+                session::forget('cart');
+            } else {
+                session(['cart' => $cart]);
+            }
+        }
+
+        return back();
+    }
+
     public function deleteOne(Product $product)
     {
         $oldCart = Session('cart') ? Session::get('cart') : null ;

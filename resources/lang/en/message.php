@@ -77,7 +77,9 @@ return [
     'name' => 'Name',
     'price' => 'Price',
     'quantity' => 'Quantity',
+    'secure' => 'Secure payment',
     'help' => 'Need Help ?',
+    'lorem' => 'Lorem ipsum dolor sit amet, in pri partem essent. Qui debitis meliore ex, tollit debitis conclusionemque te eos.',
 
     // User
     'login' => 'Login',
@@ -158,4 +160,4 @@ return [
     'topping' => 'Topping',
     'all' => 'All',
     'add_cart' => 'Add Cart',
-]; 
+];

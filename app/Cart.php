@@ -35,12 +35,14 @@ class Cart
             }
         }
 
+        dd($cart);
+
         // qty
         $cart['qty']++;
         $this->totalQty++;
 
         // price
-        $cart['price'] = $cart['qty'] * $product->price; // price foreach item
+        // $cart['price'] = $cart['qty'] * $product->price + $topping->price; // price foreach item
         $this->totalPrice += $price;
 
         // item

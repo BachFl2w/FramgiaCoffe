@@ -146,7 +146,12 @@ Route::group(['middleware' => 'userLogin'], function() {
     Route::get('edit/{user}', 'UserController@edit')->name('user.edit');
 });
 
-Route::get('cart', 'CartController@index')->name('user.cart');
+Route::group(['prefix' => 'cart'], function() {
+    Route::get('cart', 'CartController@index')->name('user.cart');
+
+    Route::get('add/{product}', 'CartController@add')->name('user.cart.add');
+    Route::get('minus/{product}', 'CartController@minus')->name('user.cart.minus');
+});
 
 Route::post('checkout', 'CartController@checkout')->name('user.checkout');
 

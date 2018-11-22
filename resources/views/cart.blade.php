@@ -8,82 +8,108 @@
 @section('content')
 <div class="container margin_60_35">
     <div class="row">
-        <div class="col-md-8 col-sm-8 add_bottom_15 box_style_2">
+        <div class="col-md-3">
+            <div class="box_style_2 hidden-xs info">
+                <h4 class="nomargin_top">{{ __('message.index.delivery_time') }}<i class="icon_clock_alt pull-right"></i></h4>
+                <p>
+                    {{ __('message.lorem') }}
+                </p>
+                <hr>
+                <h4>{{ __('message.secure') }} <i class="icon_creditcard pull-right"></i></h4>
+                <p>
+                    {{ __('message.lorem') }}
+                </p>
+            </div><!-- End box_style_2 -->
+
+            <div class="box_style_2 hidden-xs" id="help">
+                <i class="icon_lifesaver"></i>
+                <h4>{{ __('message.help') }}</span></h4>
+                <a href="tel://004542344599" class="phone">+45 423 445 99</a>
+            </div>
+        </div><!-- End col-md-3 -->
+        {!! Form::open(['method' => 'post', 'route' => 'user.checkout']) !!}
+        <div class="col-md-5 col-sm-5 add_bottom_15 box_style_2">
             <div class="indent_title_in">
                 <h3><i class="icon-user"></i> {{ __('message.info') }}</h3>
             </div>
             <div class="wrapper_indent">
-                {!! Form::open(['method' => 'post', 'route' => 'user.checkout']) !!}
-                    @if (!Auth::user())
-                        {!! Form::hidden('user_id', '', ['class' => 'hidden']) !!}
-                    @else
-                        {!! Form::hidden('user_id', Auth::user()->id, ['class' => 'hidden']) !!}
-                    @endif
-                    <div class="form-group">
-                        {!! Form::label('name', __('message.name')) !!}
-                        {!! Form::text('name', '', ['class' => 'form-control']) !!}
-                    </div>
-                    <div class="form-group">
-                        {!! Form::label('address', __('message.address')) !!}
-                        {!! Form::text('address', '', ['class' => 'form-control']) !!}
-                    </div>
-                    <div class="form-group">
-                        {!! Form::label('address', __('message.address')) !!}
-                        {!! Form::text('address', '', ['class' => 'form-control']) !!}
-                    </div>
-                    <div class="form-group">
-                        {!! Form::label('phone', __('message.phone')) !!}
-                        {!! Form::text('phone', '', ['class' => 'form-control']) !!}
-                    </div>
-                    {!! Form::submit(__('message.update'), ['class' => 'btn_1 green']) !!}
-                {!! Form::close() !!}
+                @if (!Auth::user())
+                    {!! Form::hidden('user_id', '', ['class' => 'hidden']) !!}
+                @else
+                    {!! Form::hidden('user_id', Auth::user()->id, ['class' => 'hidden']) !!}
+                @endif
+                <div class="form-group">
+                    {!! Form::label('name', __('message.name')) !!}
+                    {!! Form::text('name', '', ['class' => 'form-control']) !!}
+                </div>
+                <div class="form-group">
+                    {!! Form::label('address', __('message.address')) !!}
+                    {!! Form::text('address', '', ['class' => 'form-control']) !!}
+                </div>
+                <div class="form-group">
+                    {!! Form::label('address', __('message.address')) !!}
+                    {!! Form::text('address', '', ['class' => 'form-control']) !!}
+                </div>
+                <div class="form-group">
+                    {!! Form::label('phone', __('message.phone')) !!}
+                    {!! Form::text('phone', '', ['class' => 'form-control']) !!}
+                </div>
             </div><!-- End wrapper_indent -->
         </div>
         <div class="col-md-4" id="sidebar">
             <div class="theiaStickySidebar">
                 <div id="cart_box" >
                     <h3>Your order <i class="icon_cart_alt pull-right"></i></h3>
+                    @if (session('cart'))
+                        <strong>ok</strong>
+                    @else
+                        <strong>Empty !</strong>
+                    @endif
+                    <table class="table table_summary table-hover">
+                        <tbody>
+                        @for ($i = 0; $i < 8; $i++)
+                            <tr>
+                                <td>
+                                    <a href="{{ route('user.cart.minus', 1) }}" class="icon-minus-circled"></a>
+                                        {{ $i }}
+                                    <a href="{{ route('user.cart.add', 1) }}" class="icon-plus-circled"></a>
+                                    {{ str_random(8) . ' ' . str_random(8) }}
+                                </td>
+                                <td>
+                                    <a href="" class="icon-cancel-circled-2 pull-right"></a>
+                                    <strong class="pull-right">150,000₫</strong>
+                                </td>
+                            </tr>
+                        @endfor
+                        </tbody>
+                    </table>
+                    <hr>
                     <table class="table table_summary">
-                    <tbody>
-                    @for ($i = 0; $i < 8; $i++)
+                        <tbody>
                         <tr>
                             <td>
-                                <a href="#0" class="icon_plus_alt2"> <a href="#0" class="remove_item">
-                                <i class="icon_minus_alt"></i></a>
-                                <strong>{{ $i }}x</strong> {{ str_random(10) }}
-                            </td>
-                            <td>
-                                <strong class="pull-right">150,000₫</strong>
+                                Subtotal <span class="pull-right">150,000₫</span>
                             </td>
                         </tr>
-                    @endfor
-                    </tbody>
+                        <tr>
+                            <td>
+                                Delivery fee <span class="pull-right">150,000₫</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="total">
+                                TOTAL <span class="pull-right">150,000₫</span>
+                            </td>
+                        </tr>
+                        </tbody>
                     </table>
                     <hr>
-                    <table class="table table_summary">
-                    <tbody>
-                    <tr>
-                        <td>
-                            Subtotal <span class="pull-right">150,000₫</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Delivery fee <span class="pull-right">150,000₫</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="total">
-                            TOTAL <span class="pull-right">150,000₫</span>
-                        </td>
-                    </tr>
-                    </tbody>
-                    </table>
-                    <hr>
-                    <a class="btn_full" href="cart.html">Order now</a>
+                    {!! Form::submit(__('message.order'), ['class' => 'btn_full']) !!}
                 </div><!-- End cart_box -->
                 </div><!-- End theiaStickySidebar -->
-            </div><!-- End col-md-3 --></div>
+            </div><!-- End col-md-3 -->
+        </div>
+        {!! Form::close() !!}
     </div>
 </div>
 @endsection
