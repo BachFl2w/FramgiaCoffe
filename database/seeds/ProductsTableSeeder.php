@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Faker\Factory as Faker;
 
 class ProductsTableSeeder extends Seeder
 {
@@ -12,13 +13,13 @@ class ProductsTableSeeder extends Seeder
     public function run()
     {
         $data = [
-        	[
-        		'name' => 'Trà sữa trân châu trắng',
-        		'price' => 12345,
-        		'description' => 'Trà sữa trân châu thường có 2 loại là trân châu đen và trân châu trắng.',
-        		'category_id' => 4,
+            [
+                'name' => 'Trà sữa trân châu trắng',
+                'price' => 12345,
+                'description' => 'Trà sữa trân châu thường có 2 loại là trân châu đen và trân châu trắng.',
+                'category_id' => 4,
                 'quantity' => 100,
-        	], [
+            ], [
                 'name' => 'Trà sữa Oreo Cake Cream',
                 'price' => 312312,
                 'description' => 'rà sữa Oreo Cake Cream về cơ bản là trà sữa thông thường, tuy nhiên không dùng bột pha trực tiếp, tạo nên vị trà thơm',
@@ -51,13 +52,13 @@ class ProductsTableSeeder extends Seeder
             ],
         ];
 
-        $faker = Faker\Factory::create();
+        $faker = Faker::create();
 
-        $limit = 50;
+        $limit = 20;
 
-        for ($i = 0; $i < $limit; $i++) {
-             $data[] = [
-                'name' => $faker->lexify('Trà Sữa ???'),
+        for ($i = 0 ; $i < $limit ; $i++) {
+            $data[] = [
+                'name' => $faker->lexify('Trà Sữa ??? ????'),
                 'price' => $faker->numberBetween(1, 9999),
                 'description' => $faker->text,
                 'category_id' => random_int(1, 4),
@@ -65,9 +66,9 @@ class ProductsTableSeeder extends Seeder
             ];
         }
 
-        for ($i = 0; $i < $limit; $i++) {
-             $data[] = [
-                'name' => $faker->lexify('Nước ???'),
+        for ($i = 0 ; $i < $limit ; $i++) {
+            $data[] = [
+                'name' => $faker->lexify('Nước ???? ?????'),
                 'price' => $faker->numberBetween(1, 400),
                 'description' => $faker->text,
                 'category_id' => random_int(1, 4),

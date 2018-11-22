@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Faker\Factory as Faker;
 
 class ImagesTableSeeder extends Seeder
 {
@@ -11,42 +12,15 @@ class ImagesTableSeeder extends Seeder
      */
     public function run()
     {
-        $data = [
-            [
-                'name' => '1.jpg',
-                'product_id' => 1,
-            ], [
-                'name' => '2.jpg',
-                'product_id' => 5,
-            ], [
-                'name' => '4.jpg',
-                'product_id' => 2,
-            ], [
-                'name' => '5.jpg',
-                'product_id' => 4,
-            ], [
-                'name' => '11.jpg',
-                'product_id' => 7,
-            ], [
-                'name' => '12.jpg',
-                'product_id' => 3,
-            ] ,[
-                'name' => '9.jpg',
-                'product_id' => 6,
-            ], [
-                'name' => '8.jpg',
-                'product_id' => 2,
-            ], [
-                'name' => '3.jpg',
-                'product_id' => 8,
-            ], [
-                'name' => '6.jpg',
-                'product_id' => 3,
-            ], [
-                'name' => '10.jpg',
-                'product_id' => 9,
-            ]
-        ];
+        $faker = Faker::create();
+        $data = [];
+        $images = ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg', '11.jpg', '12.jpg', '13.jpg'];
+        for ($i = 1 ; $i <= 46 ; $i++) {
+            $data[] = [
+                'product_id' => $i,
+                'name' => $faker->randomElement($images),
+            ];
+        }
 
         DB::table('images')->insert($data);
     }

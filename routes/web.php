@@ -149,3 +149,5 @@ Route::group(['middleware' => 'userLogin'], function() {
 Route::get('/', 'ClientController@index')->name('client.index');
 
 Route::get('/list-product', 'ClientController@listProduct')->name('client.list_product');
+
+Route::post('search', 'ClientController@liveSearch')->name('client.live_search');

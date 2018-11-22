@@ -2,7 +2,9 @@
 <html>
 
 <head>
+    @routes()
     <meta charset="utf-8">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="keywords" content="pizza, delivery food, fast food, sushi, take away, chinese, italian food">
@@ -21,6 +23,48 @@
     <link href="{{ asset('css/base.css') }}" rel="stylesheet">
 
     <link href="{{ asset('css/morphext.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/grey.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/ion.rangeSlider.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/ion.rangeSlider.skinFlat.css') }}" rel="stylesheet" >
+
+    <style type="text/css">
+        #box_search{
+            display: none;
+            position: absolute;
+            top: 45px;
+            z-index: 100;
+            background-color: white;
+            width: 100%;
+        }
+        #element-result {
+            background-color: #FFFFF0;
+            padding: 5px 0px;
+            margin-bottom: 5px;
+        }
+        #element-result:hover {
+            background-color: #F8F8FF;
+        }
+        #element-img {
+            float: left;margin-left: 10px;
+        }
+        #element-text {
+            float: left;margin-left: 30px;
+        }
+        #element-load {
+            display: block;
+            background-color: red;
+            padding: 10px;
+            border: 3px solid #FFF8DC;
+            font-weight: 600;
+            border-radius: 3px;
+            margin-bottom: 5px;
+        }
+        #element-load:hover {
+            background-color: blue;
+            text-decoration: none;
+        }
+
+    </style>
 
 </head>
 
@@ -56,19 +100,21 @@
                     <li><a href="{{ route('home') }}">{{ __('message.title.home') }}</a></li>
                     <li><a href="">{{ __('message.title.cart') }}</a></li>
                     <li class="submenu">
-                    <a href="javascript:void(0);" class="show-submenu">{{ __('message.product') }}<i class="icon-down-open-mini"></i></a>
-                    <ul>
+                    <a href="{{ route('client.list_product') }}" class="show-submenu">{{ __('message.product') }}
+                        {{-- <i class="icon-down-open-mini"></i> --}}
+                    </a>
+                    {{-- <ul>
                         <li><a href="{{ route('client.list_product') }}">{{ __('message.hot_product') }}</a></li>
                         <li><a href="">{{ __('message.new_product') }}</a></li>
-                    </ul>
+                    </ul> --}}
                     </li>
-                    <li><a href="#">{{ __('message.title.about') }}</a></li>
                     <li class="submenu">
                     <a href="javascript:void(0);" class="show-submenu">{{ __('message.order') }}<i class="icon-down-open-mini"></i></a>
                     <ul>
                         <li><a href="#">{{ __('message.title.paid') }}</a></li>
                         <li><a href="#">{{ __('message.title.unpaid') }}</a></li>
                     </ul>
+                    <li><a href="#">{{ __('message.title.about') }}</a></li>
                     </li>
                     @if ($currentUser == 'Guest')
                         <li><a href="#0" data-toggle="modal" data-target="#login_2">{{ __('message.login') }}</a></li>
@@ -97,12 +143,13 @@
             <h1><strong id="js-rotating">{{ __('message.index.rotating') }}</strong></h1>
             <form method="post" action="#">
                 <div id="custom-search-input">
-                    <div class="input-group ">
-                        <input type="text" class=" search-query" placeholder="{{ __('message.index.search_placeholder') }}">
+                    <div class="input-group" style="position: relative;">
+                        <input type="text" class="search-query" placeholder="{{ __('message.index.search_placeholder') }}" autocomplete="off" id="keysearch">
                         <span class="input-group-btn">
                         <input type="submit" class="btn_search" value="submit">
                         </span>
                     </div>
+                    <div class="container-fluid" id="box_search"></div>
                 </div>
             </form>
         </div><!-- End sub_content -->
@@ -184,7 +231,7 @@
             <div class="col-md-12">
                 <div id="social_footer">
                     <ul>
-                        <li><a href="#0"><i class="icon-facebook"></i></a></li>
+                        <li><a href="#0"<i class="icon-facebook"></i></a></li>
                         <li><a href="#0"><i class="icon-twitter"></i></a></li>
                         <li><a href="#0"><i class="icon-google"></i></a></li>
                         <li><a href="#0"><i class="icon-instagram"></i></a></li>
@@ -265,6 +312,50 @@ $("#js-rotating").Morphext({
     complete: function () {
         // Overrides default empty function
     }
+});
+jQuery(document).ready(function($) {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $('#keysearch').val('');
+    $('#keysearch').on('keyup change', function(event) {
+        var request_value = '';
+        if ($('#keysearch').val() != '') {
+            request_value = $('#keysearch').val();
+        }
+        $.ajax({
+            url: route('client.live_search'),
+            type: 'post',
+            dataType: '',
+            data: { keyword: request_value },
+        })
+        .done(function(res) {
+            if (request_value == '') {
+                $('#box_search').hide();
+            }
+            var url = 'http://127.0.0.1:8000/images/products/';
+            $('#box_search').show();
+            $('#box_search').empty();
+            var result = '';
+            if(!res.length) {
+                result =  $('#box_search').hide();;
+            }
+            else {
+                res.forEach( function(element, index) {
+                    result += '<a href="">' +
+                            '<div class="row" id="element-result">' +
+                            '<img id="element-img" height="30px" width="100px" class="img-thumbnail" id="img-element-result" src="'+ url + element.images[0].name +'">' +
+                            '<h4 id="element-text">' + element.name + '</h4>' +
+                            '</div>' +
+                        '</a>';
+                });
+                result += '<a href="#" id="element-load">Load more...</a>';
+            }
+            $('#box_search').html(result);
+        })
+    });
 });
 </script>
 
