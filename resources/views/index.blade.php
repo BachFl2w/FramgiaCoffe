@@ -1,9 +1,7 @@
 @extends('layouts.app_client')
 
-@section('page_position')
-    <li><a href="#0">Home</a></li>
-    <li><a href="#0">Hot Product</a></li>
-    <li>Page active</li>
+@section('position')
+    <li><a >Home</a></li>
 @endsection
 
 @section('content')
@@ -54,7 +52,7 @@
             </div>
 
             <div class="row">
-                {{-- @foreach($data as $product)
+                 @foreach($data as $product)
                     <div class="col-md-6">
                         <a href="detail_page.html" class="strip_list">
                             <div class="ribbon_1">{{ __('message.index.popular') }}</div>
@@ -83,7 +81,7 @@
                             </div><!-- End desc-->
                         </a>
                     </div>
-                @endforeach --}}
+                @endforeach
             </div><!-- End row -->
 
         </div><!-- End container -->

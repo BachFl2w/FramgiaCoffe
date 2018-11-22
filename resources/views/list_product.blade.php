@@ -21,21 +21,27 @@
                     	<h6>Distance</h6>
                         <input type="text" id="range" value="" name="range"> --}}
                             <h6>Type</h6>
-                            <ul>
-                                <li><label><input type="radio" name="filter" checked
-                                                  class="icheck">{{ __('message.all') }}
-                                        <small>{{ '(' . $total_product . ')' }}</small>
-                                    </label></li>
+                            <form action="{{ route('client.list_product.filter') }}" id="form-filter" method="get">
+                                {{-- @csrf --}}
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="category_id"
+                                           id="filter"
+                                           value="0">
+                                    <label class="form-check-label" for="exampleRadios1">
+                                        All {{ '(' . $total_product . ')' }}
+                                    </label>
+                                </div>
                                 @foreach($categories as $category)
-                                    <li>
-                                        <label>
-                                            <input type="radio" name="filter" checked
-                                                   class="icheck">{{ $category->name }}
-                                            <small>{{ '(' . $category->products_count . ')' }}</small>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="category_id"
+                                               id="filter"
+                                               value="{{ $category->id }}">
+                                        <label class="form-check-label" for="exampleRadios2">
+                                            {{ $category->name . ' (' . $category->products_count . ')'}}
                                         </label>
-                                    </li>
+                                    </div>
                                 @endforeach
-                            </ul>
+                            </form>
                         </div>
                     </div><!--End collapse -->
                 </div><!--End filters col-->
@@ -63,46 +69,55 @@
                         </div> --}}
                         <div class="row">
                             <div class="col-md-9 col-sm-9">
-                                <div class="desc">
-                                    <div class="thumb_strip">
-                                        <a href="detail_page.html"><img
-                                                src="{{ asset(config('asset.image_path.product') . $product->images[0]->name) }}"
-                                                alt=""></a>
+                                <div class="desc row">
+                                    <div class="col-md-4">
+                                        <div class="thumb_strip">
+                                            <a href="{{ route('client.product.detail', ['id' => $product->id]) }}">
+                                                <img
+                                                    src="{{ asset(config('asset.image_path.product') . $product->images[0]->name) }}"
+                                                    alt="Image product">
+                                            </a>
+                                        </div>
                                     </div>
-                                    <div class="rating">
-                                        <i class="icon_star voted"></i>
-                                        <i class="icon_star voted"></i>
-                                        <i class="icon_star voted"></i>
-                                        <i class="icon_star voted"></i>
-                                        <i class="icon_star"></i> (
-                                        <small><a href="#0">98 reviews</a></small>
-                                        )
+                                    <div class="col-md-8">
+                                        <div class="rating">
+                                            <i class="icon_star voted"></i>
+                                            <i class="icon_star voted"></i>
+                                            <i class="icon_star voted"></i>
+                                            <i class="icon_star voted"></i>
+                                            <i class="icon_star"></i> (
+                                            <small><a href="#0">98 reviews</a></small>
+                                            )
+                                        </div>
+                                        <a href="{{ route('client.product.detail', ['id' => $product->id]) }}">
+                                            <h3>{{ $product->name }}</h3></a>
+                                        <div class="type" style="font-size: 15px">
+                                            {{ $product->category->name }}
+                                        </div>
+                                        <div class="location">
+                                            {{-- {{ $product->description }}
+                                            <span class="opening">Opens at 17:00.</span> --}}
+                                            <strong class="opening"
+                                                    style="font-size: 25px">{{ number_format($product->price) .' ₫' }}</strong>
+                                        </div>
+                                        <ul>
+                                            <li>Take away<i class="icon_check_alt2 ok"></i></li>
+                                            <li>Delivery<i class="icon_check_alt2 no"></i></li>
+                                        </ul>
                                     </div>
-                                    <h3>{{ $product->name }}</h3>
-                                    <div class="type">
-                                        {{ $product->category->name }}
-                                    </div>
-                                    <div class="location">
-                                        {{ $product->description }}
-                                        <span class="opening">Opens at 17:00.</span>
-                                    </div>
-                                    <ul>
-                                        <li>Take away<i class="icon_check_alt2 ok"></i></li>
-                                        <li>Delivery<i class="icon_check_alt2 no"></i></li>
-                                    </ul>
                                 </div>
                             </div>
                             <div class="col-md-3 col-sm-3">
                                 <div class="go_to">
                                     <div>
-                                        <a href="detail_page.html" class="btn_1">{{ __('message.add_cart') }}</a>i
+                                        <a href="detail_page.html" class="btn_1">{{ __('message.add_cart') }}</a>
                                     </div>
                                 </div>
                             </div>
                         </div><!-- End row-->
                     </div>
                 @endforeach
-                {!! $products->links() !!}
+                {!! $products->appends(request()->input())->links() !!}
 
                 {{-- <a href="#0" class="load_more_bt wow fadeIn" data-wow-delay="0.2s"></a> --}}
             </div><!-- End col-md-9-->
@@ -110,4 +125,19 @@
         </div><!-- End row -->
     </div><!-- End container -->
 
+@endsection
+@section('js')
+    <script type="text/javascript">
+        jQuery(document).ready(function ($) {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $('#form-filter').change(function () {
+                selected_value = $("input[name='category_id']:checked").val();
+                $(this).submit();
+            });
+        });
+    </script>
 @endsection

@@ -7,6 +7,7 @@
 @endsection
 
 @section('content')
+<div class="container-fluid">
     <div class="card">
             {!! Form::open(['route' => ['admin.category.update', $category->id], 'method' => 'post']) !!}
             <div class="card-header">{{ __('message.category_action.update') }}</div>
@@ -28,4 +29,5 @@
             </div>
         {!! Form::close() !!}
     </div>
+</div>
 @endsection

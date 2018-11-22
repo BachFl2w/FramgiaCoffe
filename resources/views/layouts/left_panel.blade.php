@@ -42,13 +42,6 @@
                 <li>
                     <a href="{{ route('admin.order.index') }}"> <i class="menu-icon ti-email"></i>{{ __('Manager Bill') }}</a>
                 </li>
-
-                <h3 class="menu-title">{{ __('Statistical') }}</h3><!-- /.menu-title -->
-                <li>
-                    <a href="widgets.html"> <i class="menu-icon ti-email"></i>{{ __('Statistical Bill') }}</a>
-                </li>
-
-                
             </ul>
         </div><!-- /.navbar-collapse -->
     </nav>

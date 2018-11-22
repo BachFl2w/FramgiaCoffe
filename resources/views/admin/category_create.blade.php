@@ -7,7 +7,8 @@
 @endsection
 
 @section('content')
-    <div class="card">
+    <div class="container-fluid">
+        <div class="card">
             {!! Form::open(['route' => 'admin.category.store', 'method' => 'post']) !!}
             <div class="card-header">{{ __('message.category_action.create') }}</div>
 
@@ -22,6 +23,7 @@
                 {!! Form::submit(__('message.create'), ['class' => 'btn btn-info']) !!}
                 {!! Form::reset(__('Reset'), ['class' => 'btn btn-warning']) !!}
             </div>
-        {!! Form::close() !!}
+            {!! Form::close() !!}
+        </div>
     </div>
 @endsection

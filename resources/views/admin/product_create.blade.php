@@ -28,7 +28,7 @@
 		            </div>
 		            <div class="form-group row">
 		                <h5 class="col-md-2 col-form-label-sm">{{ __('message.image') }}</h5>
-		                {!! Form::file('image', ['id' => 'image', 'class' => 'form-control col-md-10']) !!}
+		                {!! Form::file('image', ['id' => 'image', 'class' => 'col-md-10']) !!}
 		            </div>
 		            <div class="form-group row">
 		                <h5 class="col-md-2 col-form-label-sm">{{ __('message.category') }}</h5>

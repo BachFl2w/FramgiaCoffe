@@ -986,7 +986,7 @@ a.strip_list:hover h3 {
 }
 
 .desc {
-    padding-left: 135px;
+    /*padding-left: 135px;*/
     position: relative
 }
 
@@ -1047,13 +1047,13 @@ a.strip_list:hover h3 {
 }
 
 .thumb_strip {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 110px;
-    height: 110px;
+    /*position: absolute;*/
+  /*  left: 0;
+    top: 0;*/
+    width: 200px;
+    height: 135px;
     border: 1px solid #ededed;
-    padding: 5px
+    padding: 5px;
 }
 
 #cart_box,
@@ -1064,8 +1064,8 @@ a.strip_list:hover h3 {
 }
 
 .thumb_strip img {
-    width: 98px;
-    height: auto
+    width: 190px;
+    height: 125px;
 }
 
 .strip_list .go_to {
