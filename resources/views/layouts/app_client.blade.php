@@ -98,7 +98,7 @@
                 <a href="#" class="open_close" id="close_in"><i class="icon_close"></i></a>
                  <ul>
                     <li><a href="{{ route('home') }}">{{ __('message.title.home') }}</a></li>
-                    <li><a href="">{{ __('message.title.cart') }}</a></li>
+                    <li><a href="{{ route('user.cart') }}">{{ __('message.title.cart') }}</a></li>
                     <li class="submenu">
                     <a href="{{ route('client.list_product') }}" class="show-submenu">{{ __('message.product') }}
                         {{-- <i class="icon-down-open-mini"></i> --}}
@@ -116,7 +116,7 @@
                     </ul>
                     <li><a href="#">{{ __('message.title.about') }}</a></li>
                     </li>
-                    @if ($currentUser == 'Guest')
+                    @if (!$currentUser)
                         <li><a href="#0" data-toggle="modal" data-target="#login_2">{{ __('message.login') }}</a></li>
                     @else
                         <li class="submenu">

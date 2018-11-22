@@ -17,12 +17,12 @@ use App\Topping;
 use Session;
 use Hash;
 
-class PageController extends Controller
+class CartController extends Controller
 {
     public function index()
     {
         $cart = session('cart') ? session('cart') : null;
-        return view('', compact('cart'));
+        return view('cart', compact('cart'));
     }
 
     public function add(Request $req, Product $product)
@@ -100,7 +100,7 @@ class PageController extends Controller
             $orderDetail->save();
 
             $orderDetailTopping = new OrderDetailToping;
-            $orderDetailTopping = ;
+            // $orderDetailTopping = ;
         }
 
         session()->forget('cart');

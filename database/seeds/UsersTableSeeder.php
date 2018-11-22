@@ -15,7 +15,7 @@ class UsersTableSeeder extends Seeder
             [
                 'name' => 'Nguyen Chi',
                 'email' => 'abc@gmail.com',
-                'phone' => str_random(10),
+                'phone' => '123456789',
                 'image' => 'framgia2.png',
                 'password' => bcrypt('123456'),
                 'address' => strtolower(str_random(20)),
@@ -24,7 +24,7 @@ class UsersTableSeeder extends Seeder
             [
                 'name' => 'Bach Nguyen',
                 'email' => 'bach@gmail.com',
-                'phone' => str_random(10),
+                'phone' => '123456789',
                 'image' => 'framgia2.png',
                 'password' => bcrypt('123456'),
                 'address' => strtolower(str_random(20)),
@@ -35,7 +35,7 @@ class UsersTableSeeder extends Seeder
         for ($i = 0 ; $i < 2 ; $i++) {
             $user = [
                 'name' => str_random(6),
-                'phone' => str_random(10),
+                'phone' => '123456789',
                 'image' => 'framgia2.png',
                 'email' => strtolower(str_random(6)).'@gmail.com',
                 'password' => bcrypt('123456'),

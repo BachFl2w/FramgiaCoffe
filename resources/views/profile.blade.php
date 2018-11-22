@@ -19,9 +19,9 @@
             <div class="box_style_2 hidden-xs" id="help">
                 <label for="avatar">
                     @if ($user->image)
-                        <img class="img-circle" height="200px" src="{{ asset(config('asset.image_path.avatar') . $user->image) }}" alt="Card image cap">
+                        <img class="img-circle" height="200px" src="{{ asset(config('asset.image_path.avatar') . $user->image) }}">
                     @else
-                        <img class="rounded-circle" height="200px" src="{{ asset('images/default.jpeg') }}" alt="Card image cap">
+                        <img class="img-circle" height="200px" src="{{ asset('images/default.jpeg') }}">
                     @endif
                 </label>
                 <p>{!! Form::file('avatar', ['id' => 'avatar', 'class' => 'hidden']) !!}</p>
@@ -78,12 +78,9 @@
                     {!! Form::submit(__('message.update'), ['class' => 'btn_1 green']) !!}
                 </div><!-- End wrapper_indent -->
         </div>
+    {!! Form::close() !!}
     </div><!-- End box_style_1 -->
 
-    </div><!-- End col-md-6 -->
-
-    {!! Form::close() !!}
-    </div><!-- End row -->
 </div><!-- End container -->
 <!-- End Content =============================================== -->
 

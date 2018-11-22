@@ -28,8 +28,6 @@ class AppServiceProvider extends ServiceProvider
             if (Auth::check()) {
                 $currentUser = Auth::user();
                 $view->with('currentUser', $currentUser);
-            } else {
-                $view->with('currentUser', 'Guest');
             }
         });
 

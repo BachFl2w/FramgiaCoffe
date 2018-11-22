@@ -146,6 +146,10 @@ Route::group(['middleware' => 'userLogin'], function() {
     Route::get('edit/{user}', 'UserController@edit')->name('user.edit');
 });
 
+Route::get('cart', 'CartController@index')->name('user.cart');
+
+Route::post('checkout', 'CartController@checkout')->name('user.checkout');
+
 Route::get('/', 'ClientController@index')->name('client.index');
 
 Route::get('/list-product', 'ClientController@listProduct')->name('client.list_product');

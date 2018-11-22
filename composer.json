@@ -14,7 +14,6 @@
         "laravelcollective/html": "^5.2.0",
         "tightenco/ziggy": "^0.6.9",
         "realrashid/sweet-alert": "^1.1",
-        "tightenco/ziggy": "^0.6.9"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2",
