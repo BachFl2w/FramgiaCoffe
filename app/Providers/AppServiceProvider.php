@@ -42,6 +42,13 @@ class AppServiceProvider extends ServiceProvider
             $number_category = Category::all()->count();
             $view->with('number_category', $number_category);
         });
+
+        view()->composer('list_product', function($view) {
+            $total_product = Product::all()->count();
+            $categories = Category::withCount('products')->get();
+            $view->with('categories', $categories)
+            ->with('total_product', $total_product);
+        });
     }
 
     /**

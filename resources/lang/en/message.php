@@ -156,4 +156,6 @@ return [
     'order' => 'Order',
     'orderList' => 'Order List',
     'topping' => 'Topping',
-];
+    'all' => 'All',
+    'add_cart' => 'Add Cart',
+]; 
