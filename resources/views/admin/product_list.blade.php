@@ -2,7 +2,7 @@
 
 @section('page-title')
     <li><a href="{{route('admin.user.index')}}">{{ __('message.title.dashboard') }}</a></li>
-    <li class="active">List</li>
+    <li class="active">{{ __('message.product') }}</li>
 @endsection
 
 @section('content')

@@ -1,7 +1,8 @@
 @extends('layouts.app2')
 
 @section('page-title')
-    Dashboard
+    <li><a href="{{route('admin.user.index')}}">{{ __('message.title.dashboard') }}</a></li>
+    <li class="active">{{ __('message.feedback') }}</li>
 @endsection
 
 @section('content')

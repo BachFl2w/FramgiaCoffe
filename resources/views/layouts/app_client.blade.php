@@ -26,6 +26,7 @@
     <link href="{{ asset('css/grey.css') }}" rel="stylesheet">
     <link href="{{ asset('css/ion.rangeSlider.css') }}" rel="stylesheet">
     <link href="{{ asset('css/ion.rangeSlider.skinFlat.css') }}" rel="stylesheet" >
+    <link href="{{ asset('css/slider-pro.min.css') }}" rel="stylesheet" >
 
     <style type="text/css">
         #box_search{
@@ -63,7 +64,6 @@
             background-color: blue;
             text-decoration: none;
         }
-
     </style>
 
 </head>
@@ -300,7 +300,10 @@
 <script src="{{ asset('js/jquery-2.2.4.min.js') }}"></script>
 <script src="{{ asset('js/common_scripts_min.js') }}"></script>
 <script src="{{ asset('js/functions.js') }}"></script>
-<script src="{{ asset('assets/validate.js') }}"></script>
+<script src="{{ asset('js/validate.js') }}"></script>
+<script src="{{ asset('js/infobox.js') }}"></script>
+<script src="{{ asset('js/jquery.sliderPro.min.js') }}"></script>
+
 
 <!-- SPECIFIC SCRIPTS -->
 <script src="{{ asset('js/morphext.min.js') }}"></script>

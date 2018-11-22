@@ -158,4 +158,22 @@ return [
     'topping' => 'Topping',
     'all' => 'All',
     'add_cart' => 'Add Cart',
+    'image' => 'Image',
+    //Feedback
+    'feedback' => 'Feedback',
+    //Order
+    'order' => 'Order',
+    //Week
+    'monday' => 'Monday',
+    'tuesday' => 'Tuesday',
+    'wednesday' => 'Wednesday',
+    'thursday' => 'Thursday',
+    'friday' => 'Friday',
+    'saturday' => 'Saturday',
+    'sunday' => 'Sunday',
+    'closed' => 'Closed',
+    'need_help' => 'Need Help?',
+    'to' => 'To',
+    'enter_feedback' => 'Enter some feedback',
+    'opening_time' => 'Opening Time',
 ]; 
