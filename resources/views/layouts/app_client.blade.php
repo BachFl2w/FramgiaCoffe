@@ -97,7 +97,7 @@
                 </div>
                 <a href="#" class="open_close" id="close_in"><i class="icon_close"></i></a>
                  <ul>
-                    <li><a href="{{ route('home') }}">{{ __('message.title.home') }}</a></li>
+                    <li><a href="{{ route('client.index') }}">{{ __('message.title.home') }}</a></li>
                     <li><a href="{{ route('user.cart') }}">{{ __('message.title.cart') }}</a></li>
                     <li class="submenu">
                     <a href="{{ route('client.list_product') }}" class="show-submenu">{{ __('message.product') }}

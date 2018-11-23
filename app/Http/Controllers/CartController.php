@@ -17,26 +17,18 @@ use App\Product;
 
 use Session;
 use Hash;
+use Auth;
 
 class CartController extends Controller
 {
     public function index()
     {
-        $cart = session('cart') ? session('cart') : null;
+        $cart = session('cart') ? session::get('cart') : null;
         return view('cart', compact('cart'));
     }
 
-    public function add(Request $req, Product $product)
+    public function add(Request $req, Product $product, Topping $topping)
     {
-        $topping = null;
-
-        if (!empty($req->topping)) {
-            // duyet ra id cua cac topping
-            foreach ($req->topping as $value) {
-                $topping = [$value];
-            }
-        }
-
         $oldCart = Session('cart') ? Session('cart') : null ;
         $cart = new Cart($oldCart);
         $cart->add($product, $topping, $product->id);
@@ -48,7 +40,7 @@ class CartController extends Controller
     // delete 1 product
     public function minus(Product $product)
     {
-        $oldCart = Session('cart') ? Session::get('cart') : null ;
+        $oldCart = Session('cart') ? Session('cart') : null ;
 
         if ($oldCart) {
             $cart = new Cart($oldCart);
@@ -66,11 +58,13 @@ class CartController extends Controller
 
     public function deleteOne(Product $product)
     {
-        $oldCart = Session('cart') ? Session::get('cart') : null ;
+        // dd($product);
+
+        $oldCart = Session('cart') ? Session('cart') : null ;
 
         if ($oldCart) {
             $cart = new Cart($oldCart);
-            $cart->removeItem($product->id);
+            $cart->removeItem($product);
 
             if (count($cart->items) == 0) {
                 session::forget('cart');
@@ -94,6 +88,9 @@ class CartController extends Controller
 
     public function checkout(Request $req)
     {
+        if ($req) {
+
+        }
         $cart = session('cart');
 
         $id = null;

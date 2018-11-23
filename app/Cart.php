@@ -20,55 +20,65 @@ class Cart
         }
     }
 
-    public function add($product, $topping, $id)
+    public function add($product, $topping)
     {
         $cart = [
             'qty' => 0,
             'price' => 0,
             'product' => $product,
-            'topping' => $topping,
+            'topping' => [$topping->id => $topping],
         ];
 
         if ($this->items) {
-            if (array_key_exists($id, $this->items)) {
-                $cart = $this->items[$id];
+
+            if (array_key_exists($product->id, $this->items)) {
+                $cart = $this->items[$product->id];
+
+                if (!array_key_exists($topping->id, $cart['topping'])) {
+                    $cart['topping'][$topping->id] = $topping;
+                }
             }
         }
 
-        dd($cart);
+        $toppingPrice = 0;
+        foreach ($cart['topping'] as $value) {
+            $toppingPrice = $cart['topping'] + $topping->price;
+        }
 
         // qty
         $cart['qty']++;
         $this->totalQty++;
 
         // price
-        // $cart['price'] = $cart['qty'] * $product->price + $topping->price; // price foreach item
-        $this->totalPrice += $price;
+        $cart['price'] = $cart['qty'] * $product->price + $toppingPrice; // price foreach item
+        $this->totalPrice += $cart['price'];
 
         // item
-        $this->items[$id] = $cart;
+        $this->items[$product->id] = $cart;
     }
 
     // tru 1
-    public function reduceByOne($id)
+    public function reduceByOne(Product $product)
     {
-        $this->items[$id]['qty']--;
-        $this->items[$id]['price'] -= $this->items[$id]['item']['price'];
+        $this->items[$product->id]['qty']--;
+        $this->items[$product->id]['price'] -= $this->items[$id]['item']['price'];
         $this->totalQty--;
-        $this->totalPrice -= $this->items[$id]['item']['price'];
+        $this->totalPrice -= $this->items[$product->id]['item']['price'];
 
-        if($this->items[$id]['qty'] <= 0){
+        if($this->items[$product->id]['qty'] <= 0){
             unset($this->items[$id]);
         }
     }
 
     // xoa 1 sp
-    public function removeItem($id)
+    public function removeItem($product)
     {
-        $this->totalQty   -= $this->items[$id]['qty'];
-        $this->totalPrice -= $this->items[$id]['price'];
+        if (isset($this->items[$product->id])) {
+            $this->totalQty -= $this->items[$product->id]['qty'];
+            $this->totalPrice -= $this->items[$product->id]['price'];
 
-        unset($this->items[$id]);
+            unset($this->items[$product->id]);
+        }
     }
 
     // xoa het sp trong gio hang

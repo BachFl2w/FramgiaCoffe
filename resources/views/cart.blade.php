@@ -59,7 +59,14 @@
         <div class="col-md-4" id="sidebar">
             <div class="theiaStickySidebar">
                 <div id="cart_box" >
-                    <h3>Your order <i class="icon_cart_alt pull-right"></i></h3>
+                    <h3>Your order
+                        <div class="pull-right">
+                            <a href="{{ route('user.cart.destroy') }}" title="delete">
+                                <i class="icon_cart_alt"></i>
+                                Unset
+                            </a>
+                        </div>
+                    </h3>
                     @if (session('cart'))
                         <strong>ok</strong>
                     @else
@@ -67,16 +74,16 @@
                     @endif
                     <table class="table table_summary table-hover">
                         <tbody>
-                        @for ($i = 0; $i < 8; $i++)
+                        @for ($i = 1; $i < 8; $i++)
                             <tr>
                                 <td>
-                                    <a href="{{ route('user.cart.minus', 1) }}" class="icon-minus-circled"></a>
+                                    <a href="{{ route('user.cart.minus', [$i, $i]) }}" class="icon-minus-circled"></a>
                                         {{ $i }}
-                                    <a href="{{ route('user.cart.add', 1) }}" class="icon-plus-circled"></a>
+                                    <a href="{{ route('user.cart.add', [$i, $i]) }}" class="icon-plus-circled"></a>
                                     {{ str_random(8) . ' ' . str_random(8) }}
                                 </td>
                                 <td>
-                                    <a href="" class="icon-cancel-circled-2 pull-right"></a>
+                                    <a href="{{ route('user.cart.delete', $i) }}" class="icon-cancel-circled-2 pull-right"></a>
                                     <strong class="pull-right">150,000₫</strong>
                                 </td>
                             </tr>

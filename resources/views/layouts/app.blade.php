@@ -19,7 +19,7 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
-                <a class="navbar-brand" href="{{ asset('home') }}">
+                <a class="navbar-brand" href="{{ asset('client.index') }}">
                     {{-- {{ config('app.name', 'Laravel') }} --}}
                     <img src="{{ asset('images/framgia-logo.png') }}" height="39px">
                 </a>
