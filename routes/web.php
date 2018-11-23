@@ -103,6 +103,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin'], function() {
         Route::post('update/{id}', 'CategoryController@update')->name('admin.category.update');
 
         Route::get('destroy/{id}', 'CategoryController@destroy')->name('admin.category.destroy');
+
+        Route::get('json', 'CategoryController@getCategoryJson')->name('admin.category.json');
     });
 
     Route::group(['prefix' => 'topping'], function() {
@@ -169,3 +171,13 @@ Route::post('search', 'ClientController@liveSearch')->name('client.live_search')
 Route::get('list-product/filter', 'ClientController@filterProductByCategory')->name('client.list_product.filter');
 
 Route::get('product/{id}', 'ClientController@detailProduct')->name('client.product.detail');
+
+Route::post('demo', 'CartController@demo')->name('demo');
+
+Route::get('show', function() {
+    return Session::get('cart');
+});
+
+Route::get('remove', function() {
+    Session()->forget('cart');
+});

@@ -1,7 +1,7 @@
 @extends('layouts.app_client')
 
 @section('position')
-    <li><a >Home</a></li>
+    <li><a>Home</a></li>
 @endsection
 
 @section('content')
@@ -52,32 +52,39 @@
             </div>
 
             <div class="row">
-                 @foreach($data as $product)
+                @foreach($data as $product)
                     <div class="col-md-6">
-                        <a href="detail_page.html" class="strip_list">
+                        <a href="{{ route('client.product.detail', ['id' => $product->id]) }}" class="strip_list" style="height: 190px">
                             <div class="ribbon_1">{{ __('message.index.popular') }}</div>
                             <div class="desc">
-                                <div class="thumb_strip">
-                                    <img src="{{ asset(config('asset.image_path.product') . $product->image->name) }}"
-                                         alt="">
+                                <div class="col-sm-12">
+                                    <div class="col-sm-6">
+                                        <div class="thumb_strip">
+                                            <img
+                                                src="{{ asset(config('asset.image_path.product') . $product->image->name) }}"
+                                                alt="">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="rating">
+                                            <i class="icon_star voted"></i><i class="icon_star voted"></i><i
+                                                class="icon_star voted"></i><i class="icon_star voted"></i><i
+                                                class="icon_star"></i>
+                                        </div>
+                                        <h3>{{ $product->name }}</h3>
+                                        <div class="type">
+                                            {{ $product->category }}
+                                        </div>
+                                        <div class="location">
+                                            {{ __('message.price') }}: <span
+                                                class="opening">{{ number_format($product->price) . ' ₫'}}</span>
+                                        </div>
+                                        <ul>
+                                            <li>Take away<i class="icon_check_alt2 ok"></i></li>
+                                            <li>Delivery<i class="icon_close_alt2 no"></i></li>
+                                        </ul>
+                                    </div>
                                 </div>
-                                <div class="rating">
-                                    <i class="icon_star voted"></i><i class="icon_star voted"></i><i
-                                        class="icon_star voted"></i><i class="icon_star voted"></i><i
-                                        class="icon_star"></i>
-                                </div>
-                                <h3>{{ $product->name }}</h3>
-                                <div class="type">
-                                    {{ $product->category }}
-                                </div>
-                                <div class="location">
-                                    {{ __('message.price') }}: <span
-                                        class="opening">{{ number_format($product->price) . ' ₫'}}</span>
-                                </div>
-                                <ul>
-                                    <li>Take away<i class="icon_check_alt2 ok"></i></li>
-                                    <li>Delivery<i class="icon_close_alt2 no"></i></li>
-                                </ul>
                             </div><!-- End desc-->
                         </a>
                     </div>

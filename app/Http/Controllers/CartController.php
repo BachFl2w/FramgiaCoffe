@@ -29,7 +29,7 @@ class CartController extends Controller
 
     public function add(Request $req, Product $product, Topping $topping)
     {
-        $oldCart = Session('cart') ? Session('cart') : null ;
+        $oldCart = Session('cart') ? Session('cart') : null;
         $cart = new Cart($oldCart);
         $cart->add($product, $topping, $product->id);
         $req->session()->put('cart', $cart);
@@ -40,7 +40,7 @@ class CartController extends Controller
     // delete 1 product
     public function minus(Product $product)
     {
-        $oldCart = Session('cart') ? Session('cart') : null ;
+        $oldCart = Session('cart') ? Session('cart') : null;
 
         if ($oldCart) {
             $cart = new Cart($oldCart);
@@ -60,7 +60,7 @@ class CartController extends Controller
     {
         // dd($product);
 
-        $oldCart = Session('cart') ? Session('cart') : null ;
+        $oldCart = Session('cart') ? Session('cart') : null;
 
         if ($oldCart) {
             $cart = new Cart($oldCart);
@@ -123,4 +123,12 @@ class CartController extends Controller
 
         return back()->with('success', __('message.success.order'));
     }
+
+    public function demo(Request $request)
+    {
+        $cart = new Cart();
+
+        $cart->add($request->product_id, $request->product_price, $request->topping);
+    }
+
 }

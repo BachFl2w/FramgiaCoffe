@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Session;
 
 class Cart
 {
@@ -85,5 +86,78 @@ class Cart
     public function removeAllItem()
     {
         session()->forget('cart');
+    }
+
+
+//////////////////////////
+
+    public $carts = [];
+
+    function __construct()
+    {
+        $old_cart = Session::get('cart');
+
+        if ($old_cart != null) {
+            $this->carts = $old_cart;
+        } else {
+            Session::put('cart', $this->carts);
+        }
+    }
+
+    function add($productId, $productPrice, $topping)
+    {
+        $cart_new = null;
+
+        if (count($this->carts) == 0) {
+            $cart_new = [
+                'id' => 1,
+                'product_id' => $productId,
+                'price' => $productPrice,
+                'quantity' => 1,
+                'id_toppings' => $topping,
+            ];
+            $this->carts[] = $cart_new;
+        } else {
+
+            foreach ($this->carts as $cart) {
+
+                if (count($cart['id_toppings']) > count($topping)) {
+                    $result = array_diff($topping, $cart['id_toppings']);
+                }
+                
+                if (count($cart['id_toppings']) < count($topping)) {
+                    $result = array_diff($cart['id_toppings'], $topping);
+                }
+                else {
+                    $result = array_merge(
+                        array_diff($topping, $cart['id_toppings']),
+                        array_diff($cart['id_toppings'], $topping)
+                    );
+                }
+
+                if ($cart['product_id'] != $productId || count($result) != 0) {
+
+                    $cart_new['id'] = $cart['id'] + 1;
+
+                    $cart_new['product_id'] = $productId;
+
+                    $cart_new['id_toppings'] = $topping;
+
+                    $cart_new['price'] = $productPrice;
+
+                    $cart_new['quantity'] = 1;
+
+                } else {
+                    $cart['quantity']++;
+                }
+
+                if($cart_new != null)
+                {
+                    $this->carts[] = $cart_new;
+                }
+            }
+        }
+
+        Session::put('cart', $this->carts);
     }
 }

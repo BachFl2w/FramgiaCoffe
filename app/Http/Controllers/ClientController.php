@@ -7,8 +7,11 @@ use App\Order;
 use App\OrderDetail;
 use App\Product;
 use App\Category;
+use App\Topping;
+use App\Size;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class ClientController extends Controller
 {
@@ -96,6 +99,12 @@ class ClientController extends Controller
             $query->join('users', 'feedbacks.user_id', '=', 'users.id')->where('feedbacks.status', 1)->select('feedbacks.*', 'users.name', 'users.image')->get();
         }])->findOrFail($id);
 
-        return view('detail_product', compact('product'));
+        $toppings = Topping::all();
+
+        $sizes = Size::all();
+
+        return view('detail_product', compact('product', 'toppings', 'sizes'));
+
+
     }
 }

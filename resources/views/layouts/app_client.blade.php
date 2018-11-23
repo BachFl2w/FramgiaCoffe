@@ -28,6 +28,10 @@
     <link href="{{ asset('css/ion.rangeSlider.skinFlat.css') }}" rel="stylesheet" >
     <link href="{{ asset('css/slider-pro.min.css') }}" rel="stylesheet" >
 
+    <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet" />
+    
+
+
     <style type="text/css">
         #box_search{
             display: none;
@@ -303,6 +307,7 @@
 <script src="{{ asset('js/validate.js') }}"></script>
 <script src="{{ asset('js/infobox.js') }}"></script>
 <script src="{{ asset('js/jquery.sliderPro.min.js') }}"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
 
 
 <!-- SPECIFIC SCRIPTS -->

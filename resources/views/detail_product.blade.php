@@ -35,7 +35,7 @@
 
             <div class="col-md-8">
                 <div class="box_style_2">
-                    <h2 class="inner">Description</h2>
+                    <h2 class="inner" id="product_name">{{ $product->name }}</h2>
 
                     <div id="Img_carousel" class="slider-pro">
                         <div class="sp-slides">
@@ -62,18 +62,35 @@
                     <p>
                         {{ $product->description }}
                     </p>
-                    <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#myReview">Add</a>
-                    <div id="summary_review">
-                        <div id="general_rating">
-                            {{ __('message.feedback') }}
-                        </div>
-                        <div class="col-12">
+                    <form action="{{ route('demo') }}" method="post">
+                        @csrf
+                        <input type="text" name="product_id" style="height: 36px" value="{{ $product->id }}">
+                        <input type="text" name="product_price" style="height: 36px" value="{{ $product->price }}">
+                        <input type="checkbox" name="topping[]" style="height: 36px" value="1">1
+                        <input type="checkbox" name="topping[]" style="height: 36px" value="2">2
+                        <input type="checkbox" name="topping[]" style="height: 36px" value="3">3
+                        <button id="btnBuy" class="btn btn-danger" type="submit">Buy</button>
+                    </form>
+                    <p>Topping</p>
+                    <select name="states[]" multiple="multiple" id="topping_list" style="width: 100%">
+                        @foreach($toppings as  $topping)
+                            <option>{{ $topping->name }}</option>
+                        @endforeach
+                    </select>
+                    @if(Auth::check())
+                        <div id="summary_review">
+                            <div id="general_rating">
+                                {{ __('message.feedback') }}
+                            </div>
+                            <div class="col-12">
                             <textarea class="form-control" style="resize: none"
                                       placeholder="{{ __('message.enter_feedback') }}" rows="3"></textarea>
-                        </div>
-                        <hr class="styled">
-                        <a href="#" class="btn_1 add_bottom_15">Send</a>
-                    </div><!-- End summary_review -->
+                            </div>
+                            <hr class="styled">
+                            <a href="#" class="btn_1 add_bottom_15">Send</a>
+                        </div><!-- End summary_review -->
+                    @endif
+                    <h3>{{ __('message.feedback') }}</h3>
                     @if(count($product->feedbacks) != 0)
                         @foreach($product->feedbacks as $feedback)
                             <div class="review_strip_single">
@@ -93,35 +110,54 @@
                             </div>
                         @endforeach
                     @else
-                        <h3>No comment <span><img height="25px" width="25px"
+                        <h4>No comment <span><img height="25px" width="25px"
                                                   src="{{ asset(config('asset.image_path.public') . 'icon_sad.png') }}"></span>
-                        </h3>
+                        </h4>
                     @endif
                 </div><!-- End box_style_1 -->
             </div>
         </div><!-- End row -->
     </div><!-- End container -->
 
-    <div class="modal fade" id="myReview" tabindex="-1" role="dialog" aria-labelledby="myRegister" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content modal-popup">
-                <a href="#" class="close-link"><i class="icon_close_alt2"></i></a>
-                <form action="#" class="popup-form" id="myRegister">
-                    <div class="login_icon"><i class="icon_lock_alt"></i></div>
-                    <input type="text" class="form-control form-white" placeholder="Name">
-                    <input type="text" class="form-control form-white" placeholder="Last Name">
-                    <input type="email" class="form-control form-white" placeholder="Email">
-                    <input type="text" class="form-control form-white" placeholder="Password" id="password1">
-                    <input type="text" class="form-control form-white" placeholder="Confirm password" id="password2">
-                    <div id="pass-info" class="clearfix"></div>
-                    <div class="checkbox-holder text-left">
-                        <div class="checkbox">
-                            <input type="checkbox" value="accept_2" id="check_2" name="check_2"/>
-                            <label
-                                for="check_2"><span>I Agree to the <strong>Terms &amp; Conditions</strong></span></label>
+
+    <div class="modal fade" id="myReview" tabindex="-1" role="dialog" aria-labelledby="modal_product_name"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <form action="#">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h5 class="modal-title" id="modal_product_name"></h5>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row" style="padding: 10px">
+                            <div class="col-sm-4">
+                                <h4 style="padding: 5px" class="text text-info"></h4>
+                            </div>
+                            <div class="col-sm-4">
+                                <span>Size</span>
+                                <select class="form-control">
+                                    @foreach($sizes as  $size)
+                                        <option>{{ $size->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-sm-4">
+                                <span>Size</span>
+                                <select name="states[]" multiple="multiple" id="topping_list">
+                                    @foreach($toppings as  $topping)
+                                        <option>{{ $topping->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-submit">Register</button>
+                    <div class="modal-footer">
+                        <button type="Submit" class="btn btn-primary">Send</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
                 </form>
             </div>
         </div>
@@ -146,6 +182,41 @@
                 thumbnailArrows: true,
                 autoplay: false
             });
+        });
+    </script>
+    <script type="text/javascript">
+        jQuery(document).ready(function ($) {
+            var categories = [];
+
+            function setData(data) {
+                categories = data;
+            }
+
+            $('#btnBuy').click(function (event) {
+                var product_name = $('#product_name').html();
+                var product_id = $('#product_id').val();
+                var number_product = $('#number_product').val();
+                $('#modal_product_name').html(product_name + ' (3 san pham)');
+                $.ajax({
+                    url: route('admin.category.json'),
+                    type: 'get',
+                    global: false,
+                    dataType: '',
+                    data: {},
+                })
+                    .done(function (data) {
+                        setData(data)
+                    })
+                    .fail(function () {
+                        console.log("error");
+                    })
+                    .always(function () {
+                        console.log(categories);
+                    });
+            });
+
+            $('#topping_list').select2();
+
         });
     </script>
 @endsection

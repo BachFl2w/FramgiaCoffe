@@ -107,4 +107,11 @@ class CategoryController extends Controller
 
         return redirect()->route('admin.category.index')->with('success', __('message.success.delete'));
     }
+
+    public function getCategoryJson()
+    {
+        $categories_data = Category::all();
+
+        return $categories_data;
+    }
 }
