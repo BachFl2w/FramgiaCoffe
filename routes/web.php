@@ -151,7 +151,7 @@ Route::group(['middleware' => 'userLogin'], function() {
 Route::group(['prefix' => 'cart'], function() {
     Route::get('cart', 'CartController@index')->name('user.cart');
 
-    Route::get('add/{product}/{topping}', 'CartController@add')->name('user.cart.add');
+    Route::post('add', 'CartController@add')->name('user.cart.add');
 
     Route::get('minus/{product}/{topping}', 'CartController@minus')->name('user.cart.minus');
 

@@ -27,11 +27,21 @@ class CartController extends Controller
         return view('cart', compact('cart'));
     }
 
-    public function add(Request $req, Product $product, Topping $topping)
+    public function demo(Request $request)
     {
+        $cart = new Cart();
+
+        $cart->add($request->product_id, $request->product_price, $request->topping);
+    }
+
+    public function add(Request $req)
+    {
+        $product = Product::findOrFail($req->product);
+        $topping = Topping::findOrFail($req->topping);
+
         $oldCart = Session('cart') ? Session('cart') : null;
         $cart = new Cart($oldCart);
-        $cart->add($product, $topping, $product->id);
+        $cart->add($product, $topping);
         $req->session()->put('cart', $cart);
 
         return redirect()->back();
@@ -78,9 +88,8 @@ class CartController extends Controller
 
     public function destroy()
     {
-        if (session('cart')) {
-            $cart = new Cart(session('cart'));
-            $cart->removeAllItem();
+        if (Session('cart')) {
+            session()->forget('cart');
         }
 
         return back();
@@ -123,12 +132,4 @@ class CartController extends Controller
 
         return back()->with('success', __('message.success.order'));
     }
-
-    public function demo(Request $request)
-    {
-        $cart = new Cart();
-
-        $cart->add($request->product_id, $request->product_price, $request->topping);
-    }
-
 }

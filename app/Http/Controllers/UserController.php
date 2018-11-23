@@ -243,7 +243,7 @@ class UserController extends Controller
 
         if (Auth::attempt($data)) {
             if (Auth::user()->role_id == 3) {
-                return redirect('client.index');
+                return redirect(route('client.index'));
             }
 
             return redirect('admin/user/index');

@@ -67,27 +67,29 @@
                             </a>
                         </div>
                     </h3>
-                    @if (session('cart'))
-                        <strong>ok</strong>
-                    @else
-                        <strong>Empty !</strong>
-                    @endif
                     <table class="table table_summary table-hover">
                         <tbody>
-                        @for ($i = 1; $i < 8; $i++)
-                            <tr>
-                                <td>
-                                    <a href="{{ route('user.cart.minus', [$i, $i]) }}" class="icon-minus-circled"></a>
-                                        {{ $i }}
-                                    <a href="{{ route('user.cart.add', [$i, $i]) }}" class="icon-plus-circled"></a>
-                                    {{ str_random(8) . ' ' . str_random(8) }}
-                                </td>
-                                <td>
-                                    <a href="{{ route('user.cart.delete', $i) }}" class="icon-cancel-circled-2 pull-right"></a>
-                                    <strong class="pull-right">150,000₫</strong>
-                                </td>
-                            </tr>
-                        @endfor
+                            {{-- @foreach (Session('cart') as $cart) --}}
+                                <tr>
+                                    <td>
+                                        {{-- <a href="{{ route('user.cart.minus', [, ]) }}" class="icon-minus-circled"></a> --}}
+                                        {{-- <a href="{{ route('user.cart.add', [, ]) }}" class="icon-plus-circled"></a> --}}
+                                        {{ str_random(8) . ' ' . str_random(8) }}
+                                    </td>
+                                    <td>
+                                        <a href="{{ route('user.cart.delete', 1) }}" class="icon-cancel-circled-2 pull-right"></a>
+                                        <strong class="pull-right">150,000₫</strong>
+                                    </td>
+                                </tr>
+                            {{-- @endforeach --}}
+                        @if (session('cart'))
+                            {{-- @foreach (session('cart') as $e)
+                                <strong>{{ $e->items->product }}</strong>
+                            @endforeach --}}
+                        @else
+                            <strong>Empty !</strong>
+                        @endif
+
                         </tbody>
                     </table>
                     <hr>
@@ -117,6 +119,19 @@
             </div><!-- End col-md-3 -->
         </div>
         {!! Form::close() !!}
+        <form action="{{ route('user.cart.add') }}" method="post">
+        @csrf
+            <input type="text" name="product" value="1">
+            <input type="checkbox" name="topping[]" value="1">1
+            <input type="checkbox" name="topping[]" value="2">2
+            <input type="checkbox" name="topping[]" value="3">3
+            <button id="btnBuy" class="btn btn-danger" type="submit">Buy</button>
+        </form>
     </div>
 </div>
+@endsection
+
+
+@section('js')
+
 @endsection
