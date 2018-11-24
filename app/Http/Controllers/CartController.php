@@ -23,8 +23,19 @@ class CartController extends Controller
 {
     public function index()
     {
-        $cart = session('cart') ? session::get('cart') : null;
-        return view('cart', compact('cart'));
+        $oldCart = Session::get('cart');
+        if ($oldCart) {
+            $cart = new Cart($oldCart);
+            $data = [
+                'cart' => $cart->items,
+                'totalPrice' => $cart->totalPrice,
+                'totalQty' => $cart->totalQty
+            ];
+
+            return view('cart', compact('data'));
+        }
+
+        return view('cart');
     }
 
     public function demo(Request $request)
@@ -44,17 +55,28 @@ class CartController extends Controller
         $cart->add($product, $topping);
         $req->session()->put('cart', $cart);
 
-        return redirect()->back();
+        return redirect(route('user.cart.index'));
+    }
+
+    public function plus($cartId)
+    {
+        $oldCart = Session('cart') ? Session('cart') : null;
+        $cart = new Cart($oldCart);
+        $cart->plus($cartId);
+
+        session()->put('cart', $cart);
+
+        return redirect(route('user.cart.index'));
     }
 
     // delete 1 product
-    public function minus(Product $product)
+    public function minus($cartId)
     {
         $oldCart = Session('cart') ? Session('cart') : null;
 
         if ($oldCart) {
             $cart = new Cart($oldCart);
-            $cart->reduceByOne($product->id);
+            $cart->minus($cartId);
 
             if (count($cart->items) == 0) {
                 session::forget('cart');
@@ -66,15 +88,13 @@ class CartController extends Controller
         return back();
     }
 
-    public function deleteOne(Product $product)
+    public function deleteOne($cartId)
     {
-        // dd($product);
-
         $oldCart = Session('cart') ? Session('cart') : null;
 
         if ($oldCart) {
             $cart = new Cart($oldCart);
-            $cart->removeItem($product);
+            $cart->removeItem($cartId);
 
             if (count($cart->items) == 0) {
                 session::forget('cart');
@@ -92,7 +112,7 @@ class CartController extends Controller
             session()->forget('cart');
         }
 
-        return back();
+        return back(route('user.cart.index'));
     }
 
     public function checkout(Request $req)

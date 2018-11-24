@@ -67,51 +67,43 @@
                             </a>
                         </div>
                     </h3>
-                    <table class="table table_summary table-hover">
-                        <tbody>
-                            {{-- @foreach (Session('cart') as $cart) --}}
+                    @if (isset($data))
+                        <table class="table table_summary table-hover">
+                            <tbody>
+                                @foreach ($data['cart'] as $key => $value)
+                                    <tr>
+                                        <td>
+                                            <a href="{{ route('user.cart.minus', $key) }}" class="icon_minus_alt2 "></a>
+                                                <strong>{{ $value['qty'] }}</strong>
+                                            <a href="{{ route('user.cart.plus', $key) }}" class="icon_plus_alt2 "></a>
+                                                <strong>{{ $value['product']->name }}</strong>
+                                            <p>
+                                                @foreach ($value['topping'] as $k => $v)
+                                                    <span class="badge">{{ $v['name'] }}</span>
+                                                @endforeach
+                                            </p>
+                                        </td>
+                                        <td>
+                                            <a href="{{ route('user.cart.delete', $key) }}" class="icon-cancel-circled-2 pull-right"></a>
+                                            <strong class="pull-right">{{ number_format($value['price']) }}₫</strong>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                        <hr>
+                        <table class="table table_summary">
+                            <tbody>
                                 <tr>
-                                    <td>
-                                        {{-- <a href="{{ route('user.cart.minus', [, ]) }}" class="icon-minus-circled"></a> --}}
-                                        {{-- <a href="{{ route('user.cart.add', [, ]) }}" class="icon-plus-circled"></a> --}}
-                                        {{ str_random(8) . ' ' . str_random(8) }}
-                                    </td>
-                                    <td>
-                                        <a href="{{ route('user.cart.delete', 1) }}" class="icon-cancel-circled-2 pull-right"></a>
-                                        <strong class="pull-right">150,000₫</strong>
+                                    <td class="total">
+                                        {{ __('message.total') }} <span class="pull-right">{{ number_format($data['totalPrice']) }}₫</span>
                                     </td>
                                 </tr>
-                            {{-- @endforeach --}}
-                        @if (session('cart'))
-                            {{-- @foreach (session('cart') as $e)
-                                <strong>{{ $e->items->product }}</strong>
-                            @endforeach --}}
-                        @else
-                            <strong>Empty !</strong>
-                        @endif
-
-                        </tbody>
-                    </table>
-                    <hr>
-                    <table class="table table_summary">
-                        <tbody>
-                        <tr>
-                            <td>
-                                Subtotal <span class="pull-right">150,000₫</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Delivery fee <span class="pull-right">150,000₫</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="total">
-                                TOTAL <span class="pull-right">150,000₫</span>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    @else
+                        <strong class="total">{{ __('message.empty') }}</strong>
+                    @endif
                     <hr>
                     {!! Form::submit(__('message.order'), ['class' => 'btn_full']) !!}
                 </div><!-- End cart_box -->
