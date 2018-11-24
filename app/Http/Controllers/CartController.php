@@ -50,8 +50,13 @@ class CartController extends Controller
     public function add(Request $req)
     {
         $product = Product::findOrFail($req->product);
-        $topping = Topping::findOrFail($req->topping);
         $size = Size::findOrFail($req->size);
+
+        if ($req->topping) {
+            $topping = Topping::findOrFail($req->topping);
+        } else {
+            $topping = null;
+        }
 
         $oldCart = Session('cart') ? Session('cart') : null;
         $cart = new Cart($oldCart);
@@ -148,11 +153,12 @@ class CartController extends Controller
                 'quantity' => $cart->items[$key]['qty'],
             ]);
 
-            foreach ($value as $k => $v) {
-                dd($value);
-                // $orderDetailTopping = $this->orderDetailTopping->create([
-                //     'topping_id' => 0,
-                // ]);
+            foreach ($value['topping'] as $k => $v) {
+                $orderDetail->toppings()->atach([
+                    'topping_id' => $v->id,
+                    'topping_price' => $v->price,
+                    'order_detail_id' => $orderDetail->id,
+                ]);
             }
         }
 

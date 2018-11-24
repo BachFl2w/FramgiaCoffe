@@ -76,6 +76,7 @@
                 <div id="cart_box" >
                     <h3>Your order
                     </h3>
+
                     @if (isset($data))
                         <table class="table table_summary table-hover">
                             <tbody>
@@ -88,9 +89,11 @@
                                                 <strong>{{ $value['product']->name }}</strong>
                                             <p><b>Seize : {{ $value['size']->name }}</b></p>
                                             <p>
-                                                @foreach ($value['topping'] as $k => $v)
-                                                    <span class="badge">{{ $v['name'] }}</span>
-                                                @endforeach
+                                                @if ($value['topping'])
+                                                    @foreach ($value['topping'] as $k => $v)
+                                                        <span class="badge">{{ $v['name'] }}</span>
+                                                    @endforeach
+                                                @endif
                                             </p>
                                         </td>
                                         <td>
@@ -115,6 +118,7 @@
                         {!! Form::submit(__('message.order'), ['class' => 'btn_full']) !!}
                         <a href="{{ route('user.cart.destroy') }}" class="btn_full" title="delete">Remove all</a>
                     @else
+                        {{-- <a href="{{ route('user.cart.destroy') }}" class="btn_full" title="delete">Remove all</a> --}}
                         <strong class="total">{{ __('message.empty') }}</strong>
                     @endif
                 </div><!-- End cart_box -->
