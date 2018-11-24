@@ -40,7 +40,7 @@
                 @endif
                 <div class="form-group">
                     {!! Form::label('name', __('message.name')) !!}
-                    {!! Form::text('name', 'test cart', ['class' => 'form-control']) !!}
+                    {!! Form::text('name', '', ['class' => 'form-control']) !!}
                     @if ($errors->has('name'))
                         <span class="text-danger" role="alert">
                             <strong>{{ $errors->first('name') }}</strong>
@@ -49,7 +49,7 @@
                 </div>
                 <div class="form-group">
                     {!! Form::label('order_place', __('message.address')) !!}
-                    {!! Form::text('order_place', 'test cart', ['class' => 'form-control']) !!}
+                    {!! Form::text('order_place', '', ['class' => 'form-control']) !!}
                     @if ($errors->has('order_place'))
                         <span class="text-danger" role="alert">
                             <strong>{{ $errors->first('order_place') }}</strong>
@@ -58,7 +58,7 @@
                 </div>
                 <div class="form-group">
                     {!! Form::label('order_phone', __('message.phone')) !!}
-                    {!! Form::number('order_phone', '123456789', ['class' => 'form-control']) !!}
+                    {!! Form::number('order_phone', '', ['class' => 'form-control']) !!}
                     @if ($errors->has('order_phone'))
                         <span class="text-danger" role="alert">
                             <strong>{{ $errors->first('order_phone') }}</strong>
@@ -67,7 +67,7 @@
                 </div>
                 <div class="form-group">
                     {!! Form::label('note', __('message.note')) !!}
-                    {!! Form::textarea('note', 'test cart', ['class' => 'form-control']) !!}
+                    {!! Form::textarea('note', '', ['class' => 'form-control']) !!}
                 </div>
             </div><!-- End wrapper_indent -->
         </div>
@@ -87,7 +87,7 @@
                                                 <strong>{{ $value['qty'] }}</strong>
                                             <a href="{{ route('user.cart.plus', $key) }}" class="icon_plus_alt2 "></a>
                                                 <strong>{{ $value['product']->name }}</strong>
-                                            <p><b>Seize : {{ $value['size']->name }}</b></p>
+                                            <p><b>Size : {{ $value['size']->name }}</b></p>
                                             <p>
                                                 @if ($value['topping'])
                                                     @foreach ($value['topping'] as $k => $v)
