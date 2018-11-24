@@ -9,6 +9,20 @@ class Order extends Model
 {
 	use SoftDeletes;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'receiver',
+        'user_id',
+        'order_place',
+        'order_phone',
+        'status',
+        'note',
+    ];
+
     protected $table = 'orders';
 
     protected $dates = ['deleted_at'];

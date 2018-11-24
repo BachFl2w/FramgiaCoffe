@@ -40,19 +40,34 @@
                 @endif
                 <div class="form-group">
                     {!! Form::label('name', __('message.name')) !!}
-                    {!! Form::text('name', '', ['class' => 'form-control']) !!}
+                    {!! Form::text('name', 'test cart', ['class' => 'form-control']) !!}
+                    @if ($errors->has('name'))
+                        <span class="text-danger" role="alert">
+                            <strong>{{ $errors->first('name') }}</strong>
+                        </span>
+                    @endif
                 </div>
                 <div class="form-group">
-                    {!! Form::label('address', __('message.address')) !!}
-                    {!! Form::text('address', '', ['class' => 'form-control']) !!}
+                    {!! Form::label('order_place', __('message.address')) !!}
+                    {!! Form::text('order_place', 'test cart', ['class' => 'form-control']) !!}
+                    @if ($errors->has('order_place'))
+                        <span class="text-danger" role="alert">
+                            <strong>{{ $errors->first('order_place') }}</strong>
+                        </span>
+                    @endif
                 </div>
                 <div class="form-group">
-                    {!! Form::label('address', __('message.address')) !!}
-                    {!! Form::text('address', '', ['class' => 'form-control']) !!}
+                    {!! Form::label('order_phone', __('message.phone')) !!}
+                    {!! Form::number('order_phone', '123456789', ['class' => 'form-control']) !!}
+                    @if ($errors->has('order_phone'))
+                        <span class="text-danger" role="alert">
+                            <strong>{{ $errors->first('order_phone') }}</strong>
+                        </span>
+                    @endif
                 </div>
                 <div class="form-group">
-                    {!! Form::label('phone', __('message.phone')) !!}
-                    {!! Form::text('phone', '', ['class' => 'form-control']) !!}
+                    {!! Form::label('note', __('message.note')) !!}
+                    {!! Form::textarea('note', 'test cart', ['class' => 'form-control']) !!}
                 </div>
             </div><!-- End wrapper_indent -->
         </div>
@@ -60,12 +75,6 @@
             <div class="theiaStickySidebar">
                 <div id="cart_box" >
                     <h3>Your order
-                        <div class="pull-right">
-                            <a href="{{ route('user.cart.destroy') }}" title="delete">
-                                <i class="icon_cart_alt"></i>
-                                Unset
-                            </a>
-                        </div>
                     </h3>
                     @if (isset($data))
                         <table class="table table_summary table-hover">
@@ -77,6 +86,7 @@
                                                 <strong>{{ $value['qty'] }}</strong>
                                             <a href="{{ route('user.cart.plus', $key) }}" class="icon_plus_alt2 "></a>
                                                 <strong>{{ $value['product']->name }}</strong>
+                                            <p><b>Seize : {{ $value['size']->name }}</b></p>
                                             <p>
                                                 @foreach ($value['topping'] as $k => $v)
                                                     <span class="badge">{{ $v['name'] }}</span>
@@ -101,11 +111,12 @@
                                 </tr>
                             </tbody>
                         </table>
+                        <hr>
+                        {!! Form::submit(__('message.order'), ['class' => 'btn_full']) !!}
+                        <a href="{{ route('user.cart.destroy') }}" class="btn_full" title="delete">Remove all</a>
                     @else
                         <strong class="total">{{ __('message.empty') }}</strong>
                     @endif
-                    <hr>
-                    {!! Form::submit(__('message.order'), ['class' => 'btn_full']) !!}
                 </div><!-- End cart_box -->
                 </div><!-- End theiaStickySidebar -->
             </div><!-- End col-md-3 -->
@@ -114,6 +125,7 @@
         <form action="{{ route('user.cart.add') }}" method="post">
         @csrf
             <input type="text" name="product" value="1">
+            <input type="text" name="size" value="1">
             <input type="checkbox" name="topping[]" value="1">1
             <input type="checkbox" name="topping[]" value="2">2
             <input type="checkbox" name="topping[]" value="3">3
