@@ -79,6 +79,7 @@ return [
     'quantity' => 'Quantity',
     'secure' => 'Secure payment',
     'help' => 'Need Help ?',
+    'total' => 'TOTAL',
     'lorem' => 'Lorem ipsum dolor sit amet, in pri partem essent. Qui debitis meliore ex, tollit debitis conclusionemque te eos.',
 
     // User

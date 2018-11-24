@@ -53,33 +53,47 @@ class Cart
         $this->items[$key] = $cart;
     }
 
-    // tru 1
-    public function reduceByOne(Product $product)
+    public function plus($cartId)
     {
-        $this->items[$product->id]['qty']--;
-        $this->items[$product->id]['price'] -= $this->items[$id]['item']['price'];
-        $this->totalQty--;
-        $this->totalPrice -= $this->items[$product->id]['item']['price'];
+        if (isset($this->items[$cartId])) {
+            $cart = $this->items[$cartId];
 
-        if($this->items[$product->id]['qty'] <= 0){
-            unset($this->items[$id]);
+            $cart['qty']++;
+            $this->totalQty++;
+
+            $cart['price'] += $cart['price'];
+            $this->totalPrice += $cart['price'];
+
+            // item
+            $this->items[$cartId] = $cart;
+        } else {
+            return back()->with('fail', __('message.fail.find'));
+        }
+    }
+
+    // tru 1
+    public function minus($cartId)
+    {
+        if (isset($this->items[$cartId])) {
+            $this->items[$cartId]['qty']--;
+            $this->items[$cartId]['price'] -= $this->items[$cartId]['product']['price'];
+            $this->totalQty--;
+            $this->totalPrice -= $this->items[$cartId]['price'];
+
+            if($this->items[$cartId]['qty'] <= 0){
+                unset($this->items[$id]);
+            }
         }
     }
 
     // xoa 1 sp
-    public function removeItem($product)
+    public function removeItem($cartId)
     {
-        if (isset($this->items[$product->id])) {
-            $this->totalQty -= $this->items[$product->id]['qty'];
-            $this->totalPrice -= $this->items[$product->id]['price'];
+        if (isset($this->items[$cartId])) {
+            $this->totalQty -= $this->items[$cartId]['qty'];
+            $this->totalPrice -= $this->items[$cartId]['price'];
 
-            unset($this->items[$product->id]);
+            unset($this->items[$cartId]);
         }
-    }
-
-    // xoa het sp trong gio hang
-    public function removeAllItem()
-    {
-        session()->forget('cart');
     }
 }
