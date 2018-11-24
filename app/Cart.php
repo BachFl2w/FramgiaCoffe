@@ -82,5 +82,4 @@ class Cart
     {
         session()->forget('cart');
     }
-
 }

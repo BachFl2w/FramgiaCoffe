@@ -343,7 +343,7 @@ jQuery(document).ready(function($) {
             if (request_value == '') {
                 $('#box_search').hide();
             }
-            var url = 'http://127.0.0.1:8000/images/products/';
+            var url_image = 'http://127.0.0.1:8000/images/products/';
             $('#box_search').show();
             $('#box_search').empty();
             var result = '';
@@ -352,9 +352,10 @@ jQuery(document).ready(function($) {
             }
             else {
                 res.forEach( function(element, index) {
-                    result += '<a href="">' +
+                    var url_product = route("client.product.detail", {id: element.id})
+                    result += '<a href=' + url_product + '>' +
                             '<div class="row" id="element-result">' +
-                            '<img id="element-img" height="30px" width="100px" class="img-thumbnail" id="img-element-result" src="'+ url + element.images[0].name +'">' +
+                            '<img id="element-img" height="30px" width="100px" class="img-thumbnail" id="img-element-result" src="'+ url_image + element.images[0].name +'">' +
                             '<h4 id="element-text">' + element.name + '</h4>' +
                             '</div>' +
                         '</a>';

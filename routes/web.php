@@ -172,6 +172,8 @@ Route::get('list-product/filter', 'ClientController@filterProductByCategory')->n
 
 Route::get('product/{id}', 'ClientController@detailProduct')->name('client.product.detail');
 
+Route::post('comment', 'ClientController@comment')->name('client.comment');
+
 Route::post('demo', 'CartController@demo')->name('demo');
 
 Route::get('show', function() {

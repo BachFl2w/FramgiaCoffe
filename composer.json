@@ -12,8 +12,9 @@
         "laravel/framework": "5.7.*",
         "laravel/tinker": "^1.0",
         "laravelcollective/html": "^5.2.0",
-        "tightenco/ziggy": "^0.6.9",
         "realrashid/sweet-alert": "^1.1",
+        "tightenco/ziggy": "^0.6.9",
+        "unisharp/laravel-ckeditor": "^4.7"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2",

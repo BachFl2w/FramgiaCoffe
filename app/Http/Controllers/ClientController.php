@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Feedback;
 use App\Image;
 use App\Order;
 use App\OrderDetail;
@@ -12,6 +13,7 @@ use App\Size;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
 
 class ClientController extends Controller
 {
@@ -104,7 +106,20 @@ class ClientController extends Controller
         $sizes = Size::all();
 
         return view('detail_product', compact('product', 'toppings', 'sizes'));
+    }
 
+    public function comment(Request $request)
+    {
+        $feedback = new Feedback();
 
+        $feedback->user_id = Auth::id();
+
+        $feedback->product_id = $request->product_id;
+
+        $feedback->content = $request->comment;
+
+        $feedback->status = 0;
+
+        $feedback->save();
     }
 }

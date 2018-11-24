@@ -71,23 +71,19 @@
                         <input type="checkbox" name="topping[]" style="height: 36px" value="3">3
                         <button id="btnBuy" class="btn btn-danger" type="submit">Buy</button>
                     </form>
-                    <p>Topping</p>
-                    <select name="states[]" multiple="multiple" id="topping_list" style="width: 100%">
-                        @foreach($toppings as  $topping)
-                            <option>{{ $topping->name }}</option>
-                        @endforeach
-                    </select>
                     @if(Auth::check())
                         <div id="summary_review">
                             <div id="general_rating">
                                 {{ __('message.feedback') }}
                             </div>
                             <div class="col-12">
-                            <textarea class="form-control" style="resize: none"
-                                      placeholder="{{ __('message.enter_feedback') }}" rows="3"></textarea>
+                                <input hidden value="{{ $product->id }}" id="product_id_feedback">
+                                <textarea id="comment" class="form-control" style="resize: none"
+                                          placeholder="{{ __('message.enter_feedback') }}" rows="3"></textarea>
                             </div>
                             <hr class="styled">
-                            <a href="#" class="btn_1 add_bottom_15">Send</a>
+                            <button id="btnSendFeedback" class="btn_1 add_bottom_15">Send</button>
+                            
                         </div><!-- End summary_review -->
                     @endif
                     <h3>{{ __('message.feedback') }}</h3>
@@ -120,45 +116,15 @@
     </div><!-- End container -->
 
 
-    <div class="modal fade" id="myReview" tabindex="-1" role="dialog" aria-labelledby="modal_product_name"
+    <div class="modal fade" id="myModalThank" tabindex="-1" role="dialog" aria-labelledby="modal_product_name"
          aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <form action="#">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                        <h5 class="modal-title" id="modal_product_name"></h5>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row" style="padding: 10px">
-                            <div class="col-sm-4">
-                                <h4 style="padding: 5px" class="text text-info"></h4>
-                            </div>
-                            <div class="col-sm-4">
-                                <span>Size</span>
-                                <select class="form-control">
-                                    @foreach($sizes as  $size)
-                                        <option>{{ $size->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-sm-4">
-                                <span>Size</span>
-                                <select name="states[]" multiple="multiple" id="topping_list">
-                                    @foreach($toppings as  $topping)
-                                        <option>{{ $topping->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="Submit" class="btn btn-primary">Send</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    </div>
-                </form>
+            <div class="modal-content" style="border-radius: 20px">
+                <div class="modal-body">
+                    <img src="{{ asset('images/heart_icon.png') }}" class="img-thumbnail"
+                         style="margin: auto;display: block;">
+                    <h1 class="text text-center" style="font-size: 30px">Thank you for you comment</h1>
+                </div>
             </div>
         </div>
     </div>
@@ -217,6 +183,28 @@
 
             $('#topping_list').select2();
 
+            $('#btnSendFeedback').click(function (event) {
+                event.preventDefault();
+                $.ajax({
+                    url: route('client.comment'),
+                    type: 'POST',
+                    dataType: '',
+                    data: {
+                        comment: $('#comment').val(),
+                        product_id: $('#product_id_feedback').val(),
+                    }
+                })
+                    .done(function () {
+                        $('#myModalThank').modal('show');
+
+                        window.setTimeout(function () {
+                            $("#myModalThank").modal("hide");
+                        }, 1500);
+                    })
+                    .fail(function () {
+                        console.log("error");
+                    })
+            });
         });
     </script>
 @endsection
