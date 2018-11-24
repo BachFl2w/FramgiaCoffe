@@ -21,11 +21,12 @@ class Cart
         }
     }
 
-    public function add($product, $topping)
+    public function add($product, $topping, $size)
     {
         $cart = [
             'qty' => 0,
             'price' => 0,
+            'size' => $size,
             'product' => $product,
             'topping' => $topping,
         ];
@@ -46,8 +47,13 @@ class Cart
 
         // tổng tiền topping trong 1 cốc
         $totalToppingPrice = array_sum($topping->pluck('price')->toArray());
-        $cart['price'] = $product->price * $cart['qty'] + $totalToppingPrice;
-        $this->totalPrice += $cart['price'];
+        $sizePrice = $product->price * $cart['size']->percent / 100;
+        $productPrice = $product->price;
+        $price = $productPrice + $sizePrice + $totalToppingPrice;
+
+        $cart['price'] = $price * $cart['qty'];
+        $this->totalPrice += $price;
+        // dd($this->totalPrice, $cart['price']);
 
         // item
         $this->items[$key] = $cart;
@@ -61,8 +67,13 @@ class Cart
             $cart['qty']++;
             $this->totalQty++;
 
-            $cart['price'] += $cart['price'];
-            $this->totalPrice += $cart['price'];
+            $totalToppingPrice = array_sum($cart['topping']->pluck('price')->toArray());
+            $sizePrice = $cart['product']->price * $cart['size']->percent / 100;
+            $productPrice = $cart['product']->price;
+            $price = $productPrice + $sizePrice + $totalToppingPrice;
+
+            $cart['price'] = $price * $cart['qty'];
+            $this->totalPrice += $price;
 
             // item
             $this->items[$cartId] = $cart;
@@ -81,7 +92,7 @@ class Cart
             $this->totalPrice -= $this->items[$cartId]['price'];
 
             if($this->items[$cartId]['qty'] <= 0){
-                unset($this->items[$id]);
+                unset($this->items[$cartId]);
             }
         }
     }

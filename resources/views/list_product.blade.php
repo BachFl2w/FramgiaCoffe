@@ -69,14 +69,12 @@
                         </div> --}}
                         <div class="row">
                             <div class="col-md-9 col-sm-9">
+                                <a href="{{ route('client.product.detail', ['id' => $product->id]) }}">
                                 <div class="desc row">
                                     <div class="col-md-4">
                                         <div class="thumb_strip">
-                                            <a href="{{ route('client.product.detail', ['id' => $product->id]) }}">
-                                                <img
-                                                    src="{{ asset(config('asset.image_path.product') . $product->images[0]->name) }}"
+                                            <img src="{{ asset(config('asset.image_path.product') . $product->images[0]->name) }}"
                                                     alt="Image product">
-                                            </a>
                                         </div>
                                     </div>
                                     <div class="col-md-8">
@@ -86,19 +84,15 @@
                                             <i class="icon_star voted"></i>
                                             <i class="icon_star voted"></i>
                                             <i class="icon_star"></i> (
-                                            <small><a href="#0">98 reviews</a></small>
+                                            <small>98 reviews</small>
                                             )
                                         </div>
-                                        <a href="{{ route('client.product.detail', ['id' => $product->id]) }}">
-                                            <h3>{{ $product->name }}</h3></a>
+                                            <h3>{{ $product->name }}</h3>
                                         <div class="type" style="font-size: 15px">
                                             {{ $product->category->name }}
                                         </div>
                                         <div class="location">
-                                            {{-- {{ $product->description }}
-                                            <span class="opening">Opens at 17:00.</span> --}}
-                                            <strong class="opening"
-                                                    style="font-size: 25px">{{ number_format($product->price) .' ₫' }}</strong>
+                                            <strong class="opening" style="font-size: 25px">{{ number_format($product->price) .' ₫' }}</strong>
                                         </div>
                                         <ul>
                                             <li>Take away<i class="icon_check_alt2 ok"></i></li>
@@ -106,7 +100,9 @@
                                         </ul>
                                     </div>
                                 </div>
+                                </a>
                             </div>
+                            
                             <div class="col-md-3 col-sm-3">
                                 <div class="go_to">
                                     <div>

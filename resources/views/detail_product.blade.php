@@ -62,15 +62,11 @@
                     <p>
                         {{ $product->description }}
                     </p>
-                    <form action="{{ route('demo') }}" method="post">
-                        @csrf
-                        <input type="text" name="product_id" style="height: 36px" value="{{ $product->id }}">
-                        <input type="text" name="product_price" style="height: 36px" value="{{ $product->price }}">
-                        <input type="checkbox" name="topping[]" style="height: 36px" value="1">1
-                        <input type="checkbox" name="topping[]" style="height: 36px" value="2">2
-                        <input type="checkbox" name="topping[]" style="height: 36px" value="3">3
-                        <button id="btnBuy" class="btn btn-danger" type="submit">Buy</button>
-                    </form>
+
+                    <button id="btnBuy" data-toggle="modal" data-target="#order" class="btn btn-danger" type="submit">
+                        Add Cart
+                    </button>
+
                     @if(Auth::check())
                         <div id="summary_review">
                             <div id="general_rating">
@@ -83,7 +79,7 @@
                             </div>
                             <hr class="styled">
                             <button id="btnSendFeedback" class="btn_1 add_bottom_15">Send</button>
-                            
+
                         </div><!-- End summary_review -->
                     @endif
                     <h3>{{ __('message.feedback') }}</h3>
@@ -128,6 +124,42 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="order" tabindex="-1" role="dialog" aria-labelledby="modal_product_name"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" style="border-radius: 20px">
+                <form id="form_order">
+                    <input type="text" hidden name="product" value="{{ $product->id }}">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">{{ $product->name }}</h4>
+                    </div>
+                    <div class="modal-body">
+                        <h3>Size</h3>
+                        @foreach($sizes as $size)
+                            <label class="radio-inline">
+                                <input type="radio" name="size" value="{{ $size->id }}">
+                                {{ $size->name }}
+                            </label>
+                        @endforeach
+                        <h3>Topping</h3>
+                        @foreach($toppings as $topping)
+                            <label class="checkbox-inline">
+                                <input type="checkbox" name="topping[]" id="topping" value="{{ $topping->id }}">
+                                {{ $topping->name }}
+                            </label>
+                        @endforeach
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" id="btnSubmitOrder" class="btn btn-primary">Order</button>
+                        <button type="button" data-dismiss="modal" class="btn btn-danger">Cancel</button>
+                    </div>
+            </div>
+            </form>
+        </div>
+    </div>
+    </div>
     <!-- End Content =============================================== -->
 @endsection
 
@@ -152,37 +184,7 @@
     </script>
     <script type="text/javascript">
         jQuery(document).ready(function ($) {
-            var categories = [];
-
-            function setData(data) {
-                categories = data;
-            }
-
-            $('#btnBuy').click(function (event) {
-                var product_name = $('#product_name').html();
-                var product_id = $('#product_id').val();
-                var number_product = $('#number_product').val();
-                $('#modal_product_name').html(product_name + ' (3 san pham)');
-                $.ajax({
-                    url: route('admin.category.json'),
-                    type: 'get',
-                    global: false,
-                    dataType: '',
-                    data: {},
-                })
-                    .done(function (data) {
-                        setData(data)
-                    })
-                    .fail(function () {
-                        console.log("error");
-                    })
-                    .always(function () {
-                        console.log(categories);
-                    });
-            });
-
-            $('#topping_list').select2();
-
+            
             $('#btnSendFeedback').click(function (event) {
                 event.preventDefault();
                 $.ajax({
@@ -204,6 +206,27 @@
                     .fail(function () {
                         console.log("error");
                     })
+            });
+
+            $('#btnSubmitOrder').click(function(event) {
+                event.preventDefault();
+                console.log($('#topping').val())
+
+                // $.ajax({
+                //     url: route('user.cart.add'),
+                //     type: 'post',
+                //     dataType: '',
+                //     data: $("#form_order").serialize(),
+                // })
+                // .done(function() {
+                //     console.log("success");
+                // })
+                // .fail(function() {
+                //     console.log("error");
+                // })
+                // .always(function() {
+                //     // console.log(form);
+                // });
             });
         });
     </script>

@@ -15,21 +15,27 @@ class OrderDetailToppingsTableSeeder extends Seeder
             [
                 'order_detail_id' => 1,
                 'topping_id' => 1,
+                'topping_price' => 5,
             ], [
                 'order_detail_id' => 2,
                 'topping_id' => 3,
+                'topping_price' => 5,
             ], [
                 'order_detail_id' => 3,
                 'topping_id' => 1,
+                'topping_price' => 5,
             ], [
                 'order_detail_id' => 1,
                 'topping_id' => 2,
+                'topping_price' => 5,
             ], [
                 'order_detail_id' => 1,
                 'topping_id' => 3,
+                'topping_price' => 5,
             ], [
                 'order_detail_id' => 1,
                 'topping_id' => 4,
+                'topping_price' => 5,
             ],
         ];
 

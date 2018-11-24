@@ -102,7 +102,15 @@
                 <a href="#" class="open_close" id="close_in"><i class="icon_close"></i></a>
                  <ul>
                     <li><a href="{{ route('client.index') }}">{{ __('message.title.home') }}</a></li>
-                    <li><a href="{{ route('user.cart.index') }}">{{ __('message.title.cart') }}</a></li>
+                    <li>
+                        <a href="{{ route('user.cart.index') }}">
+                            {{ __('message.title.cart') }}
+                            @if(Session::has('cart'))
+                                {{ '( ' . count(Session::get('cart')) . ' )' }}
+                            @else {{ ' (0)' }}
+                            @endif   
+                        </a>
+                    </li>
                     <li class="submenu">
                     <a href="{{ route('client.list_product') }}" class="show-submenu">{{ __('message.product') }}
                         {{-- <i class="icon-down-open-mini"></i> --}}
@@ -112,12 +120,7 @@
                         <li><a href="">{{ __('message.new_product') }}</a></li>
                     </ul> --}}
                     </li>
-                    <li class="submenu">
-                    <a href="javascript:void(0);" class="show-submenu">{{ __('message.order') }}<i class="icon-down-open-mini"></i></a>
-                    <ul>
-                        <li><a href="#">{{ __('message.title.paid') }}</a></li>
-                        <li><a href="#">{{ __('message.title.unpaid') }}</a></li>
-                    </ul>
+                    <li><a href="{{ route('client.orders') }}">{{ __('message.title.order') }}</a></li>
                     <li><a href="#">{{ __('message.title.about') }}</a></li>
                     </li>
                     @if (!Auth::id())

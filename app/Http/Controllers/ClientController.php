@@ -122,4 +122,17 @@ class ClientController extends Controller
 
         $feedback->save();
     }
+
+    public function orders()
+    {
+        if(Auth::check())
+        {
+            $user_id = Auth::id();
+            $orders = Order::where('user_id', $user_id)->get();
+
+            return view('list_order', compact('orders'));
+        }
+        
+        return abort(404);
+    }
 }

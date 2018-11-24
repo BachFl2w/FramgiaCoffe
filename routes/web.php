@@ -184,3 +184,5 @@ Route::get('show', function() {
 Route::get('remove', function() {
     Session()->forget('cart');
 });
+
+Route::get('order', 'ClientController@orders')->name('client.orders');

@@ -2,29 +2,38 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
-use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\Controller;
+use Session;
+use Hash;
+use Auth;
 
 use App\Cart;
 use App\User;
 use App\OrderDetailToping;
 use App\OrderDetail;
 use App\Order;
+use App\Size;
 use App\Topping;
 use App\Product;
+use App\Repositories\Repository;
 
-use Session;
-use Hash;
-use Auth;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\OrderRequest;
 
 class CartController extends Controller
 {
+    protected $orderModel;
+    protected $orderDetailModel;
+
+    function __construct(Order $orderModel, OrderDetail $orderDetailModel) {
+        $this->orderModel = new Repository($orderModel);
+        $this->orderDetailModel = new Repository($orderDetailModel);
+    }
+
     public function index()
     {
-        $oldCart = Session::get('cart');
-        if ($oldCart) {
+        if (Session::has('cart')) {
+            $oldCart = Session('cart');
             $cart = new Cart($oldCart);
             $data = [
                 'cart' => $cart->items,
@@ -38,21 +47,15 @@ class CartController extends Controller
         return view('cart');
     }
 
-    public function demo(Request $request)
-    {
-        $cart = new Cart();
-
-        $cart->add($request->product_id, $request->product_price, $request->topping);
-    }
-
     public function add(Request $req)
     {
         $product = Product::findOrFail($req->product);
         $topping = Topping::findOrFail($req->topping);
+        $size = Size::findOrFail($req->size);
 
         $oldCart = Session('cart') ? Session('cart') : null;
         $cart = new Cart($oldCart);
-        $cart->add($product, $topping);
+        $cart->add($product, $topping, $size);
         $req->session()->put('cart', $cart);
 
         return redirect(route('user.cart.index'));
@@ -63,7 +66,6 @@ class CartController extends Controller
         $oldCart = Session('cart') ? Session('cart') : null;
         $cart = new Cart($oldCart);
         $cart->plus($cartId);
-
         session()->put('cart', $cart);
 
         return redirect(route('user.cart.index'));
@@ -112,14 +114,11 @@ class CartController extends Controller
             session()->forget('cart');
         }
 
-        return back(route('user.cart.index'));
+        return back();
     }
 
-    public function checkout(Request $req)
+    public function checkout(OrderRequest $req)
     {
-        if ($req) {
-
-        }
         $cart = session('cart');
 
         $id = null;
@@ -127,25 +126,34 @@ class CartController extends Controller
             $id = Auth::id();
         }
 
-        $order = new Order;
-        $order->receiver = $req->name;
-        $order->user_id = $id;
-        $order->order_place = $req->order_place;
-        $order->order_phone = $req->order_phone;
-        $order->status = 0;
-        $order->note = $req->note;
+        // dd($cart);
 
-        $order->save();
+        $order = $this->orderModel->create([
+            'receiver' => $req->name,
+            'user_id' => $id,
+            'order_place' => $req->order_place,
+            'order_phone' => $req->order_phone,
+            'status' => 0,
+            'note' => $req->note,
+        ]);
+
+        // dd($order->id);
 
         foreach ($cart->items as $key => $value) {
-            $orderDetail = new orderDetail;
-            $orderDetail->product_id = $key;
-            $orderDetail->order_id = $order->id;
-            $orderDetail->quantity = $value['qty'];
-            $orderDetail->save();
+            $orderDetail = $this->orderDetailModel->create([
+                'product_id' => $cart->items[$key]['product']->id,
+                'product_price' => $cart->items[$key]['product']->price,
+                'order_id' => $order->id,
+                'size_id' => $cart->items[$key]['size']->id,
+                'quantity' => $cart->items[$key]['qty'],
+            ]);
 
-            $orderDetailTopping = new OrderDetailToping;
-            // $orderDetailTopping = ;
+            foreach ($value as $k => $v) {
+                dd($value);
+                // $orderDetailTopping = $this->orderDetailTopping->create([
+                //     'topping_id' => 0,
+                // ]);
+            }
         }
 
         session()->forget('cart');

@@ -27,6 +27,7 @@ return [
         'contact' => 'Contact',
         'news' => 'Newsletter',
         'setting' => 'Settings',
+        'order' => 'Order',
     ],
 
     'index' => [
@@ -180,4 +181,5 @@ return [
     'to' => 'To',
     'enter_feedback' => 'Enter some feedback',
     'opening_time' => 'Opening Time',
+    'empty_cart' => 'Your Cart is Empty',
 ];
