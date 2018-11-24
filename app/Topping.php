@@ -15,6 +15,6 @@ class Topping extends Model
 
     public function orderDetails()
     {
-        return $this->belongsToMany(OrderDetail::class);
+        return $this->belongsToMany(OrderDetail::class)->withPivot('topping_price');;
     }
 }

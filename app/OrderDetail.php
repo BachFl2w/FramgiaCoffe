@@ -33,7 +33,7 @@ class OrderDetail extends Model
 
     public function toppings()
     {
-        return $this->belongsToMany(Topping::class)->withTrashed();
+        return $this->belongsToMany(Topping::class)->withTrashed()->withPivot('topping_price');
     }
 
     public function size()

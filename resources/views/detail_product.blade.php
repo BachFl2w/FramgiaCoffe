@@ -210,23 +210,22 @@
 
             $('#btnSubmitOrder').click(function(event) {
                 event.preventDefault();
-                console.log($('#topping').val())
 
-                // $.ajax({
-                //     url: route('user.cart.add'),
-                //     type: 'post',
-                //     dataType: '',
-                //     data: $("#form_order").serialize(),
-                // })
-                // .done(function() {
-                //     console.log("success");
-                // })
-                // .fail(function() {
-                //     console.log("error");
-                // })
-                // .always(function() {
-                //     // console.log(form);
-                // });
+                $.ajax({
+                    url: route('user.cart.add'),
+                    type: 'post',
+                    dataType: '',
+                    data: $("#form_order").serialize(),
+                })
+                .done(function() {
+                    console.log("success");
+                })
+                .fail(function() {
+                    console.log("error");
+                })
+                .always(function() {
+                    // console.log(form);
+                });
             });
         });
     </script>

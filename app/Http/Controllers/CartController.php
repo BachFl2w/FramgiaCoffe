@@ -50,8 +50,13 @@ class CartController extends Controller
     public function add(Request $req)
     {
         $product = Product::findOrFail($req->product);
-        $topping = Topping::findOrFail($req->topping);
         $size = Size::findOrFail($req->size);
+
+        if ($req->topping) {
+            $topping = Topping::findOrFail($req->topping);
+        } else {
+            $topping = null;
+        }
 
         $oldCart = Session('cart') ? Session('cart') : null;
         $cart = new Cart($oldCart);
@@ -148,11 +153,20 @@ class CartController extends Controller
                 'quantity' => $cart->items[$key]['qty'],
             ]);
 
-            foreach ($value as $k => $v) {
-                dd($value);
-                // $orderDetailTopping = $this->orderDetailTopping->create([
-                //     'topping_id' => 0,
+            /**
+             * Sửa code ở 2 model orderDetail và Topping thêm ->withPivot('topping_price');
+             Trong đó tham số truyền vào của withPivot là các gía trị muốn thêm mà ko liên qua đến liên kết gĩưa 3 bảng, ví dụ ở đây là price của topping
+             **/
+            
+            foreach ($value['topping'] as $k => $v) {
+                // $orderDetail->toppings()->atach([
+                //     'topping_id' => $v->id, (Ko cần khai báo key cho nó vì nó là cột liên kết rồi)
+                //     'topping_price' => $v->price, (Muốn thêm gía trị của cột ko liên qua thì dùng mảng truyền vào theo kiểu key => value)
+                //     'order_detail_id' => $orderDetail->id, (đoạn này bị thưa, vì khi dùng $orderDetail->toppings() là đã có 1 id của $orderDetail thêm vào rồi, ko cần cái này)
                 // ]);
+                $orderDetail->toppings()->atach($v->id, [
+                    'topping_price' => $v->price,
+                ]);
             }
         }
 

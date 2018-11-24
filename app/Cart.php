@@ -33,7 +33,13 @@ class Cart
 
         // set key theo mã sản phẩm + mảng các key topping
         // VD: product 1, topping 1 +2 => key = 112
-        $key = $product->id . implode($topping->pluck('id')->toArray());
+        $key = $product->id;
+        $totalToppingPrice = 0;
+
+        if ($topping != null) {
+            $totalToppingPrice = array_sum($topping->pluck('price')->toArray());
+            $key = $product->id . implode($topping->pluck('id')->toArray());
+        }
 
         if ($this->items) {
             // kiểm tra nếu tồn tại cốc có cùng topping thì gán cart cho cart cũ
@@ -46,7 +52,6 @@ class Cart
         $this->totalQty++;
 
         // tổng tiền topping trong 1 cốc
-        $totalToppingPrice = array_sum($topping->pluck('price')->toArray());
         $sizePrice = $product->price * $cart['size']->percent / 100;
         $productPrice = $product->price;
         $price = $productPrice + $sizePrice + $totalToppingPrice;
@@ -67,7 +72,11 @@ class Cart
             $cart['qty']++;
             $this->totalQty++;
 
-            $totalToppingPrice = array_sum($cart['topping']->pluck('price')->toArray());
+            $totalToppingPrice = 0;
+            if ($cart['topping']) {
+                $totalToppingPrice = array_sum($cart['topping']->pluck('price')->toArray());
+            }
+
             $sizePrice = $cart['product']->price * $cart['size']->percent / 100;
             $productPrice = $cart['product']->price;
             $price = $productPrice + $sizePrice + $totalToppingPrice;
