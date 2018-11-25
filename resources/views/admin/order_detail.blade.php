@@ -1,7 +1,7 @@
 @extends('layouts.app2')
 
 @section('page-title')
-    <li><a href="{{route('admin.user.index')}}">{{ __('message.title.dashboard') }}</a></li>
+    <li><a href="{{route('admin.index')}}">{{ __('message.title.dashboard') }}</a></li>
     <li><a href="{{route('admin.order.index')}}">{{ __('message.order') }}</a></li>
     <li class="active">{{ __('message.order_title.detail') }}</li>
 @endsection
@@ -138,6 +138,7 @@
 @endsection
 @section('script')
     <script type="text/javascript">
+        var nf = new Intl.NumberFormat();
         $.ajax({
             url: route('admin.order.detail.json', {id: $('#order_id').val()}),
             type: 'get',
@@ -149,7 +150,7 @@
             res.forEach( function(element, index) {
                 total += element.price;
             });
-            $('#total').html(total + ' vnđ');
+            $('#total').html(nf.format(total) + ' vnđ');
         })
         .fail(function() {
             console.log("error");

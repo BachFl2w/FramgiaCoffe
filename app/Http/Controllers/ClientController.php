@@ -135,4 +135,19 @@ class ClientController extends Controller
         
         return abort(404);
     }
+
+    public function order_details($order_id)
+    {
+        $orderDetails = OrderDetail::with('product', 'size', 'toppings')->where('order_id', $order_id)->get();
+
+        return $orderDetails; 
+    }
+    public function cancel_order($order_id)
+    {
+        $order = Order::findOrfail($order_id);
+
+        $order->status = -1;
+
+        $order->save();
+    }
 }

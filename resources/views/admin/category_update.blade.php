@@ -2,8 +2,8 @@
 
 @section('page-title')
     <li><a href="{{route('admin.user.index')}}">Dashboard</a></li>
-    <li><a href="{{route('admin.user.index')}}">{{ __('message.category') }}</a></li>
-    <li class="active">{{ __('message.create') }}</li>
+    <li><a href="{{route('admin.category.index')}}">{{ __('message.category') }}</a></li>
+    <li class="active">{{ __('message.update') }}</li>
 @endsection
 
 @section('content')
@@ -25,7 +25,7 @@
             </div>
             <div class="card-footer">
                 {!! Form::submit(__('message.update'), ['class' => 'btn btn-info']) !!}
-                {!! Form::reset(__('message.reset'), ['class' => 'btn btn-warning']) !!}
+                {!! Form::reset(__('message.reset'), ['class' => 'btn btn-danger']) !!}
             </div>
         {!! Form::close() !!}
     </div>

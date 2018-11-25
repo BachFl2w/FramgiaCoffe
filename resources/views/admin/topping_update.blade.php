@@ -1,8 +1,8 @@
 @extends('layouts.app2')
 
 @section('page-title')
-    <li><a href="{{route('admin.user.index')}}">Dashboard</a></li>
-    <li><a href="{{route('admin.user.index')}}">{{ __('message.topping') }}</a></li>
+    <li><a href="{{route('admin.index')}}">Dashboard</a></li>
+    <li><a href="{{route('admin.topping.index')}}">{{ __('message.topping') }}</a></li>
     <li class="active">{{ __('message.update') }}</li>
 @endsection
 
@@ -30,7 +30,7 @@
                 </div>
                 <div class="text-xs-right">
                     <button type="submit" class="btn btn-info">{{ __('message.update') }}</button>
-                    <a href="{{ route('admin.topping.index') }}" class="btn btn-inverse">{{ __('message.cancel') }}</a>
+                    <a href="{{ route('admin.topping.index') }}" class="btn btn-danger">{{ __('message.cancel') }}</a>
                 </div>
             </form>
         </div>

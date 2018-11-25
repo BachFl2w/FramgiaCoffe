@@ -219,12 +219,14 @@
                 })
                 .done(function() {
                     console.log("success");
+                    $('#order').modal('hide');
+                    alert('Add cart success');
                 })
                 .fail(function() {
                     console.log("error");
                 })
                 .always(function() {
-                    // console.log(form);
+                    $("#form_order")[0].reset();
                 });
             });
         });

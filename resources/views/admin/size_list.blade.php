@@ -2,7 +2,7 @@
 
 @section('page-title')
     <li><a href="{{route('admin.index')}}">{{ __('message.title.dashboard') }}</a></li>
-    <li class="active">{{ __('message.category') }}</li>
+    <li class="active">{{ __('message.size') }}</li>
 @endsection
 
 @section('content')
@@ -11,7 +11,7 @@
             <div class="card-header">
                 <strong class="card-title">{{ __('message.category') }}</strong>
                 <div class="float-right">
-                    <a href="{{ route('admin.category.create') }}" class="btn btn-outline-info"
+                    <a href="{{ route('admin.size.create') }}" class="btn btn-outline-info"
                        title="show">{{ __('message.create') }}</a>
                 </div>
             </div>
@@ -20,19 +20,21 @@
                     <thead>
                     <tr>
                         <th>{{ __('message.id') }}</th>
-                        <th>{{ __('message.category') }}</th>
+                        <th>{{ __('message.size') }}</th>
+                        <th>{{ __('message.percent') }}</th>
                         <th>{{ __('message.action') }}</th>
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach ($categories as $category)
+                    @foreach ($sizes as $size)
                         <tr>
-                            <td>{{$category->id }}</td>
-                            <td>{{ $category->name }}</td>
+                            <td>{{$size->id }}</td>
+                            <td>{{ $size->name }}</td>
+                            <td>{{ $size->percent . '%' }}</td>
                             <td>
-                                <a href="{{ route('admin.category.edit', ['id' => $category->id]) }}"
+                                <a href="{{ route('admin.size.edit', ['id' => $size->id]) }}"
                                    class="btn btn-outline-primary"><i class="fa fa-edit"></i></a>
-                                <a href="{{ route('admin.category.destroy', ['id' => $category->id]) }}"
+                                <a href="{{ route('admin.size.destroy', ['id' => $size->id]) }}"
                                    onclick="return confirm('Delete this one? ')" class="btn btn-outline-danger"><i
                                         class="fa fa-trash"></i></a>
                             </td>

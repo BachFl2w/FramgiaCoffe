@@ -92,6 +92,8 @@ class ProductController extends Controller
 
         $img->save();
 
+        toast()->success(__('message.success.create'), 'success');
+
         return route('admin.product.index');
     }
 
@@ -188,6 +190,8 @@ class ProductController extends Controller
             $img->save();
         }
 
+        toast()->success(__('message.success.update'), 'success');
+
         return redirect()->route('admin.product.index');
     }
 
@@ -202,6 +206,8 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
 
         $product->delete();
+
+        toast()->success(__('message.success.delete'), 'success');
 
         return redirect()->route('admin.product.index');
     }
@@ -268,6 +274,5 @@ class ProductController extends Controller
         $image->active = 1;
 
         $image->save();
-
     }
 }

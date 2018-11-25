@@ -92,7 +92,7 @@
                                             {{ $product->category->name }}
                                         </div>
                                         <div class="location">
-                                            <strong class="opening" style="font-size: 25px">{{ number_format($product->price) .' ₫' }}</strong>
+                                            <strong class="opening" style="font-size: 25px">{{ number_format($product->price) . ' ₫' }}</strong>
                                         </div>
                                         <ul>
                                             <li>Take away<i class="icon_check_alt2 ok"></i></li>

@@ -1,7 +1,7 @@
 @extends('layouts.app2')
 
 @section('page-title')
-    <li><a href="{{route('admin.user.index')}}">{{ __('message.title.dashboard') }}</a></li>
+    <li><a href="{{route('admin.index')}}">{{ __('message.title.dashboard') }}</a></li>
     <li class="active">{{ __('message.order') }}</li>
 @endsection
 
@@ -36,7 +36,19 @@
                             <td>{{ $order->order_time }}</td>
                             <td>{{ $order->order_place }}</td>
                             <td>{{ $order->order_phone }}</td>
-                            <td>{{ $order->status }}</td>
+                            <td>
+                                @switch($order->status)
+                                @case(-1)
+                                    {{ 'Canceled' }}
+                                    @break
+                                @case(1)
+                                    {{ 'Success' }}
+                                    @break
+                                @case(0)
+                                    {{ 'Unprocess' }}
+                                    @break
+                                @endswitch
+                            </td>
                             <td>{{ $order->note }}</td>
                             <td>
                                 <a href="{{ route('admin.order.edit', ['id' => $order->id]) }}" class="btn btn-outline-primary"><i class="fa fa-edit"></i></a>

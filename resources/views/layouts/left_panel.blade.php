@@ -36,6 +36,10 @@
                 </li>
 
                 <li>
+                    <a href="{{ route('admin.size.index') }}"> <i class="menu-icon ti-email"></i>{{ __('Manager Size') }}</a>
+                </li>
+
+                <li>
                     <a href="{{ route('admin.topping.index') }}"> <i class="menu-icon ti-email"></i>{{ __('Manager Topping') }}</a>
                 </li>
                 <h3 class="menu-title">{{ __('Manager Bill') }}</h3><!-- /.menu-title -->
