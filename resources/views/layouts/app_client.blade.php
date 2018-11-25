@@ -105,10 +105,9 @@
                     <li>
                         <a href="{{ route('user.cart.index') }}">
                             {{ __('message.title.cart') }}
-                            {{-- @if(Session::has('cart'))
-                                {{ '( ' . count(Session::get('cart')) . ' )' }}
-                            @else {{ ' (0)' }}
-                            @endif --}}   
+                            @if(Session::has('cart'))
+                                {{ '(' . count(Session::get('cart')) . ')' }}
+                            @endif
                         </a>
                     </li>
                     <li class="submenu">

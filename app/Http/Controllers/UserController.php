@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Session;
 
 use App\User;
+use App\Order;
 use App\Role;
 use App\Repositories\Repository;
 
@@ -121,7 +122,8 @@ class UserController extends Controller
             }
 
             if ($currentUser->role_id == 3) {
-                return view('profile', compact('user'));
+                $order = Order::where('user_id', $currentUser->id)->get();
+                return view('profile', compact('user', 'order'));
             }
 
             return view('admin.user_edit', compact('user'));
@@ -264,6 +266,6 @@ class UserController extends Controller
     {
         Auth::logout();
 
-        return redirect(route('home'));
+        return redirect(route('index.client'));
     }
 }
