@@ -186,3 +186,7 @@ Route::get('remove', function() {
 });
 
 Route::get('order', 'ClientController@orders')->name('client.orders');
+
+Route::get('order_detail/{order_id}', 'ClientController@order_details')->name('client.order.order_detail');
+
+Route::get('cancel_order/{order_id}', 'ClientController@cancel_order')->name('client.order.cancel_order');

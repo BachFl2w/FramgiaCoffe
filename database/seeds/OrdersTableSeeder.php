@@ -26,8 +26,24 @@ class OrdersTableSeeder extends Seeder
                 'order_time' => '2018-11-02 09:39:12',
                 'order_place' => 'Handico',
                 'order_phone' => '0123456789',
-                'status' => 0,
+                'status' => -1,
                 'Note' => 'Giao hàng muộn',
+            ], [
+                'receiver' => 'Nguyen Van A',
+                'user_id' => 1,
+                'order_time' => '2018-11-05 09:39:12',
+                'order_place' => 'Handico',
+                'order_phone' => '0123456789',
+                'status' => 1,
+                'Note' => 'Giao hàng muộn 1',
+            ], [
+                'receiver' => 'Nguyen Van C',
+                'user_id' => 2,
+                'order_time' => '2018-11-02 09:39:12',
+                'order_place' => 'Handico ABCXYZ',
+                'order_phone' => '0123456789',
+                'status' => 1,
+                'Note' => 'Van chuyen can than',
             ],
         ];
 

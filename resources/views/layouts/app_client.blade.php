@@ -123,7 +123,7 @@
                     <li><a href="{{ route('client.orders') }}">{{ __('message.title.order') }}</a></li>
                     <li><a href="#">{{ __('message.title.about') }}</a></li>
                     </li>
-                    @if (!Auth::id())
+                    @if (!Auth::check())
                         <li><a href="#0" data-toggle="modal" data-target="#login_2">{{ __('message.login') }}</a></li>
                     @else
                         <li class="submenu">
