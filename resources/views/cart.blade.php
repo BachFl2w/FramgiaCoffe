@@ -74,8 +74,7 @@
         <div class="col-md-4" id="sidebar">
             <div class="theiaStickySidebar">
                 <div id="cart_box" >
-                    <h3>Your order
-                    </h3>
+                    <h3>Your order</h3>
 
                     @if (isset($data))
                         <table class="table table_summary table-hover">
@@ -122,6 +121,14 @@
                     @endif
                 </div><!-- End cart_box -->
                 </div><!-- End theiaStickySidebar -->
+                @if (session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                @endif
             </div><!-- End col-md-3 -->
         </div>
         {!! Form::close() !!}
