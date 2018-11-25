@@ -22,9 +22,9 @@ class CreateOrdersTable extends Migration
             $table->string('order_place');
             $table->string('order_phone');
             $table->TinyInteger('status');
-            $table->text('note');
+            $table->text('note')->nullable();
             $table->timestamps();
-            $table->softDeletes();  
+            $table->softDeletes();
         });
     }
 
