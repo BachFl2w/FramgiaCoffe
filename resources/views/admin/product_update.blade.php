@@ -1,7 +1,7 @@
 @extends('layouts.app2')
 
 @section('page-title')
-    <li><a href="{{route('admin.user.index')}}">Dashboard</a></li>
+    <li><a href="{{route('admin.index')}}">Dashboard</a></li>
     <li><a href="{{route('admin.product.index')}}">{{ __('message.product') }}</a></li>
     <li class="active">{{ __('message.update') }}</li>
 @endsection
@@ -32,7 +32,7 @@
                     </div>
                     <div class="form-group row">
                         <h5 class="col-md-2 col-form-label-sm">{{ __('message.image') }}</h5>
-                        {!! Form::file('image', ['id' => 'image', 'class' => 'form-control col-md-8']) !!}
+                        {!! Form::file('image', ['id' => 'image', 'class' => 'col-md-8']) !!}
                         <div class="col-md-2">
                             {!! Form::text('', $product->image, ['id' => 'image_current', 'hidden']) !!}
                             {!! Form::submit(__('message.cancel'), ['id' => 'cancel_image', 'class' => 'btn btn-outline-primary']) !!}
@@ -57,7 +57,7 @@
             </div>
             <div class="text-xs-right">
                 {!! Form::submit(__('message.order_detai_title.description'), ['class' => 'btn btn-info']) !!}
-                <a href="{{ route('admin.product.index') }}" class="btn btn-warning">{{ __('message.cancel') }}</a>
+                <a href="{{ route('admin.product.index') }}" class="btn btn-dagner">{{ __('message.cancel') }}</a>
             </div>
             {!! Form::close() !!}
         </div>

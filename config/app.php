@@ -169,6 +169,7 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         Intervention\Image\ImageServiceProvider::class,
+        'Grimthorr\LaravelToast\ServiceProvider',
 
     ],
 
@@ -222,6 +223,7 @@ return [
         'Html'         => Collective\Html\HtmlFacade::class,
         'Debugbar'     => Barryvdh\Debugbar\Facade::class,
         'Image'        => Intervention\Image\Facades\Image::class,
+        'Toast' => 'Grimthorr\LaravelToast\Facade',
     ],
 
 ];

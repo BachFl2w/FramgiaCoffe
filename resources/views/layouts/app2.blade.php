@@ -53,7 +53,7 @@
             </div>
 
             <div class="content mt-3">
-
+                @include('toast::messages')
                 @yield('content')
 
             </div>

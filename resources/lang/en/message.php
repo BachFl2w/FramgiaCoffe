@@ -122,6 +122,10 @@ return [
         'create' => 'Create Category',
         'update' => 'Update Category',
     ],
+    'size_action' => [
+        'create' => 'Create Size',
+        'update' => 'Update Size',
+    ],
 
     //Order
     'order_title' => [
@@ -182,4 +186,7 @@ return [
     'enter_feedback' => 'Enter some feedback',
     'opening_time' => 'Opening Time',
     'empty_cart' => 'Your Cart is Empty',
+    'size' => 'Size',
+    'percent' => 'Percent',
+    
 ];

@@ -1,9 +1,9 @@
 @extends('layouts.app2')
 
 @section('page-title')
-    <li><a href="{{route('admin.user.index')}}">Dashboard</a></li>
+    <li><a href="{{route('admin.index')}}">Dashboard</a></li>
     <li><a href="{{route('admin.product.index')}}">{{ __('message.product') }}</a></li>
-    <li class="active">{{ __('message.update') }}</li>
+    <li class="active">{{ __('message.create') }}</li>
 @endsection
 
 @section('content')
@@ -48,7 +48,7 @@
             </div>
             <div class="text-xs-right">
                 {!! Form::submit(__('message.update'), ['class' => 'btn btn-info']) !!}
-                 <a href="{{ route('admin.product.index') }}" class="btn btn-warning">{{ __('message.cancel') }}</a>
+                 <a href="{{ route('admin.product.index') }}" class="btn btn-danger">{{ __('message.cancel') }}</a>
             </div>
             {!! Form::close() !!}
         </div>

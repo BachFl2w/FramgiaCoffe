@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Size;
 use Illuminate\Http\Request;
 
 class SizeController extends Controller
@@ -13,7 +14,9 @@ class SizeController extends Controller
      */
     public function index()
     {
-        //
+        $sizes = Size::all();
+
+        return view('admin.size_list', compact('sizes'));
     }
 
     /**
@@ -23,7 +26,7 @@ class SizeController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.size_create');
     }
 
     /**
@@ -34,7 +37,13 @@ class SizeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $size = new Size();
+        $size->name = $request->name;
+        $size->percent = $request->percent;
+        $size->save();
+        toast()->success(__('message.success.create'), 'success');
+
+        return redirect()->route('admin.size.index');
     }
 
     /**
@@ -56,7 +65,9 @@ class SizeController extends Controller
      */
     public function edit($id)
     {
-        //
+        $size = Size::findorFail($id);
+        
+        return view('admin.size_update', compact('size'));
     }
 
     /**
@@ -68,7 +79,13 @@ class SizeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $size = Size::findOrFail($id);
+        $size->name= $request->name;
+        $size->percent = $request->percent;
+        $size->save();
+        toast()->success(__('message.success.update'), 'success');
+
+        return redirect()->route('admin.size.index');
     }
 
     /**
@@ -79,6 +96,10 @@ class SizeController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $size = Size::findOrFail($id);
+        $size->destroy();
+        toast()->success(__('message.success.delete'), 'success');
+
+        return redirect()->route('admin.size.index');
     }
 }

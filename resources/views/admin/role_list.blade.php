@@ -1,7 +1,7 @@
 @extends('layouts.app2')
 
 @section('page-title')
-    <li><a href="{{route('admin.role.index')}}">Dashboard</a></li>
+    <li><a href="{{route('admin.index')}}">Dashboard</a></li>
     <li class="active">{{ __('message.role') }}</li>
 @endsection
 

@@ -1,7 +1,7 @@
 @extends('layouts.app2')
 
 @section('page-title')
-    <li><a href="{{route('admin.user.index')}}">{{ __('message.title.dashboard') }}</a></li>
+    <li><a href="{{route('admin.index')}}">{{ __('message.title.dashboard') }}</a></li>
     <li class="active">{{ __('message.product') }}</li>
 @endsection
 
@@ -26,7 +26,7 @@
                                     <th>{{ __('message.quantity') }}</th>
                                     <th>{{ __('message.image') }}</th>
                                     <th>{{ __('message.price') }}</th>
-                                    <th>{{ __('message.description') }}</th>
+                                    <th>{{ __('message.order_detai_title.description') }}</th>
                                     <th>{{ __('message.category') }}</th>
                                     <th>{{ __('message.action') }}</th>
                                 </tr>

@@ -46,7 +46,7 @@ class CategoryController extends Controller
 
         $category->save();
 
-        toast('Your Post as been submited!','success','top-right');
+        toast()->success(__('message.success.create'), 'success');
 
         return redirect()->route('admin.category.index');
     }
@@ -90,7 +90,9 @@ class CategoryController extends Controller
 
         $category->save();
 
-        return redirect()->route('admin.category.index')->with('success', __('message.success.create'));
+        toast()->success(__('message.success.update'), 'success');
+
+        return redirect()->route('admin.category.index');
     }
 
     /**
@@ -105,7 +107,9 @@ class CategoryController extends Controller
 
         $category->delete();
 
-        return redirect()->route('admin.category.index')->with('success', __('message.success.delete'));
+        toast()->success(__('message.success.delete'), 'success');
+
+        return redirect()->route('admin.category.index');
     }
 
     public function getCategoryJson()

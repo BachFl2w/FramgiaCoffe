@@ -29,6 +29,8 @@ Route::get('logout', 'UserController@logoutUser')->name('logout');
 
 Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin'], function() {
 
+    Route::get('index', 'HomeController@index')->name('admin.index');
+
     Route::get('logout', 'UserController@logoutAdmin')->name('admin.logout');
 
     Route::group(['prefix' => 'role'], function () {
@@ -122,6 +124,21 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin'], function() {
         Route::get('destroy/{id}', 'TopingController@destroy')->name('admin.topping.destroy');
 
         Route::get('edit/{id}', 'TopingController@edit')->name('admin.topping.edit');
+    });
+
+    Route::group(['prefix' => 'size'], function() {
+
+        Route::get('index', 'SizeController@index')->name('admin.size.index');
+
+        Route::get('create', 'SizeController@create')->name('admin.size.create');
+
+        Route::post('store', 'SizeController@store')->name('admin.size.store');
+
+        Route::post('update/{id}', 'SizeController@update')->name('admin.size.update');
+
+        Route::get('destroy/{id}', 'SizeController@destroy')->name('admin.size.destroy');
+
+        Route::get('edit/{id}', 'SizeController@edit')->name('admin.size.edit');
     });
 
     Route::group(['prefix' => 'order'], function() {
