@@ -19,6 +19,7 @@ class Order extends Model
         'user_id',
         'order_place',
         'order_phone',
+        'order_time',
         'status',
         'note',
     ];

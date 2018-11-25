@@ -114,7 +114,7 @@
                                 @foreach ($order as $value)
                                     <tr>
                                         <td>
-                                            <a href="" title="show" title="">{{ $value->order_time }}</a>
+                                            <a href="{{ route('client.orders') }}" title="show" title="">{{ $value->order_time }}</a>
                                         </td>
                                     </tr>
                                 @endforeach

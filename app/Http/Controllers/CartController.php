@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Session;
 use Hash;
 use Auth;
+use Carbon\Carbon;
 
 use App\Cart;
 use App\User;
@@ -131,18 +132,20 @@ class CartController extends Controller
             $id = Auth::id();
         }
 
-        // dd($cart);
+        $dateTime = new \DateTime;
+
+        date_default_timezone_set("Asia/Ho_Chi_Minh");
+        $now = new \DateTime();
 
         $order = $this->orderModel->create([
             'receiver' => $req->name,
             'user_id' => $id,
+            'order_time' => $now->format('Y-m-d H:i:s'),
             'order_place' => $req->order_place,
             'order_phone' => $req->order_phone,
             'status' => 0,
             'note' => $req->note,
         ]);
-
-        // dd($order->id);
 
         foreach ($cart->items as $key => $value) {
             $orderDetail = $this->orderDetailModel->create([

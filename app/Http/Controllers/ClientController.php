@@ -132,7 +132,7 @@ class ClientController extends Controller
 
             return view('list_order', compact('orders'));
         }
-        
+
         return abort(404);
     }
 
@@ -140,7 +140,7 @@ class ClientController extends Controller
     {
         $orderDetails = OrderDetail::with('product', 'size', 'toppings')->where('order_id', $order_id)->get();
 
-        return $orderDetails; 
+        return $orderDetails;
     }
     public function cancel_order($order_id)
     {
