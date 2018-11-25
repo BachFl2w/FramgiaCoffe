@@ -65,7 +65,7 @@
                                         @if ($u->image)
                                             <img src="{{ asset(config('asset.image_path.avatar') . $u->image) }}" height="100px">
                                         @else
-                                            <img src="{{ asset(config('asset.default')) }}" height="100px">
+                                            <img src="{{ asset(config('asset.image_path.default')) }}" height="100px">
                                         @endif
                                     </td>
                                     <td>{{ $u->role->name }}</td>
