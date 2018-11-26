@@ -122,7 +122,7 @@ class UserController extends Controller
             }
 
             if ($currentUser->role_id == 3) {
-                $order = Order::where('user_id', $currentUser->id)->paginate(5);
+                $order = Order::where('user_id', $currentUser->id)->orderBy('order_time', 'desc')->paginate(5);
                 return view('profile', compact('user', 'order'));
             }
 

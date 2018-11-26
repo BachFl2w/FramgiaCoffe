@@ -128,15 +128,6 @@
             </div>
         </div>
     {!! Form::close() !!}
-
-    @if (session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">×</span>
-            </button>
-        </div>
-    @endif
     </div><!-- End box_style_1 -->
 
 </div><!-- End container -->
