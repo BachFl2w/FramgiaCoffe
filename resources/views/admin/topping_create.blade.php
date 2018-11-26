@@ -10,22 +10,22 @@
     <div class="card">
         <div class="card-header">{{ __('message.topping') }}</div>
         <div class="card-body">
-            <form action="{{ route('admin.topping.store') }}" novalidate method="post">
+                {!! Form::open(['route' => 'admin.topping.store', 'method' => 'post']) !!}
                 @csrf
                 <div class="form-group row">
                     <h5 class="col-md-1 col-form-label-sm">{{ __('message.topping') }}</h5>
-                    <input type="text" name="name" class="form-control col-md-11">
+                    {!! Form::text('name', null, ['class' => 'form-control col-md-11']) !!}
                 </div>
                 <div class="form-group row">
                     <h5 class="col-md-1 col-form-label-sm">{{ __('message.price') }}</h5>
-                    <input type="number" name="price" class="form-control col-md-11">
+                    {!! Form::text('price', null, ['class' => 'form-control col-md-11']) !!}
                 </div>
                 <div class="form-group row">
                     <h5 class="col-md-1 col-form-label-sm">{{ __('message.quantity') }}</h5>
-                    <input type="number" name="quantity" class="form-control col-md-11">
+                    {!! Form::number('quantity', null, ['class' => 'form-control col-md-11']) !!}
                 </div>
                 <div class="text-xs-right">
-                    <button type="submit" class="btn btn-info">{{ __('message.update') }}</button>
+                    {!! Form::submit(__('message.update'), ['class' => 'btn btn-info']) !!}
                     <a href="{{ route('admin.topping.index') }}" class="btn btn-danger">{{ __('message.cancel') }}</a>
                 </div>
             </form>

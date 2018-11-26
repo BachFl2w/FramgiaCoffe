@@ -25,7 +25,7 @@
             </div>
             <div class="card-footer">
                 {!! Form::submit(__('message.update'), ['class' => 'btn btn-info']) !!}
-                {!! Form::reset(__('message.reset'), ['class' => 'btn btn-danger']) !!}
+                <a href="{{ route('admin.category.index') }}" class="btn btn-dagner">{{ __('message.cancel') }}</a>
             </div>
         {!! Form::close() !!}
     </div>

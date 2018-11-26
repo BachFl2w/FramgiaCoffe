@@ -155,10 +155,9 @@
                         <button type="submit" id="btnSubmitOrder" class="btn btn-primary">Order</button>
                         <button type="button" data-dismiss="modal" class="btn btn-danger">Cancel</button>
                     </div>
+                </form>
             </div>
-            </form>
         </div>
-    </div>
     </div>
     <!-- End Content =============================================== -->
 @endsection
@@ -198,7 +197,7 @@
                 })
                     .done(function () {
                         $('#myModalThank').modal('show');
-
+                        $('#comment').val('');
                         window.setTimeout(function () {
                             $("#myModalThank").modal("hide");
                         }, 1500);

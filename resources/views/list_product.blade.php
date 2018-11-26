@@ -106,7 +106,7 @@
                             <div class="col-md-3 col-sm-3">
                                 <div class="go_to">
                                     <div>
-                                        <a href="detail_page.html" class="btn_1">{{ __('message.add_cart') }}</a>
+                                        <a data-id="{{ $product->id }}" data-toggle="modal" data-target="#order" class="btn_1" id="btnAddCart">{{ __('message.add_cart') }}</a>
                                     </div>
                                 </div>
                             </div>
@@ -121,6 +121,41 @@
         </div><!-- End row -->
     </div><!-- End container -->
 
+    <div class="modal fade" id="order" tabindex="-1" role="dialog" aria-labelledby="modal_product_name"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" style="border-radius: 20px">
+                <form id="form_order">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <input type="text" name="product" id="product_id" value="">
+                        <h4 class="modal-title">{{ $product->name }}</h4>
+                    </div>
+                    <div class="modal-body">
+                        <h3>Size</h3>
+                        @foreach($sizes as $size)
+                            <label class="radio-inline">
+                                <input type="radio" name="size" value="{{ $size->id }}">
+                                {{ $size->name }}
+                            </label>
+                        @endforeach
+                        <h3>Topping</h3>
+                        @foreach($toppings as $topping)
+                            <label class="checkbox-inline">
+                                <input type="checkbox" name="topping[]" id="topping" value="{{ $topping->id }}">
+                                {{ $topping->name }}
+                            </label>
+                        @endforeach
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" id="btnSubmitOrder" class="btn btn-primary">Order</button>
+                        <button type="button" data-dismiss="modal" class="btn btn-danger">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
 @endsection
 @section('js')
     <script type="text/javascript">
@@ -133,6 +168,12 @@
             $('#form-filter').change(function () {
                 selected_value = $("input[name='category_id']:checked").val();
                 $(this).submit();
+            });
+
+            $('#btnAddCart').click(function(event) {
+                event.preventDefault();
+                var product_id = $(this).data('id');
+                $(".modal-header #product_id").val( product_id );
             });
         });
     </script>

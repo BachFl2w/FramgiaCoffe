@@ -63,44 +63,26 @@ class OrderController extends Controller
     public function edit($id)
     {
         $order = Order::findOrFail($id);
-
         $orderDetails = OrderDetail::with('product', 'size', 'toppings')->where('order_id', $id)->get();
-
         $index = 0;
-
         $images = [];
-
         foreach ($orderDetails as $orderDetail) {
-
             $product_id = $orderDetail->product->id;
-
             $image = Image::where('product_id', $product_id)->where('active', 1)->first();
-
             if ($image != null) {
-
                 $orderDetails[$index]->image = $image->name;
             }
             else {
-
                 $image = Image::where('product_id', $product_id)->orderBy('id','DESC')->first();
-
                 $orderDetails[$index]->image = $image->name;
             }
-
-            $priceProduct = $orderDetail->product->price * (1 + $orderDetail->size->percent) * $orderDetail->quantity;
-
+            $priceProduct = $orderDetail->product_price * $orderDetail->quantity;
             $priceTopping = 0;
-
             foreach ($orderDetail->toppings as $topping) {
-
-                $priceTopping += $topping->price ;
-
+                $priceTopping += $topping->pivot->topping_price ;
             }
-
             $orderDetails[$index]->price = $priceProduct + $priceTopping;
-
             $orderDetails[$index]->status = $order->status;
-
             $index ++;
         }
 
@@ -124,6 +106,7 @@ class OrderController extends Controller
         $order->note = $request->note;
         $order->status = $request->status;
         $order->save();
+        toast()->success(__('message.success.update'), 'success');
 
         return redirect()->route('admin.order.edit', ['id' => $id]);
     }
@@ -137,8 +120,8 @@ class OrderController extends Controller
     public function destroy($id)
     {
         $order = Order::findOrFail($id);
-
         $order->delete();
+        toast()->success(__('message.success.delete'), 'success');
 
         return redirect()->route('admin.order.index');
     }

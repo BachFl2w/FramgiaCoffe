@@ -188,5 +188,6 @@ return [
     'empty_cart' => 'Your Cart is Empty',
     'size' => 'Size',
     'percent' => 'Percent',
+    'order_detail' => 'Order Detail',
     
 ];

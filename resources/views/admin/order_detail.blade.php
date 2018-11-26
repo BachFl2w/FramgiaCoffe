@@ -10,7 +10,7 @@
     <div class="container-fluid">
         <div class="card">
             <div class="card-header">
-                {{ __('Đơn Hàng Chi Tiết' ) }}
+                {{ __('message.order_detail' ) }}
             </div>
 
             <div class="card-body card-block">
@@ -113,7 +113,7 @@
                             <tr>
                                 <td>
                                     <h3>{{ $detail->product->name }}</h3>
-                                    <h4>{{ __('message.order_detai_title.price') . ': ' . number_format($detail->product->price) . ' vnđ' }}</h4>
+                                    <h4>{{ __('message.order_detai_title.price') . ': ' . number_format($detail->product_price) . ' vnđ' }}</h4>
                                 </td>
                                 <td>{{ $detail->size->name }}</td>
                                 <td>{{ $detail->quantity }}</td>

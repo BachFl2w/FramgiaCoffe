@@ -245,10 +245,10 @@ class UserController extends Controller
 
         if (Auth::attempt($data)) {
             if (Auth::user()->role_id == 3) {
-                return redirect(route('client.index'));
+                return redirect()->back();
             }
 
-            return redirect('admin/user/index');
+            return redirect()->route('admin.index');
         }
 
         return back()->with('fail', __('message.fail.login'));
