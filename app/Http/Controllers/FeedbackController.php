@@ -65,11 +65,14 @@ class FeedbackController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Feedback $feedback)
+    public function active(Feedback $feedback)
     {
-        $this->feedbackModel->update([
-            'status' => 1
-        ]);
+        $this->feedbackModel->update(
+            [
+                'status' => 1
+            ],
+            $feedback->id
+        );
 
         return back()->with('success', __('message.success.feedback'));
     }

@@ -20,7 +20,7 @@
                             <th scope="col">Người dùng</th>
                             <th scope="col">Sản phẩm </th>
                             <th scope="col">Nội dung</th>
-                            <th scope="col">Trang thái</th>
+                            <th scope="col">Trạng thái</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -30,9 +30,8 @@
                                 <td>{{ $feedback->user->name }}</td>
                                 <td>{{ $feedback->product->name }}</td>
                                 <td>{{ $feedback->content }}</td>
-                                <td>{{ $feedback->status }}</td>
                                 <td>
-                                    {!! Form::open(['route' => ['admin.user.active', $feedback->id] , 'method' => 'post']) !!}
+                                    {!! Form::open(['route' => ['admin.feedback.active', $feedback->id] , 'method' => 'post']) !!}
                                         <label class="switch switch-3d switch-primary mr-3" for="active_user{{ $feedback->id }}">
                                             <input type="checkbox" class="switch-input"
                                                 @if ($feedback->status == 1)

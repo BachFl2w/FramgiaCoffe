@@ -30,7 +30,7 @@
             <div class="box_style_2 hidden-xs" id="help">
                 <i class="icon_lifesaver"></i>
                 <h4>{{ __('message.help') }}</span></h4>
-                <a href="tel://004542344599" class="phone">+45 423 445 99</a>
+                <a href="tel://004542344599" class="phone">{{ config('asset.constaint.phone') }}</a>
             </div>
 
         </div><!-- End col-md-3 -->
@@ -120,8 +120,9 @@
                                 @endforeach
                             </tbody>
                         </table>
+                        {!! $order->links() !!}
                     @else
-                        <p>Emp</p>
+                        <p>Empty</p>
                     @endif
                 </div>
             </div>

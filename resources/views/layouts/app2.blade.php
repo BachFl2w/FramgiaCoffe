@@ -18,7 +18,9 @@
     <link rel="shortcut icon" href="favicon.ico">
 
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    
+
+    <link rel="stylesheet" href="{{ asset('admin_template/assets/css/themify-icons.css') }}">
+
     @yield('css')
 
 
@@ -26,37 +28,34 @@
 
 </head>
 <body>
-    <div id="app">
-        @include('layouts.left_panel')
+    @include('layouts.left_panel')
 
-        <div id="right-panel" class="right-panel">
+    <div id="right-panel" class="right-panel">
 
-            @include('layouts.header')
+        @include('layouts.header')
 
-            <div class="breadcrumbs">
-                <div class="col-sm-4">
-                    <div class="page-header float-left">
-                        <div class="page-title">
-                            <h1>Dashboard</h1>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-8">
-                    <div class="page-header float-right">
-                        <div class="page-title">
-                            <ol class="breadcrumb text-right">
-                                @yield('page-title')
-                            </ol>
-                        </div>
+        <div class="breadcrumbs">
+            <div class="col-sm-4">
+                <div class="page-header float-left">
+                    <div class="page-title">
+                        <h1>Dashboard</h1>
                     </div>
                 </div>
             </div>
-
-            <div class="content mt-3">
-                @include('toast::messages')
-                @yield('content')
-
+            <div class="col-sm-8">
+                <div class="page-header float-right">
+                    <div class="page-title">
+                        <ol class="breadcrumb text-right">
+                            @yield('page-title')
+                        </ol>
+                    </div>
+                </div>
             </div>
+        </div>
+
+        <div class="content mt-3">
+            @include('toast::messages')
+            @yield('content')
         </div>
     </div>
 

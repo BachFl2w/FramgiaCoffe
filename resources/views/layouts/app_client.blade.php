@@ -123,7 +123,8 @@
                     <li><a href="#">{{ __('message.title.about') }}</a></li>
                     </li>
                     @if (!Auth::check())
-                        <li><a href="#0" data-toggle="modal" data-target="#login_2">{{ __('message.login') }}</a></li>
+                        <li><a href="#login_2" data-toggle="modal" data-target="#login_2">{{ __('message.login') }}</a></li>
+                        <li><a href="#0" data-toggle="modal" data-target="#register">{{ __('message.register') }}</a></li>
                     @else
                         <li class="submenu">
                             <a href="javascript:void(0);" class="show-submenu">{{ $currentUser->name }}<i class="icon-down-open-mini"></i></a>
@@ -223,14 +224,6 @@
                         <option value="{!! route('user.change-language', ['vi']) !!}">Tiếng Việt</option>
                     </select>
                 </div>
-                <div class="styled-select">
-                    <select class="form-control" name="currency" id="currency">
-                        <option value="USD" selected>USD</option>
-                        <option value="EUR">EUR</option>
-                        <option value="GBP">GBP</option>
-                        <option value="RUB">RUB</option>
-                    </select>
-                </div>
             </div>
         </div><!-- End row -->
         <div class="row">
@@ -266,10 +259,15 @@
                 	<div class="login_icon"><i class="icon_lock_alt"></i></div>
                     {!! Form::text('email', '', ['class' => 'form-control form-white', 'placeholder' => 'Username']) !!}
                     {!! Form::password('password', ['class' => 'form-control form-white', 'placeholder' => 'Password']) !!}
+                    @if (session('fail'))
+                        <p class="text-left text-danger">
+                            <strong>{{session('fail')}}</strong>
+                        </p>
+                    @endif
 					<div class="text-left">
 						<a href="#">{{ __('message.password.forgot') }}</a>
 					</div>
-                    {!! Form::submit(__('message.login'), ['class' => 'btn btn-submit']) !!}
+                    {!! Form::submit(__('message.login'), ['class' => 'btn btn-submit', 'id' => 'login']) !!}
 				{!! Form::close() !!}
 			</div>
 		</div>
@@ -283,12 +281,42 @@
                 {!! Form::open(['method' => 'post', 'route' => 'register', 'class' => 'popup-form', 'id' => 'myRegister']) !!}
                 	<div class="login_icon"><i class="icon_lock_alt"></i></div>
                     {!! Form::text('name', '', ['class' => 'form-control form-white', 'placeholder' => __('message.name')]) !!}
+                    @if ($errors->has('name'))
+                        <span class="text-left text-danger">
+                            <strong>{{ $errors->first('name') }}</strong>
+                        </span>
+                    @endif
                     {!! Form::hidden('role', 3, ['class' => 'd-none']) !!}
                     {!! Form::text('email', '', ['class' => 'form-control form-white', 'placeholder' => __('message.email')]) !!}
+                    @if ($errors->has('email'))
+                        <span class="text-left text-danger">
+                            <strong>{{ $errors->first('email') }}</strong>
+                        </span>
+                    @endif
                     {!! Form::password('password', ['class' => 'form-control form-white', 'placeholder' => __('message.password.password')]) !!}
+                    @if ($errors->has('password'))
+                        <span class="text-left text-danger">
+                            <strong>{{ $errors->first('password') }}</strong>
+                        </span>
+                    @endif
                     {!! Form::password('password_confirmation', ['class' => 'form-control form-white', 'placeholder' => __('message.password.confirm')]) !!}
+                    @if ($errors->has('password_confirmation'))
+                        <span class="text-left text-danger">
+                            <strong>{{ $errors->first('password_confirmation') }}</strong>
+                        </span>
+                    @endif
                     {!! Form::text('address', '', ['class' => 'form-control form-white', 'placeholder' => __('message.address')]) !!}
+                    @if ($errors->has('address'))
+                        <span class="text-left text-danger">
+                            <strong>{{ $errors->first('address') }}</strong>
+                        </span>
+                    @endif
                     {!! Form::number('phone', '', ['class' => 'form-control form-white', 'placeholder' => __('message.phone')]) !!}
+                    @if ($errors->has('phone'))
+                        <span class="text-left text-danger">
+                            <strong>{{ $errors->first('phone') }}</strong>
+                        </span>
+                    @endif
                     <div id="pass-info" class="clearfix"></div>
 					<div class="checkbox-holder text-left">
 						<div class="checkbox">
@@ -296,7 +324,7 @@
 							<label for="check_2"><span>{{ __('message.agree') }}</label>
 						</div>
 					</div>
-                    {!! Form::submit(__('message.register'), ['class' => 'btn btn-submit']) !!}
+                    {!! Form::submit(__('message.register'), ['class' => 'btn btn-submit', 'id' => 'btn_register', 'disabled']) !!}
                 {!! Form::close() !!}
 			</div>
 		</div>
@@ -323,6 +351,13 @@ $("#js-rotating").Morphext({
         // Overrides default empty function
     }
 });
+
+var check_2 = document.getElementById('check_2');
+var btn_register = document.getElementById('btn_register');
+check_2.onchange = function() {
+    btn_register.disabled = false;
+};
+
 jQuery(document).ready(function($) {
     $.ajaxSetup({
         headers: {
@@ -370,6 +405,21 @@ jQuery(document).ready(function($) {
 });
 </script>
 
+@if(!empty(Session::get('fail')) || !Auth::check())
+    <script>
+        $(function() {
+            $('#login_2').modal('show');
+        });
+    </script>
+@endif
+
+@if(count($errors) > 0)
+    <script>
+        $(function() {
+            $('#register').modal('show');
+        });
+    </script>
+@endif
 @yield('js')
 
 </body>
