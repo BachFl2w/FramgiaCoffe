@@ -29,7 +29,7 @@ class OrderController extends Controller
      */
     public function create()
     {
-        
+
     }
 
     /**
@@ -51,7 +51,7 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-        
+
     }
 
     /**
@@ -101,7 +101,7 @@ class OrderController extends Controller
         $order = Order::findOrFail($id);
         $order->receiver = $request->receiver;
         $order->order_phone = $request->order_phone;
-        $order->order_time = $request->order_time;
+        // $order->order_time = $request->order_time;
         $order->order_place = $request->order_place;
         $order->note = $request->note;
         $order->status = $request->status;

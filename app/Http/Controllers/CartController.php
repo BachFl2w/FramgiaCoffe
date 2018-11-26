@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Session;
 use Hash;
 use Auth;
+use Carbon\Carbon;
 
 use App\Cart;
 use App\User;
@@ -131,18 +132,20 @@ class CartController extends Controller
             $id = Auth::id();
         }
 
-        // dd($cart);
+        $dateTime = new \DateTime;
+
+        date_default_timezone_set("Asia/Ho_Chi_Minh");
+        $now = new \DateTime();
 
         $order = $this->orderModel->create([
             'receiver' => $req->name,
             'user_id' => $id,
+            'order_time' => $now->format('Y-m-d H:i:s'),
             'order_place' => $req->order_place,
             'order_phone' => $req->order_phone,
             'status' => 0,
             'note' => $req->note,
         ]);
-
-        // dd($order->id);
 
         foreach ($cart->items as $key => $value) {
             $orderDetail = $this->orderDetailModel->create([
@@ -153,17 +156,8 @@ class CartController extends Controller
                 'quantity' => $cart->items[$key]['qty'],
             ]);
 
-            /**
-             * Sửa code ở 2 model orderDetail và Topping thêm ->withPivot('topping_price');
-             Trong đó tham số truyền vào của withPivot là các gía trị muốn thêm mà ko liên qua đến liên kết gĩưa 3 bảng, ví dụ ở đây là price của topping
-             **/
             if ($value['topping']) {
                 foreach ($value['topping'] as $k => $v) {
-                    // $orderDetail->toppings()->atach([
-                    //     'topping_id' => $v->id, (Ko cần khai báo key cho nó vì nó là cột liên kết rồi)
-                    //     'topping_price' => $v->price, (Muốn thêm gía trị của cột ko liên qua thì dùng mảng truyền vào theo kiểu key => value)
-                    //     'order_detail_id' => $orderDetail->id, (đoạn này bị thưa, vì khi dùng $orderDetail->toppings() là đã có 1 id của $orderDetail thêm vào rồi, ko cần cái này)
-                    // ]);
                     $orderDetail->toppings()->attach(
                         $v->id,
                         [

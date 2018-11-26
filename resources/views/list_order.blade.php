@@ -53,7 +53,7 @@
                                 <td>{{ $order->receiver }}</td>
                                 <td>{{ $order->order_place }}</td>
                                 <td>{{ $order->order_phone }}</td>
-                                <td>{{ date('d/m/Y h:m:s', strtotime($order->order_time)) }}</td>
+                                <td>{{ $order->order_time }}</td>
                                 <td width="8%">
                                     @switch ($order->status)
                                         @case(-1)
@@ -113,7 +113,7 @@
 @section('js')
     <script type="text/javascript">
         jQuery(document).ready(function ($) {
-            
+
             $('#order_list tbody').on('click', '#edit_order', function (event) {
                 event.preventDefault();
                 var row = $(this).closest('tr');

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Repositories\Repository;
 use App\Http\Requests\CategoryRequest;
 use Illuminate\Http\Request;
 
@@ -10,6 +11,14 @@ use RealRashid\SweetAlert\Facades\Aler;
 
 class CategoryController extends Controller
 {
+    protected $categoryModel;
+
+    public function __construct(Category $categoryModel)
+    {
+        // set the model
+        $this->categoryModel = new Repository($categoryModel);
+    }
+
     /**
      * Display a listing of the resource.
      *

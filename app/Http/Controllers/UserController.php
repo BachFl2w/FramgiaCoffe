@@ -122,7 +122,7 @@ class UserController extends Controller
             }
 
             if ($currentUser->role_id == 3) {
-                $order = Order::where('user_id', $currentUser->id)->get();
+                $order = Order::where('user_id', $currentUser->id)->paginate(5);
                 return view('profile', compact('user', 'order'));
             }
 
@@ -245,7 +245,7 @@ class UserController extends Controller
 
         if (Auth::attempt($data)) {
             if (Auth::user()->role_id == 3) {
-                return redirect()->back();
+                return redirect(route('client.index'));
             }
 
             return redirect()->route('admin.index');
@@ -266,6 +266,6 @@ class UserController extends Controller
     {
         Auth::logout();
 
-        return redirect(route('index.client'));
+        return redirect(route('client.index'));
     }
 }

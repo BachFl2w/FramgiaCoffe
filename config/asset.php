@@ -14,7 +14,7 @@ return [
     ],
     'constaint' => [
         'time' => '7.00 AM - 11.30 PM',
-        'phone' => '113',
+        'phone' => '1900 1009',
         'time_help' => '9.00 AM - 7.30 PM'
     ],
 ];

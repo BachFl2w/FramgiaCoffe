@@ -14,10 +14,6 @@
 
 Auth::routes();
 
-Route::get('home', function() {
-    return view('index');
-})->name('home');
-
 // Route::get('change-language/{language}', 'HomeController@changeLanguage')->name('user.change-language');
 
 Route::group(['middleware' => 'locale'], function() {
@@ -70,6 +66,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin'], function() {
         Route::get('index', 'FeedbackController@index')->name('admin.feedback.index');
 
         Route::get('edit/{id}', 'FeedbackController@edit')->name('admin.feedback.edit');
+
+        Route::post('active/{feedback}', 'FeedbackController@active')->name('admin.feedback.active');
 
         Route::post('send_mail', 'FeedbackController@send')->name('admin.feedback.send_mail');
 
