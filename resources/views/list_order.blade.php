@@ -78,6 +78,7 @@
                         @endforeach
                         </tbody>
                     </table>
+                    {!! $orders->appends(request()->input())->links() !!}
                 </div>
             </div>
 
@@ -142,7 +143,7 @@
                                 '<td width="20%">' +
                                 '<img class="img-thumbnail" src="{{ asset('images/products/2.jpg') }}">' +
                                 '</td>' +
-                                '<td>' + element.product.name + '</td>' +
+                                '<td><p>' + element.product.name + '</p><p> Size: '+ element.size.name +'</p></td>' +
                                 '<td width="46%">';
                             var price = element.product_price;
                             element.toppings.forEach(function (element) {

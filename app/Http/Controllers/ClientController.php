@@ -143,7 +143,7 @@ class ClientController extends Controller
         if(Auth::check())
         {
             $user_id = Auth::id();
-            $orders = Order::where('user_id', $user_id)->get();
+            $orders = Order::where('user_id', $user_id)->paginate(1);
 
             return view('list_order', compact('orders'));
         }
