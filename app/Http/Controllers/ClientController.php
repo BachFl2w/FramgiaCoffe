@@ -80,6 +80,21 @@ class ClientController extends Controller
         return $data;
     }
 
+    public function search(Request $request)
+    {
+        $keyword = $request->keyword;
+        $products = [];
+        if ($keyword != null) {
+            $products = Product::where('name', 'like', '%' . $keyword . '%')
+                ->with(['images' => function ($query) {
+                    $query->orderBy('active', 'id')->get();
+                }])
+                ->paginate(5);
+        }
+
+        return view('list_result_search', compact('products'));
+    }
+
     public function filterProductByCategory(Request $request)
     {
         $category_id = $request->category_id;

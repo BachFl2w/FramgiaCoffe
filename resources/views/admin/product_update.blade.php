@@ -57,7 +57,7 @@
             </div>
             <div class="text-xs-right">
                 {!! Form::submit(__('message.order_detai_title.description'), ['class' => 'btn btn-info']) !!}
-                <a href="{{ route('admin.product.index') }}" class="btn btn-dagner">{{ __('message.cancel') }}</a>
+                <a href="{{ route('admin.product.index') }}" class="btn btn-danger">{{ __('message.cancel') }}</a>
             </div>
             {!! Form::close() !!}
         </div>

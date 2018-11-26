@@ -57,7 +57,7 @@
         }
         #element-load {
             display: block;
-            background-color: red;
+            background-color: #FFFAF0;
             padding: 10px;
             border: 3px solid #FFF8DC;
             font-weight: 600;
@@ -65,7 +65,7 @@
             margin-bottom: 5px;
         }
         #element-load:hover {
-            background-color: blue;
+            background-color: #DCDCDC;
             text-decoration: none;
         }
     </style>
@@ -147,7 +147,7 @@
         <div id="sub_content">
             <h1>{{ __('message.index.statistics') }}</h1>
             <h1><strong id="js-rotating">{{ __('message.index.rotating') }}</strong></h1>
-            <form method="post" action="#">
+           {{--  <form method="get" action="" id="form_search"> --}}
                 <div id="custom-search-input">
                     <div class="input-group" style="position: relative;">
                         <input type="text" class="search-query" placeholder="{{ __('message.index.search_placeholder') }}" autocomplete="off" id="keysearch">
@@ -157,7 +157,7 @@
                     </div>
                     <div class="container-fluid" id="box_search"></div>
                 </div>
-            </form>
+            {{-- </form> --}}
         </div><!-- End sub_content -->
     </div><!-- End subheader -->
     <div id="count" class="hidden-xs">
@@ -174,7 +174,7 @@
             <ul>
                 @yield('position')
             </ul>
-            <a href="#0" class="search-overlay-menu-btn"><i class="icon-search-6"></i> {{ __('message.index.search') }}</a>
+            {{-- <a href="#0" class="search-overlay-menu-btn"><i class="icon-search-6"></i> {{ __('message.index.search') }}</a> --}}
         </div>
     </div><!-- Position -->
 
@@ -353,6 +353,7 @@ jQuery(document).ready(function($) {
                 result =  $('#box_search').hide();;
             }
             else {
+                var url = route('client.search', { keyword: request_value })
                 res.forEach( function(element, index) {
                     var url_product = route("client.product.detail", {id: element.id})
                     result += '<a href=' + url_product + '>' +
@@ -362,7 +363,7 @@ jQuery(document).ready(function($) {
                             '</div>' +
                         '</a>';
                 });
-                result += '<a href="#" id="element-load">Load more...</a>';
+                result += '<a href="'+ url +'" id="element-load" style="color: #2F4F4F">Load more...</a>';
             }
             $('#box_search').html(result);
         })

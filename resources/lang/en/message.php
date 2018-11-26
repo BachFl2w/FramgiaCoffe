@@ -189,5 +189,5 @@ return [
     'size' => 'Size',
     'percent' => 'Percent',
     'order_detail' => 'Order Detail',
-    
+    'cart' => 'Cart',
 ];

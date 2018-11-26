@@ -1,8 +1,8 @@
 @extends('layouts.app_client')
 
 @section('position')
-    <li><a href="#0">{{ __('message.title.home') }}</a></li>
-    <li class="active"><a>{{ __('message.hot_product') }}</a></li>
+    <li><a href="{{ route('client.index') }}">{{ __('message.title.home') }}</a></li>
+    <li class="active"><a>{{ __('message.product') }}</a></li>
 @endsection
 
 @section('content')
@@ -49,7 +49,7 @@
 
             <div class="col-md-9">
 
-                <div id="tools">
+                {{-- <div id="tools">
                     <div class="row">
                         <div class="col-md-3 col-sm-3 col-xs-6">
                             <div class="styled-select">
@@ -61,7 +61,7 @@
                             </div>
                         </div>
                     </div>
-                </div><!--End tools -->
+                </div><!--End tools --> --}}
                 @foreach($products as $product)
                     <div class="strip_list wow fadeIn" data-wow-delay="0.1s">
                         {{-- <div class="ribbon_1">
@@ -105,9 +105,10 @@
                             
                             <div class="col-md-3 col-sm-3">
                                 <div class="go_to">
-                                    <div>
-                                        <a data-id="{{ $product->id }}" data-toggle="modal" data-target="#order" class="btn_1" id="btnAddCart">{{ __('message.add_cart') }}</a>
-                                    </div>
+                                    {{-- <div id="div_buy">
+                                        <input type="text" name="id" id="product_id" value="{{ $product->id }}">
+                                        <button type="submit" data-toggle="modal" data-target="#order" class="btn_1" id="btnAddCart">{{ __('message.add_cart') }}</button>
+                                    </div> --}}
                                 </div>
                             </div>
                         </div><!-- End row-->
@@ -121,14 +122,14 @@
         </div><!-- End row -->
     </div><!-- End container -->
 
-    <div class="modal fade" id="order" tabindex="-1" role="dialog" aria-labelledby="modal_product_name"
+    {{-- <div class="modal fade" id="order" tabindex="-1" role="dialog" aria-labelledby="modal_product_name"
          aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content" style="border-radius: 20px">
                 <form id="form_order">
+                    <input type="text" hidden name="product" value="{{ $product->id }}">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <input type="text" name="product" id="product_id" value="">
                         <h4 class="modal-title">{{ $product->name }}</h4>
                     </div>
                     <div class="modal-body">
@@ -154,7 +155,7 @@
                 </form>
             </div>
         </div>
-    </div>
+    </div> --}}
 
 @endsection
 @section('js')
@@ -172,8 +173,8 @@
 
             $('#btnAddCart').click(function(event) {
                 event.preventDefault();
-                var product_id = $(this).data('id');
-                $(".modal-header #product_id").val( product_id );
+                var id = $(this).closest('#product_id').find('#product_id').val();
+                console.log(id);
             });
         });
     </script>

@@ -1,9 +1,8 @@
 @extends('layouts.app_client')
 
 @section('position')
-    <li><a href="#0">Home</a></li>
-    <li><a href="#0">Hot Product</a></li>
-    <li>Page active</li>
+    <li><a href="{{ route('client.index') }}">{{ __('message.title.home') }}</a></li>
+    <li><a href="{{ route('client.list_product') }}">{{ __('message.product') }}</a></li>
 @endsection
 
 @section('content')

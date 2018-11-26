@@ -1,7 +1,7 @@
 @extends('layouts.app_client')
 
 @section('position')
-    <li><a href="#0">{{ __('message.title.home') }}</a></li>
+    <li><a href="{{ route('client.index') }}">{{ __('message.title.home') }}</a></li>
     <li><a href="#0">{{ __('message.user') }}</a></li>
     <li>{{ __('message.profile') }}</li>
 @endsection

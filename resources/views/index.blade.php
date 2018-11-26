@@ -1,7 +1,7 @@
 @extends('layouts.app_client')
 
 @section('position')
-    <li><a>Home</a></li>
+    <li class="active"><a>Home</a></li>
 @endsection
 
 @section('content')

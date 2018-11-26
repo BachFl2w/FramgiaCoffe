@@ -31,6 +31,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin'], function() {
 
     Route::get('index', 'HomeController@index')->name('admin.index');
 
+    Route::get('/', 'HomeController@index')->name('admin.index');
+
     Route::get('logout', 'UserController@logoutAdmin')->name('admin.logout');
 
     Route::group(['prefix' => 'role'], function () {
@@ -185,6 +187,8 @@ Route::get('/', 'ClientController@index')->name('client.index');
 Route::get('/list-product', 'ClientController@listProduct')->name('client.list_product');
 
 Route::post('search', 'ClientController@liveSearch')->name('client.live_search');
+
+Route::get('search/{keyword}', 'ClientController@search')->name('client.search');
 
 Route::get('list-product/filter', 'ClientController@filterProductByCategory')->name('client.list_product.filter');
 

@@ -97,7 +97,7 @@ class SizeController extends Controller
     public function destroy($id)
     {
         $size = Size::findOrFail($id);
-        $size->destroy();
+        $size->delete();
         toast()->success(__('message.success.delete'), 'success');
 
         return redirect()->route('admin.size.index');
