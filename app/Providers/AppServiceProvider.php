@@ -5,6 +5,8 @@ namespace App\Providers;
 use App\User;
 use App\Product;
 use App\Category;
+use App\Size;
+use App\Topping;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
 
@@ -44,8 +46,12 @@ class AppServiceProvider extends ServiceProvider
         view()->composer('list_product', function($view) {
             $total_product = Product::all()->count();
             $categories = Category::withCount('products')->get();
+            $sizes = Size::all();
+            $toppings = Topping::all();
             $view->with('categories', $categories)
-            ->with('total_product', $total_product);
+            ->with('total_product', $total_product)
+            ->with('toppings', $toppings)
+            ->with('sizes', $sizes);
         });
     }
 
