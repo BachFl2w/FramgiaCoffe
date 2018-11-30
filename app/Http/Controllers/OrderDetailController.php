@@ -32,7 +32,7 @@ class OrderDetailController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -43,7 +43,7 @@ class OrderDetailController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -51,17 +51,7 @@ class OrderDetailController extends Controller
         $order = Order::findOrFail($id);
         $orderDetails = OrderDetail::with('product', 'size', 'toppings')->where('order_id', $id)->get();
         $index = 0;
-        $images = [];
         foreach ($orderDetails as $orderDetail) {
-            $product_id = $orderDetail->product->id;
-            $image = Image::where('product_id', $product_id)->where('active', 1)->first();
-            if ($image != null) {
-                $orderDetails[$index]->image = $image->name;
-            }
-            else {
-                $image = Image::where('product_id', $product_id)->orderBy('id','DESC')->first();
-                $orderDetails[$index]->image = $image->name;
-            }
             $priceProduct = $orderDetail->product_price * $orderDetail->quantity;
             $priceTopping = 0;
             foreach ($orderDetail->toppings as $topping) {
@@ -69,7 +59,7 @@ class OrderDetailController extends Controller
             }
             $orderDetails[$index]->price = $priceProduct + $priceTopping;
             $orderDetails[$index]->status = $order->status;
-            $index ++;
+            $index++;
         }
         return $orderDetails;
     }
@@ -77,7 +67,7 @@ class OrderDetailController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -88,8 +78,8 @@ class OrderDetailController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -100,7 +90,7 @@ class OrderDetailController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
@@ -122,17 +112,7 @@ class OrderDetailController extends Controller
         $order = Order::findOrFail($id);
         $orderDetails = OrderDetail::with('product', 'size', 'toppings')->where('order_id', $id)->get();
         $index = 0;
-        $images = [];
         foreach ($orderDetails as $orderDetail) {
-            $product_id = $orderDetail->product->id;
-            $image = Image::where('product_id', $product_id)->where('active', 1)->first();
-            if ($image != null) {
-                $orderDetails[$index]->image = $image->name;
-            }
-            else {
-                $image = Image::where('product_id', $product_id)->orderBy('id','DESC')->first();
-                $orderDetails[$index]->image = $image->name;
-            }
             $priceProduct = $orderDetail->product_price * $orderDetail->quantity;
             $priceTopping = 0;
             foreach ($orderDetail->toppings as $topping) {
@@ -140,7 +120,7 @@ class OrderDetailController extends Controller
             }
             $orderDetails[$index]->price = $priceProduct + $priceTopping;
             $orderDetails[$index]->status = $order->status;
-            $index ++;
+            $index++;
         }
 
         return $orderDetails;
@@ -150,30 +130,21 @@ class OrderDetailController extends Controller
     {
         $order_id = $request->order_id;
         $detail_id = $request->detail_id;
-        $order = Order::findOrFail($order_id);
         $orderDetails = OrderDetail::with('product', 'size', 'toppings')->where('order_id', $order_id)->get();
         $index = 0;
         foreach ($orderDetails as $orderDetail) {
-            $product_id = $orderDetail->product->id;
-            $image = Image::where('product_id', $product_id)->where('active', 1)->first();
-            if ($image != null) {
-                $orderDetails[$index]->image = $image->name;
-            }
-            else {
-                $image = Image::where('product_id', $product_id)->orderBy('id','DESC')->first();
-                $orderDetails[$index]->image = $image->name;
-            }
+
             $priceProduct = $orderDetail->product_price * $orderDetail->quantity;
             $priceTopping = 0;
             foreach ($orderDetail->toppings as $topping) {
                 $priceTopping += $topping->pivot->topping_price;
             }
             $orderDetails[$index]->price = $priceProduct + $priceTopping;
-            $index ++;
+            $index++;
         }
         $orderDetailResult = null;
         foreach ($orderDetails as $orderDetail) {
-            if($orderDetail->id == $detail_id) {
+            if ($orderDetail->id == $detail_id) {
                 $orderDetailResult = $orderDetail;
                 break;
             }

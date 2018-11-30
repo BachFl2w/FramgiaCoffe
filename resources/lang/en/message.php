@@ -190,4 +190,5 @@ return [
     'percent' => 'Percent',
     'order_detail' => 'Order Detail',
     'cart' => 'Cart',
+    'brief' => 'Brief',
 ];

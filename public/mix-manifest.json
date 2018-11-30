@@ -1,8 +1,4 @@
 {
-    "/js/app.js": "/js/app.js",
-    "/css/app.css": "/css/app.css",
-    "/fonts/themify-icons.eot": "/fonts/themify-icons.eot",
-    "/fonts/themify-icons.svg": "/fonts/themify-icons.svg",
-    "/fonts/themify-icons.ttf": "/fonts/themify-icons.ttf",
-    "/fonts/themify-icons.woff": "/fonts/themify-icons.woff"
+    "/js/app_client.js": "/js/app_client.js",
+    "/css/app.css": "/css/app.css"
 }

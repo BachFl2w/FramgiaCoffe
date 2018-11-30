@@ -19,39 +19,23 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        view()->composer('layouts/header', function($view) {
+        view()->composer('layouts/header', function ($view) {
             if (Auth::check()) {
                 $currentUser = Auth::user();
                 $view->with('currentUser', $currentUser);
             }
         });
-
-        view()->composer('layouts/app_client', function($view) {
-            if (Auth::check()) {
-                $currentUser = Auth::user();
-                $view->with('currentUser', $currentUser);
-            }
-        });
-
-        view()->composer('layouts/app_client', function($view) {
-            $number_product = Product::all()->count();
-            $view->with('number_product', $number_product);
-        });
-
-        view()->composer('layouts/app_client', function($view) {
-            $number_category = Category::all()->count();
-            $view->with('number_category', $number_category);
-        });
-
-        view()->composer('list_product', function($view) {
-            $total_product = Product::all()->count();
-            $categories = Category::withCount('products')->get();
+        view()->composer('index', function ($view) {
+            $categories = Category::all();
             $sizes = Size::all();
             $toppings = Topping::all();
-            $view->with('categories', $categories)
-            ->with('total_product', $total_product)
-            ->with('toppings', $toppings)
-            ->with('sizes', $sizes);
+            $view->with(['categories' => $categories, 'sizes' => $sizes, 'toppings' => $toppings]);
+        });
+        view()->composer('layouts/search_and_menu_client', function ($view) {
+            $category = Category::with(['products' => function($query) {
+                $query->limit(5);
+            }])->get();
+           $view->with('category_with_product', $category);
         });
     }
 

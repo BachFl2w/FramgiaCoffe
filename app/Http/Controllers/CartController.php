@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use Session;
 use Hash;
 use Auth;
@@ -15,6 +16,7 @@ use App\Order;
 use App\Size;
 use App\Topping;
 use App\Product;
+use App\Image;
 use App\Repositories\Repository;
 
 use Illuminate\Http\Request;
@@ -26,26 +28,43 @@ class CartController extends Controller
     protected $orderModel;
     protected $orderDetailModel;
 
-    function __construct(Order $orderModel, OrderDetail $orderDetailModel) {
+    function __construct(Order $orderModel, OrderDetail $orderDetailModel)
+    {
         $this->orderModel = new Repository($orderModel);
         $this->orderDetailModel = new Repository($orderDetailModel);
     }
 
-    public function index()
+    public function cart()
     {
+        $data = [];
+        $cart = [];
         if (Session::has('cart')) {
             $oldCart = Session('cart');
             $cart = new Cart($oldCart);
             $data = [
                 'cart' => $cart->items,
                 'totalPrice' => $cart->totalPrice,
-                'totalQty' => $cart->totalQty
+                'totalQty' => $cart->totalQty,
             ];
-
-            return view('cart', compact('data'));
+            $items = [];
+            foreach ($data['cart'] as $key => $value) {
+                $item = $value;
+                $item['key'] = $key;
+                $id_sp = $value['product']->id;
+                $image_main = Image::where('product_id', $id_sp)
+                    ->orderBy('active', 'desc')
+                    ->orderBy('id', 'desc')->first();
+                $item['image'] = $image_main->name;
+                $items[] = $item;
+            }
+            $cart = [
+                'items' => $items,
+                'totalPrice' => $data['totalPrice'],
+                'totalQty' => $data['totalQty'],
+            ];
         }
 
-        return view('cart');
+        return $cart;
     }
 
     public function add(Request $req)
@@ -63,8 +82,6 @@ class CartController extends Controller
         $cart = new Cart($oldCart);
         $cart->add($product, $topping, $size);
         $req->session()->put('cart', $cart);
-
-        return redirect(route('user.cart.index'));
     }
 
     public function plus($cartId)
@@ -171,5 +188,16 @@ class CartController extends Controller
         session()->forget('cart');
 
         return back()->with('success', __('message.success.order'));
+    }
+
+    public function demo()
+    {
+        $categories = Category::with(['products' => function ($query) {
+            return $query->limit(5);
+        }])->get()->map(function() {
+
+        });
+
+        return $categories;
     }
 }

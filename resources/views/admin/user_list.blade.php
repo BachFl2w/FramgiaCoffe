@@ -39,7 +39,7 @@
                 </div>
 
                 <div class="card-body">
-                    <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                    <table id="user_list" class="table table-striped table-bordered">
                         <thead>
                             <tr>
                                 <th scope="col">ID</th>
@@ -103,7 +103,7 @@
 
     <script type="text/javascript">
         $(document).ready(function() {
-            $('#bootstrap-data-table-export').DataTable();
+            $('#user_list').DataTable();
         } );
     </script>
 @endsection

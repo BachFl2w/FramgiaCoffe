@@ -17,9 +17,9 @@
 
     <link rel="shortcut icon" href="favicon.ico">
 
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/admin_style.css') }}" rel="stylesheet">
 
-    <link rel="stylesheet" href="{{ asset('admin_template/assets/css/themify-icons.css') }}">
+    {{-- <link rel="stylesheet" href="{{ asset('admin_template/assets/css/themify-icons.css') }}"> --}}
 
     @yield('css')
 
