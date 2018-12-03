@@ -94,7 +94,7 @@
 
                             <div class="col-md-6">
                                 <select id="role" class="form-control{{ $errors->has('role') ? ' is-invalid' : '' }}" name="role" value="{{ old('role') }}" required autofocus>
-                                    @foreach ($role as $r)
+                                    @foreach ($roles as $r)
                                         <option value="{{$r->id}}">{{ $r->name }}</option>
                                     @endforeach
                                 </select>

@@ -7,6 +7,7 @@ use Session;
 use App\User;
 use App\Order;
 use App\Role;
+Use Alert;
 use App\Repositories\Repository;
 
 use Illuminate\Support\Facades\Hash;
@@ -35,9 +36,26 @@ class UserController extends Controller
      */
     public function index()
     {
+        if (Auth::user()->role_id != 1) {
+            return back()->with('fail', __('message.fail.permission'));
+        }
+
+        $roles = $this->roleModel->all();
         $user = $this->userModel->all()->load('role');
 
-        return view('admin.user_list', compact('user'));
+        return view('admin.user_list', compact('user', 'roles'));
+    }
+
+    public function json()
+    {
+        if (Auth::user()->role_id != 1) {
+            return back()->with('fail', __('message.fail.permission'));
+        }
+
+        $roles = $this->roleModel->all();
+        $user = $this->userModel->all()->load('role');
+
+        return response()->json($user);
     }
 
     /**
@@ -84,7 +102,7 @@ class UserController extends Controller
             $image = null;
         }
 
-        $this->userModel->create([
+        $data = $this->userModel->create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
@@ -95,7 +113,10 @@ class UserController extends Controller
             'image' => $image,
         ]);
 
-        return back()->with('success', __('message.success.create'));
+        $user = $data->load('role');
+
+        // return back()->with('success', __('message.success.create'));
+        return response()->json($user);
     }
 
     /**
@@ -197,24 +218,16 @@ class UserController extends Controller
 
         if ($currentUser->role_id == 1) {
             if ($user->role_id == 1 && $user->active == 1) {
-                return back()->with('fail', __('message.fail.permission'));
-            }
-
-            if ($user->active == 0) {
-                $active = 1;
+                alert()->error('Error Message', 'Optional Title');
+            } else {
+                $this->userModel->update(['active' => $user->active == 1 ? 0 : 1], $user->id);
+                alert()->success('Success Message', 'Optional Title');
             }
         } else {
-            return back()->with('fail', __('message.fail.permission'));
+            alert()->error('Error Message', 'Optional Title');
         }
 
-        $this->userModel->update(
-            [
-                'active' => $active,
-            ],
-            $user->id
-        );
-
-        return back()->with('success', __('message.success.update'));
+        return redirect()->back();
     }
 
     /**
@@ -230,10 +243,10 @@ class UserController extends Controller
         if ($currentUser->role_id == 1 && $user->role_id != 1) {
             $user->delete();
 
-            return back()->with('success', __('message.success.delete'));
+            return 'success';
+        } else {
+            return 'fail';
         }
-
-        return back()->with('fail', __('message.fail.permission'));
     }
 
     public function login(Request $request)

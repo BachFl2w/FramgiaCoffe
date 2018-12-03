@@ -119,7 +119,9 @@
                         <li><a href="">{{ __('message.new_product') }}</a></li>
                     </ul> --}}
                     </li>
-                    <li><a href="{{ route('client.orders') }}">{{ __('message.title.order') }}</a></li>
+                    @if (Auth::check())
+                        <li><a href="{{ route('client.orders') }}">{{ __('message.title.order') }}</a></li>
+                    @endif
                     <li><a href="#">{{ __('message.title.about') }}</a></li>
                     </li>
                     @if (!Auth::check())
@@ -406,7 +408,7 @@ jQuery(document).ready(function($) {
 });
 </script>
 
-@if(!empty(Session::get('fail')) || !Auth::check())
+@if(!empty(Session::get('fail')))
     <script>
         $(function() {
             $('#login_2').modal('show');

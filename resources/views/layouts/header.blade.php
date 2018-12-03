@@ -86,7 +86,7 @@
 
                 <div class="user-menu dropdown-menu" >
                     <a class="nav-link" href="{{ route('admin.user.edit', $currentUser->id) }}">
-                        <i class="fa fa-user"></i>{{ $currentUser->name }}
+                        <i class="fa fa-user"></i> {{ __('message.profile') }}
                     </a>
                     <a class="nav-link" href="{{ route('admin.logout') }}"><i class="fa fa-power -off"></i>Logout</a>
                 </div>

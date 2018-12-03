@@ -49,6 +49,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin'], function() {
 
         Route::get('index', 'UserController@index')->name('admin.user.index');
 
+        Route::get('json', 'UserController@json')->name('admin.user.json');
+
         Route::get('create', 'UserController@create')->name('admin.user.create');
 
         Route::post('store', 'UserController@store')->name('admin.user.store');
@@ -57,9 +59,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin'], function() {
 
         Route::post('update/{user}', 'UserController@update')->name('admin.user.update');
 
-        Route::get('/destroy/{id}', 'UserController@destroy')->name('admin.user.destroy');
+        Route::get('/destroy/{user}', 'UserController@destroy')->name('admin.user.destroy');
 
-        Route::post('active/{user}', 'UserController@active')->name('admin.user.active');
+        Route::get('active/{user}', 'UserController@active')->name('admin.user.active');
     });
 
     Route::group(['prefix' => 'feedback'], function() {

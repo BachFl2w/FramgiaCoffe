@@ -34,7 +34,7 @@
             </div>
 
         </div><!-- End col-md-3 -->
-        <div class="col-md-5 col-sm-5 add_bottom_15 box_style_2">
+        <div class="col-md-8 col-sm-8 add_bottom_15 box_style_2">
             <div class="indent_title_in">
                 <h3><i class="icon-user"></i> {{ __('message.info') }}</h3>
             </div>
@@ -102,30 +102,6 @@
                 </div>
                 {!! Form::submit(__('message.update'), ['class' => 'btn_1 green']) !!}
             </div><!-- End wrapper_indent -->
-        </div>
-        <div class="col-md-3 col-sm-3 add_bottom_15">
-            <div class="theiaStickySidebar">
-                <div id="cart_box" >
-                    <h3>Your order</h3>
-                    @if (count($order) > 0)
-                        {{-- {{ dd($order) }} --}}
-                        <table class="table table_summary table-hover">
-                            <tbody>
-                                @foreach ($order as $value)
-                                    <tr>
-                                        <td>
-                                            <a href="{{ route('client.orders') }}" title="show" title="">{{ $value->order_time }}</a>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                        {!! $order->links() !!}
-                    @else
-                        <p>Empty</p>
-                    @endif
-                </div>
-            </div>
         </div>
     {!! Form::close() !!}
     </div><!-- End box_style_1 -->

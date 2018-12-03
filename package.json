@@ -17,12 +17,14 @@
     "laravel-mix": "^2.0",
     "lodash": "^4.17.5",
     "popper.js": "^1.12",
+    "sweetalert": "^2.1.2",
     "vue": "^2.5.7"
   },
   "dependencies": {
     "@icon/themify-icons": "^1.0.1-2",
     "ckeditor": "^4.11.1",
     "font-awesome": "^4.7.0",
+    "sweetalert2": "^7.29.2",
     "toastr": "^2.1.4"
   }
 }

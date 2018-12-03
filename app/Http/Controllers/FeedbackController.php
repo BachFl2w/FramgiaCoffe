@@ -69,7 +69,7 @@ class FeedbackController extends Controller
     {
         $this->feedbackModel->update(
             [
-                'status' => 1
+                'status' => $feedback->status == 1 ? 0 : 1
             ],
             $feedback->id
         );

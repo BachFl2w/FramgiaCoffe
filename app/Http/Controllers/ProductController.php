@@ -22,9 +22,7 @@ class ProductController extends Controller
     {
         $products = Product::with('category')->get();
 
-        $index = 0;
-
-        foreach ($products as $product) {
+        foreach ($products as $key => $product) {
 
             $images = Image::where('product_id', $product->id)->orderBy('active', 'desc')->orderBy('id', 'desc')->get();
             $image = null;
@@ -33,11 +31,9 @@ class ProductController extends Controller
                 $image = $images[0]->name;
             }
 
-            $products[$index]->image = $image;
-
-            $index ++;
+            $products[$key]->image = $image;
         }
-        
+
         return view('admin.product_list', compact('products'));
     }
 
@@ -48,7 +44,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        
+
         $categories = Category::pluck('name', 'id');
 
         return view('admin.product_create', compact('categories'));
@@ -105,7 +101,7 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        
+
     }
 
     /**
@@ -174,7 +170,7 @@ class ProductController extends Controller
         $image = $request->file('image');
 
         if ($image != null) {
-            
+
             $filename = $product->name . '_' . $image->getClientOriginalName();
 
             $path = public_path('images/products/' . $filename);
