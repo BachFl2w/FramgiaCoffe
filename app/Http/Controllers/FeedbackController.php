@@ -50,7 +50,7 @@ class FeedbackController extends Controller
         $this->feedbackModel->create([
             'user_id' => $user->id,
             'product_id' => $product->id,
-            'content' => $request->content,
+            'content' => $request->contents,
             'status' => 0,
         ]);
 
@@ -61,8 +61,8 @@ class FeedbackController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function active(Feedback $feedback)

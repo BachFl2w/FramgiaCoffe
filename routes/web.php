@@ -65,6 +65,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin'], function() {
     });
 
     Route::group(['prefix' => 'feedback'], function() {
+
         Route::get('index', 'FeedbackController@index')->name('admin.feedback.index');
 
         Route::get('edit/{id}', 'FeedbackController@edit')->name('admin.feedback.edit');
@@ -88,7 +89,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin'], function() {
 
         Route::get('detail/json/{id}', 'ProductController@productJson')->name('admin.product.detail.json');
 
-        Route::put('update/{id}', 'ProductController@update')->name('admin.product.update');
+        Route::put('update/{product}', 'ProductController@update')->name('admin.product.update');
 
         Route::get('destroy/{id}', 'ProductController@destroy')->name('admin.product.destroy');
 
@@ -104,7 +105,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin'], function() {
 
         Route::get('edit/{id}', 'CategoryController@edit')->name('admin.category.edit');
 
-        Route::post('update/{id}', 'CategoryController@update')->name('admin.category.update');
+        Route::post('update/{category}', 'CategoryController@update')->name('admin.category.update');
 
         Route::get('destroy/{id}', 'CategoryController@destroy')->name('admin.category.destroy');
 
@@ -121,7 +122,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin'], function() {
 
         Route::post('store', 'TopingController@store')->name('admin.topping.store');
 
-        Route::post('update/{id}', 'TopingController@update')->name('admin.topping.update');
+        Route::post('update/{topping}', 'TopingController@update')->name('admin.topping.update');
 
         Route::get('destroy/{id}', 'TopingController@destroy')->name('admin.topping.destroy');
 
@@ -136,7 +137,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin'], function() {
 
         Route::post('store', 'SizeController@store')->name('admin.size.store');
 
-        Route::post('update/{id}', 'SizeController@update')->name('admin.size.update');
+        Route::post('update/{size}', 'SizeController@update')->name('admin.size.update');
 
         Route::get('destroy/{id}', 'SizeController@destroy')->name('admin.size.destroy');
 
@@ -168,7 +169,6 @@ Route::group(['middleware' => 'userLogin'], function() {
 });
 
 Route::group(['prefix' => 'cart'], function() {
-    Route::get('index', 'CartController@index')->name('user.cart.index');
 
     Route::post('add', 'CartController@add')->name('user.cart.add');
 
@@ -194,9 +194,11 @@ Route::get('list-product/filter', 'ClientController@filterProductByCategory')->n
 
 Route::get('product/{id}', 'ClientController@detailProduct')->name('client.product.detail');
 
+Route::get('product/{id}/json', 'ClientController@detailProductData')->name('client.product.detail.json');
+
 Route::post('comment', 'ClientController@comment')->name('client.comment');
 
-Route::post('demo', 'CartController@demo')->name('demo');
+Route::get('demo', 'CartController@demo')->name('demo');
 
 Route::get('show', function() {
     return Session::get('cart');
@@ -211,3 +213,5 @@ Route::get('order', 'ClientController@orders')->name('client.orders');
 Route::get('order_detail/{order_id}', 'ClientController@order_details')->name('client.order.order_detail');
 
 Route::get('cancel_order/{order_id}', 'ClientController@cancel_order')->name('client.order.cancel_order');
+
+Route::get('cart', 'CartController@cart')->name('client.cart');

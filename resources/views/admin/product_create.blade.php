@@ -16,23 +16,23 @@
 	            <div class="col-6">
 		            <div class="form-group row">
 		                <h5 class="col-md-2 col-form-label-sm">{{ __('message.product') }}</h5>
-		                {!! Form::text('name', null, ['class' => 'form-control col-md-10', 'required']) !!}
+		                {!! Form::text('name', null, ['class' => 'form-control col-md-10', 'required' => 'required', 'placeholder' => 'Name Product']) !!}
 		            </div>
 		            <div class="form-group row">
 		                <h5 class="col-md-2 col-form-label-sm">{{ __('message.quantity') }}</h5>
-		                {!! Form::number('quantity', null, ['class' => 'form-control col-md-10', 'required']) !!}
+		                {!! Form::number('quantity', null, ['class' => 'form-control col-md-10', 'required' => 'required', 'placeholder' => 'Number Product']) !!}
 		            </div>
 		            <div class="form-group row">
 		                <h5 class="col-md-2 col-form-label-sm">{{ __('message.price') }}</h5>
-		                {!! Form::number('price', null, ['class' => 'form-control col-md-10', 'required']) !!}
+		                {!! Form::number('price', null, ['class' => 'form-control col-md-10', 'required' => 'required']) !!}
 		            </div>
 		            <div class="form-group row">
 		                <h5 class="col-md-2 col-form-label-sm">{{ __('message.image') }}</h5>
-		                {!! Form::file('image', ['id' => 'image', 'class' => 'col-md-10']) !!}
+		                {!! Form::file('image', ['id' => 'image', 'class' => 'col-md-10',  'required' => 'required']) !!}
 		            </div>
 		            <div class="form-group row">
 		                <h5 class="col-md-2 col-form-label-sm">{{ __('message.category') }}</h5>
-		                {!! Form::select('category_id', $categories, null, ['class' => 'form-control col-md-10']) !!}
+		                {!! Form::select('category_id', $categories, null, ['class' => 'form-control col-md-10', 'placeholder' => __('Choose Category'),  'required' => 'required']) !!}
 		            </div>
 	        	</div>
 	        	<div class="col-6">
@@ -56,10 +56,6 @@
 @endsection
 @section('script')
 <script type="text/javascript">
-	// var config = {};
-	// config.placeholder = 'some value';
- //    CKEDITOR.replace('description', config);
-
     jQuery(document).ready(function($) {
     	$('#image').val('');
     	$('#image').change(function() {
@@ -72,5 +68,8 @@
 	        }
     	});
     });
+</script>
+<script>
+    $('#description').ckeditor();
 </script>
 @endsection

@@ -7,58 +7,57 @@ use App\Image;
 use App\Order;
 use App\OrderDetail;
 use App\Product;
-use App\Category;
 use App\Topping;
 use App\Size;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
 
 class ClientController extends Controller
 {
     public function index()
     {
-        $data = [];
-        $popular_products = DB::table('order_details')
-            ->join('products', 'product_id', '=', 'products.id')
-            ->join('categories', 'products.category_id', '=', 'categories.id')
-            ->groupBy('product_id', 'categories.name')
+        $best_discount_product = Product::with('images')->orderBy('discount', 'desc')
+            ->orderBy('id', 'desc')
+            ->first();
+        $best_discount_product->image = $best_discount_product->images[0]->name;
+
+        $best_products = OrderDetail::with('product')->groupBy('product_id')
+            ->orderBy('product_price', 'desc')
+            ->orderBy('id', 'desc')
             ->limit(6)
-            ->get(['products.*', 'categories.name as category']);
-        $id = [];
-        foreach ($popular_products as $product) {
-            $id[] = $product->id;
+            ->get();
+
+        $best_product_ids = [];
+        $best_product_ids[] = $best_discount_product->id;
+
+        $products = [];
+        foreach ($best_products as $product) {
+            $best_product_ids[] = $product->product_id;
+            $products[] = $product->product;
         }
-        $data = $popular_products;
-        if (count($data) < 6) {
-            $quantity = count($data);
-            $products = DB::table('products')
-                ->join('categories', 'products.category_id', '=', 'categories.id')
-                ->whereNotIn('products.id', $id)
-                ->take(6 - $quantity)
-                ->get(['products.*', 'categories.name as category']);
-            foreach ($products as $product) {
-                $data[] = $product;
+        if (count($best_products) < 6) {
+            $newest_products = Product::whereNotIn('id', $best_product_ids)
+                ->limit(6 - count($best_products))
+                ->get();
+            foreach ($newest_products as $product) {
+                $products[] = $product;
             }
         }
-        $index = 0;
-        foreach ($data as $product) {
-            $image = Image::where('product_id', $product->id)->orderBy('active', 'id')->first();
-
-            $data[$index]->image = $image;
-
-            $index++;
+        for ($i = 0 ; $i < count($products) ; $i++) {
+            $image = Image::where('product_id', $products[$i]->id)
+                ->orderBy('active', 'desc')
+                ->orderBy('id', 'desc')
+                ->first();
+            $products[$i]->image = $image->name;
         }
 
-        return view('index', compact('data'));
+        return view('index', compact('products', 'best_discount_product'));
+//        return $products;
     }
 
     public function listProduct()
     {
-        $products = Product::with(['images' => function ($query) {
-            $query->orderBy('active', 'id')->get();
-        }])->with(['category' => function ($query) {
+        $products = Product::with(['category' => function ($query) {
             $query->get();
         }])->paginate(4);
 
@@ -70,11 +69,7 @@ class ClientController extends Controller
         $keyword = $request->keyword;
         $data = [];
         if ($keyword != null) {
-            $data = Product::where('name', 'like', '%' . $keyword . '%')
-                ->with(['images' => function ($query) {
-                    $query->orderBy('active', 'id')->get();
-                }])
-                ->limit(4)->get();
+            $data = Product::where('name', 'like', '%' . $keyword . '%')->limit(4)->get();
         }
 
         return $data;
@@ -85,11 +80,7 @@ class ClientController extends Controller
         $keyword = $request->keyword;
         $products = [];
         if ($keyword != null) {
-            $products = Product::where('name', 'like', '%' . $keyword . '%')
-                ->with(['images' => function ($query) {
-                    $query->orderBy('active', 'id')->get();
-                }])
-                ->paginate(5);
+            $products = Product::where('name', 'like', '%' . $keyword . '%')->paginate(5);
         }
 
         return view('list_result_search', compact('products'));
@@ -110,17 +101,24 @@ class ClientController extends Controller
         return view('list_product', compact('products'));
     }
 
-    public function detailProduct($id) {
+    public function detailProduct($id)
+    {
+        $product = Product::with('category', 'images')->findOrFail($id);
+        $image_main = Image::where('product_id', $product->id)->orderBy('active', 'desc')
+            ->orderBy('id', 'desc')->first();
+        $product->image = $image_main->name;
 
-        $product = Product::with('images', 'category')->with(['feedbacks' => function($query) {
-            $query->join('users', 'feedbacks.user_id', '=', 'users.id')->where('feedbacks.status', 1)->select('feedbacks.*', 'users.name', 'users.image')->get();
-        }])->findOrFail($id);
+        return view('product_detail', compact('product'));
+    }
 
-        $toppings = Topping::all();
+    public function detailProductData($id)
+    {
+        $product = Product::with('category', 'images')->findOrFail($id);
+        $image_main = Image::where('product_id', $product->id)->orderBy('active', 'desc')
+            ->orderBy('id', 'desc')->first();
+        $product->image = $image_main->name;
 
-        $sizes = Size::all();
-
-        return view('detail_product', compact('product', 'toppings', 'sizes'));
+        return $product;
     }
 
     public function comment(Request $request)
@@ -140,8 +138,7 @@ class ClientController extends Controller
 
     public function orders()
     {
-        if(Auth::check())
-        {
+        if (Auth::check()) {
             $user_id = Auth::id();
             $orders = Order::where('user_id', $user_id)->orderBy('id', 'desc')->paginate(8);
 
@@ -157,6 +154,7 @@ class ClientController extends Controller
 
         return $orderDetails;
     }
+
     public function cancel_order($order_id)
     {
         $order = Order::findOrfail($order_id);

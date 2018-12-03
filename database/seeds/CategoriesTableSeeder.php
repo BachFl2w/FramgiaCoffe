@@ -20,6 +20,10 @@ class CategoriesTableSeeder extends Seeder
                 'name' => 'Sinh Tố',
             ], [
                 'name' => 'Soda - Mojito',
+            ], [
+                'name' => 'Nước Ép',
+            ], [
+                'name' => 'Đồ Đá Xay',
             ],
         ];
 

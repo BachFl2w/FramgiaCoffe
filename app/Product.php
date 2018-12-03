@@ -13,11 +13,6 @@ class Product extends Model
 
     protected $dates = ['deleted_at'];
 
-    public function images()
-    {
-        return $this->hasMany(Image::class);
-    }
-
     public function feedbacks()
     {
         return $this->hasMany(Feedback::class);
@@ -26,5 +21,10 @@ class Product extends Model
     public function category()
     {
         return $this->belongsTo(Category::class)->withTrashed();
+    }
+
+    public function images()
+    {
+        return $this->hasMany(Image::class);
     }
 }

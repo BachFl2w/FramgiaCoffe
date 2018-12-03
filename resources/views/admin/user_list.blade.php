@@ -33,7 +33,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                    <table id="user_list" class="table table-striped table-bordered">
                         <thead>
                             <tr>
                                 <th scope="col">ID</th>
