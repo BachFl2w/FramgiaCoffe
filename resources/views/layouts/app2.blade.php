@@ -28,7 +28,7 @@
 
 </head>
 <body>
-    {{-- @include('layouts.left_panel') --}}
+    @include('layouts.left_panel')
 
     <div id="right-panel" class="right-panel">
 
@@ -62,7 +62,8 @@
     @include('sweetalert::alert')`
 
     <script src="{{ asset('js/app.js') }}"></script>
-    @yield('script')
+    <script src="{{ asset('js/sweetalert.min.js') }}"></script>
 
+    @yield('script')
 </body>
 </html>

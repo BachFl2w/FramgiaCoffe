@@ -55,7 +55,7 @@ class UserController extends Controller
         $roles = $this->roleModel->all();
         $user = $this->userModel->all()->load('role');
 
-        return response()->json($user);
+        return $user;
     }
 
     /**
@@ -213,20 +213,18 @@ class UserController extends Controller
     public function active(User $user)
     {
         $currentUser = Auth::user();
-        $active = 0;
 
         if ($currentUser->role_id == 1) {
             if ($user->role_id == 1 && $user->active == 1) {
-                alert()->error('Error Message', 'Optional Title');
+                return 'false';
             } else {
                 $this->userModel->update(['active' => $user->active == 1 ? 0 : 1], $user->id);
-                alert()->success('Success Message', 'Optional Title');
+
+                return 'true';
             }
-        } else {
-            alert()->error('Error Message', 'Optional Title');
         }
 
-        return redirect()->back();
+        return 'false';
     }
 
     /**
@@ -242,10 +240,10 @@ class UserController extends Controller
         if ($currentUser->role_id == 1 && $user->role_id != 1) {
             $user->delete();
 
-            return 'success';
-        } else {
-            return 'fail';
+            return 'true';
         }
+
+        return 'false';
     }
 
     public function login(Request $request)
