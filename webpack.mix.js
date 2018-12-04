@@ -39,3 +39,7 @@ mix.js([
     'resources/asset/client/js/common.js',
 ], 'public/js/app_client.js');
 
+mix.js([
+       'resources/asset/js/sweetalert.min.js'
+], 'public/js/sweetalert.min.js');
+
