@@ -28,7 +28,7 @@
 
 </head>
 <body>
-    @include('layouts.left_panel')
+    {{-- @include('layouts.left_panel') --}}
 
     <div id="right-panel" class="right-panel">
 

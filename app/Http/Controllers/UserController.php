@@ -115,7 +115,6 @@ class UserController extends Controller
 
         $user = $data->load('role');
 
-        // return back()->with('success', __('message.success.create'));
         return response()->json($user);
     }
 
