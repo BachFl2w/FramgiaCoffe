@@ -136,21 +136,157 @@
     var iid1 = "countbox_1";
     CountBack_slider(gsecs1, "countbox_1", 1);
 
-    @if(!empty(Session::get('fail')))
-        <script>
-            $(function() {
-                $('#login_2').modal('show');
-            });
-        </script>
-    @endif
+<<<<<<< HEAD
+</script>
 
-    @if(count($errors) > 0)
-        <script>
-            $(function() {
-                $('#register').modal('show');
-            });
-        </script>
-    @endif
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        var nf = new Intl.NumberFormat();
+
+        function loadCart() {
+            var htmlCart = '' +
+                '<ul class="mini-products-list" id="cart-sidebar">';
+            $.ajax({
+                url: route('client.cart'),
+                type: 'get',
+                dataType: '',
+                data: {},
+            })
+                .done(function (res) {
+                    var empty_cart = '<h2 style="margin: 10px auto;padding: 10px 20px ;width: 100%">' +
+                        'Bạn chưa mua sản phẩm nào ! </h2>';
+                    if (res.length !== 0) {
+                        $total_price = 0;
+                        $count_product = 0;
+                        res.forEach(function (element) {
+                            $total_price += element.item_price;
+                            $count_product += element.item.quantity;
+                        });
+                        $('#count_cart').html($count_product);
+                        $('#price_cart').html(nf.format($total_price));
+                        var count_cart = res.length < 3 ? res.length : 3;
+                        for (var i = 0; i < count_cart; i++) {
+                            var url_image = 'http://127.0.0.1:8000/images/products/';
+                            var item = '' +
+                                '<li class="item first">' +
+                                '<div class="item-inner">' +
+                                '<a class="product-image" title="Retis lapen casen" href="#l">' +
+                                '<img src="' + url_image + res[i].item.product.image + '">' +
+                                '</a>' +
+                                '<div class="product-details">' +
+                                '<div class="access">' +
+                                '<a class="btn-remove1 btnRemove" href="#" data-id="' + res[i].key + '" >' +
+                                '</a>' +
+                                '</div>' +
+                                '<strong>' + res[i].item.quantity + '</strong> x <span' +
+                                'class="price">' + nf.format(res[i].item.product_price) + ' ₫' + '</span>' +
+                                '<p class="product-name"><a href="#">' + res[i].item.product.name + '</a></p>';
+                            res[i].item.toppings.forEach(function (element, index) {
+                                item += '<span class="product-name" style="padding: 5px 10px 0px 2px;display: inline-block">' + element.name + '</span>';
+                            });
+                            item += '</div></div></li>';
+                            htmlCart += item;
+                        }
+                        htmlCart += '</ul>';
+                        if (res.length >= 3) {
+                            htmlCart += '<h3 class="text text-center">...Load more...</h3>';
+                        }
+                        $('#car_list').html(htmlCart);
+                        $('#action_order').show();
+                    } else {
+                        $('#car_list').html(empty_cart);
+                        $('#action_order').hide();
+                    }
+                })
+        };
+
+        loadCart();
+
+        $('.btnBuy').click(function (event) {
+            var id_sp = $(this).attr("data-id");
+            $.ajax({
+                url: route('client.product.detail.json', {id: id_sp}),
+                type: 'get',
+                dataType: '',
+                data: {},
+            })
+                .done(function (res) {
+                    $('.modal-title').html(res.name);
+                    $('#product_id').val(res.id);
+                })
+                .fail(function () {
+                    console.log("error");
+                })
+        });
+
+        $('#btnSubmitOrder').click(function (event) {
+            event.preventDefault();
+            $.ajax({
+                url: route('user.cart.add'),
+                type: 'post',
+                dataType: '',
+                data: $('#form_order').serialize(),
+            })
+                .done(function () {
+                    loadCart();
+
+                })
+                .fail(function () {
+                    console.log("error");
+                })
+                .always(function () {
+                    $('#form_order')[0].reset();
+                    $('#order').modal('hide');
+                });
+        });
+
+        $('.remove-item').click(function (event) {
+            event.preventDefault();
+            var key = $(this).attr("data-id");
+            $.ajax({
+                url: route('user.cart.delete'),
+                type: 'post',
+                dataType: '',
+                data: {key: key},
+            })
+                .done(function (res) {
+                    console.log(res);
+                })
+                .fail(function () {
+                    console.log("error");
+                })
+                .always(function () {
+                    console.log("complete");
+                });
+        });
+
+        $('#empty_cart_button').click(function (event) {
+            if (confirm('Are you sure ?')) {
+                $.ajax({
+                    url: route('user.cart.remove'),
+                    type: 'get',
+                    dataType: '',
+                    data: {},
+                })
+                    .done(function () {
+                        console.log("success");
+                    })
+                    .fail(function () {
+                        console.log("error");
+                    })
+                    .always(function () {
+                        console.log("complete");
+                    });
+            }
+        });
+    });
+</script>
 
 @yield('js')
 </body>

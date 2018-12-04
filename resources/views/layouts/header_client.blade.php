@@ -10,13 +10,13 @@
                            class="block-language dropdown-toggle"
                            href="#">
                             <img src="{{ asset('images/vn_flat.png') }}" alt="language">
-                            Tiếng Việt
+                            {{ trans('message.vn') }}
                         </a>
                         <ul class="dropdown-menu" role="menu">
                             <li role="presentation">
                                 <a href="#">
                                     <img src="{{ asset('images/en_flat.png') }}" alt="language">
-                                    English
+                                    {{ trans('message.en') }}
                                 </a>
                             </li>
                         </ul>
@@ -30,29 +30,29 @@
                             <div class="demo">
                                 <a title="Blog"
                                    href="http://htmldemo.themessoft.com/freshia/version3/blog.html">
-                                    <span class="">Blog</span>
+                                    <span class="">{{ trans('message.blog') }}</span>
                                 </a>
                             </div>
                             <div class="check">
                                 <a title="Checkout"
                                    href="http://htmldemo.themessoft.com/freshia/version3/checkout.html">
-                                    <span class="">Checkout</span>
+                                    <span class="">{{ trans('message.checkout') }}</span>
                                 </a>
                             </div>
                             <div class="myaccount">
                                 <a title="My Account"
                                    href="http://htmldemo.themessoft.com/freshia/version3/login.html">
-                                    <span class="">My Account</span>
+                                    <span class="">{{ trans('message.my_account') }}</span>
                                 </a>
                             </div>
                             <div class="login">
                                 <a href="http://htmldemo.themessoft.com/freshia/version3/login.html">
-                                    <span class="">Log In</span>
+                                    <span class="">{{ trans('message.login') }}</span>
                                 </a>
                             </div>
                             <div class="login">
                                 <a href="http://htmldemo.themessoft.com/freshia/version3/register.html">
-                                    <span class="">Register</span>
+                                    <span class="">{{ trans('message.register') }}</span>
                                 </a>
                             </div>
                         </div>
@@ -80,7 +80,7 @@
                                maxlength="70">
                         <input type="hidden" value="product" name="post_type">
                         <button class="search-btn-bg" type="submit"><span
-                                class="glyphicon glyphicon-search"></span>&nbsp;
+                                    class="glyphicon glyphicon-search"></span>&nbsp;
                         </button>
                     </form>
                 </div>
@@ -88,8 +88,8 @@
             <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
                 <div class="hotline hidden-xs">
                     <span class="content">
-                        <span class="text">Support +0123 456 789</span>
-                        <span class="text info2">Email: info@freshia.com</span
+                        <span class="text">{{ trans('message.support') }}</span>
+                        <span class="text info2">{{ trans('message.email_help') }}</span>
                     </span>
                 </div>
                 <div class="top-cart-contain pull-right">
@@ -105,17 +105,18 @@
                         </div>
                         <div>
                             <div class="top-cart-content" id="cart_box">
-                                <!--block-subtitle-->
-                                <ul class="mini-products-list" id="cart-sidebar">
-                                    
-                                </ul>
+                                <div id="car_list">
+                                    {{--  <ul class="mini-products-list" id="cart-sidebar">
+
+                                     </ul> --}}
+                                </div>
                                 <!--actions-->
                                 <div class="actions" id="action_order">
                                     <button class="btn-checkout" title="Checkout" type="button">
-                                        <span>Checkout</span>
+                                        <span>{{ trans('message.checkout') }}</span>
                                     </button>
-                                    <a href="{{ route('client.cart') }}" class="view-cart">
-                                        <span>View Cart</span>
+                                    <a href="{{ route('client.showCart') }}" class="view-cart">
+                                        <span>{{ trans('message.view_cart') }}</span>
                                     </a>
                                 </div>
 

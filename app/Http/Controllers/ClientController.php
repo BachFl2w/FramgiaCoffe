@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use App\Feedback;
 use App\Image;
 use App\Order;
@@ -11,6 +12,7 @@ use App\Topping;
 use App\Size;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class ClientController extends Controller
 {
@@ -43,7 +45,7 @@ class ClientController extends Controller
                 $products[] = $product;
             }
         }
-        for ($i = 0 ; $i < count($products) ; $i++) {
+        for ($i = 0; $i < count($products); $i++) {
             $image = Image::where('product_id', $products[$i]->id)
                 ->orderBy('active', 'desc')
                 ->orderBy('id', 'desc')
@@ -163,4 +165,26 @@ class ClientController extends Controller
 
         $order->save();
     }
+
+    public function cart()
+    {
+        $carts = [];
+        if (Session::has('cart')) {
+            $carts = Session('cart');
+        }
+
+        return view('cart', compact('carts'));
+    }
+
+    public function demo()
+    {
+        $category = Category::with(['products'])->get()->map(function ($query) {
+            $query->setRelation('products', $query->products->take(5));
+            return $query;
+        });
+
+        return $category;
+    }
+
+
 }

@@ -7,27 +7,25 @@
                         <aside id="text-5" class="widget widget_text">
                             <div class="textwidget">
                                 <div class="newsletter-wrap">
-                                    <h4>DOWNLOAD THE APP</h4>
-                                    <div class="app-img"><img
-                                            src="http://htmldemo.themessoft.com/freshia/version3/images/android-app.png"
-                                            alt="android"></div>
-                                    <div class="app-img"><img
-                                            src="http://htmldemo.themessoft.com/freshia/version3/images/ios-app.png"
-                                            alt="android"></div>
-                                    <div class="app-img"><img
-                                            src="http://htmldemo.themessoft.com/freshia/version3/images/windows-btn.png"
-                                            alt="android"></div>
-                                </div>
-                                <div class="payment-accept">
-                                    <div><img
-                                            src="http://htmldemo.themessoft.com/freshia/version3/images/payment-1-1.png"
-                                            alt="payment1"> <img
-                                            src="http://htmldemo.themessoft.com/freshia/version3/images/payment-2-1.png"
-                                            alt="payment2"> <img
-                                            src="http://htmldemo.themessoft.com/freshia/version3/images/payment-3.png"
-                                            alt="payment3"> <img
-                                            src="http://htmldemo.themessoft.com/freshia/version3/images/payment-4-1.png"
-                                            alt="payment4"></div>
+                                    <h4>PayPal</h4>
+                                    <div>
+                                        <a href="">
+                                            <img src="http://htmldemo.themessoft.com/freshia/version3/images/payment-1-1.png"
+                                            >
+                                        </a>
+                                        <a href="">
+                                            <img src="http://htmldemo.themessoft.com/freshia/version3/images/payment-2-1.png"
+                                            >
+                                        </a>
+                                        <a href="">
+                                            <img src="http://htmldemo.themessoft.com/freshia/version3/images/payment-3.png"
+                                            >
+                                        </a>
+                                        <a href="">
+                                            <img src="http://htmldemo.themessoft.com/freshia/version3/images/payment-4-1.png"
+                                            >
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </aside>
@@ -132,7 +130,7 @@
             <div class="row">
                 <address>
                     <i class="fa fa-map-marker"></i> ABC Town Luton Street, New York 226688 <i
-                        class="fa fa-mobile"></i><span> + 0800 567 345</span> <i class="fa fa-envelope"></i><span> support@themessoft.com</span>
+                            class="fa fa-mobile"></i><span> + 0800 567 345</span> <i class="fa fa-envelope"></i><span> support@themessoft.com</span>
                 </address>
             </div>
         </div>

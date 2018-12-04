@@ -32,10 +32,11 @@ class AppServiceProvider extends ServiceProvider
             $view->with(['categories' => $categories, 'sizes' => $sizes, 'toppings' => $toppings]);
         });
         view()->composer('layouts/search_and_menu_client', function ($view) {
-            $category = Category::with(['products' => function($query) {
-                $query->limit(5);
-            }])->get();
-           $view->with('category_with_product', $category);
+            $category = Category::with(['products'])->get()->map(function ($query) {
+                $query->setRelation('products', $query->products->take(4));
+                return $query;
+            });
+            $view->with('category_with_product', $category);
         });
     }
 

@@ -14,16 +14,22 @@ class CategoriesTableSeeder extends Seeder
         $data = [
             [
                 'name' => 'Cafe',
+                'image'=> 'coffee.svg',
             ], [
                 'name' => 'Trà',
+                'image'=> 'coffee-cup.svg',
             ], [
                 'name' => 'Sinh Tố',
+                'image'=> 'frappe.svg',
             ], [
                 'name' => 'Soda - Mojito',
+                'image'=> 'mocha.svg',
             ], [
                 'name' => 'Nước Ép',
+                'image'=> 'takeaway.svg',
             ], [
                 'name' => 'Đồ Đá Xay',
+                'image'=> 'tea-cup.svg',
             ],
         ];
 

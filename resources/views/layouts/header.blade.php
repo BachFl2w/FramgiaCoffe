@@ -7,6 +7,7 @@
             {{-- <a id="menuToggle" class="menutoggle pull-left"><i class="fa fa fa-tasks"></i></a> --}}
             <div class="header-left">
                 <div class="dropdown for-notification">
+
                   <button class="btn btn-secondary dropdown-toggle" type="button" id="notification" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fa fa-bell"></i>
                     <span class="count bg-danger">5</span>
@@ -93,6 +94,7 @@
             </div>
 
             <div class="language-select dropdown" id="language-select">
+
                 <a class="dropdown-toggle" href="#" data-toggle="dropdown" id="language" aria-haspopup="true" aria-expanded="true">
                     {{-- <i class="flag-icon flag-icon-vn"></i> --}}
                     <img src="{{ asset('images/en_flat.png') }}" class="img-fluid">
