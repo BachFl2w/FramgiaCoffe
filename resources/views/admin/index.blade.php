@@ -5,11 +5,11 @@
 @endsection
 
 @section('content')
-    
+
     <div class="col-sm-6 col-lg-3">
         <div class="card text-white bg-flat-color-1">
             <div class="card-body pb-0">
-                
+
                 <h4 class="mb-0">
                     <span class="count">{{ count($successOrder) }}</span>
                 </h4>
@@ -21,7 +21,7 @@
     <div class="col-sm-6 col-lg-3">
         <div class="card text-white bg-flat-color-2">
             <div class="card-body pb-0">
-                
+
                 <h4 class="mb-0">
                     <span class="count">{{ count($canceledOrder) }}</span>
                 </h4>
@@ -30,5 +30,5 @@
 
         </div>
     </div>
-    
+
 @endsection

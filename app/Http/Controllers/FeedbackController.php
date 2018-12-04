@@ -67,9 +67,10 @@ class FeedbackController extends Controller
      */
     public function active(Feedback $feedback)
     {
-        $this->feedbackModel->update([
-            'status' => 1,
-        ],
+        $this->feedbackModel->update(
+            [
+                'status' => $feedback->status == 1 ? 0 : 1
+            ],
             $feedback->id
         );
 

@@ -152,9 +152,6 @@ return [
         Barryvdh\Debugbar\ServiceProvider::class,
         Unisharp\Ckeditor\ServiceProvider::class,
         RealRashid\SweetAlert\SweetAlertServiceProvider::class,
-
-
-
         /*
          * Package Service Providers...
          */
@@ -169,8 +166,6 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         Intervention\Image\ImageServiceProvider::class,
-        'Grimthorr\LaravelToast\ServiceProvider',
-
     ],
 
     /*
@@ -223,7 +218,7 @@ return [
         'Html'         => Collective\Html\HtmlFacade::class,
         'Debugbar'     => Barryvdh\Debugbar\Facade::class,
         'Image'        => Intervention\Image\Facades\Image::class,
-        'Toast' => 'Grimthorr\LaravelToast\Facade',
+        'Alert'        => RealRashid\SweetAlert\Facades\Alert::class,
     ],
 
 ];

@@ -22,9 +22,7 @@ class ProductController extends Controller
     {
         $products = Product::with('category')->get();
 
-        $index = 0;
-
-        foreach ($products as $product) {
+        foreach ($products as $key => $product) {
 
             $images = Image::where('product_id', $product->id)->orderBy('active', 'desc')->orderBy('id', 'desc')->get();
             $image = null;
@@ -33,9 +31,7 @@ class ProductController extends Controller
                 $image = $images[0]->name;
             }
 
-            $products[$index]->image = $image;
-
-            $index++;
+            $products[$key]->image = $image;
         }
 
         return view('admin.product_list', compact('products'));

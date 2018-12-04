@@ -136,6 +136,7 @@
     var iid1 = "countbox_1";
     CountBack_slider(gsecs1, "countbox_1", 1);
 
+<<<<<<< HEAD
 </script>
 
 <script type="text/javascript">
@@ -286,6 +287,7 @@
         });
     });
 </script>
+
 @yield('js')
 </body>
 </html>
