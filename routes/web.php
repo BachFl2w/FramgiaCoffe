@@ -166,17 +166,17 @@ Route::group(['middleware' => 'userLogin'], function() {
     Route::get('edit/{user}', 'UserController@edit')->name('user.edit');
 });
 
-Route::group(['prefix' => 'cart'], function() {
-
-    Route::post('add', 'CartController@add')->name('user.cart.add');
-
-    Route::get('plus/{cart}', 'CartController@plus')->name('user.cart.plus');
-    Route::get('minus/{cart}', 'CartController@minus')->name('user.cart.minus');
-
-    Route::get('delete/{cartId}', 'CartController@deleteOne')->name('user.cart.delete');
-
-    Route::get('destroy', 'CartController@destroy')->name('user.cart.destroy');
-});
+//Route::group(['prefix' => 'cart'], function() {
+//
+//    Route::post('add', 'CartController@add')->name('user.cart.add');
+//
+//    Route::get('plus/{cart}', 'CartController@plus')->name('user.cart.plus');
+//    Route::get('minus/{cart}', 'CartController@minus')->name('user.cart.minus');
+//
+//    Route::get('delete/{cartId}', 'CartController@deleteOne')->name('user.cart.delete');
+//
+//    Route::get('destroy', 'CartController@destroy')->name('user.cart.destroy');
+//});
 
 Route::post('checkout', 'CartController@checkout')->name('user.checkout');
 
@@ -196,15 +196,19 @@ Route::get('product/{id}/json', 'ClientController@detailProductData')->name('cli
 
 Route::post('comment', 'ClientController@comment')->name('client.comment');
 
-Route::get('demo', 'CartController@demo')->name('demo');
+Route::get('cart-data', 'Cart1Controller@cart')->name('client.cart');
 
-Route::get('show', function() {
-    return Session::get('cart');
-});
+Route::get('cart', 'ClientController@cart')->name('client.showCart');
+
+Route::post('cart-add', 'Cart1Controller@add')->name('user.cart.add');
 
 Route::get('remove', function() {
-    Session()->forget('cart');
+    Session::forget('cart');
 });
+
+Route::post('cart-delete', 'Cart1Controller@delete')->name('user.cart.delete');
+
+Route::get('cart-remove-all', 'Cart1Controller@removeAll')->name('user.cart.remove');
 
 Route::get('order', 'ClientController@orders')->name('client.orders');
 
@@ -212,4 +216,6 @@ Route::get('order_detail/{order_id}', 'ClientController@order_details')->name('c
 
 Route::get('cancel_order/{order_id}', 'ClientController@cancel_order')->name('client.order.cancel_order');
 
-Route::get('cart', 'CartController@cart')->name('client.cart');
+Route::get('demo', 'ClientController@demo');
+
+

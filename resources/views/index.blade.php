@@ -36,8 +36,7 @@
                                              data-start='1500' data-easing='Linear.easeNone' data-splitin='none'
                                              data-splitout='none' data-elementdelay='0.1' data-endelementdelay='0.1'
                                              style='z-index:4;white-space:nowrap;'>
-                                            <a
-                                                href='#' class="buy-btn">Shop Now</a>
+
                                         </div>
                                     </div>
                                 </li>
@@ -70,7 +69,6 @@
                                              data-start='1500' data-easing='Linear.easeNone' data-splitin='none'
                                              data-splitout='none' data-elementdelay='0.1' data-endelementdelay='0.1'
                                              style='z-index:4;white-space:nowrap;'>
-                                            <a href='#' class="buy-btn">Buy Now</a>
                                         </div>
                                     </div>
                                 </li>
@@ -132,21 +130,17 @@
                                                                 <i class="fa fa-eye"></i>
                                                             </a>
                                                         </div>
-                                                        <a class="product-image" title="Retis lapen casen"
+                                                        <a class="product-image" title="{{ $best_discount_product->image }}"
                                                            href="{{ route('client.product.detail', ['id' => $best_discount_product->id]) }}">
-                                                            <img alt="Retis lapen casen"
+                                                            <img alt="{{ $best_discount_product->image }}"
                                                                  src="{{ asset('images/products/' . $best_discount_product->image) }}">
                                                         </a>
-                                                    </div>
-                                                    <div class="box-timer">
-                                                        <div class="countbox_1 timer-grid" data-time="2018/11/28">
-                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="item-info">
                                                     <div class="info-inner">
                                                         <div class="item-title">
-                                                            <a title="Retis lapen casen"
+                                                            <a title="{{ $best_discount_product->image }}"
                                                                href="{{ route('client.product.detail', ['id' => $best_discount_product->id]) }}">
                                                                 {{ $best_discount_product->name }}
                                                             </a>
@@ -198,16 +192,16 @@
                                                                              class="product-cartitem">0
                                                                         </div>
                                                                         <a class="product-image"
-                                                                           title="Retis lapen casen"
+                                                                           title="{{ $product->name }}"
                                                                            href="{{ route('client.product.detail', ['id' => $product->id]) }}">
-                                                                            <img alt="Retis lapen casen"
+                                                                            <img alt="{{ $product->name }}"
                                                                                  src="{{ asset('images/products/' . $product->image) }}">
                                                                         </a>
                                                                     </div>
                                                                     <div class="item-info">
                                                                         <div class="info-inner">
                                                                             <div class="item-title">
-                                                                                <a title="Retis lapen casen"
+                                                                                <a title="{{ $product->name }}"
                                                                                    href="{{ route('client.product.detail', ['id' => $product->id]) }}">
                                                                                     {{ $product->name }}
                                                                                 </a>
@@ -675,7 +669,7 @@
                         <div class="col-lg-2 col-md-2 col-sm-4 col-xs-6">
                             <div class="category-box"><a href="#">
                                     <img class="loaded"
-                                         src="{{ asset('images/cafe_image.png') }}">
+                                         src="{{ asset(config('asset.image_path.category') . $category->image) }}">
                                 </a>
                                 <div class="cate-title"><a href="#">{{ $category->name }}</a></div>
                             </div>
@@ -837,7 +831,7 @@
                         <h1>Topping</h1>
                         @foreach($toppings as $topping)
                             <label style="padding: 2px 15px;margin-left: 5px;border-radius: 15px;font-size: 20px;background-color: #ADFF2F">
-                                <input type="checkbox" name="topping[]" id="topping" value="{{ $topping->id }}">
+                                <input type="checkbox" name="toppings[]" id="topping" value="{{ $topping->id }}">
                                 {{ $topping->name }}
                             </label>
                         @endforeach
@@ -850,136 +844,4 @@
             </div>
         </div>
     </div>
-@endsection
-@section('js')
-<script type="text/javascript">
-    jQuery(document).ready(function($) {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-
-        var nf = new Intl.NumberFormat();
-
-        function loadCart() {
-            var htmlCart = '' +
-                '<ul class="mini-products-list" id="cart-sidebar">';
-            $.ajax({
-                url: route('client.cart'),
-                type: 'get',
-                dataType: '',
-                data: {},
-            })
-            .done(function (res) {
-                var empty_cart = '<h2 style="margin: 10px auto;padding: 10px 20px ;width: 100%">' +
-                                        'Bạn chưa mua sản phẩm nào ! </h2>';
-                var cart = Object.entries(res);
-                if(cart.length !== 0)
-                {
-                  var arrItem = cart[0][1];
-                    $('#count_cart').html(arrItem.length);
-                    $('#price_cart').html(nf.format(cart[1][1]));
-                    if (arrItem.length === 0) {
-                        $('#action_order').hide();
-                        $('#cart_box').html(empty_cart);
-                    } else {
-                        var count_cart = arrItem.length < 3 ? arrItem.length : 3;
-                        for (var i = 0; i < count_cart; i++) {
-                            var url_image = 'http://127.0.0.1:8000/images/products/';
-                            var item = '' +
-                                '<li class="item first">' +
-                                '<div class="item-inner">' +
-                                '<a class="product-image" title="Retis lapen casen" href="#l">' +
-                                '<img src="' + url_image + arrItem[i].image +'">' +
-                                '</a>' +
-                                '<div class="product-details">' +
-                                '<div class="access">' +
-                                '<a class="btn-remove1" href="#123" data-id="'+ arrItem[i].key +'" >' +
-                                '</a>' +
-                                '</div>' +
-                                '<strong>'+ arrItem[i].qty +'</strong> x <span' +
-                                'class="price">'+ nf.format(arrItem[i].product.price) + ' ₫' + '</span>' +
-                                '<p class="product-name"><a href="#">'+ arrItem[i].product.name +'</a></p>';
-                                arrItem[i].topping.forEach(function (element, index) {
-                                    item += '<span class="product-name" style="padding: 5px 10px 0px 2px;display: inline-block">'+ element.name +'</span>';
-                                });
-                                item += '</div></div></li>';
-                            htmlCart += item;
-                        }
-                        htmlCart += '</ul>';
-                        if (arrItem.length >= 3) {
-                            htmlCart += '<h3 class="text text-center">...Load more...</h3>';
-                        }
-                        $('#cart-sidebar').html(htmlCart);
-                    }  
-                } else {
-                    $('#action_order').hide();
-                    $('#cart_box').html(empty_cart);
-                }
-            })
-        };
-
-        loadCart();
-
-        $('.btnBuy').click(function(event) {
-            var id_sp = $(this).attr("data-id");
-            $.ajax({
-                url: route('client.product.detail.json', { id: id_sp }),
-                type: 'get',
-                dataType: '',
-                data: {},
-            })
-            .done(function(res) {
-                $('.modal-title').html(res.name);
-                $('#product_id').val(res.id);
-            })
-            .fail(function() {
-                console.log("error");
-            })
-        });
-
-        $('#btnSubmitOrder').click(function(event) {
-            event.preventDefault();
-            $.ajax({
-                url: route('user.cart.add'),
-                type: 'post',
-                dataType: '',
-                data: $('#form_order').serialize(),
-            })
-            .done(function() {
-                loadCart();
-
-            })
-            .fail(function() {
-                console.log("error");
-            })
-            .always(function() {
-                $('#form_order')[0].reset();
-                $('#order').modal('hide');
-            });
-        });
-
-        $('.btn-remove1').click(function(event) {
-            event.preventDefault();
-            var key = $(this).attr("data-id");
-            $.ajax({
-                url: route('user.cart.delete', { cartId: key }),
-                type: 'get',
-                dataType: '',
-                data: {},
-            })
-            .done(function() {
-                console.log("success");
-            })
-            .fail(function() {
-                console.log("error");
-            })
-            .always(function() {
-                console.log("complete");
-            });
-
-        });
-    });
-</script>
 @endsection

@@ -36,7 +36,6 @@ class CartController extends Controller
 
     public function cart()
     {
-        $data = [];
         $cart = [];
         if (Session::has('cart')) {
             $oldCart = Session('cart');
