@@ -31,9 +31,16 @@ class FeedbackController extends Controller
      */
     public function index()
     {
+        // $feedbacks = Feedback::all()->load('user', 'product');
+
+        return view('admin.feedback_list');
+    }
+
+    public function json()
+    {
         $feedbacks = Feedback::all()->load('user', 'product');
 
-        return view('admin.feedback_list', compact('feedbacks'));
+        return response()->json($feedbacks);
     }
 
     /**
@@ -73,7 +80,5 @@ class FeedbackController extends Controller
             ],
             $feedback->id
         );
-
-        return back()->with('success', __('message.success.feedback'));
     }
 }

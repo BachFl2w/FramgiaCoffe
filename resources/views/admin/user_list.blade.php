@@ -60,9 +60,7 @@
 <div id="modal_create" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">{{ __('message.create') }}</h4>
-            </div>
+            <div class="modal-header"></div>
             {!! Form::open(['method' => 'POST', 'class' => 'form', 'files' => true, 'id' => 'form_create_user']) !!}
                 <div class="modal-body">
                     <div class="form-group">
@@ -107,7 +105,7 @@
             </div>
             <div class="modal-footer">
                 {!! Form::button(__('message.close'), ['class' => 'btn btn-warning', 'data-dismiss' => 'modal', 'id' => 'close-modal']) !!}
-                {!! Form::submit(__('message.submit'), ['class' => 'btn btn-outline-success action_button', 'id' => 'create_user']) !!}
+                {!! Form::submit(__('message.submit'), ['class' => 'btn btn-success action_button', 'id' => 'create_user']) !!}
             </div>
             {!! Form::close() !!}
         </div>
@@ -195,13 +193,19 @@ $(document).ready(function() {
             data: new FormData($('form#form_create_user')[0]),
         })
         .done(function(data) {
-            tableTest.ajax.reload();
-            $('#modal_create').modal('hide');
-            swal({icon: 'success'});
-            console.log("success");
+            if (data == 'success') {
+                tableTest.ajax.reload();
+                $('#modal_create').modal('hide');
+                swal({icon: 'success'});
+                console.log("success");
+            } else {
+                swal(data, {icon: 'error'});
+            }
         })
         .fail(function() {
-            swal({icon: 'warning'});
+            swal("Something wrong !", {
+                icon: "error",
+            });
             console.log("error");
         })
         .always(function() {
@@ -227,10 +231,10 @@ $(document).ready(function() {
                     type: 'get',
                 })
                 .done(function(data) {
-                    if (data == 'false') {
+                    if (data == 'fail') {
                         swal('You dont have permission !', {icon: 'error'});
                     } else {
-                        swal('User has been deleted !', {
+                        swal(data, {
                             icon: "success",
                         });
                         tableTest.ajax.reload();
@@ -238,10 +242,8 @@ $(document).ready(function() {
                     }
                 })
                 .fail(function() {
-                    console.log("fail");
-                    swal("Something wrong !", {
-                        icon: "error",
-                    });
+                    console.log('fail');
+                    swal("Something wrong !", {icon: "error"});
                 })
                 .always(function() {
                     console.log("complete");
@@ -285,13 +287,17 @@ $(document).ready(function() {
                 data: new FormData($('form#form_create_user')[0]),
             })
             .done(function(data) {
-                tableTest.ajax.reload();
-                $('#modal_create').modal('hide');
-                swal({icon: 'success'});
-                console.log("success");
+                if (data != 'fail') {
+                    tableTest.ajax.reload();
+                    $('#modal_create').modal('hide');
+                    swal(data, {icon: 'success'});
+                    console.log("success");
+                } else {
+                    swal('You dont have permission !', {icon: 'error'});
+                }
             })
             .fail(function() {
-                swal({icon: 'warning'});
+                swal('Something wrong !', {icon: 'error'});
                 console.log("error");
             })
             .always(function() {
@@ -303,18 +309,17 @@ $(document).ready(function() {
     $('#user_list tbody').on('click', '.active', function(event) {
         event.preventDefault();
         var id = $(this).closest('tr').find('td:eq(0)').text();
-        console.log(id);
 
         $.ajax({
             url: route('admin.user.active', id),
             type: 'GET',
         })
         .done(function(data) {
-            if (data == 'false') {
-                swal('You dont have permission !', {icon: 'error'});
-            } else {
+            if (data == 'success') {
                 tableTest.ajax.reload();
                 console.log("success");
+            } else {
+                swal(data, {icon: 'error'});
             }
         })
         .fail(function() {

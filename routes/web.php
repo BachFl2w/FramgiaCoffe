@@ -55,11 +55,11 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin'], function() {
 
         Route::post('store', 'UserController@store')->name('admin.user.store');
 
-        Route::get('edit/{user}', 'UserController@edit')->name('admin.user.edit');
+        Route::get('edit', 'UserController@edit')->name('admin.user.edit');
 
         Route::post('update/{user}', 'UserController@update')->name('admin.user.update');
 
-        Route::get('/destroy/{user}', 'UserController@destroy')->name('admin.user.destroy');
+        Route::get('destroy/{user}', 'UserController@destroy')->name('admin.user.destroy');
 
         Route::get('active/{user}', 'UserController@active')->name('admin.user.active');
     });
@@ -68,9 +68,11 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin'], function() {
 
         Route::get('index', 'FeedbackController@index')->name('admin.feedback.index');
 
+        Route::get('json', 'FeedbackController@json')->name('admin.feedback.json');
+
         Route::get('edit/{id}', 'FeedbackController@edit')->name('admin.feedback.edit');
 
-        Route::post('active/{feedback}', 'FeedbackController@active')->name('admin.feedback.active');
+        Route::get('active/{feedback}', 'FeedbackController@active')->name('admin.feedback.active');
 
         Route::post('send_mail', 'FeedbackController@send')->name('admin.feedback.send_mail');
 

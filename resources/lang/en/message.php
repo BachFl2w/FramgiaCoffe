@@ -65,6 +65,9 @@ return [
         'approval' => 'Your account is pending approval !',
         'check' => 'You must login first !',
         'active' => 'You account was block !',
+        'create' => 'Create fail !',
+        'update' => 'Update fail !',
+        'delete' => 'Delete fail !',
     ],
 
     'create' => 'Create',

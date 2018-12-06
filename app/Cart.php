@@ -23,6 +23,7 @@ class Cart
 
     public function add($product, $topping, $size)
     {
+        // khởi tạo cart
         $cart = [
             'qty' => 0,
             'price' => 0,
@@ -31,18 +32,23 @@ class Cart
             'topping' => $topping,
         ];
 
-        // set key theo mã sản phẩm + mảng các key topping
-        // VD: product 1, topping 1 +2 => key = 112
+        // set key theo mã sản phẩm
         $key = $product->id;
         $totalToppingPrice = 0;
 
         if ($topping != null) {
+            // tính gía các topping trong 1 cốc
             $totalToppingPrice = array_sum($topping->pluck('price')->toArray());
+
+            // nếu có topping thì đổi key vừa set theo format : key = product_id + topping_1 + ... + topping_n
+            // VD: product 1, topping 1 + 2 => key = 112
             $key = $product->id . implode($topping->pluck('id')->toArray());
         }
 
+        // this->item được truyền từ session('cart'), mặc định = null
+        // kiểm tra biến item có null hay không
         if ($this->items) {
-            // kiểm tra nếu tồn tại cốc có cùng topping thì gán cart cho cart cũ
+            // kiểm tra key va gán cart cho cart cũ
             if (array_key_exists($key, $this->items)) {
                 $cart = $this->items[$key];
             }
@@ -52,15 +58,14 @@ class Cart
         $this->totalQty++;
 
         // tổng tiền topping trong 1 cốc
-        $sizePrice = $product->price * $cart['size']->percent / 100;
-        $productPrice = $product->price;
-        $price = $productPrice + $sizePrice + $totalToppingPrice;
+        $sizePrice = $product->price * $cart['size']->percent / 100; // tính gía size
+        $productPrice = $product->price; // gía sản phẩm ban đầu
+        $price = $productPrice + $sizePrice + $totalToppingPrice; // gía sản phẩm sau cùng
 
-        $cart['price'] = $price * $cart['qty'];
-        $this->totalPrice += $price;
-        // dd($this->totalPrice, $cart['price']);
+        $cart['price'] = $price * $cart['qty']; // tính lại gía của 1 cốc
+        $this->totalPrice += $price; // cộng tổng gía của cả giỏ hàng
 
-        // item
+        // truyền key cho sản phẩm trong giỏ để phân biệt
         $this->items[$key] = $cart;
     }
 

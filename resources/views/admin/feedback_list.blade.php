@@ -13,7 +13,7 @@
             </div>
 
             <div class="card-body">
-                <table class="table table-bordered" id="bootstrap-data-table">
+                <table class="table table-bordered" id="feedback">
                     <thead>
                         <tr>
                             <th scope="col">ID</th>
@@ -24,27 +24,6 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($feedbacks as $feedback)
-                            <tr>
-                                <td scope="row">{{ $feedback->id }}</td>
-                                <td>{{ $feedback->user->name }}</td>
-                                <td>{{ $feedback->product->name }}</td>
-                                <td>{{ $feedback->content }}</td>
-                                <td>
-                                    {!! Form::open(['route' => ['admin.feedback.active', $feedback->id] , 'method' => 'post']) !!}
-                                        <label class="switch switch-3d switch-primary mr-3" for="active_user{{ $feedback->id }}">
-                                            <input type="checkbox" class="switch-input"
-                                                @if ($feedback->status == 1)
-                                                    {{ 'checked' }}
-                                                @endif
-                                            >
-                                        <span class="switch-label"></span> <span class="switch-handle"></span>
-                                        </label>
-                                        {!! Form::submit('', ['id' => 'active_user' . $feedback->id, 'class' => 'd-none']) !!}
-                                    {!! Form::close() !!}
-                                </td>
-                            </tr>
-                        @endforeach
                     </tbody>
                 </table>
             </div>
@@ -54,9 +33,57 @@
 
 @section('script')
 
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $('#bootstrap-data-table').DataTable();
-        } );
-    </script>
+<script type="text/javascript">
+
+$(document).ready(function() {
+    var table = $('#feedback').DataTable({
+        ajax: {
+            url: route('admin.feedback.json'),
+            dataSrc: '',
+            type: 'get',
+        },
+        columns: [
+            { data: 'id' },
+            { data: 'user.name' },
+            { data: 'product.name' },
+            { data: 'content' },
+            {
+                data: 'status',
+                render: function(data, type, row) {
+                    var checked = (data == 1) ? 'checked' : '';
+                    return `<a href="#" class="active">
+                        <label class="switch switch-3d switch-primary mr-3">
+                            <input type="checkbox" class="switch-input" ${checked}>
+                            <span class="switch-label"></span><span class="switch-handle"></span>
+                        </label>
+                    </a>`;
+                },
+            },
+        ],
+    });
+
+    $('#feedback tbody').on('click', '.active', function(event) {
+        event.preventDefault();
+        var id = $(this).closest('tr').find('td:eq(0)').text();
+
+        $.ajax({
+            url: route('admin.feedback.active', id),
+            type: 'GET',
+        })
+        .done(function(data) {
+            table.ajax.reload();
+            console.log("success");
+        })
+        .fail(function() {
+            swal('Something wrong !', {icon: 'error'});
+            console.log("error");
+        })
+        .always(function() {
+            console.log("complete");
+        });
+    });
+});
+
+</script>
+
 @endsection

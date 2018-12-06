@@ -36,42 +36,16 @@ class UserController extends Controller
      */
     public function index()
     {
-        if (Auth::user()->role_id != 1) {
-            return back()->with('fail', __('message.fail.permission'));
-        }
-
         $roles = $this->roleModel->all();
-        $user = $this->userModel->all()->load('role');
 
-        return view('admin.user_list', compact('user', 'roles'));
+        return view('admin.user_list', compact('roles'));
     }
 
     public function json()
     {
-        if (Auth::user()->role_id != 1) {
-            return back()->with('fail', __('message.fail.permission'));
-        }
-
-        $roles = $this->roleModel->all();
-        $user = $this->userModel->all()->load('role');
+        $user = $this->userModel->where('id', '<>', Auth::id())->with('role')->get();
 
         return $user;
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        if (Auth::user()->role_id != 1) {
-            return back()->with('fail', __('message.fail.permission'));
-        }
-
-        $roles = $this->roleModel->all();
-
-        return view('admin.user_create', compact('roles'));
     }
 
     /**
@@ -83,7 +57,7 @@ class UserController extends Controller
     public function store(UserStoreRequest $request)
     {
         if (Auth::user()->role_id != 1) {
-            return back()->with('fail', __('message.fail.permission'));
+            return __('message.fail.create');
         }
 
         if ($request->hasFile('avatar')) {
@@ -102,7 +76,7 @@ class UserController extends Controller
             $image = null;
         }
 
-        $data = $this->userModel->create([
+        $this->userModel->create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
@@ -113,41 +87,20 @@ class UserController extends Controller
             'image' => $image,
         ]);
 
-        $user = $data->load('role');
-
-        return response()->json($user);
+        return 'success';
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * edit my profile
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit()
     {
-        $currentUser = Auth::user();
+        $user = Auth::user();
 
-        if ($currentUser->role_id == 1) {
-
-            if ($user->role_id == 1 && $currentUser->email != $user->email) {
-                return back()->with('fail', __('message.fail.permission'));
-            }
-
-            return view('admin.user_edit', compact('user'));
-        } else {
-
-            if ($currentUser->email != $user->email) {
-                return back()->with('fail', __('message.fail.permission'));
-            }
-
-            if ($currentUser->role_id == 3) {
-                $order = Order::where('user_id', $currentUser->id)->orderBy('order_time', 'desc')->paginate(5);
-                return view('profile', compact('user', 'order'));
-            }
-
-            return view('admin.user_edit', compact('user'));
-        }
+        return view('admin.user_edit', compact('user'));
     }
 
     /**
@@ -162,11 +115,11 @@ class UserController extends Controller
 
         if ($currentUser->role_id == 1) {
             if ($user->role_id == 1 && $currentUser->email != $user->email) {
-                return back()->with('fail', __('message.fail.permission'));
+                return 'fail';
             }
         } else {
             if ($currentUser->email != $user->email) {
-                return back()->with('fail', __('message.fail.permission'));
+                return 'fail';
             }
         }
 
@@ -207,7 +160,7 @@ class UserController extends Controller
             $user->id
         );
 
-        return back()->with('success', __('message.success.update'));
+        return __('message.success.update');
     }
 
     public function active(User $user)
@@ -216,15 +169,15 @@ class UserController extends Controller
 
         if ($currentUser->role_id == 1) {
             if ($user->role_id == 1 && $user->active == 1) {
-                return 'false';
+                return __('message.fail.update');
             } else {
                 $this->userModel->update(['active' => $user->active == 1 ? 0 : 1], $user->id);
 
-                return 'true';
+                return 'success';
             }
         }
 
-        return 'false';
+        return __('message.fail.update');
     }
 
     /**
@@ -240,10 +193,10 @@ class UserController extends Controller
         if ($currentUser->role_id == 1 && $user->role_id != 1) {
             $user->delete();
 
-            return 'true';
+            return __('message.success.delete');
         }
 
-        return 'false';
+        return 'fail';
     }
 
     public function login(Request $request)
