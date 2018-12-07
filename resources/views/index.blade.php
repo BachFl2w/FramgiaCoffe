@@ -741,24 +741,9 @@
                                                     <div class="new-label new-top-right"> Sale</div>
                                                     <div class="box-hover">
                                                         <ul class="add-to-links">
-                                                            <li>
-                                                                <a class="detail-bnt yith-wcqv-button link-quickview"
-                                                                   data-product_id="60">
-                                                                    <i class="fa fa-search" aria-hidden="true"></i>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a title="Add to Wishlist" href="#" data-product-id="60"
-                                                                   data-product-type="simple"
-                                                                   class="add_to_wishlist link-wishlist">
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a title="Add to Compare" href="#"
-                                                                   class="link-compare add_to_compare compare"
-                                                                   data-product_id="60">
-                                                                </a>
-                                                            </li>
+                                                            <li> <a class="detail-bnt yith-wcqv-button link-quickview" data-product_id="83"> <i class="fa fa-search" aria-hidden="true"></i> </a> </li>
+                                                            <li> <a title="favorite" href="#" data-product-id="83" data-product-type="simple" class="add_to_wishlist link-wishlist"></a> </li>
+                                                            <li> <a title="like" href="#" class="link-compare add_to_compare compare" data-product_id="83"></a> </li>
                                                         </ul>
                                                     </div>
                                                 </div>
@@ -821,14 +806,14 @@
                     </div>
                     <div class="modal-body">
                         <h1 class="modal-title"></h1>
-                        <h1>Size</h1>
+                        <h3>Size</h3>
                         @foreach($sizes as $size)
                             <label style="padding: 2px 15px;margin-left: 5px;border-radius: 15px;font-size: 20px;background-color: #FF7F50">
                                 <input type="radio" name="size" value="{{ $size->id }}">
                                 {{ $size->name }}
                             </label>
                         @endforeach
-                        <h1>Topping</h1>
+                        <h3>Topping</h3>
                         @foreach($toppings as $topping)
                             <label style="padding: 2px 15px;margin-left: 5px;border-radius: 15px;font-size: 20px;background-color: #ADFF2F">
                                 <input type="checkbox" name="toppings[]" id="topping" value="{{ $topping->id }}">

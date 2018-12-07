@@ -7,7 +7,7 @@
         <div class="nav-inner">
             <!-- BEGIN NAV -->
             <ul id="nav" class="hidden-xs">
-                <li class="level0 nav-6 level-top noDropdown active"><a class="level-top" href="#">
+                <li class="level0 nav-6 level-top noDropdown active"><a class="level-top" href="{{ route('client.index') }}">
                         <span>Home</span> </a>
                 <li class="mega-menu">
                     <a class="level-top" href="http://htmldemo.themessoft.com/freshia/version3/grid.html">
@@ -27,7 +27,7 @@
                                                 <ul class="level1">
                                                     @for($i = 0; $i < count($category->products); $i++)
                                                         <li class="level2 nav-6-1-1">
-                                                            <a href="">
+                                                            <a href="{{ route('client.product.detail', ['id' => $category->products[$i]->id]) }}">
                                                                 <span>{{ $category->products[$i]->name }}</span>
                                                             </a>
                                                         </li>

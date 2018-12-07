@@ -65,7 +65,9 @@
 @section('script')
     <script type="text/javascript">
         jQuery(document).ready(function ($) {
-            $('#admin_product_list').DataTable();
+            $('#admin_product_list').DataTable({
+                
+            });
         });
     </script>
 @endsection

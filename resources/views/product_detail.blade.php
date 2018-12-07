@@ -34,9 +34,7 @@
                                         <div class="product-image">
                                             <div class="product-full">
                                                 <img id="product-zoom"
-                                                     src="{{ asset('images/products/' . $product->image) }}"
-                                                     data-zoom-image="product-images/product16.jpg"
-                                                     alt="product-image"/></div>
+                                                     src="{{ asset('images/products/' . $product->images[0]->name) }}"/></div>
                                             <div class="more-views">
                                                 <div class="slider-items-products">
                                                     <div id="gallery_01"
@@ -44,11 +42,9 @@
                                                         <div class="slider-items slider-width-col4 block-content">
                                                             @foreach($product->images as $image)
                                                                 <div class="more-views-items">
-                                                                    <a href="#" data-image="product-images/product2.jpg"
-                                                                       data-zoom-image="http://htmldemo.themessoft.com/freshia/version3/product-images/product2.jpg">
+                                                                    <a href="#">
                                                                         <img id="product-zoom"
-                                                                             src="{{ asset('images/products/' . $image->name)  }}"
-                                                                             alt="product-image"/>
+                                                                             src="{{ asset('images/products/' . $image->name)  }}"/>
                                                                     </a>
                                                                 </div>
                                                             @endforeach
@@ -75,7 +71,7 @@
                                                 <div style="width:60%" class="rating"></div>
                                             </div>
                                             <p class="rating-links">
-                                                <a href="#">1 Review(s)</a>
+                                                <a href="#">{{ count($product->feedbacks)}} Review(s)</a>
                                             </p>
                                         </div>
                                         <div class="price-block">
@@ -186,64 +182,9 @@
                                                             </tr>
                                                             </thead>
                                                             <tbody>
+                                                            
                                                             <tr class="first odd">
-                                                                <th>Price</th>
-                                                                <td class="value">
-                                                                    <input type="radio" class="radio"
-                                                                           value="11" id="Price_1"
-                                                                           name="ratings[3]">
-                                                                </td>
-                                                                <td class="value">
-                                                                    <input type="radio" class="radio"
-                                                                           value="12" id="Price_2"
-                                                                           name="ratings[3]">
-                                                                </td>
-                                                                <td class="value">
-                                                                    <input type="radio" class="radio"
-                                                                           value="13" id="Price_3"
-                                                                           name="ratings[3]">
-                                                                </td>
-                                                                <td class="value">
-                                                                    <input type="radio" class="radio"
-                                                                           value="14" id="Price_4"
-                                                                           name="ratings[3]">
-                                                                </td>
-                                                                <td class="value last">
-                                                                    <input type="radio" class="radio"
-                                                                           value="15" id="Price_5"
-                                                                           name="ratings[3]">
-                                                                </td>
-                                                            </tr>
-                                                            <tr class="even">
-                                                                <th>Value</th>
-                                                                <td class="value">
-                                                                    <input type="radio" class="radio"
-                                                                           value="6" id="Value_1"
-                                                                           name="ratings[2]">
-                                                                </td>
-                                                                <td class="value">
-                                                                    <input type="radio" class="radio"
-                                                                           value="7" id="Value_2"
-                                                                           name="ratings[2]">
-                                                                </td>
-                                                                <td class="value">
-                                                                    <input type="radio" class="radio"
-                                                                           value="8" id="Value_3"
-                                                                           name="ratings[2]">
-                                                                </td>
-                                                                <td class="value">
-                                                                    <input type="radio" class="radio"
-                                                                           value="9" id="Value_4"
-                                                                           name="ratings[2]">
-                                                                </td>
-                                                                <td class="value last">
-                                                                    <input type="radio" class="radio"
-                                                                           value="10" id="Value_5"
-                                                                           name="ratings[2]">
-                                                                </td>
-                                                            </tr>
-                                                            <tr class="last odd">
-                                                                <th>Quality</th>
+                                                                <th>Rate</th>
                                                                 <td class="value">
                                                                     <input type="radio" class="radio"
                                                                            value="1" id="Quality_1"
@@ -300,8 +241,7 @@
                                                                     <label class="required "
                                                                            for="review_field">Review<em>*</em></label>
                                                                     <div class="input-box">
-                                                                    <textarea rows="3" cols="5" id="review_field"
-                                                                              name="detail"></textarea>
+                                                                    <textarea rows="3" cols="5" id="review_field" name="detail"></textarea>
                                                                     </div>
                                                                 </li>
                                                             </ul>
@@ -316,7 +256,7 @@
                                             </div>
                                         </div>
                                         <div class="box-reviews2">
-                                            <h3>Customer Reviews</h3>
+                                            <h3>Reviews</h3>
                                             <div class="box visible">
                                                 <ul>
                                                     <li>
@@ -334,22 +274,7 @@
                                                                     </div>
                                                                 </td>
                                                             </tr>
-                                                            <tr>
-                                                                <th>Quality</th>
-                                                                <td>
-                                                                    <div class="rating-box">
-                                                                        <div class="rating" style="width:100%;"></div>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th>Price</th>
-                                                                <td>
-                                                                    <div class="rating-box">
-                                                                        <div class="rating" style="width:100%;"></div>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
+                                                            
                                                             </tbody>
                                                         </table>
                                                         <div class="review">
@@ -363,95 +288,6 @@
                                                                 it's at
                                                                 your front door the minute you get off your pc. I have
                                                                 received my purchases within two days - amazing.
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                    <li class="even">
-                                                        <table class="ratings-table">
-                                                            <colgroup>
-                                                                <col width="1">
-                                                                <col>
-                                                            </colgroup>
-                                                            <tbody>
-                                                            <tr>
-                                                                <th>Value</th>
-                                                                <td>
-                                                                    <div class="rating-box">
-                                                                        <div class="rating" style="width:100%;"></div>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th>Quality</th>
-                                                                <td>
-                                                                    <div class="rating-box">
-                                                                        <div class="rating" style="width:100%;"></div>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th>Price</th>
-                                                                <td>
-                                                                    <div class="rating-box">
-                                                                        <div class="rating" style="width:80%;"></div>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                            </tbody>
-                                                        </table>
-                                                        <div class="review">
-                                                            <h6><a href="#/catalog/product/view/id/60/">Amazing</a></h6>
-                                                            <small>Review by <span>Sandra Parker</span>on 1/3/2014
-                                                            </small>
-                                                            <div class="review-txt"> Minimalism is the online !</div>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <table class="ratings-table">
-                                                            <colgroup>
-                                                                <col width="1">
-                                                                <col>
-                                                            </colgroup>
-                                                            <tbody>
-                                                            <tr>
-                                                                <th>Value</th>
-                                                                <td>
-                                                                    <div class="rating-box">
-                                                                        <div class="rating" style="width:100%;"></div>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th>Quality</th>
-                                                                <td>
-                                                                    <div class="rating-box">
-                                                                        <div class="rating" style="width:100%;"></div>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th>Price</th>
-                                                                <td>
-                                                                    <div class="rating-box">
-                                                                        <div class="rating" style="width:80%;"></div>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                            </tbody>
-                                                        </table>
-                                                        <div class="review">
-                                                            <h6><a href="#/catalog/product/view/id/59/">Nicely</a></h6>
-                                                            <small>Review by <span>Anthony  Lewis</span>on 1/3/2014
-                                                            </small>
-                                                            <div class="review-txt last"> Unbeatable service and
-                                                                selection.
-                                                                This store has the best business model I have seen on
-                                                                the
-                                                                net. They are true to their word, and go the extra mile
-                                                                for
-                                                                their customers. I felt like a purchasing partner more
-                                                                than
-                                                                a customer. You have a lifetime client in me.
                                                             </div>
                                                         </div>
                                                     </li>

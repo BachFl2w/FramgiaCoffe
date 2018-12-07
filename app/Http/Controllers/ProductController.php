@@ -166,7 +166,7 @@ class ProductController extends Controller
 
             $path = public_path('images/products/' . $filename);
 
-            $image_resize = Images::make($image->getRealPath())->resize(600, 348)->save($path);
+            Images::make($image->getRealPath())->resize(600, 348)->save($path);
 
             $img = new Image();
 
@@ -198,5 +198,14 @@ class ProductController extends Controller
         toast()->success(__('message.success.delete'), 'success');
 
         return redirect()->route('admin.product.index');
+    }
+
+    public function getAllData()
+    {
+        $product = Product::all()->with(['images' => function($query) {
+            $query->orderBy('');
+        }]);
+
+        return $product;
     }
 }

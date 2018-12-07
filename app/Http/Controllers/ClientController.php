@@ -105,21 +105,25 @@ class ClientController extends Controller
 
     public function detailProduct($id)
     {
-        $product = Product::with('category', 'images')->findOrFail($id);
-        $image_main = Image::where('product_id', $product->id)->orderBy('active', 'desc')
+        $product = Product::with('category')->with(['images' => function($query) {
+            $query->orderBy('active', 'desc')
             ->orderBy('id', 'desc')->first();
-        $product->image = $image_main->name;
+        }])->findOrFail($id);
 
-        return view('product_detail', compact('product'));
+        $feedback = Product::with(['feedbacks' => function($query) {
+            $query->where('status', 1)->orderBy('id', 'desc')->get();
+        }])->findOrFail($id);
+
+        return view('product_detail', compact('product', 'feedback'));
     }
 
     public function detailProductData($id)
     {
-        $product = Product::with('category', 'images')->findOrFail($id);
-        $image_main = Image::where('product_id', $product->id)->orderBy('active', 'desc')
+        $product = Product::with('category')->with(['images' => function($query) {
+            $query->orderBy('active', 'desc')
             ->orderBy('id', 'desc')->first();
-        $product->image = $image_main->name;
-
+        }])->findOrFail($id);
+       
         return $product;
     }
 

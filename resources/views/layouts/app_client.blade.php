@@ -121,23 +121,6 @@
         });
     });
 </script>
-<!-- Hot Deals Timer 1-->
-<script>
-    var dthen1 = new Date("12/25/17 11:59:00 PM");
-    start = "08/04/15 03:02:11 AM";
-    start_date = Date.parse(start);
-    var dnow1 = new Date(start_date);
-    if (CountStepper > 0)
-        ddiff = new Date((dnow1) - (dthen1));
-    else
-        ddiff = new Date((dthen1) - (dnow1));
-    gsecs1 = Math.floor(ddiff.valueOf() / 1000);
-
-    var iid1 = "countbox_1";
-    CountBack_slider(gsecs1, "countbox_1", 1);
-
-<<<<<<< HEAD
-</script>
 
 <script type="text/javascript">
     jQuery(document).ready(function ($) {
@@ -158,52 +141,52 @@
                 dataType: '',
                 data: {},
             })
-                .done(function (res) {
-                    var empty_cart = '<h2 style="margin: 10px auto;padding: 10px 20px ;width: 100%">' +
-                        'Bạn chưa mua sản phẩm nào ! </h2>';
-                    if (res.length !== 0) {
-                        $total_price = 0;
-                        $count_product = 0;
-                        res.forEach(function (element) {
-                            $total_price += element.item_price;
-                            $count_product += element.item.quantity;
+            .done(function (res) {
+                var empty_cart = '<h2 style="margin: 10px auto;padding: 10px 20px ;width: 100%">' +
+                    'Bạn chưa mua sản phẩm nào ! </h2>';
+                if (res.length !== 0) {
+                    $total_price = 0;
+                    $count_product = 0;
+                    res.forEach(function (element) {
+                        $total_price += element.item_price;
+                        $count_product += element.item.quantity;
+                    });
+                    $('#count_cart').html($count_product);
+                    $('#price_cart').html(nf.format($total_price));
+                    var count_cart = res.length < 3 ? res.length : 3;
+                    for (var i = 0; i < count_cart; i++) {
+                        var url_image = 'http://127.0.0.1:8000/images/products/';
+                        var item = '' +
+                            '<li class="item first">' +
+                            '<div class="item-inner">' +
+                            '<a class="product-image" title="Retis lapen casen" href="#l">' +
+                            '<img src="' + url_image + res[i].item.product.image + '">' +
+                            '</a>' +
+                            '<div class="product-details">' +
+                            '<div class="access">' +
+                            '<a class="btn-remove1 btnRemove" href="#" data-id="' + res[i].key + '" >' +
+                            '</a>' +
+                            '</div>' +
+                            '<strong>' + res[i].item.quantity + '</strong> x <span' +
+                            'class="price">' + nf.format(res[i].item.product_price) + ' ₫' + '</span>' +
+                            '<p class="product-name"><a href="#">' + res[i].item.product.name + '</a></p>';
+                        res[i].item.toppings.forEach(function (element, index) {
+                            item += '<span class="product-name" style="padding: 5px 10px 0px 2px;display: inline-block">' + element.name + '</span>';
                         });
-                        $('#count_cart').html($count_product);
-                        $('#price_cart').html(nf.format($total_price));
-                        var count_cart = res.length < 3 ? res.length : 3;
-                        for (var i = 0; i < count_cart; i++) {
-                            var url_image = 'http://127.0.0.1:8000/images/products/';
-                            var item = '' +
-                                '<li class="item first">' +
-                                '<div class="item-inner">' +
-                                '<a class="product-image" title="Retis lapen casen" href="#l">' +
-                                '<img src="' + url_image + res[i].item.product.image + '">' +
-                                '</a>' +
-                                '<div class="product-details">' +
-                                '<div class="access">' +
-                                '<a class="btn-remove1 btnRemove" href="#" data-id="' + res[i].key + '" >' +
-                                '</a>' +
-                                '</div>' +
-                                '<strong>' + res[i].item.quantity + '</strong> x <span' +
-                                'class="price">' + nf.format(res[i].item.product_price) + ' ₫' + '</span>' +
-                                '<p class="product-name"><a href="#">' + res[i].item.product.name + '</a></p>';
-                            res[i].item.toppings.forEach(function (element, index) {
-                                item += '<span class="product-name" style="padding: 5px 10px 0px 2px;display: inline-block">' + element.name + '</span>';
-                            });
-                            item += '</div></div></li>';
-                            htmlCart += item;
-                        }
-                        htmlCart += '</ul>';
-                        if (res.length >= 3) {
-                            htmlCart += '<h3 class="text text-center">...Load more...</h3>';
-                        }
-                        $('#car_list').html(htmlCart);
-                        $('#action_order').show();
-                    } else {
-                        $('#car_list').html(empty_cart);
-                        $('#action_order').hide();
+                        item += '</div></div></li>';
+                        htmlCart += item;
                     }
-                })
+                    htmlCart += '</ul>';
+                    if (res.length >= 3) {
+                        htmlCart += '<h3 class="text text-center">...Load more...</h3>';
+                    }
+                    $('#car_list').html(htmlCart);
+                    $('#action_order').show();
+                } else {
+                    $('#car_list').html(empty_cart);
+                    $('#action_order').hide();
+                }
+            })
         };
 
         loadCart();
@@ -216,13 +199,13 @@
                 dataType: '',
                 data: {},
             })
-                .done(function (res) {
-                    $('.modal-title').html(res.name);
-                    $('#product_id').val(res.id);
-                })
-                .fail(function () {
-                    console.log("error");
-                })
+            .done(function (res) {
+                $('.modal-title').html(res.name);
+                $('#product_id').val(res.id);
+            })
+            .fail(function () {
+                console.log("error");
+            })
         });
 
         $('#btnSubmitOrder').click(function (event) {
@@ -233,37 +216,17 @@
                 dataType: '',
                 data: $('#form_order').serialize(),
             })
-                .done(function () {
-                    loadCart();
+            .done(function () {
+                loadCart();
 
-                })
-                .fail(function () {
-                    console.log("error");
-                })
-                .always(function () {
-                    $('#form_order')[0].reset();
-                    $('#order').modal('hide');
-                });
-        });
-
-        $('.remove-item').click(function (event) {
-            event.preventDefault();
-            var key = $(this).attr("data-id");
-            $.ajax({
-                url: route('user.cart.delete'),
-                type: 'post',
-                dataType: '',
-                data: {key: key},
             })
-                .done(function (res) {
-                    console.log(res);
-                })
-                .fail(function () {
-                    console.log("error");
-                })
-                .always(function () {
-                    console.log("complete");
-                });
+            .fail(function () {
+                console.log("error");
+            })
+            .always(function () {
+                $('#form_order')[0].reset();
+                $('#order').modal('hide');
+            });
         });
 
         $('#empty_cart_button').click(function (event) {
@@ -274,17 +237,57 @@
                     dataType: '',
                     data: {},
                 })
-                    .done(function () {
-                        console.log("success");
-                    })
-                    .fail(function () {
-                        console.log("error");
-                    })
-                    .always(function () {
-                        console.log("complete");
-                    });
+                .done(function () {
+                    console.log("success");
+                })
+                .fail(function () {
+                    console.log("error");
+                })
+                .always(function () {
+                    console.log("complete");
+                });
             }
         });
+
+        //search index client
+        $('#keysearch').on('keyup change', function(event) {
+        var request_value = '';
+        if ($('#keysearch').val() != '') {
+            request_value = $('#keysearch').val();
+        }
+        $.ajax({
+            url: route('client.live_search'),
+            type: 'post',
+            dataType: '',
+            data: { keyword: request_value },
+        })
+        .done(function(res) {
+            if (request_value == '') {
+                $('#box_search').hide();
+            }
+            var url_image = 'http://127.0.0.1:8000/images/products/';
+            $('#box_search').show();
+            $('#box_search').empty();
+            var result = '';
+            if(!res.length) {
+                result =  $('#box_search').hide();;
+            }
+            else {
+                var url = route('client.search', { keyword: request_value })
+                res.forEach( function(element, index) {
+                    var url_product = route("client.product.detail", {id: element.id})
+                    result += '<a href=' + url_product + '>' +
+                            '<div class="row" id="element-result">' +
+                            '<img id="element-img" height="30px" width="100px" class="img-thumbnail" id="img-element-result" src="'+ url_image + element.images[0].name +'">' +
+                            '<h4 id="element-text">' + element.name + '</h4>' +
+                            '</div>' +
+                        '</a>';
+                });
+                result += '<a href="'+ url +'" id="element-load" style="color: #2F4F4F">Load more...</a>';
+            }
+            $('#box_search').html(result);
+        })
+    });
     });
 </script>
 

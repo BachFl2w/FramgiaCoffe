@@ -93,6 +93,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin'], function() {
 
         Route::get('destroy/{id}', 'ProductController@destroy')->name('admin.product.destroy');
 
+        Route::get('json', 'ProductController@getAllData')->name('admin.product.json');
+
     });
 
     Route::group(['prefix' => 'category'], function() {
@@ -208,7 +210,7 @@ Route::get('remove', function() {
     Session::forget('cart');
 });
 
-Route::post('cart-delete', 'Cart1Controller@delete')->name('user.cart.delete');
+Route::get('cart-delete/{key}', 'Cart1Controller@delete')->name('user.cart.delete');
 
 Route::get('cart-remove-all', 'Cart1Controller@removeAll')->name('user.cart.remove');
 

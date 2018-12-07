@@ -7,7 +7,8 @@
                     <div class="page-title">
                         <h2>Shopping Cart</h2>
                     </div>
-                    <div class="table-responsive">
+                    @if(count($carts))
+                        <div class="table-responsive">
                             <input type="hidden" value="Vwww7itR3zQFe86m" name="form_key">
                             <fieldset>
                                 <table class="data-table cart-table" id="shopping-cart-table">
@@ -37,7 +38,7 @@
                                             <button class="button btn-continue" type="button">
                                                 <span>Continue Shopping</span>
                                             </button>
-                                            
+
                                             <button id="empty_cart_button" class="button btn-empty">
                                                 <span>Clear Cart</span>
                                             </button>
@@ -80,7 +81,9 @@
                                             </span>
                                             </td>
                                             <td class="a-center movewishlist">
-                                                <input type="number" maxlength="12" min="1" max="10" class="input-text qty" size="4" value="{{ $cart['item']['quantity'] }}">
+                                                <input type="text" maxlength="12" min="1" max="10"
+                                                       class="input-text qty"
+                                                       size="4" pattern="\d*" value="{{ $cart['item']['quantity'] }}">
                                             </td>
                                             <td class="a-right movewishlist">
                                             <span class="cart-price">
@@ -88,7 +91,7 @@
                                             </span>
                                             </td>
                                             <td class="a-center last">
-                                                <a class="button remove-item" data-id={{ $cart['key'] }} href="#">
+                                                <a class="button remove-item" data-id={{ $cart['key'] }} href="{{ route('user.cart.delete', ['key' => $cart['key']]) }}">
                                                 </a>
                                             </td>
                                         </tr>
@@ -96,7 +99,10 @@
                                     </tbody>
                                 </table>
                             </fieldset>
-                    </div>
+                        </div>
+                    @else
+                        <h2>Nothing here</h2>
+                    @endif
                 </div>
                 <div class="crosssel bounceInUp animated">
 
@@ -106,7 +112,6 @@
                             <h2>you may be interested</h2>
                         </div>
                         <div class="category-products">
-
                             <ul class="products-grid">
                                 <li class="item col-lg-3 col-md-3 col-sm-4 col-xs-6">
                                     <div class="item-inner">
@@ -121,15 +126,8 @@
                                                 </figure>
                                                 <div class="box-hover">
                                                     <ul class="add-to-links">
-                                                        <li><a class="link-quickview"
-                                                               href="http://htmldemo.themessoft.com/freshia/version3/quick_view.html">Quick
-                                                                View</a>
-                                                        </li>
                                                         <li><a class="link-wishlist"
                                                                href="http://htmldemo.themessoft.com/freshia/version3/wishlist.html">Wishlist</a>
-                                                        </li>
-                                                        <li><a class="link-compare"
-                                                               href="http://htmldemo.themessoft.com/freshia/version3/compare.html">Compare</a>
                                                         </li>
                                                     </ul>
                                                 </div>
@@ -137,215 +135,37 @@
                                         </div>
                                         <div class="item-info">
                                             <div class="info-inner">
-                                                <div class="item-title"><a title="Retis lapen casen"
-                                                                           href="http://htmldemo.themessoft.com/freshia/version3/product_detail.html">
-                                                        Retis lapen casen </a></div>
+                                                <div class="item-title">
+                                                    <a href="http://htmldemo.themessoft.com/freshia/version3/product_detail.html">
+                                                        Retis lapen casen </a>
+                                                </div>
                                                 <div class="item-content">
                                                     <div class="rating">
                                                         <div class="ratings">
                                                             <div class="rating-box">
                                                                 <div style="width:80%" class="rating"></div>
                                                             </div>
-                                                            <p class="rating-links"><a href="#">1 Review(s)</a> <span
-                                                                        class="separator">|</span> <a href="#">Add
-                                                                    Review</a></p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="item-price">
-                                                        <div class="price-box"><span class="regular-price"> <span
-                                                                        class="price">$155.00</span> </span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="action">
-                                                        <a rel="nofollow" href="#" data-quantity="1"
-                                                           data-product_id="99" data-product_sku=""
-                                                           class="button product_type_grouped btn-cart "><span>View products</span></a><a
-                                                                href="#" class="button yith-wcqv-button"
-                                                                data-product_id="99">Quick View</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="item col-lg-3 col-md-3 col-sm-4 col-xs-6">
-                                    <div class="item-inner">
-                                        <div class="item-img">
-                                            <div class="item-img-info">
-                                                <figure class="img-responsive">
-                                                    <a class="product-image" title="Retis lapen casen"
-                                                       href="http://htmldemo.themessoft.com/freshia/version3/product_detail.html">
-                                                        <img alt="Retis lapen casen"
-                                                             src="http://htmldemo.themessoft.com/freshia/version3/product-images/product11 (3).jpg">
-                                                    </a>
-                                                </figure>
-                                                <div class="box-hover">
-                                                    <ul class="add-to-links">
-                                                        <li><a class="link-quickview"
-                                                               href="http://htmldemo.themessoft.com/freshia/version3/quick_view.html">Quick
-                                                                View</a>
-                                                        </li>
-                                                        <li><a class="link-wishlist"
-                                                               href="http://htmldemo.themessoft.com/freshia/version3/wishlist.html">Wishlist</a>
-                                                        </li>
-                                                        <li><a class="link-compare"
-                                                               href="http://htmldemo.themessoft.com/freshia/version3/compare.html">Compare</a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="item-info">
-                                            <div class="info-inner">
-                                                <div class="item-title"><a title="Retis lapen casen"
-                                                                           href="http://htmldemo.themessoft.com/freshia/version3/product_detail.html">
-                                                        Retis lapen casen </a></div>
-                                                <div class="item-content">
-                                                    <div class="rating">
-                                                        <div class="ratings">
-                                                            <div class="rating-box">
-                                                                <div style="width:80%" class="rating"></div>
-                                                            </div>
-                                                            <p class="rating-links"><a href="#">1 Review(s)</a> <span
-                                                                        class="separator">|</span> <a href="#">Add
-                                                                    Review</a></p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="item-price">
-                                                        <div class="price-box"><span class="regular-price"> <span
-                                                                        class="price">$225.00</span> </span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="action">
-                                                        <a rel="nofollow" href="#" data-quantity="1"
-                                                           data-product_id="99" data-product_sku=""
-                                                           class="button product_type_grouped btn-cart "><span>View products</span></a><a
-                                                                href="#" class="button yith-wcqv-button"
-                                                                data-product_id="99">Quick View</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="item col-lg-3 col-md-3 col-sm-4 col-xs-6">
-                                    <div class="item-inner">
-                                        <div class="item-img">
-                                            <div class="item-img-info">
-                                                <figure class="img-responsive">
-                                                    <a class="product-image" title="Retis lapen casen"
-                                                       href="http://htmldemo.themessoft.com/freshia/version3/product_detail.html">
-                                                        <img alt="Retis lapen casen"
-                                                             src="http://htmldemo.themessoft.com/freshia/version3/product-images/product2.jpg">
-                                                    </a>
-                                                </figure>
-                                                <div class="box-hover">
-                                                    <ul class="add-to-links">
-                                                        <li><a class="link-quickview"
-                                                               href="http://htmldemo.themessoft.com/freshia/version3/quick_view.html">Quick
-                                                                View</a>
-                                                        </li>
-                                                        <li><a class="link-wishlist"
-                                                               href="http://htmldemo.themessoft.com/freshia/version3/wishlist.html">Wishlist</a>
-                                                        </li>
-                                                        <li><a class="link-compare"
-                                                               href="http://htmldemo.themessoft.com/freshia/version3/compare.html">Compare</a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="item-info">
-                                            <div class="info-inner">
-                                                <div class="item-title"><a title="Retis lapen casen"
-                                                                           href="http://htmldemo.themessoft.com/freshia/version3/product_detail.html">
-                                                        Retis lapen casen </a></div>
-                                                <div class="item-content">
-                                                    <div class="rating">
-                                                        <div class="ratings">
-                                                            <div class="rating-box">
-                                                                <div style="width:80%" class="rating"></div>
-                                                            </div>
-                                                            <p class="rating-links"><a href="#">1 Review(s)</a> <span
-                                                                        class="separator">|</span> <a href="#">Add
-                                                                    Review</a></p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="item-price">
-                                                        <div class="price-box"><span class="regular-price"> <span
-                                                                        class="price">$99.00</span> </span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="action">
-                                                        <a rel="nofollow" href="#" data-quantity="1"
-                                                           data-product_id="99" data-product_sku=""
-                                                           class="button product_type_grouped btn-cart "><span>View products</span></a><a
-                                                                href="#" class="button yith-wcqv-button"
-                                                                data-product_id="99">Quick View</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="item col-lg-3 col-md-3 col-sm-4 col-xs-6">
-                                    <div class="item-inner">
-                                        <div class="item-img">
-                                            <div class="item-img-info">
-                                                <figure class="img-responsive">
-                                                    <a class="product-image" title="Retis lapen casen"
-                                                       href="http://htmldemo.themessoft.com/freshia/version3/product_detail.html">
-                                                        <img alt="Retis lapen casen"
-                                                             src="http://htmldemo.themessoft.com/freshia/version3/product-images/product3.jpg">
-                                                    </a>
-                                                </figure>
-                                                <div class="new-label new-top-left">new</div>
-                                                <div class="box-hover">
-                                                    <ul class="add-to-links">
-                                                        <li><a class="link-quickview"
-                                                               href="http://htmldemo.themessoft.com/freshia/version3/quick_view.html">Quick
-                                                                View</a>
-                                                        </li>
-                                                        <li><a class="link-wishlist"
-                                                               href="http://htmldemo.themessoft.com/freshia/version3/wishlist.html">Wishlist</a>
-                                                        </li>
-                                                        <li><a class="link-compare"
-                                                               href="http://htmldemo.themessoft.com/freshia/version3/compare.html">Compare</a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="item-info">
-                                            <div class="info-inner">
-                                                <div class="item-title"><a title="Retis lapen casen"
-                                                                           href="http://htmldemo.themessoft.com/freshia/version3/product_detail.html">
-                                                        Retis lapen casen </a></div>
-                                                <div class="item-content">
-                                                    <div class="rating">
-                                                        <div class="ratings">
-                                                            <div class="rating-box">
-                                                                <div style="width:80%" class="rating"></div>
-                                                            </div>
-                                                            <p class="rating-links"><a href="#">1 Review(s)</a> <span
-                                                                        class="separator">|</span> <a href="#">Add
-                                                                    Review</a></p>
+                                                            <p class="rating-links">
+                                                                <a href="#">1 Review(s)</a>
+                                                                <span class="separator">|</span>
+                                                                <a href="#">Add Review</a>
+                                                            </p>
                                                         </div>
                                                     </div>
                                                     <div class="item-price">
                                                         <div class="price-box">
-                                                            <p class="special-price"><span class="price-label">Special Price</span>
-                                                                <span class="price"> $156.00 </span></p>
-                                                            <p class="old-price"><span class="price-label">Regular Price:</span>
-                                                                <span class="price"> $167.00 </span></p>
+                                                            <span class="regular-price">
+                                                                <span class="price">$155.00</span>
+                                                            </span>
                                                         </div>
                                                     </div>
                                                     <div class="action">
-                                                        <a rel="nofollow" href="#" data-quantity="1"
-                                                           data-product_id="99" data-product_sku=""
-                                                           class="button product_type_grouped btn-cart "><span>View products</span></a><a
-                                                                href="#" class="button yith-wcqv-button"
-                                                                data-product_id="99">Quick View</a>
+                                                        <a href="#" data-quantity="1"
+                                                           class="button product_type_grouped btn-cart ">
+                                                            <span>View products</span>
+                                                        </a>
+                                                        <a href="#" class="button yith-wcqv-button"
+                                                           data-product_id="99">Quick View</a>
                                                     </div>
                                                 </div>
                                             </div>
