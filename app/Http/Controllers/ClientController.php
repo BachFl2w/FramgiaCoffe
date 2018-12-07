@@ -18,39 +18,67 @@ class ClientController extends Controller
 {
     public function index()
     {
-        $best_discount_product = Product::with('images')->orderBy('discount', 'desc')
+        // $best_discount_product = Product::with('images')->orderBy('discount', 'desc')
+        //     ->orderBy('id', 'desc')
+        //     ->first();
+        // $best_discount_product->image = $best_discount_product->images[0]->name;
+
+        // $best_products = OrderDetail::with('product')->groupBy('product_id')
+        //     ->orderBy('product_price', 'desc')
+        //     ->orderBy('id', 'desc')
+        //     ->limit(6)
+        //     ->get();
+
+        // $best_product_ids = [];
+        // $best_product_ids[] = $best_discount_product->id;
+
+        // $products = [];
+        // foreach ($best_products as $product) {
+        //     $best_product_ids[] = $product->product_id;
+        //     $products[] = $product->product;
+        // }
+        // if (count($best_products) < 6) {
+        //     $newest_products = Product::whereNotIn('id', $best_product_ids)
+        //         ->limit(6 - count($best_products))
+        //         ->get();
+        //     foreach ($newest_products as $product) {
+        //         $products[] = $product;
+        //     }
+        // }
+        // for ($i = 0; $i < count($products); $i++) {
+        //     $image = Image::where('product_id', $products[$i]->id)
+        //         ->orderBy('active', 'desc')
+        //         ->orderBy('id', 'desc')
+        //         ->first();
+        //     $products[$i]->image = $image->name;
+        // }
+
+        // return view('index', compact('products', 'best_discount_product'));
+
+        $best_discount_product = Product::with(['images' => function($query) {
+                $query->orderBy('id', 'desc')->limit(1);
+            }])
+            ->orderBy('discount', 'desc')
             ->orderBy('id', 'desc')
             ->first();
-        $best_discount_product->image = $best_discount_product->images[0]->name;
 
-        $best_products = OrderDetail::with('product')->groupBy('product_id')
-            ->orderBy('product_price', 'desc')
+        $products = OrderDetail::with('product.images')
             ->orderBy('id', 'desc')
             ->limit(6)
             ->get();
 
-        $best_product_ids = [];
-        $best_product_ids[] = $best_discount_product->id;
-
-        $products = [];
-        foreach ($best_products as $product) {
-            $best_product_ids[] = $product->product_id;
-            $products[] = $product->product;
-        }
-        if (count($best_products) < 6) {
-            $newest_products = Product::whereNotIn('id', $best_product_ids)
-                ->limit(6 - count($best_products))
-                ->get();
-            foreach ($newest_products as $product) {
-                $products[] = $product;
-            }
-        }
-        for ($i = 0; $i < count($products); $i++) {
-            $image = Image::where('product_id', $products[$i]->id)
-                ->orderBy('active', 'desc')
-                ->orderBy('id', 'desc')
-                ->first();
-            $products[$i]->image = $image->name;
+        // dd($bestSelling);
+        // ong co the lay ra anh cua best selling
+        // tuy trỏ tới biến sẽ dài thêm 1 tí, nhưng gỉam được truy vấn
+        // vì chỉ cần lấy ra 1 ảnh của sp nên mặc định biến $value['product']['images'][0]->name sẽ truyền 0 vào
+        // duyệt foreach với 3 bảng cần lấy ra, query giam tu 16 xuong 10
+        // đây mới chỉ demo data, ông tự truyền vào view nhé
+        echo '<h1>Data demo</h1>';
+        foreach ($products as $value) {
+            echo 'product name: ' . $value['product']->name . '<br>';
+            echo 'order detail price: ' . $value->product_price . '<br>';
+            echo 'image: ' . $value['product']['images'][0]->name . '<br>';
+            echo '<br><br><BR>';
         }
 
         return view('index', compact('products', 'best_discount_product'));

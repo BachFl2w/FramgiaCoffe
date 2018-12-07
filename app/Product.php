@@ -23,6 +23,11 @@ class Product extends Model
         return $this->belongsTo(Category::class)->withTrashed();
     }
 
+    public function orderDetails()
+    {
+        return $this->hasMany(OrderDetail::class);
+    }
+
     public function images()
     {
         return $this->hasMany(Image::class);
