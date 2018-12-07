@@ -54,7 +54,6 @@ class ClientController extends Controller
         }
 
         return view('index', compact('products', 'best_discount_product'));
-//        return $products;
     }
 
     public function listProduct()

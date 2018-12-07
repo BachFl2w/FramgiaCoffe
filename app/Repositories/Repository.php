@@ -21,6 +21,11 @@ class Repository implements RepositoryInterface
         return $this->model->all();
     }
 
+    public function where($column, $condition, $value)
+    {
+        return $this->model->where($column, $condition, $value);
+    }
+
     // create a new record in the database
     public function create(array $data)
     {

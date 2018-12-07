@@ -59,9 +59,11 @@
         </div>
     </div>
 
-    @include('sweetalert::alert')`
+    @include('sweetalert::alert')
 
     <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/sweetalert.min.js') }}"></script>
+
     @yield('script')
 
 </body>

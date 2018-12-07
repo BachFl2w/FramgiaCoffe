@@ -9,6 +9,7 @@ use App\Order;
 use App\Role;
 Use Alert;
 use App\Repositories\Repository;
+use Yajra\Datatables\Datatables;
 
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -36,42 +37,17 @@ class UserController extends Controller
      */
     public function index()
     {
-        if (Auth::user()->role_id != 1) {
-            return back()->with('fail', __('message.fail.permission'));
-        }
-
         $roles = $this->roleModel->all();
-        $user = $this->userModel->all()->load('role');
 
-        return view('admin.user_list', compact('user', 'roles'));
+        return view('admin.user_list', compact('roles'));
     }
 
     public function json()
     {
-        if (Auth::user()->role_id != 1) {
-            return back()->with('fail', __('message.fail.permission'));
-        }
+        $user = $this->userModel->where('id', '<>', Auth::id())->with('role')->get();
 
-        $roles = $this->roleModel->all();
-        $user = $this->userModel->all()->load('role');
-
-        return response()->json($user);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        if (Auth::user()->role_id != 1) {
-            return back()->with('fail', __('message.fail.permission'));
-        }
-
-        $roles = $this->roleModel->all();
-
-        return view('admin.user_create', compact('roles'));
+        // return $user;
+        return datatables($user)->make(true);
     }
 
     /**
@@ -83,7 +59,7 @@ class UserController extends Controller
     public function store(UserStoreRequest $request)
     {
         if (Auth::user()->role_id != 1) {
-            return back()->with('fail', __('message.fail.permission'));
+            return __('message.fail.create');
         }
 
         if ($request->hasFile('avatar')) {
@@ -102,7 +78,7 @@ class UserController extends Controller
             $image = null;
         }
 
-        $data = $this->userModel->create([
+        $this->userModel->create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
@@ -113,42 +89,20 @@ class UserController extends Controller
             'image' => $image,
         ]);
 
-        $user = $data->load('role');
-
-        // return back()->with('success', __('message.success.create'));
-        return response()->json($user);
+        return 'success';
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * edit my profile
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit()
     {
-        $currentUser = Auth::user();
+        $user = Auth::user();
 
-        if ($currentUser->role_id == 1) {
-
-            if ($user->role_id == 1 && $currentUser->email != $user->email) {
-                return back()->with('fail', __('message.fail.permission'));
-            }
-
-            return view('admin.user_edit', compact('user'));
-        } else {
-
-            if ($currentUser->email != $user->email) {
-                return back()->with('fail', __('message.fail.permission'));
-            }
-
-            if ($currentUser->role_id == 3) {
-                $order = Order::where('user_id', $currentUser->id)->orderBy('order_time', 'desc')->paginate(5);
-                return view('profile', compact('user', 'order'));
-            }
-
-            return view('admin.user_edit', compact('user'));
-        }
+        return view('admin.user_edit', compact('user'));
     }
 
     /**
@@ -163,11 +117,11 @@ class UserController extends Controller
 
         if ($currentUser->role_id == 1) {
             if ($user->role_id == 1 && $currentUser->email != $user->email) {
-                return back()->with('fail', __('message.fail.permission'));
+                return 'fail';
             }
         } else {
             if ($currentUser->email != $user->email) {
-                return back()->with('fail', __('message.fail.permission'));
+                return 'fail';
             }
         }
 
@@ -208,26 +162,24 @@ class UserController extends Controller
             $user->id
         );
 
-        return back()->with('success', __('message.success.update'));
+        return __('message.success.update');
     }
 
     public function active(User $user)
     {
         $currentUser = Auth::user();
-        $active = 0;
 
         if ($currentUser->role_id == 1) {
             if ($user->role_id == 1 && $user->active == 1) {
-                alert()->error('Error Message', 'Optional Title');
+                return __('message.fail.update');
             } else {
                 $this->userModel->update(['active' => $user->active == 1 ? 0 : 1], $user->id);
-                alert()->success('Success Message', 'Optional Title');
+
+                return 'success';
             }
-        } else {
-            alert()->error('Error Message', 'Optional Title');
         }
 
-        return redirect()->back();
+        return __('message.fail.update');
     }
 
     /**
@@ -243,10 +195,10 @@ class UserController extends Controller
         if ($currentUser->role_id == 1 && $user->role_id != 1) {
             $user->delete();
 
-            return 'success';
-        } else {
-            return 'fail';
+            return __('message.success.delete');
         }
+
+        return 'fail';
     }
 
     public function login(Request $request)

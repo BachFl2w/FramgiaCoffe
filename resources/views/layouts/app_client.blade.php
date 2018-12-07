@@ -4,9 +4,6 @@
     @routes()
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <!--[if IE]>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <![endif]-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -16,26 +13,8 @@
     <title>Smart Drink</title>
     <!-- Mobile Specific -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <!-- CSS Style -->
-    <link rel="stylesheet" type="text/css" href="http://htmldemo.themessoft.com/freshia/version3/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="http://htmldemo.themessoft.com/freshia/version3/css/font-awesome.css"
-          media="all">
-    <link rel="stylesheet" type="text/css"
-          href="http://htmldemo.themessoft.com/freshia/version3/css/simple-line-icons.css" media="all">
-    <link rel="stylesheet" type="text/css" href="http://htmldemo.themessoft.com/freshia/version3/css/owl.carousel.css">
-    <link rel="stylesheet" type="text/css" href="http://htmldemo.themessoft.com/freshia/version3/css/owl.theme.css">
-    <link rel="stylesheet" type="text/css"
-          href="http://htmldemo.themessoft.com/freshia/version3/css/jquery.bxslider.css">
-    <link rel="stylesheet" type="text/css"
-          href="http://htmldemo.themessoft.com/freshia/version3/css/jquery.mobile-menu.css">
-    <link rel="stylesheet" type="text/css" href="http://htmldemo.themessoft.com/freshia/version3/css/style.css"
-          media="all">
-    <link rel="stylesheet" type="text/css" href="http://htmldemo.themessoft.com/freshia/version3/css/revslider.css">
-    <link rel="stylesheet" type="text/css" href="http://htmldemo.themessoft.com/freshia/version3/css/thm_menu.css">
-    <!-- Google Fonts -->
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:700,600,800,400' rel='stylesheet' type='text/css'>
-    <link href="https://fonts.googleapis.com/css?family=Rubik:400,400i,500,500i,700,700i,900" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/app_client.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/custom.css') }}">
     @yield('css')
 </head>
 
@@ -142,8 +121,8 @@
                 data: {},
             })
             .done(function (res) {
-                var empty_cart = '<h2 style="margin: 10px auto;padding: 10px 20px ;width: 100%">' +
-                    'Bạn chưa mua sản phẩm nào ! </h2>';
+                var empty_cart = '<h4 style="margin: 10px auto;padding: 10px 20px ;width: 100%">' +
+                    'Bạn chưa mua sản phẩm nào ! </h4>';
                 if (res.length !== 0) {
                     $total_price = 0;
                     $count_product = 0;
@@ -251,43 +230,59 @@
 
         //search index client
         $('#keysearch').on('keyup change', function(event) {
-        var request_value = '';
-        if ($('#keysearch').val() != '') {
-            request_value = $('#keysearch').val();
-        }
-        $.ajax({
-            url: route('client.live_search'),
-            type: 'post',
-            dataType: '',
-            data: { keyword: request_value },
-        })
-        .done(function(res) {
-            if (request_value == '') {
-                $('#box_search').hide();
+            var request_value = '';
+            if ($('#keysearch').val() != '') {
+                request_value = $('#keysearch').val();
             }
-            var url_image = 'http://127.0.0.1:8000/images/products/';
-            $('#box_search').show();
-            $('#box_search').empty();
-            var result = '';
-            if(!res.length) {
-                result =  $('#box_search').hide();;
-            }
-            else {
-                var url = route('client.search', { keyword: request_value })
-                res.forEach( function(element, index) {
-                    var url_product = route("client.product.detail", {id: element.id})
-                    result += '<a href=' + url_product + '>' +
-                            '<div class="row" id="element-result">' +
-                            '<img id="element-img" height="30px" width="100px" class="img-thumbnail" id="img-element-result" src="'+ url_image + element.images[0].name +'">' +
-                            '<h4 id="element-text">' + element.name + '</h4>' +
+            $.ajax({
+                url: route('client.live_search'),
+                type: 'post',
+                dataType: '',
+                data: { keyword: request_value },
+            })
+            .done(function(res) {
+                if (request_value == '') {
+                    $('#box_search').hide();
+                }
+                var url_image = 'http://127.0.0.1:8000/images/products/';
+                $('#box_search').show();
+                $('#box_search').empty();
+                var result = '';
+                if(!res.length) {
+                    result =  $('#box_search').hide();;
+                }
+                else {
+                    var url = route('client.search', { keyword: request_value })
+                    res.forEach( function(element, index) {
+                        var url_product = route("client.product.detail", {id: element.id})
+                        result += '<a href="">' +
+                        '<div class="element_search">' +
+                            '<div class="image">' +
+                                '<img class="img-thumbnail" src="{{ asset('images/products/1.jpg') }}">' +
                             '</div>' +
-                        '</a>';
-                });
-                result += '<a href="'+ url +'" id="element-load" style="color: #2F4F4F">Load more...</a>';
-            }
-            $('#box_search').html(result);
-        })
-    });
+                            '<div class="info">' +
+                                '<p class="product-title">' + element.name + '</p>';
+                                if(element.discount)
+                                {
+                                    result += '<p class="product-price">' +
+                                    '<span class="product-old-price">' + nf.format(element.price) + ' ₫</span>' +
+                                    '<span class="product-discount"> ('+ element.discount +'%)</span>' +
+                                    '</p>';
+                                }
+                                result += '<p class="product-new-price">' + nf.format(element.price * (1 - element.discount)) + '  ₫</p>' +
+                            '</div>' +
+                        '</div>' +
+                    '</a>';
+                    });
+                    result += '<div class="load-more">' +
+                                    '<a href="' + url + '">' +
+                                        '<div>Load More</div>' +
+                                    '</a>' +
+                                '</div>' 
+                }
+                $('#box_search').html(result);
+            })
+        });
     });
 </script>
 

@@ -29,7 +29,7 @@
                 <div class="card-header">
                     <strong class="card-title">{{ __('message.user') }}</strong>
                     <div class="float-right">
-                        <button data-toggle="modal" data-target="#myModal" class="btn btn-outline-info" title="show">{{ __('message.create') }}</button>
+                        <button data-toggle="modal" data-target="#modal_create" id="show-modal" class="btn btn-outline-info" title="show">{{ __('message.create') }}</button>
                     </div>
                 </div>
                 <div class="card-body">
@@ -48,38 +48,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($user as $u)
-                                <tr>
-                                    <td scope="row">{{ $u->id }}</td>
-                                    <td>{{ $u->name }}</td>
-                                    <td>{{ $u->email }}</td>
-                                    <td>{{ $u->address }}</td>
-                                    <td>{{ $u->phone }}</td>
-                                    <td>
-                                        @if ($u->image)
-                                            <img src="{{ asset(config('asset.image_path.avatar') . $u->image) }}" height="80px">
-                                        @else
-                                            <img src="{{ asset(config('asset.image_path.default')) }}" height="80px">
-                                        @endif
-                                    </td>
-                                    <td>{{ $u->role->name }}</td>
-                                    <td>
-                                        <a href="{{ route('admin.user.active', $u->id) }}" id="active_user{{ $u->id }}">
-                                            <label class="switch switch-3d switch-primary mr-3" for="active_user{{ $u->id }}">
-                                                <input type="checkbox" class="switch-input" @if ($u->active == 1) {{ 'checked' }} @endif>
-                                                <span class="switch-label"></span> <span class="switch-handle"></span>
-                                            </label>
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <a href="{{route('admin.user.edit', $u->id)}}" class="btn btn-outline-primary" title="Edit"><i class="fa fa-edit"></i></a>
-                                        <a data-id="{{ $u->id }}" class="btn btn-outline-danger destroy" id="destroy{{ $u->id }}" title="Remove"><i class="fa fa-remove"></i></a>
-                                        {{-- <button data-id="{{ $u->id }}" class="btn btn-outline-danger destroy" title="Delete">
-                                            <i class="fa fa-trash-o"></i>
-                                        </button> --}}
-                                    </td>
-                                </tr>
-                            @endforeach
+
                         </tbody>
                     </table>
                 </div>
@@ -88,16 +57,15 @@
     </div>
 </div>
 
-<div id="myModal"class="modal fade" role="dialog">
+<div id="modal_create" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">{{ __('message.create') }}</h4>
-            </div>
-            <div class="modal-body">
-                {!! Form::open(['route' => 'admin.user.store' ,'method' => 'POST', 'class' => 'form', 'files' => true, 'id' => 'form_create_user']) !!}
+            <div class="modal-header"></div>
+            {!! Form::open(['method' => 'POST', 'class' => 'form', 'files' => true, 'id' => 'form_create_user']) !!}
+                <div class="modal-body">
                     <div class="form-group">
                         {!! Form::hidden('_token', csrf_token(), ['id' => '_token']) !!}
+                        {!! Form::hidden('id', '', ['id' => 'id']) !!}
                         {!! Form::label('name', __('Name'), ['class' => 'pr-1 form-control-label']) !!}
                         {!! Form::text('name', '', ['class' => 'form-control']) !!}
                     </div>
@@ -121,12 +89,12 @@
                         {!! Form::label('phone', __('Phone'), ['class' => 'pr-1 form-control-label']) !!}
                         {!! Form::number('phone', '', ['class' => 'form-control']) !!}
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" id="form-image">
                         {!! Form::label('avatar', __('Avatar'), ['class' => 'pr-1 form-control-label']) !!}
                         {!! Form::file('avatar', ['id' => 'avatar', 'name' => 'avatar']) !!}
+                        <p><img src="#" id="imageSrc" height="80px" class="d-none"></p>
                     </div>
                     <div class="form-group">
-                        <label for="role" class="px-1 form-control-label">{{ __('message.permission') }}</label>
                         {!! Form::label('role', __('Permission'), ['class' => 'pr-1 form-control-label']) !!}
                         <select name="role" id="role" class="form-control">
                             @foreach ($roles as $r)
@@ -136,8 +104,8 @@
                     </div>
             </div>
             <div class="modal-footer">
-                {!! Form::button(__('message.close'), ['class' => 'btn btn-warning', 'data-dismiss' => 'modal']) !!}
-                {!! Form::submit(__('message.create'), ['class' => 'btn btn-outline-success', 'id' => 'create_user']) !!}
+                {!! Form::button(__('message.close'), ['class' => 'btn btn-warning', 'data-dismiss' => 'modal', 'id' => 'close-modal']) !!}
+                {!! Form::submit(__('message.submit'), ['class' => 'btn btn-success action_button', 'id' => 'create_user']) !!}
             </div>
             {!! Form::close() !!}
         </div>
@@ -147,23 +115,79 @@
 @endsection
 
 @section('script')
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <script type="text/javascript">
-    var table = $('#bootstrap-data-table').DataTable();
-
-    $(document).ready(function() {
-        table;
-    } );
-
-    // ajax setup
+$(document).ready(function() {
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
         }
     });
 
-    $('#create_user').click(function (event) {
+    var tableTest = $('#user_list').DataTable({
+        processing: true,
+        serverSide: true,
+        order: [0, "desc"],
+        ajax: '{!! route('admin.user.json') !!}',
+        columns: [
+            { data: 'id', name: 'id' },
+            { data: 'name', name: 'name' },
+            { data: 'email', name: 'email' },
+            { data: 'address', name: 'address' },
+            { data: 'phone', name: 'phone' },
+            {
+                data: 'image',
+                name: 'image',
+                render: function(data) {
+                    return data ?
+                        `<img data-image="${data}" src="http://127.0.0.1:8000/images/avatars/${data}" height="80px">`
+                        : `<img src="http://127.0.0.1:8000/images/default.jpeg" height="80px">`;
+                }
+            },
+            {
+                data: 'role',
+                name: 'role',
+                render: function(data) {
+                    return `<span data-role="${data.id}">${data.name}</span>`;
+                }
+            },
+            {
+                data: 'active',
+                name: 'active',
+                render: function(data, type, row) {
+                    var checked = (data == 1) ? 'checked' : '';
+                    return `<a href="#" class="active">
+                        <label class="switch switch-3d switch-primary mr-3" for="active_user">
+                            <input type="checkbox" class="switch-input" ${checked}>
+                            <span class="switch-label"></span><span class="switch-handle"></span>
+                        </label>
+                    </a>`;
+                },
+            },
+            {
+                data: null,
+                name: null,
+                defaultContent: [
+                    '<a class="btn btn-outline-primary show_edit_modal" title="Edit"><i class="fa fa-edit"></i></a>' +
+                    '<a class="btn btn-outline-danger destroy" title="Remove"><i class="fa fa-remove"></i></a>'
+                ]
+            },
+        ],
+    });
+
+    $('#show-modal').click(function(event) {
+        $('#imageSrc').addClass('d-none');
+        $('.action_button').addClass('create_user').removeClass('edit_user');
+        $('#id').val('');
+        $('#name').val('');
+        $('#password').val('');
+        $('#re_password').val('');
+        $('#email').val('');
+        $('#address').val('');
+        $('#phone').val('');
+    });
+
+    $('#modal_create').on('click', '.create_user', function (event) {
         event.preventDefault();
         $.ajax({
             url: route('admin.user.store'),
@@ -171,45 +195,22 @@
             cache: false,
             contentType: false,
             processData: false,
-            // data: $('#form_create_user').serialize(),
             data: new FormData($('form#form_create_user')[0]),
         })
         .done(function(data) {
-            console.log(data.image);
-            var image = data.image ? `<img src="http://127.0.0.1:8000/images/avatars/${data.image}" height="80px">` : `<img src="http://127.0.0.1:8000/images/default.jpeg" height="80px">`;
-            var checked = (data.active == 1) ? "checked" : "";
-            table.row.add([
-                `<td scope="row">${data.id}</td>`,
-                `<td>${data.name}</td>`,
-                `<td>${data.email}</td>`,
-                `<td>${data.address}</td>`,
-                `<td>${data.phone}</td>`,
-                `<td>${image}</td>`,
-                `<td>${data.role.name}</td>`,
-                `<td>
-                    <form method="post" action="${route('admin.user.active', data.id)}" id="active_user">
-                    <label class="switch switch-3d switch-primary mr-3" for="active_user${data.id}">
-                        <input type="checkbox" class="switch-input" ${checked}>
-                        <span class="switch-label"></span> <span class="switch-handle"></span>
-                    </label>
-                    <button id="active_user${data.id}" class="d-none"></button>
-                    </form>
-                </td>`,
-                `<td>
-                    <a href="${route('admin.user.edit', data.id)}" class="btn btn-outline-primary" title="Edit">
-                        <i class="fa fa-edit"></i>
-                    </a>
-                    <a href="${route('admin.user.destroy', data.id)}" onclick="return confirm('Delete ?');" class="btn btn-outline-danger" title="Delete">
-                        <i class="fa fa-trash-o"></i>
-                    </a>
-                </td>`
-            ]).draw( false );
-            $('#myModal').modal('hide');
-            swal({icon: 'success'});
-            console.log("success");
+            if (data == 'success') {
+                tableTest.ajax.reload();
+                $('#modal_create').modal('hide');
+                swal({icon: 'success'});
+                console.log("success");
+            } else {
+                swal(data, {icon: 'error'});
+            }
         })
         .fail(function() {
-            swal({icon: 'warning'});
+            swal("Something wrong !", {
+                icon: "error",
+            });
             console.log("error");
         })
         .always(function() {
@@ -217,53 +218,124 @@
         });
     });
 
-    // $('.destroy').on('click', 'tbody tr', function(event) {
-    $('.destroy').click(function (event) {
-        console.log($(this).attr('data-id'));
+    $('#user_list tbody').on('click', '.destroy', function(event) {
+        var id = $(this).closest('tr').find('td:eq(0)').text();
         event.preventDefault();
+
         swal({
-            title: "Are you sure?",
-            text: "Once deleted, you will not be able to recover this imaginary file!",
-            icon: "warning",
+            title: 'Are you sure?',
+            text: 'Once deleted, you will not be able to recover this user!',
+            icon: 'warning',
             buttons: true,
             dangerMode: true,
         })
         .then((willDelete) => {
             if (willDelete) {
                 $.ajax({
-                    url: route('admin.user.destroy', $(this).attr("data-id")),
+                    url: route('admin.user.destroy', id),
                     type: 'get',
                 })
                 .done(function(data) {
-                    if (data == 'success') {
-                        table.row( this ).delete();
-                        swal("Poof! user has been deleted!", {
+                    if (data == 'fail') {
+                        swal('You dont have permission !', {icon: 'error'});
+                    } else {
+                        swal(data, {
                             icon: "success",
                         });
+                        tableTest.ajax.reload();
                         console.log("success");
-                    } else {
-                        swal("Fail", {
-                            icon: "error",
-                        });
-                        console.log("fail");
                     }
                 })
                 .fail(function() {
-                    swal("Uppsss...!", {
-                        icon: "error",
-                    });
-                    console.log("error");
+                    console.log('fail');
+                    swal("Something wrong !", {icon: "error"});
                 })
                 .always(function() {
                     console.log("complete");
                 });
-            } else {
-                swal("Your imaginary file is safe!");
             }
         });
     });
-    // $('#myTable').on( 'click', 'tbody tr', function () {
-    //     table.row( this ).delete();
-    // } );
+
+    $('#user_list tbody').on('click', '.show_edit_modal', function(event) {
+        event.preventDefault();
+
+        $('#modal_create').modal('show');
+        $('.action_button').addClass('edit_user').removeClass('create_user');
+
+        var tr = $(this).closest('tr');
+        var id = tr.find('td:eq(0)').text();
+        var name = tr.find('td:eq(1)').text();
+        var email = tr.find('td:eq(2)').text();
+        var address = tr.find('td:eq(3)').text();
+        var phone = tr.find('td:eq(4)').text();
+        var image = tr.find('img').attr('src');
+        var role = tr.find('span').data('role');
+
+        $('#id').val(id);
+        $('#name').val(name);
+        $('#email').val(email);
+        $('#address').val(address);
+        $('#phone').val(phone);
+        $('#imageSrc').attr('src', image).removeClass('d-none');
+        $('#role').val(role);
+
+        $('#modal_create').on( 'click', '.edit_user', function (event) {
+            event.preventDefault();
+
+            $.ajax({
+                url: route('admin.user.update', id),
+                type: 'POST',
+                cache: false,
+                contentType: false,
+                processData: false,
+                data: new FormData($('form#form_create_user')[0]),
+            })
+            .done(function(data) {
+                if (data != 'fail') {
+                    tableTest.ajax.reload();
+                    $('#modal_create').modal('hide');
+                    swal(data, {icon: 'success'});
+                    console.log("success");
+                } else {
+                    swal('You dont have permission !', {icon: 'error'});
+                }
+            })
+            .fail(function() {
+                swal('Something wrong !', {icon: 'error'});
+                console.log("error");
+            })
+            .always(function() {
+                console.log("complete");
+            });
+        });
+    });
+
+    $('#user_list tbody').on('click', '.active', function(event) {
+        event.preventDefault();
+        var id = $(this).closest('tr').find('td:eq(0)').text();
+
+        $.ajax({
+            url: route('admin.user.active', id),
+            type: 'GET',
+        })
+        .done(function(data) {
+            if (data == 'success') {
+                tableTest.ajax.reload();
+                console.log("success");
+            } else {
+                swal(data, {icon: 'error'});
+            }
+        })
+        .fail(function() {
+            swal('Something wrong !', {icon: 'error'});
+            console.log("error");
+        })
+        .always(function() {
+            console.log("complete");
+        });
+    });
+});
 </script>
+
 @endsection

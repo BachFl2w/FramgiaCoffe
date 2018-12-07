@@ -6,6 +6,8 @@ interface RepositoryInterface
 {
     public function all();
 
+    public function where($id, $condition, $value);
+
     public function create(array $data);
 
     public function update(array $data, $id);

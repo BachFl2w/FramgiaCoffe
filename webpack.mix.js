@@ -32,10 +32,33 @@ mix.sass('resources/sass/app.scss', 'public/css');
 //         'node_modules/simple-line-icons/fonts/'
 //     ], 'public/fonts/');
 
-//Mix client
-mix.js([
-    'resources/js/app.js',
-    'resources/asset/client/js/revslider.js',
-    'resources/asset/client/js/common.js',
-], 'public/js/app_client.js');
+/**
+ *  Mix Admin
+ **/
+mix.styles([
+    'public/css/app.css',
+    'resources/asset/admin/css/admin.css',
+    'resources/asset/admin/css/custom.css',
+], 'public/css/admin_style.css');
 
+/**
+ *  Mix Client
+ **/
+mix.styles([
+    'resources/asset/client/css/bootstrap.min.css',
+    'resources/asset/client/css/font-awesome.css',
+    'resources/asset/client/css/simple-line-icons.css',
+    'resources/asset/client/css/owl.carousel.css',
+    'resources/asset/client/css/owl.theme.css',
+    'resources/asset/client/css/jquery.bxslider.css',
+    'resources/asset/client/css/jquery.mobile-menu.css',
+    'resources/asset/client/css/style.css',
+    'resources/asset/client/css/revslider.css',
+    'resources/asset/client/css/thm_menu.css',
+    'resources/asset/client/css/internal.css',
+    'resources/asset/client/css/custom.css',
+], 'public/css/app_client.css');
+
+mix.copyDirectory('node_modules/simple-line-icons/fonts/', 'public/fonts/');
+mix.copyDirectory('node_modules/font-awesome/fonts/', 'public/fonts/');
+mix.copyDirectory('resources/asset/client/css/image/', 'public/images/');

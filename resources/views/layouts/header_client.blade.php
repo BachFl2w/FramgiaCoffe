@@ -76,14 +76,15 @@
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                 <div class="search-box">
                     <form name="myform" method="GET" action="#">
-                        <input class="thmsearch" type="text" value="" placeholder="Search product here" name="s"
-                               maxlength="70">
+                        <input class="thmsearch" type="text" value="" id="keysearch" placeholder="Search product here" name="s" maxlength="70" autocomplete="off">
                         <input type="hidden" value="product" name="post_type">
                         <button class="search-btn-bg" type="submit"><span
                                     class="glyphicon glyphicon-search"></span>&nbsp;
                         </button>
                     </form>
+                    
                 </div>
+                <div id="box_search"></div>
             </div>
             <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
                 <div class="hotline hidden-xs">
@@ -119,7 +120,6 @@
                                         <span>{{ trans('message.view_cart') }}</span>
                                     </a>
                                 </div>
-
                             </div>
                         </div>
                     </div>
