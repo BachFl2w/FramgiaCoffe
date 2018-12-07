@@ -147,14 +147,16 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+
+        /*
+         * Package Service Providers...
+         */
         Collective\Html\HtmlServiceProvider::class,
         Tightenco\Ziggy\ZiggyServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
         Unisharp\Ckeditor\ServiceProvider::class,
         RealRashid\SweetAlert\SweetAlertServiceProvider::class,
-        /*
-         * Package Service Providers...
-         */
+        Yajra\DataTables\DataTablesServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -219,6 +221,7 @@ return [
         'Debugbar'     => Barryvdh\Debugbar\Facade::class,
         'Image'        => Intervention\Image\Facades\Image::class,
         'Alert'        => RealRashid\SweetAlert\Facades\Alert::class,
+        'DataTables'   => Yajra\DataTables\Facades\DataTables::class,
     ],
 
 ];

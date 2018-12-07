@@ -125,19 +125,19 @@ $(document).ready(function() {
     });
 
     var tableTest = $('#user_list').DataTable({
-        ajax: {
-            url: route('admin.user.json'),
-            dataSrc: '',
-            type: 'get',
-        },
+        processing: true,
+        serverSide: true,
+        order: [0, "desc"],
+        ajax: '{!! route('admin.user.json') !!}',
         columns: [
-            { data: 'id' },
-            { data: 'name' },
-            { data: 'email' },
-            { data: 'address' },
-            { data: 'phone' },
+            { data: 'id', name: 'id' },
+            { data: 'name', name: 'name' },
+            { data: 'email', name: 'email' },
+            { data: 'address', name: 'address' },
+            { data: 'phone', name: 'phone' },
             {
                 data: 'image',
+                name: 'image',
                 render: function(data) {
                     return data ?
                         `<img data-image="${data}" src="http://127.0.0.1:8000/images/avatars/${data}" height="80px">`
@@ -146,12 +146,14 @@ $(document).ready(function() {
             },
             {
                 data: 'role',
+                name: 'role',
                 render: function(data) {
                     return `<span data-role="${data.id}">${data.name}</span>`;
                 }
             },
             {
                 data: 'active',
+                name: 'active',
                 render: function(data, type, row) {
                     var checked = (data == 1) ? 'checked' : '';
                     return `<a href="#" class="active">
@@ -164,6 +166,7 @@ $(document).ready(function() {
             },
             {
                 data: null,
+                name: null,
                 defaultContent: [
                     '<a class="btn btn-outline-primary show_edit_modal" title="Edit"><i class="fa fa-edit"></i></a>' +
                     '<a class="btn btn-outline-danger destroy" title="Remove"><i class="fa fa-remove"></i></a>'
@@ -177,6 +180,8 @@ $(document).ready(function() {
         $('.action_button').addClass('create_user').removeClass('edit_user');
         $('#id').val('');
         $('#name').val('');
+        $('#password').val('');
+        $('#re_password').val('');
         $('#email').val('');
         $('#address').val('');
         $('#phone').val('');

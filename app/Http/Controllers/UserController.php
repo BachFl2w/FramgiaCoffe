@@ -9,6 +9,7 @@ use App\Order;
 use App\Role;
 Use Alert;
 use App\Repositories\Repository;
+use Yajra\Datatables\Datatables;
 
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -45,7 +46,8 @@ class UserController extends Controller
     {
         $user = $this->userModel->where('id', '<>', Auth::id())->with('role')->get();
 
-        return $user;
+        // return $user;
+        return datatables($user)->make(true);
     }
 
     /**
