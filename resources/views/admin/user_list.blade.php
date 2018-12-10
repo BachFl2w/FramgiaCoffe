@@ -89,7 +89,7 @@
                         {!! Form::label('phone', __('Phone'), ['class' => 'pr-1 form-control-label']) !!}
                         {!! Form::number('phone', '', ['class' => 'form-control']) !!}
                     </div>
-                    <div class="form-group" id="form-image">
+                    <div class="form-group">
                         {!! Form::label('avatar', __('Avatar'), ['class' => 'pr-1 form-control-label']) !!}
                         {!! Form::file('avatar', ['id' => 'avatar', 'name' => 'avatar']) !!}
                         <p><img src="#" id="imageSrc" height="80px" class="d-none"></p>
@@ -279,6 +279,16 @@ $(document).ready(function() {
         $('#phone').val(phone);
         $('#imageSrc').attr('src', image).removeClass('d-none');
         $('#role').val(role);
+
+        $('#avatar').change(function(e) {
+            if (this.files && this.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    $('#imageSrc').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(this.files[0]);
+            }
+        })
 
         $('#modal_create').on( 'click', '.edit_user', function (event) {
             event.preventDefault();

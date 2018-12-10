@@ -21,9 +21,9 @@
                             {!! Form::file('avatar', ['class' => 'd-none', 'id' => 'avatar']) !!}
                             <label for="avatar">
                                 @if ($user->image)
-                                    <img class="rounded-circle mx-auto d-block" height="200px" src="{{ asset(config('asset.image_path.avatar') . $user->image) }}" alt="Card image cap">
+                                    <img class="rounded-circle mx-auto d-block img-avatar" height="200px" src="{{ asset(config('asset.image_path.avatar') . $user->image) }}" alt="Card image cap">
                                 @else
-                                    <img class="rounded-circle mx-auto d-block" height="200px" src="{{ asset('images/default.jpeg') }}" alt="Card image cap">
+                                    <img class="rounded-circle mx-auto d-block img-avatar" height="200px" src="{{ asset('images/default.jpeg') }}" alt="Card image cap">
                                 @endif
                             </label>
                             <h5 class="text-sm-center mt-2 mb-1"> {{ $user->name }} </h5>
@@ -37,7 +37,6 @@
                             <a href="#"><i class="fa fa-pinterest pr-1"></i></a>
                         </div>
                     </div>
-                    {!! Form::button(__('Change Avatar'), ['class' => 'btn btn-outline-info btn-lg btn-block btnSubmit']) !!}
                 </div>
             </div>
 
@@ -112,10 +111,9 @@
 <script type="text/javascript">
 
 $(document).ready(function() {
-    $('.btnSubmit').click(function(event) {
-        event.preventDefault();
-        var id = $('#id').val();
+    var id = $('#id').val();
 
+    function funtionAjax() {
         $.ajax({
             url: route('admin.user.update', id),
             type: 'POST',
@@ -125,10 +123,8 @@ $(document).ready(function() {
             data: new FormData($('form#form_edit_user')[0]),
         })
         .done(function(data) {
-            if (data != 'fail') {
-                swal(data, {icon: 'success'});
-                console.log("success");
-            }
+            swal(data, {icon: 'success'});
+            console.log("success");
         })
         .fail(function() {
             swal('Something wrong !', {icon: 'error'});
@@ -137,6 +133,28 @@ $(document).ready(function() {
         .always(function() {
             console.log("complete");
         });
+    };
+
+    $('#avatar').change(function(e) {
+        if (this.files && this.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                $('.img-avatar').attr('src', e.target.result);
+                $('.avatar-header').attr('src', e.target.result); // avatar in header.blade.php
+            }
+            reader.readAsDataURL(this.files[0]);
+            event.preventDefault();
+
+            funtionAjax();
+        }
+    })
+
+
+
+    $('.btnSubmit').click(function(event) {
+        event.preventDefault();
+
+        funtionAjax();
     });
 });
 
