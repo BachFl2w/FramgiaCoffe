@@ -6,9 +6,13 @@ use App\User;
 use App\Product;
 use App\Feedback;
 use App\Mail\SendEmail;
+use App\Events\FeedbackEvent;
+use App\Repositories\Repository;
+
+use Pusher\Pusher;
+
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
-use App\Repositories\Repository;
 
 class FeedbackController extends Controller
 {
@@ -60,6 +64,18 @@ class FeedbackController extends Controller
             'content' => $request->contents,
             'status' => 0,
         ]);
+
+        $options = array(
+            'cluster' => 'ap1',
+            'encrypted' => true
+        );
+
+        $pusher = new Pusher(
+            env('PUSHER_APP_KEY'),
+            env('PUSHER_APP_SECRET'),
+            env('PUSHER_APP_ID'),
+            $options
+        );
 
         return back()->with('success', __('message.success.send'));
     }
