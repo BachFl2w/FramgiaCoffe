@@ -71,7 +71,7 @@
                     </div>
                     <div class="form-group">
                         {!! Form::label('email', __('Email'), ['class' => 'pr-1 form-control-label']) !!}
-                        {!! Form::text('email', '', ['class' => 'form-control']) !!}
+                        {!! Form::text('email', '', ['class' => 'form-control', 'readonly']) !!}
                     </div>
                     <div class="form-group">
                         {!! Form::label('password', __('Password'), ['class' => 'pr-1 form-control-label']) !!}
@@ -182,9 +182,10 @@ $(document).ready(function() {
         $('#name').val('');
         $('#password').val('');
         $('#re_password').val('');
-        $('#email').val('');
+        $('#email').val('').attr('readonly', false);
         $('#address').val('');
         $('#phone').val('');
+        $('#role').attr('disabled', false);
     });
 
     $('#modal_create').on('click', '.create_user', function (event) {
@@ -274,11 +275,11 @@ $(document).ready(function() {
 
         $('#id').val(id);
         $('#name').val(name);
-        $('#email').val(email);
+        $('#email').val(email).attr('readonly', true);
         $('#address').val(address);
         $('#phone').val(phone);
         $('#imageSrc').attr('src', image).removeClass('d-none');
-        $('#role').val(role);
+        $('#role').val(role).attr("disabled", true);
 
         $('#avatar').change(function(e) {
             if (this.files && this.files[0]) {
@@ -324,6 +325,7 @@ $(document).ready(function() {
     $('#user_list tbody').on('click', '.active', function(event) {
         event.preventDefault();
         var id = $(this).closest('tr').find('td:eq(0)').text();
+        console.log(id);
 
         $.ajax({
             url: route('admin.user.active', id),

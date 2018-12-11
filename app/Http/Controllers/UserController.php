@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use Session;
+use Cache;
+use Redis;
 
 use App\User;
-use App\Order;
 use App\Role;
-Use Alert;
 use App\Repositories\Repository;
 use Yajra\Datatables\Datatables;
 
@@ -25,7 +25,6 @@ class UserController extends Controller
 
     public function __construct(User $userModel, Role $roleModel)
     {
-        // set the model
         $this->userModel = new Repository($userModel);
         $this->roleModel = new Repository($roleModel);
     }
@@ -44,10 +43,16 @@ class UserController extends Controller
 
     public function json()
     {
-        $user = $this->userModel->where('id', '<>', Auth::id())->with('role')->get();
+        // get all user but dont get current user
+        if (!Redis::get('user:all')) {
+            // $name, $with from repository
+            $this->userModel->setRedisAll('user:all', ['role']);
+        }
 
-        // return $user;
-        return datatables($user)->make(true);
+        // set true to return array
+        $data = json_decode(Redis::get('user:all'), true);
+
+        return datatables($data)->make(true);
     }
 
     /**
@@ -78,7 +83,7 @@ class UserController extends Controller
             $image = null;
         }
 
-        $this->userModel->create([
+        $user = $this->userModel->create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
@@ -88,6 +93,11 @@ class UserController extends Controller
             'active' => 1,
             'image' => $image,
         ]);
+
+        // $name, $with
+        $this->userModel->setRedisAll('user:all', ['role']);
+        // $name, $id, $data
+        $this->userModel->setRedisById('user:' . $user->id, $user);
 
         return 'success';
     }
@@ -150,7 +160,7 @@ class UserController extends Controller
             $file->move(config('asset.image_path.avatar'), $newName);
         }
 
-        $this->userModel->update(
+        $data = $this->userModel->update(
             [
                 'name' => $request->name,
                 'address' => $request->address,
@@ -161,6 +171,9 @@ class UserController extends Controller
             ],
             $user->id
         );
+
+        $this->userModel->setRedisAll('user:all', ['role']);
+        $this->userModel->setRedisById('user:' . $user->id, $data);
 
         return __('message.success.update');
     }
@@ -173,7 +186,10 @@ class UserController extends Controller
             if ($user->role_id == 1 && $user->active == 1) {
                 return __('message.fail.update');
             } else {
-                $this->userModel->update(['active' => $user->active == 1 ? 0 : 1], $user->id);
+                $data = $this->userModel->update(['active' => $user->active == 1 ? 0 : 1], $user->id);
+
+                $this->userModel->setRedisAll('user:all', ['role']);
+                $this->userModel->setRedisById('user' . $user->id, User::where('id', $user->id)->get());
 
                 return 'success';
             }
@@ -193,6 +209,9 @@ class UserController extends Controller
         $currentUser = Auth::user();
 
         if ($currentUser->role_id == 1 && $user->role_id != 1) {
+            $this->userModel->setRedisAll('user:all', ['role']);
+            $this->userModel->deleteRedis('user' . $user->id);
+
             $user->delete();
 
             return __('message.success.delete');

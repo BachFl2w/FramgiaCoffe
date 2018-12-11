@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Cache;
+use Redis;
 use App\User;
 use App\Product;
 use App\Feedback;
@@ -9,6 +11,7 @@ use App\Mail\SendEmail;
 use App\Events\FeedbackEvent;
 use App\Repositories\Repository;
 
+use Yajra\Datatables\Datatables;
 use Pusher\Pusher;
 
 use Illuminate\Support\Facades\Mail;
@@ -35,16 +38,21 @@ class FeedbackController extends Controller
      */
     public function index()
     {
-        // $feedbacks = Feedback::all()->load('user', 'product');
-
         return view('admin.feedback_list');
     }
 
     public function json()
     {
-        $feedbacks = Feedback::all()->load('user', 'product');
+        // get all user but dont get current user
+        if (!Redis::get('feedback:all')) {
+            // $name, $with from repository
+            $this->feedbackModel->setRedisAll('feedback:all', ['user', 'product']);
+        }
 
-        return response()->json($feedbacks);
+        // set true to return array
+        $data = json_decode(Redis::get('feedback:all'), true);
+
+        return datatables($data)->make(true);
     }
 
     /**
@@ -58,24 +66,17 @@ class FeedbackController extends Controller
             return back()->with('fail', __('message.fail.feedback'));
         }
 
-        $this->feedbackModel->create([
+        $data = $this->feedbackModel->create([
             'user_id' => $user->id,
             'product_id' => $product->id,
             'content' => $request->contents,
             'status' => 0,
         ]);
 
-        $options = array(
-            'cluster' => 'ap1',
-            'encrypted' => true
-        );
-
-        $pusher = new Pusher(
-            env('PUSHER_APP_KEY'),
-            env('PUSHER_APP_SECRET'),
-            env('PUSHER_APP_ID'),
-            $options
-        );
+        // $name, $with
+        $this->feedbackModel->setRedisAll('feedback:all', ['user', 'product']);
+        // $name, $id, $data
+        $this->feedbackModel->setRedisById('feedback:' . $data->id, $data);
 
         return back()->with('success', __('message.success.send'));
     }
@@ -90,11 +91,16 @@ class FeedbackController extends Controller
      */
     public function active(Feedback $feedback)
     {
-        $this->feedbackModel->update(
+        $data = $this->feedbackModel->update(
             [
                 'status' => $feedback->status == 1 ? 0 : 1
             ],
             $feedback->id
         );
+
+        // $name, $with
+        $this->feedbackModel->setRedisAll('feedback:all', ['user', 'product']);
+        // $name, $id, $data
+        $this->feedbackModel->setRedisById('feedback:' . $feedback->id, Feedback::where('id', $feedback->id));
     }
 }
