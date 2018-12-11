@@ -28,6 +28,15 @@ class CategoryController extends Controller
     {
         $categories_data = Category::all();
 
+        // if (!Redis::get('catogory:all')) {
+        //     // $name, $with from repository
+        //     $this->categoryModel->setRedisAll('catogory:all', []);
+        // }
+
+        // // set true to return array
+        // $data = json_decode(Redis::get('catogory:all'), true);
+        // return datatables($data)->make(true);
+
         return view('admin.category_list', ['categories' => $categories_data]);
     }
 
@@ -56,6 +65,11 @@ class CategoryController extends Controller
         $category->save();
 
         toast()->success(__('message.success.create'), 'success');
+
+        // // $name, $with
+        // $this->categoryModel->setRedisAll('category:all', []);
+        // // $name, $id, $data
+        // $this->categoryModel->setRedisById('category:' . $category->id, $category);
 
         return redirect()->route('admin.category.index');
     }
@@ -101,6 +115,9 @@ class CategoryController extends Controller
 
         toast()->success(__('message.success.update'), 'success');
 
+        // $this->categoryModel->setRedisAll('category:all', []);
+        // $this->categoryModel->setRedisById('category:' . $category->id, $data);
+
         return redirect()->route('admin.category.index');
     }
 
@@ -114,6 +131,9 @@ class CategoryController extends Controller
     {
         $category = Category::findOrFail($id);
 
+        $this->categoryModel->setRedisAll('category:all', ['role']);
+        $this->categoryModel->deleteRedis('category:' . $category->id);
+
         $category->delete();
 
         toast()->success(__('message.success.delete'), 'success');
@@ -126,5 +146,15 @@ class CategoryController extends Controller
         $categories_data = Category::all();
 
         return $categories_data;
+
+        /*if (!Redis::get('category:all')) {
+            // $name, $with from repository
+            $this->categoryModel->setRedisAll('category:all', []);
+        }
+
+        // set true to return array
+        $data = json_decode(Redis::get('category:all'), true);
+
+        return datatables($data)->make(true);*/
     }
 }

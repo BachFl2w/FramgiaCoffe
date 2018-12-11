@@ -43,7 +43,6 @@ class UserController extends Controller
 
     public function json()
     {
-        // get all user but dont get current user
         if (!Redis::get('user:all')) {
             // $name, $with from repository
             $this->userModel->setRedisAll('user:all', ['role']);
