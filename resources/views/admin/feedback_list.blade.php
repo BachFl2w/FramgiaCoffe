@@ -38,8 +38,10 @@
 $(document).ready(function() {
     var table = $('#feedback').DataTable({
         ajax: {
-            url: route('admin.feedback.json'),
-            dataSrc: '',
+            processing: true,
+            serverSide: true,
+            order: [0, "desc"],
+            url: '{!! route('admin.feedback.json') !!}',
             type: 'get',
         },
         columns: [

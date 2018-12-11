@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use Redis;
 use Illuminate\Database\Eloquent\Model;
 
 class Repository implements RepositoryInterface
@@ -19,6 +20,27 @@ class Repository implements RepositoryInterface
     public function all()
     {
         return $this->model->all();
+    }
+
+    public function setRedisAll($key, array $load)
+    {
+        if (!empty($load)) {
+            $data = $this->model->all()->load($load);
+        } else {
+            $data = $this->model->all();
+        }
+
+        return Redis::set($key, json_encode($data));
+    }
+
+    public function setRedisById($key, $data)
+    {
+        return Redis::set($key, json_encode($data));
+    }
+
+    public function deleteRedis($key)
+    {
+        return Redis::del($key);
     }
 
     public function where($column, $condition, $value)

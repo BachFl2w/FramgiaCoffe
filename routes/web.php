@@ -14,6 +14,10 @@
 
 Auth::routes();
 
+// login with google
+Route::get('/auth/{provider}', 'SocialAuthController@redirectToProvider');
+Route::get('/auth/{provide}/callback', 'SocialAuthController@handleProviderCallback');
+
 // Route::get('change-language/{language}', 'HomeController@changeLanguage')->name('user.change-language');
 
 Route::group(['middleware' => 'locale'], function() {
