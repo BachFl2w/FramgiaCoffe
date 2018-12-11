@@ -227,7 +227,9 @@
             $('#checkout').click(function (event) {
                 event.preventDefault();
                 var user = $(this).attr('data-user');
-                console.log(user);
+                
+                var data = Object.entries(user);
+                console.log(data);
                 $('#div-check-out').fadeIn();
             });
         });
