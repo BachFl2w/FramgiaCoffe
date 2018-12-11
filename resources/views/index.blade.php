@@ -133,7 +133,7 @@
                                                         <a class="product-image" title="{{ $best_discount_product->image }}"
                                                            href="{{ route('client.product.detail', ['id' => $best_discount_product->id]) }}">
                                                             <img alt="{{ $best_discount_product->image }}"
-                                                                 src="{{ asset('images/products/' . $best_discount_product->image) }}">
+                                                                 src="{{ asset('images/products/' . $best_discount_product->images[0]->name) }}">
                                                         </a>
                                                     </div>
                                                 </div>
@@ -192,18 +192,18 @@
                                                                              class="product-cartitem">0
                                                                         </div>
                                                                         <a class="product-image"
-                                                                           title="{{ $product->name }}"
-                                                                           href="{{ route('client.product.detail', ['id' => $product->id]) }}">
+                                                                           title="{{ $product['product']->name }}"
+                                                                           href="{{ route('client.product.detail', ['id' => $product['product']->id]) }}">
                                                                             <img alt="{{ $product->name }}"
-                                                                                 src="{{ asset('images/products/' . $product->image) }}">
+                                                                                 src="{{ asset('images/products/' . $product['product']['images'][0]->name) }}">
                                                                         </a>
                                                                     </div>
                                                                     <div class="item-info">
                                                                         <div class="info-inner">
                                                                             <div class="item-title">
                                                                                 <a title="{{ $product->name }}"
-                                                                                   href="{{ route('client.product.detail', ['id' => $product->id]) }}">
-                                                                                    {{ $product->name }}
+                                                                                   href="{{ route('client.product.detail', ['id' => $product['product']->id]) }}">
+                                                                                    {{ $product['product']->name }}
                                                                                 </a>
                                                                             </div>
                                                                             <div class="rating">
@@ -219,7 +219,7 @@
                                                                                     <div class="price-box">
                                                                                         <span class="regular-price">
                                                                                             <span
-                                                                                                class="price">{{ number_format($product->price ) . ' ₫'}}</span>
+                                                                                                class="price">{{ number_format($product['product']->price) . ' ₫'}}</span>
                                                                                         </span>
                                                                                     </div>
                                                                                 </div>
@@ -667,7 +667,8 @@
                 <div class="row">
                     @foreach($categories as $category)
                         <div class="col-lg-2 col-md-2 col-sm-4 col-xs-6">
-                            <div class="category-box"><a href="#">
+                            <div class="category-box">
+                                <a href="{{ route('client.filter', ['category_id' => $category->id]) }}">
                                     <img class="loaded"
                                          src="{{ asset(config('asset.image_path.category') . $category->image) }}">
                                 </a>
@@ -678,7 +679,7 @@
                 </div>
             </div>
         </section>
-        <section class="brand-logo-section">
+       {{--  <section class="brand-logo-section">
             <div class="container">
                 <div class="row">
                     <h3 class="widget-heading">Best of Brands</h3>
@@ -716,7 +717,7 @@
                         </a></div>
                 </div>
             </div>
-        </section>
+        </section> --}}
         <div class="container">
             <div class="bestsell-pro">
                 <div class="slider-items-products">
@@ -741,9 +742,17 @@
                                                     <div class="new-label new-top-right"> Sale</div>
                                                     <div class="box-hover">
                                                         <ul class="add-to-links">
-                                                            <li> <a class="detail-bnt yith-wcqv-button link-quickview" data-product_id="83"> <i class="fa fa-search" aria-hidden="true"></i> </a> </li>
-                                                            <li> <a title="favorite" href="#" data-product-id="83" data-product-type="simple" class="add_to_wishlist link-wishlist"></a> </li>
-                                                            <li> <a title="like" href="#" class="link-compare add_to_compare compare" data-product_id="83"></a> </li>
+                                                            <li>
+                                                                <a class="detail-bnt yith-wcqv-button link-quickview">
+                                                                <i class="fa fa-search" aria-hidden="true"></i>
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a class="add_to_wishlist link-wishlist favorite" data-id="{{ $product->id }}"></a>
+                                                                 </li>
+                                                            <li> 
+                                                                <a href="#" class="link-compare add_to_compare compare"></a> 
+                                                            </li>
                                                         </ul>
                                                     </div>
                                                 </div>

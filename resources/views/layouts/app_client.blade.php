@@ -36,11 +36,8 @@
 <script src="http://htmldemo.themessoft.com/freshia/version3/js/owl.carousel.min.js"></script>
 <script src="http://htmldemo.themessoft.com/freshia/version3/js/jquery.mobile-menu.min.js"></script>
 <script src="http://htmldemo.themessoft.com/freshia/version3/js/countdown.js"></script>
-
-
-<!-- <script src="js/thm_menu.js.download.js"></script>
-<script src="js/jquery.bxslider.js"></script>  -->
 <script src="{{ asset('js/js_cloud-zoom.js') }}"></script>
+<script src="{{ asset('js/sweetalert.min.js') }}"></script>
 
 <script>
     jQuery(document).ready(function () {
@@ -131,7 +128,7 @@
                         $count_product += element.item.quantity;
                     });
                     $('#count_cart').html($count_product);
-                    $('#price_cart').html(nf.format($total_price));
+                    $('.price_cart').html(nf.format($total_price));
                     var count_cart = res.length < 3 ? res.length : 3;
                     for (var i = 0; i < count_cart; i++) {
                         var url_image = 'http://127.0.0.1:8000/images/products/';
@@ -196,8 +193,12 @@
                 data: $('#form_order').serialize(),
             })
             .done(function () {
+                swal({
+                    title:"Add to cart successfully", 
+                    icon: "success",
+                    timer: 2000,
+                });
                 loadCart();
-
             })
             .fail(function () {
                 console.log("error");
@@ -218,6 +219,7 @@
                 })
                 .done(function () {
                     console.log("success");
+                    window.location.href = route('client.showCart');
                 })
                 .fail(function () {
                     console.log("error");
@@ -229,7 +231,7 @@
         });
 
         //search index client
-        $('#keysearch').on('keyup change', function(event) {
+        $('#keysearch').on('keyup', function(event) {
             var request_value = '';
             if ($('#keysearch').val() != '') {
                 request_value = $('#keysearch').val();
@@ -252,10 +254,10 @@
                     result =  $('#box_search').hide();;
                 }
                 else {
-                    var url = route('client.search', { keyword: request_value })
+                    var url = route('client.search', { keyword: request_value });
                     res.forEach( function(element, index) {
                         var url_product = route("client.product.detail", {id: element.id})
-                        result += '<a href="">' +
+                        result += '<a href="' + url_product + '">' +
                         '<div class="element_search">' +
                             '<div class="image">' +
                                 '<img class="img-thumbnail" src="{{ asset('images/products/1.jpg') }}">' +
@@ -269,7 +271,7 @@
                                     '<span class="product-discount"> ('+ element.discount +'%)</span>' +
                                     '</p>';
                                 }
-                                result += '<p class="product-new-price">' + nf.format(element.price * (1 - element.discount)) + '  ₫</p>' +
+                                result += '<p class="product-new-price">' + nf.format(element.price * (1 - element.discount/100)) + '  ₫</p>' +
                             '</div>' +
                         '</div>' +
                     '</a>';
@@ -283,9 +285,35 @@
                 $('#box_search').html(result);
             })
         });
+
+        $('.favorite').click(function(event) {
+            event.preventDefault();
+            var id_product = $(this).attr('data-id');
+            console.log(id_product);
+            $.ajax({
+                url: '{{ route('client.favorite') }}',
+                type: 'post',
+                dataType: '',
+                data: {id: id_product},
+            })
+            .done(function() {
+                swal({
+                    title:"Add to favorite list", 
+                    icon: "success",
+                    timer: 2000,
+                });
+            })
+            .fail(function() {
+                console.log("error");
+            })
+            .always(function() {
+                console.log("complete");
+            });
+        });
     });
 </script>
 
+{{-- <script src="{{ asset('js/app_client.js') }}" type="text/javascript" charset="utf-8" async defer></script> --}}
 @yield('js')
 </body>
 </html>

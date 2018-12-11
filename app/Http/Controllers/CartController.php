@@ -188,15 +188,4 @@ class CartController extends Controller
 
         return back()->with('success', __('message.success.order'));
     }
-
-    public function demo()
-    {
-        $categories = Category::with(['products' => function ($query) {
-            return $query->limit(5);
-        }])->get()->map(function() {
-
-        });
-
-        return $categories;
-    }
 }

@@ -50,4 +50,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(Potential::class);
     }
+
+    public function products()
+    {
+        return $this->belongsToMany(Product::class);
+    }
 }

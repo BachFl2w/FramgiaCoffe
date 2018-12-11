@@ -25,7 +25,6 @@ class ImagesTableSeeder extends Seeder
             '8.jpg',
             '9.jpg',
             '10.jpg',
-            '11.png',
             '12.jpg',
             '13.jpg',
             '15.jpg',

@@ -11,8 +11,8 @@
                 <li class="level0 nav-6 level-top noDropdown active"><a class="level-top" href="{{ route('client.index') }}">
                         <span>Home</span> </a>
                 <li class="mega-menu">
-                    <a class="level-top" href="http://htmldemo.themessoft.com/freshia/version3/grid.html">
-                        <span>{{ trans('message.product') }}</span>
+                    <a class="level-top" href="">
+                        <span>{{ __('message.product') }}</span>
                     </a>
                     <div class="level0-wrapper dropdown-6col">
                         <div class="container">
@@ -45,6 +45,11 @@
                         </div>
                     </div>
                 </li>
+                 <li class="level0 nav-6 level-top drop-menu aaa"> <a class="level-top" href="#"> <span>Pages</span> </a>
+                    <ul class="level1">
+                      <li class="level2 first"><a href="{{ route('client.filter') }}"><span>Filter</span></a> </li>
+                    </ul>
+                  </li>
                 <li id="nav-menu-item-3566" class=" pull-right">
                     <a href="#" class="">
                         <span>Winter Sale! <em class="tip hot">HOT<i class="tip-arrow"></i></em></span>

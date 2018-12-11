@@ -184,7 +184,7 @@ Route::group(['middleware' => 'userLogin'], function() {
 //    Route::get('destroy', 'CartController@destroy')->name('user.cart.destroy');
 //});
 
-Route::post('checkout', 'CartController@checkout')->name('user.checkout');
+// Route::post('checkout', 'Cart1Controller@checkout')->name('user.checkout');
 
 Route::get('/', 'ClientController@index')->name('client.index');
 
@@ -208,10 +208,6 @@ Route::get('cart', 'ClientController@cart')->name('client.showCart');
 
 Route::post('cart-add', 'Cart1Controller@add')->name('user.cart.add');
 
-Route::get('remove', function() {
-    Session::forget('cart');
-});
-
 Route::get('cart-delete/{key}', 'Cart1Controller@delete')->name('user.cart.delete');
 
 Route::get('cart-remove-all', 'Cart1Controller@removeAll')->name('user.cart.remove');
@@ -222,6 +218,17 @@ Route::get('order_detail/{order_id}', 'ClientController@order_details')->name('c
 
 Route::get('cancel_order/{order_id}', 'ClientController@cancel_order')->name('client.order.cancel_order');
 
-Route::get('demo', 'ClientController@demo');
+Route::get('profile', 'ClientController@profile')->name('client.profile');
 
+Route::get('client/login', 'ClientController@login')->name('client.login');
+
+Route::get('register', 'ClientController@register')->name('client.register');
+
+Route::post('registerPost', 'ClientController@registerPost')->name('client.registerPost');
+
+Route::get('filter', 'ClientController@filter')->name('client.filter');
+
+Route::post('favorite', 'ClientController@favorite')->name('client.favorite');
+
+Route::post('checkout', 'ClientController@checkout')->name('client.checkout');
 

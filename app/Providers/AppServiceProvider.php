@@ -31,6 +31,13 @@ class AppServiceProvider extends ServiceProvider
             $toppings = Topping::all();
             $view->with(['categories' => $categories, 'sizes' => $sizes, 'toppings' => $toppings]);
         });
+
+        view()->composer('product_detail', function ($view) {
+            $categories = Category::all();
+            $sizes = Size::all();
+            $toppings = Topping::all();
+            $view->with(['categories' => $categories, 'sizes' => $sizes, 'toppings' => $toppings]);
+        });
         view()->composer('layouts/search_and_menu_client', function ($view) {
             $category = Category::with(['products'])->get()->map(function ($query) {
                 $query->setRelation('products', $query->products->take(4));

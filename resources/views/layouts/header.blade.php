@@ -1,4 +1,3 @@
-<!-- Header-->
 <header id="header" class="header">
     <div class="header-menu">
         <div class="col-sm-7">

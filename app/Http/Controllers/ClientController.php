@@ -2,62 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\Category;
 use App\Feedback;
-use App\Image;
+use App\Http\Requests\Client_UserRequest;
 use App\Order;
 use App\OrderDetail;
 use App\Product;
-use App\Topping;
-use App\Size;
+use App\User;
+use App\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Redis;
+use Cache;
 
 class ClientController extends Controller
 {
     public function index()
     {
-        // $best_discount_product = Product::with('images')->orderBy('discount', 'desc')
-        //     ->orderBy('id', 'desc')
-        //     ->first();
-        // $best_discount_product->image = $best_discount_product->images[0]->name;
-
-        // $best_products = OrderDetail::with('product')->groupBy('product_id')
-        //     ->orderBy('product_price', 'desc')
-        //     ->orderBy('id', 'desc')
-        //     ->limit(6)
-        //     ->get();
-
-        // $best_product_ids = [];
-        // $best_product_ids[] = $best_discount_product->id;
-
-        // $products = [];
-        // foreach ($best_products as $product) {
-        //     $best_product_ids[] = $product->product_id;
-        //     $products[] = $product->product;
-        // }
-        // if (count($best_products) < 6) {
-        //     $newest_products = Product::whereNotIn('id', $best_product_ids)
-        //         ->limit(6 - count($best_products))
-        //         ->get();
-        //     foreach ($newest_products as $product) {
-        //         $products[] = $product;
-        //     }
-        // }
-        // for ($i = 0; $i < count($products); $i++) {
-        //     $image = Image::where('product_id', $products[$i]->id)
-        //         ->orderBy('active', 'desc')
-        //         ->orderBy('id', 'desc')
-        //         ->first();
-        //     $products[$i]->image = $image->name;
-        // }
-
-        // return view('index', compact('products', 'best_discount_product'));
-
-        $best_discount_product = Product::with(['images' => function($query) {
-                $query->orderBy('id', 'desc')->limit(1);
-            }])
+        $best_discount_product = Product::with(['images' => function ($query) {
+            $query->orderBy('id', 'desc')->limit(1);
+        }])
             ->orderBy('discount', 'desc')
             ->orderBy('id', 'desc')
             ->first();
@@ -67,28 +31,21 @@ class ClientController extends Controller
             ->limit(6)
             ->get();
 
-        // dd($bestSelling);
-        // ong co the lay ra anh cua best selling
-        // tuy trỏ tới biến sẽ dài thêm 1 tí, nhưng gỉam được truy vấn
-        // vì chỉ cần lấy ra 1 ảnh của sp nên mặc định biến $value['product']['images'][0]->name sẽ truyền 0 vào
-        // duyệt foreach với 3 bảng cần lấy ra, query giam tu 16 xuong 10
-        // đây mới chỉ demo data, ông tự truyền vào view nhé
-        echo '<h1>Data demo</h1>';
-        foreach ($products as $value) {
-            echo 'product name: ' . $value['product']->name . '<br>';
-            echo 'order detail price: ' . $value->product_price . '<br>';
-            echo 'image: ' . $value['product']['images'][0]->name . '<br>';
-            echo '<br><br><BR>';
-        }
-
         return view('index', compact('products', 'best_discount_product'));
     }
 
     public function listProduct()
     {
-        $products = Product::with(['category' => function ($query) {
-            $query->get();
-        }])->paginate(4);
+        if(!Redis::get('products')) {
+            $products = Product::with(['category' => function ($query) {
+                $query->get();
+            }])->paginate(4);
+            Redis::set('products', json_encode($products));
+        }
+        else
+        {
+            $products = json_decode(Redis::get('products'));
+        }
 
         return view('list_product', compact('products'));
     }
@@ -115,57 +72,44 @@ class ClientController extends Controller
         return view('list_result_search', compact('products'));
     }
 
-    public function filterProductByCategory(Request $request)
-    {
-        $category_id = $request->category_id;
-
-        $products = [];
-
-        if ($category_id == 0) {
-            $products = Product::paginate(4);
-        } else {
-            $products = Product::where('category_id', $category_id)->paginate(4);
-        }
-
-        return view('list_product', compact('products'));
-    }
-
     public function detailProduct($id)
     {
-        $product = Product::with('category')->with(['images' => function($query) {
+        $product = Product::with('category')->with(['images' => function ($query) {
             $query->orderBy('active', 'desc')
-            ->orderBy('id', 'desc')->first();
+                ->orderBy('id', 'desc')->first();
         }])->findOrFail($id);
 
-        $feedback = Product::with(['feedbacks' => function($query) {
+        $products = Product::with('category')->with(['images' => function ($query) {
+            $query->orderBy('active', 'desc')
+                ->orderBy('id', 'desc')->get();
+        }])->where('category_id', '=', $product->category->id)
+            ->whereNotIn('id', [$product->id])
+            ->limit(3)->get();
+
+        $feedback = Product::with(['feedbacks' => function ($query) {
             $query->where('status', 1)->orderBy('id', 'desc')->get();
         }])->findOrFail($id);
 
-        return view('product_detail', compact('product', 'feedback'));
+        return view('product_detail', compact('product', 'feedback', 'products'));
     }
 
     public function detailProductData($id)
     {
-        $product = Product::with('category')->with(['images' => function($query) {
+        $product = Product::with('category')->with(['images' => function ($query) {
             $query->orderBy('active', 'desc')
-            ->orderBy('id', 'desc')->first();
+                ->orderBy('id', 'desc')->first();
         }])->findOrFail($id);
-       
+
         return $product;
     }
 
     public function comment(Request $request)
     {
         $feedback = new Feedback();
-
         $feedback->user_id = Auth::id();
-
         $feedback->product_id = $request->product_id;
-
         $feedback->content = $request->comment;
-
         $feedback->status = 0;
-
         $feedback->save();
     }
 
@@ -175,7 +119,7 @@ class ClientController extends Controller
             $user_id = Auth::id();
             $orders = Order::where('user_id', $user_id)->orderBy('id', 'desc')->paginate(8);
 
-            return view('list_order', compact('orders'));
+            return view('order', compact('orders'));
         }
 
         return abort(404);
@@ -191,9 +135,7 @@ class ClientController extends Controller
     public function cancel_order($order_id)
     {
         $order = Order::findOrfail($order_id);
-
         $order->status = -1;
-
         $order->save();
     }
 
@@ -207,15 +149,75 @@ class ClientController extends Controller
         return view('cart', compact('carts'));
     }
 
-    public function demo()
+    public function profile()
     {
-        $category = Category::with(['products'])->get()->map(function ($query) {
-            $query->setRelation('products', $query->products->take(5));
-            return $query;
-        });
+        $user = Auth::user();
 
-        return $category;
+        return view('profile', compact('user'));
     }
 
+    public function login()
+    {
+        return view('login');
+    }
 
+    public function register()
+    {
+        return view('register');
+    }
+
+    public function registerPost(Client_UserRequest $request)
+    {
+        if ($request->hasFile('avatar')) {
+            $file = $request->file('avatar');
+            $name = $file->getClientOriginalName();
+            $newName = str_random(4) . '_' . $name;
+            while (file_exists(config('asset.image_path.avatar') . $newName)) {
+                $newName = str_random(4) . '_' . $name;
+            }
+            $file->move(config('asset.image_path.avatar'), $newName);
+            $image = $newName;
+        } else {
+            $image = null;
+        }
+        $user = new User();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = $request->password;
+        $user->image = $image;
+        $user->address = $request->address;
+        $user->phone = $request->phone;
+        $user->role_id = 3;
+        $user->save();
+    }
+
+    public function filter(Request $request)
+    {
+        $category_id = $request->input('category_id') ? $request->input('category_id') : 0;
+        $category = Category::find($category_id);
+        $categories = Category::all();
+        $products = Product::with(['images' => function ($query) {
+            $query->orderBy('active', 'desc')->orderBy('id', 'desc')->get();
+        }])->with('category')->orderBy('id', 'desc')
+            ->when($category_id, function ($query, $category_id) {
+                return $category_id != 0 ? $query->where('category_id', '=', $category_id) : $query->get();
+            })
+            ->paginate(6);
+
+        return view('filter', compact('categories', 'products', 'category'));
+    }
+
+    public function favorite(Request $request)
+    {
+        $product = Product::findOrFail($request->id);
+
+        if (Auth::check()) {
+            Auth::user()->products()->attach($product);
+        }
+    }
+
+    public function checkout(Request $request)
+    {
+        
+    }
 }

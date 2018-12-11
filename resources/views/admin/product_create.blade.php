@@ -69,7 +69,4 @@
     	});
     });
 </script>
-<script>
-    $('#description').ckeditor();
-</script>
 @endsection

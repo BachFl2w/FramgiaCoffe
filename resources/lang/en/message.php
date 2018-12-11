@@ -187,4 +187,14 @@ return [
     'my_account' => 'My Account',
     'login' => 'Login',
     'register' => 'Register',
+    'logout' => 'Logout',
+    're_password' => 'Re-PassWord',
+    'password' => 'Password',
+    'full_name' => 'Full Name',
+    'register_title' => 'register a new account',
+    'new_customer' => 'New Customers',
+    'create_account' => 'Create an Account',
+    'login_or_create_account' => 'Login or Create an Account',
+    'client_login_text' => 'By creating an account with our store, you will be able to move through the checkout 
+        process faster, store multiple shipping addresses, view and track your orders in your account and more',
 ];
