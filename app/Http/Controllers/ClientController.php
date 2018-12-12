@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Feedback;
+use App\Http\Requests\CheckoutRequest;
 use App\Http\Requests\Client_UserRequest;
 use App\Order;
 use App\OrderDetail;
@@ -14,9 +15,19 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Redis;
 use Cache;
+use App\Repositories\Repository;
 
 class ClientController extends Controller
 {
+    protected $orderModel;
+    protected $orderDetailModel;
+
+    function __construct(Order $orderModel, OrderDetail $orderDetailModel)
+    {
+        $this->orderModel = new Repository($orderModel);
+        $this->orderDetailModel = new Repository($orderDetailModel);
+    }
+
     public function index()
     {
         $best_discount_product = Product::with(['images' => function ($query) {
@@ -36,14 +47,12 @@ class ClientController extends Controller
 
     public function listProduct()
     {
-        if(!Redis::get('products')) {
+        if (!Redis::get('products')) {
             $products = Product::with(['category' => function ($query) {
                 $query->get();
             }])->paginate(4);
             Redis::set('products', json_encode($products));
-        }
-        else
-        {
+        } else {
             $products = json_decode(Redis::get('products'));
         }
 
@@ -64,12 +73,13 @@ class ClientController extends Controller
     public function search(Request $request)
     {
         $keyword = $request->keyword;
+        $category = null;
         $products = [];
         if ($keyword != null) {
             $products = Product::where('name', 'like', '%' . $keyword . '%')->paginate(5);
         }
 
-        return view('list_result_search', compact('products'));
+        return view('filter', compact('products', 'category', 'keyword'));
     }
 
     public function detailProduct($id)
@@ -193,18 +203,18 @@ class ClientController extends Controller
 
     public function filter(Request $request)
     {
+        $keyword = null;
         $category_id = $request->input('category_id') ? $request->input('category_id') : 0;
         $category = Category::find($category_id);
-        $categories = Category::all();
         $products = Product::with(['images' => function ($query) {
-            $query->orderBy('active', 'desc')->orderBy('id', 'desc')->get();
+            $query->where('active', 1)->get();
         }])->with('category')->orderBy('id', 'desc')
             ->when($category_id, function ($query, $category_id) {
                 return $category_id != 0 ? $query->where('category_id', '=', $category_id) : $query->get();
             })
             ->paginate(6);
 
-        return view('filter', compact('categories', 'products', 'category'));
+        return view('filter', compact('products', 'category', 'keyword'));
     }
 
     public function favorite(Request $request)
@@ -216,8 +226,48 @@ class ClientController extends Controller
         }
     }
 
-    public function checkout(Request $request)
+    public function checkout(CheckoutRequest $request)
     {
-        
+        $cart = session('cart');
+
+        $id = null;
+        if (Auth::id()) {
+            $id = Auth::id();
+        }
+
+        $dateTime = new \DateTime;
+
+        date_default_timezone_set("Asia/Ho_Chi_Minh");
+        $now = new \DateTime();
+
+        $order = $this->orderModel->create([
+            'receiver' => $request->receiver,
+            'user_id' => $id,
+            'order_time' => $now->format('Y-m-d H:i:s'),
+            'order_place' => $request->place,
+            'order_phone' => $request->phone,
+            'status' => 0,
+            'note' => $request->note,
+        ]);
+
+        foreach ($cart as $product) {
+            $orderDetail = $this->orderDetailModel->create([
+                'product_id' => $product['item']['product']->id,
+                'product_price' => $product['item']['product_price'],
+                'order_id' => $order->id,
+                'size_id' => $product['item']['size']->id,
+                'quantity' => $product['item']['quantity'],
+            ]);
+
+            if ($product['item']['toppings']) {
+                foreach ($product['item']['toppings'] as $topping) {
+                    $orderDetail->toppings()->attach($topping->id, [
+                            'topping_price' => $topping->price,
+                        ]
+                    );
+                }
+            }
+        }
+        session()->forget('cart');
     }
 }

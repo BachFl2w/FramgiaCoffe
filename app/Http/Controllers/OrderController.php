@@ -2,14 +2,22 @@
 
 namespace App\Http\Controllers;
 
-
 use App\Order;
 use App\OrderDetail;
 use App\Image;
 use Illuminate\Http\Request;
+use App\Repositories\Repository;
+use Auth;
 
 class OrderController extends Controller
 {
+    protected $orderModel;
+
+    public function __construct(Order $orderModel)
+    {
+        $this->orderModel = new Repository($orderModel);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -17,7 +25,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::all();
+        $orders = $this->orderModel->all();
 
         return view('admin.order_list', compact('orders'));
     }
@@ -35,7 +43,7 @@ class OrderController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -46,7 +54,7 @@ class OrderController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -57,7 +65,7 @@ class OrderController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -71,19 +79,18 @@ class OrderController extends Controller
             $image = Image::where('product_id', $product_id)->where('active', 1)->first();
             if ($image != null) {
                 $orderDetails[$index]->image = $image->name;
-            }
-            else {
-                $image = Image::where('product_id', $product_id)->orderBy('id','DESC')->first();
+            } else {
+                $image = Image::where('product_id', $product_id)->orderBy('id', 'DESC')->first();
                 $orderDetails[$index]->image = $image->name;
             }
             $priceProduct = $orderDetail->product_price * $orderDetail->quantity;
             $priceTopping = 0;
             foreach ($orderDetail->toppings as $topping) {
-                $priceTopping += $topping->pivot->topping_price ;
+                $priceTopping += $topping->pivot->topping_price;
             }
             $orderDetails[$index]->price = $priceProduct + $priceTopping;
             $orderDetails[$index]->status = $order->status;
-            $index ++;
+            $index++;
         }
 
         return view('admin.order_detail', compact('orderDetails', 'order'));
@@ -92,21 +99,19 @@ class OrderController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        $order = Order::findOrFail($id);
-        $order->receiver = $request->receiver;
-        $order->order_phone = $request->order_phone;
-        // $order->order_time = $request->order_time;
-        $order->order_place = $request->order_place;
-        $order->note = $request->note;
-        $order->status = $request->status;
-        $order->save();
-        toast()->success(__('message.success.update'), 'success');
+        $this->orderModel->update([
+            'receiver' => $request->receiver,
+            'order_phone' => $request->order_phone,
+            'order_place' => $request->order_place,
+            'note' => $request->note,
+            'status' => $request->status,
+        ], $id);
 
         return redirect()->route('admin.order.edit', ['id' => $id]);
     }
@@ -114,14 +119,16 @@ class OrderController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        $order = Order::findOrFail($id);
-        $order->delete();
-        toast()->success(__('message.success.delete'), 'success');
+        if(Auth::user()->role_id == 2)
+        {
+            return response()->json(['errors' => 'Not authorized.'],403);
+        }
+        $this->orderModel->delete($id);
 
         return redirect()->route('admin.order.index');
     }

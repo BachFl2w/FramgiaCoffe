@@ -45,6 +45,11 @@ class AppServiceProvider extends ServiceProvider
             });
             $view->with('category_with_product', $category);
         });
+
+        view()->composer('filter', function($view) {
+            $categories = Category::all();
+            $view->with('categories', $categories);
+        });
     }
 
     /**

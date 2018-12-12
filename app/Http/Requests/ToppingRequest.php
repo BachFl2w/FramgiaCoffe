@@ -24,8 +24,8 @@ class ToppingRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|max:200|unique:topping,name,' . $this->route('toppping'),
-            'price' => 'required|numeric',
+            'name' => 'required|max:200|unique:toppings,name,' . $this->route('topping'),
+            'price' => 'required|numeric|min:1',
             'quantity' => 'required|numeric|min:1',
         ];
     }
@@ -33,14 +33,15 @@ class ToppingRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => 'Tên ko để trống',
-            'name.max' => 'Tên ko quá 200 kí tự',
-            'name.unique' => 'Tên đã tồn tại',
-            'price.required' => 'Giá ko để trống',
-            'price.numeric' => 'Giá phải kiểu số',
-            'quantity.required' => 'Số lượng ko để trống',
-            'quantity.numeric' => 'Số lượng phải là kiểu số',
-            'quantity.min' => 'Số lượng phải lớn hơn 0',
+            'name.required' => 'Name is empty',
+            'name.max' => 'Name is too long',
+            'name.unique' => 'Name has been used',
+            'price.required' => 'Price is empty',
+            'price.min' => 'Price is too small',
+            'price.numeric' => 'Price is number',
+            'quantity.required' => 'Quantity is empty',
+            'quantity.numeric' => 'Quantity is number',
+            'quantity.min' => 'Quantity is too small',
         ];
     }
 }

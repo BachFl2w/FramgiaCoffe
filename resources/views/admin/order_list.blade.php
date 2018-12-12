@@ -33,7 +33,7 @@
                             <tr>
                             <td>{{ $order->id }}</td>
                             <td>{{ $order->receiver }}</td>
-                            <td>{{ $order->order_time }}</td>
+                            <td>{{ date_format(date_create($order->order_time), 'd/m/Y H:i:s') }}</td>
                             <td>{{ $order->order_place }}</td>
                             <td>{{ $order->order_phone }}</td>
                             <td>
@@ -49,7 +49,7 @@
                                     @break
                                 @endswitch
                             </td>
-                            <td>{{ $order->note }}</td>
+                            <td width="10%">{{ $order->note }}</td>
                             <td>
                                 <a href="{{ route('admin.order.edit', ['id' => $order->id]) }}" class="btn btn-outline-primary"><i class="fa fa-edit"></i></a>
                                 <a href="{{ route('admin.order.destroy', ['id' => $order->id]) }}" onclick="return confirm('Delete this one? ')" class="btn btn-outline-danger"><i class="fa fa-trash"></i></a>
@@ -67,7 +67,6 @@
 @section('script')
     <script type="text/javascript">
         jQuery(document).ready(function($) {
-            
             var order_table = $('#admin_order_list').DataTable(); 
         });
     </script>

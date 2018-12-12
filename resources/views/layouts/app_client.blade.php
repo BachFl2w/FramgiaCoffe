@@ -15,6 +15,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/app_client.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/custom.css') }}">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css">
     @yield('css')
 </head>
 
@@ -127,7 +128,7 @@
                         $total_price += element.item_price;
                         $count_product += element.item.quantity;
                     });
-                    $('#count_cart').html($count_product);
+                    $('.count_cart').html($count_product);
                     $('.price_cart').html(nf.format($total_price));
                     var count_cart = res.length < 3 ? res.length : 3;
                     for (var i = 0; i < count_cart; i++) {

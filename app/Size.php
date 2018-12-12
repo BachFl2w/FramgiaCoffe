@@ -11,6 +11,12 @@ class Size extends Model
 
     protected $table = 'sizes';
 
+    protected $fillable = [
+        'id',
+        'name',
+        'percent',
+    ];
+
     protected $dates = ['deleted_at'];
 
     public function orderDetails()

@@ -7,6 +7,7 @@
                     <div class="page-title">
                         <h2>{{ __('message.order') }}</h2>
                     </div>
+                    @if(count($orders))
                     <table class="table table-bordered" id="order_list">
                         <thead>
                         <tr>
@@ -52,6 +53,9 @@
                         </tbody>
                     </table>
                     {!! $orders->appends(request()->input())->links() !!}
+                    @else
+                        <h3>You dont have any order</h3>
+                    @endif
                 </div>
                 <div class="crosssel bounceInUp animated">
                     <div class="also-like">
@@ -162,6 +166,8 @@
 @section('js')
 <script type="text/javascript">
         jQuery(document).ready(function ($) {
+
+            $('#order_list').DataTable();
 
             $('#order_list tbody').on('click', '#edit_order', function (event) {
                 event.preventDefault();

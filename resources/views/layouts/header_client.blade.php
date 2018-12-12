@@ -81,7 +81,7 @@
             </div>
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                 <div class="search-box">
-                    <form name="myform" method="GET" action="#">
+                    <form name="myform" action="{{ route('client.search') }}">
                         <input class="thmsearch" type="text" value="" id="keysearch" placeholder="Search product here" name="keyword" maxlength="70" autocomplete="off">
                         <button class="search-btn-bg" type="submit">
                             <span class="glyphicon glyphicon-search"></span>&nbsp;
@@ -101,7 +101,7 @@
                     <div class="mini-cart">
                         <div data-hover="dropdown" class="basket dropdown-toggle">
                             <a href="#">
-                                <span class="count" id="count_cart">0</span>
+                                <span class="count count_cart">0</span>
                                 <span class="woocs_special_price_code">
                                     <span class="woocommerce-Price-amount amount">
                                     <span class="woocommerce-Price-currencySymbol price_cart">0</span> ₫</span>

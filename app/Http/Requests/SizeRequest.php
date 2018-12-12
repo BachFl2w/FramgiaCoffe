@@ -24,18 +24,20 @@ class SizeRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|min:1|max:5|unique:size,name'.$this->route('size'),
-            'percent' => 'required|numberic',
+            'name' => 'required|min:1|max:5|unique:sizes,name,' . $this->route('size'),
+            'percent' => 'required|numeric',
         ];
     }
 
     public function messages()
     {
         return [
-            'name.required' => 'Tên còn trống',
-            'name.unique' => 'Tên đã tồn tại',
-            'name.max' => 'Tên tối đa 5 kí tự',
-            'name.min' => 'Tên thiểu đa 1 kí tự',
+            'name.required' => 'Name is empty',
+            'name.unique' => 'Name has been used',
+            'name.max' => 'Name is too long',
+            'name.min' => 'Name is too short',
+            'percent.required' => 'Percent is empty',
+            'percent.numeric' => 'Percent is number',
         ];
     }
 }

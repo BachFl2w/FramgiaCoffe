@@ -11,6 +11,13 @@ class Topping extends Model
 
     protected $table = 'toppings';
 
+    protected $fillable = [
+        'id',
+        'name',
+        'price',
+        'quantity',
+    ];
+
     protected $dates = ['deleted_at'];
 
     public function orderDetails()

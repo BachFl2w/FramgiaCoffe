@@ -7,6 +7,7 @@
                     <div class="page-title">
                         <h2>Shopping Cart</h2>
                     </div>
+                    <div id="box-cart">
                     @if(count($carts))
                         <div class="table-responsive">
                             <input type="hidden" value="Vwww7itR3zQFe86m" name="form_key">
@@ -112,30 +113,32 @@
                     @else
                         <h2>Nothing here</h2>
                     @endif
+                    </div>
                 </div>
                 <div class="container-fluid" hidden id="div-check-out" >
                     <div class="page-title">
                         <h2>Checkout</h2>
                     </div>
                     <div class="col-md-7">
-                        <form id="form-checkout" action="{{ route('client.checkout') }}">
+                        <form id="form-checkout" action="{{ route('client.checkout') }}" method="post">
+                            @csrf
                             <div class="form-group">
                                 <label for="receiver">Receiver:</label>
-                                <input type="text" class="form-control" id="receiver" name="receiver" placeholder="Name Receirver">
+                                <input type="text" class="form-control" id="checkout-receiver" name="receiver" placeholder="Name Receirver">
                             </div>
                             <div class="form-group">
                                 <label for="place">Order Place:</label>
-                                <input type="text" class="form-control" id="place" name="place" placeholder="Place Order">
+                                <input type="text" class="form-control" id="checkout-place" name="place" placeholder="Place Order">
                             </div>
                             <div class="form-group">
                                 <label for="phone">Order Phone:</label>
-                                <input type="text" class="form-control" name="phone" id="phone" placeholder="Phone">
+                                <input type="text" class="form-control" name="phone" id="checkout-phone" placeholder="Phone">
                             </div>
                             <div class="form-group">
                                 <label for="note">Note:</label>
-                                <textarea class="form-control" name="note" id="note" placeholder="Phone"></textarea>
+                                <textarea class="form-control" name="note" id="checkout-note" placeholder="Note"></textarea>
                             </div>
-                            <button type="submit" class="button btn-default" id="btn_checkout">Submit</button>
+                            <button type="submit" class="button btn-default" id="btn_checkout">Order</button>
                         </form>
                     </div>
                 </div>
@@ -222,15 +225,55 @@
 @endsection
 
 @section('js')
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <script type="text/javascript">
         jQuery(document).ready(function ($) {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
             $('#checkout').click(function (event) {
                 event.preventDefault();
-                var user = $(this).attr('data-user');
-                
-                var data = Object.entries(user);
-                console.log(data);
+                var user_current = $(this).attr('data-user');
+                if(user_current !== '') {
+                    var user = JSON.parse(user_current)
+                    $('#checkout-receiver').val(user.name);
+                    $('#checkout-place').val(user.address);
+                    $('#checkout-phone').val(user.phone);
+                }
                 $('#div-check-out').fadeIn();
+            });
+
+            $('#btn_checkout').click(function(event) {
+                event.preventDefault();
+
+                $.ajax({
+                    url: route('client.checkout'),
+                    type: 'post',
+                    dataType: '',
+                    contentType: false,
+                    processData: false,
+                    cache: false,
+                    data: new FormData($('form#form-checkout')[0]),
+                })
+                .done(function() {
+                    swal({
+                            title: "Success",
+                            icon: "success",
+                            timer: 2000,
+                    });
+                    $('#box-cart').html('<h2>Nothing here</h2>');
+                    $('#div-check-out').fadeOut();
+                })
+                .fail(function(xhr, status, error) {
+                    var err = JSON.parse(xhr.responseText);
+                    var errors = Object.entries(err.errors);
+                    errors.forEach(function (value, index) {
+                        toastr.error(value[1][0], 'Error!');
+                    });
+                })
             });
         });
     </script>

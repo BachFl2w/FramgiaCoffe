@@ -1,5 +1,7 @@
 <?php
 
+use App\OrderDetail;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,14 +22,14 @@ Route::get('/auth/{provide}/callback', 'SocialAuthController@handleProviderCallb
 
 // Route::get('change-language/{language}', 'HomeController@changeLanguage')->name('user.change-language');
 
-Route::group(['middleware' => 'locale'], function() {
+Route::group(['middleware' => 'locale'], function () {
     Route::get('change-language/{language}', 'HomeController@changeLanguage')->name('user.change-language');
 });
 
 Route::post('login', 'UserController@login')->name('postLogin');
 Route::get('logout', 'UserController@logoutUser')->name('logout');
 
-Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin'], function() {
+Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin'], function () {
 
     Route::get('index', 'HomeController@index')->name('admin.index');
 
@@ -49,7 +51,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin'], function() {
 
     });
 
-    Route::group(['prefix' => 'user'], function() {
+    Route::group(['prefix' => 'user'], function () {
 
         Route::get('index', 'UserController@index')->name('admin.user.index');
 
@@ -68,7 +70,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin'], function() {
         Route::get('active/{user}', 'UserController@active')->name('admin.user.active');
     });
 
-    Route::group(['prefix' => 'feedback'], function() {
+    Route::group(['prefix' => 'feedback'], function () {
 
         Route::get('index', 'FeedbackController@index')->name('admin.feedback.index');
 
@@ -89,13 +91,13 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin'], function() {
 
         Route::get('create', 'ProductController@create')->name('admin.product.create');
 
+        Route::get('show/{id}', 'ProductController@show')->name('admin.product.show');
+
         Route::post('store', 'ProductController@store')->name('admin.product.store');
 
         Route::get('edit/{id}', 'ProductController@edit')->name('admin.product.edit');
 
-        Route::get('detail/json/{id}', 'ProductController@productJson')->name('admin.product.detail.json');
-
-        Route::put('update/{product}', 'ProductController@update')->name('admin.product.update');
+        Route::post('update/{product}', 'ProductController@update')->name('admin.product.update');
 
         Route::get('destroy/{id}', 'ProductController@destroy')->name('admin.product.destroy');
 
@@ -103,7 +105,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin'], function() {
 
     });
 
-    Route::group(['prefix' => 'category'], function() {
+    Route::group(['prefix' => 'category'], function () {
 
         Route::get('index', 'CategoryController@index')->name('admin.category.index');
 
@@ -120,7 +122,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin'], function() {
         Route::get('json', 'CategoryController@getCategoryJson')->name('admin.category.json');
     });
 
-    Route::group(['prefix' => 'topping'], function() {
+    Route::group(['prefix' => 'topping'], function () {
 
         Route::get('json', 'TopingController@getDataJson')->name('admin.topping.json');
 
@@ -137,9 +139,11 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin'], function() {
         Route::get('edit/{id}', 'TopingController@edit')->name('admin.topping.edit');
     });
 
-    Route::group(['prefix' => 'size'], function() {
+    Route::group(['prefix' => 'size'], function () {
 
         Route::get('index', 'SizeController@index')->name('admin.size.index');
+
+        Route::get('json', 'SizeController@getDataJson')->name('admin.size.json');
 
         Route::get('create', 'SizeController@create')->name('admin.size.create');
 
@@ -150,15 +154,17 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin'], function() {
         Route::get('destroy/{id}', 'SizeController@destroy')->name('admin.size.destroy');
 
         Route::get('edit/{id}', 'SizeController@edit')->name('admin.size.edit');
+
+
     });
 
-    Route::group(['prefix' => 'order'], function() {
+    Route::group(['prefix' => 'order'], function () {
 
         Route::get('index', 'OrderController@index')->name('admin.order.index');
 
         Route::get('edit/{id}', 'OrderController@edit')->name('admin.order.edit');
 
-        Route::get('/{id}/detail','OrderDetailController@show')->name('admin.order.detail.json');
+        Route::get('/{id}/detail', 'OrderDetailController@show')->name('admin.order.detail.json');
 
         Route::post('update/{id}', 'OrderController@update')->name('admin.order.update');
 
@@ -166,13 +172,13 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin'], function() {
     });
 });
 
-Route::group(['prefix' => 'user', 'middleware' => 'userLogin'], function() {
+Route::group(['prefix' => 'user', 'middleware' => 'userLogin'], function () {
     Route::get('profile/{user}', 'UserController@edit')->name('user.edit');
     Route::post('update/{user}', 'UserController@update')->name('user.update');
 });
 
 
-Route::group(['middleware' => 'userLogin'], function() {
+Route::group(['middleware' => 'userLogin'], function () {
     Route::get('edit/{user}', 'UserController@edit')->name('user.edit');
 });
 
@@ -194,9 +200,9 @@ Route::get('/', 'ClientController@index')->name('client.index');
 
 Route::get('/list-product', 'ClientController@listProduct')->name('client.list_product');
 
-Route::post('search', 'ClientController@liveSearch')->name('client.live_search');
+Route::post('live-search', 'ClientController@liveSearch')->name('client.live_search');
 
-Route::get('search/{keyword}', 'ClientController@search')->name('client.search');
+Route::get('search', 'ClientController@search')->name('client.search');
 
 Route::get('list-product/filter', 'ClientController@filterProductByCategory')->name('client.list_product.filter');
 
@@ -235,4 +241,3 @@ Route::get('filter', 'ClientController@filter')->name('client.filter');
 Route::post('favorite', 'ClientController@favorite')->name('client.favorite');
 
 Route::post('checkout', 'ClientController@checkout')->name('client.checkout');
-

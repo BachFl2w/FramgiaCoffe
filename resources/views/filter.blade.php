@@ -29,8 +29,6 @@
                         <div class="slider-items-products">
                             <div id="category-desc-slider" class="product-flexslider hidden-buttons">
                                 <div class="slider-items slider-width-col1 owl-carousel owl-theme">
-
-                                    <!-- Item -->
                                     <div class="item">
                                         <a href="#">
                                             <img alt="" src="{{ asset('images/image_background2.jpg') }}">
@@ -51,8 +49,12 @@
                             @if($category != null)
                             <span class="page-heading-title" style="float: right;">{{  $category->name }}</span>
                             @endif
+                            @if($keyword != null)
+                            <span class="page-heading-title" style="float: right;">Key Word: '{{ $keyword }}'</span>
+                            @endif
                         </h2>
                         <div class="category-products">
+                            @if(count($products))
                             <ul class="products-grid">
                                 @foreach($products as $product)
                                     <li class="item col-lg-4 col-md-4 col-sm-6 col-xs-12">
@@ -116,13 +118,16 @@
                                     </li>
                                 @endforeach()
                             </ul>
+                            @else
+                                <h3 class="text text-center">No product is related with keyword</h3>
+                            @endif
                         </div>
                         <div class="toolbar">
                             <div class="row">
                                 <div class="col-lg-10 col-sm-7 col-md-5">
                                     <div class="pager">
                                         <div class="pages">
-                                            <label>Page:</label>
+                                            {{-- <label>Page:</label> --}}
                                             {!! $products->appends(request()->input())->links() !!}
                                         </div>
                                     </div>
@@ -188,32 +193,17 @@
                             <div class="block-title ">My Cart</div>
                             <div class="block-content">
                                 <div class="summary">
-                                    <p class="amount">There are<a href=""></a> in your cart.</p>
-                                    <p class="subtotal"><span class="label">Cart Subtotal:</span> <span class="price">$27.99</span>
+                                    <p class="amount">There are <span class="count_cart">0</span> product in your cart.</p>
+                                    <p class="subtotal">
+                                        <span class="label">Cart Subtotal:</span>
+                                        <span class="price price_cart">0</span>
+                                        <strong class=""> ₫</strong>
                                     </p>
                                 </div>
                                 <div class="ajax-checkout">
                                     <button class="button button-checkout" title="Submit" type="submit">
                                         <span>Checkout</span></button>
                                 </div>
-                                <p class="block-subtitle">Recently added item(s) </p>
-                                <ul>
-                                    <li class="item">
-                                        <a href="" class="product-image">
-                                            <img src="http://htmldemo.themessoft.com/freshia/version3/product-images/product19.jpg">
-                                        </a>
-                                        <div class="product-details">
-                                            <div class="access">
-                                                <a href=""
-                                                   class="btn-remove1"> <span
-                                                            class="icon"></span> Remove </a></div>
-                                            <strong>1</strong> x <span class="price">$19.99</span>
-                                            <p class="product-name">
-                                                <a href="">Skate Dress In Leaf Print Grouped Product</a>
-                                            </p>
-                                        </div>
-                                    </li>
-                                </ul>
                             </div>
                         </div>
                     </aside>
@@ -227,15 +217,10 @@
 @section('js')
     <script type="text/javascript">
         jQuery(document).ready(function ($) {
-            $.ajax({
-                url: route('client.cart'),
-                type: 'get',
-                dataType: '',
-                data: {},
-            })
-                .done(function (res) {
-
-                })
+            $('.button-checkout').click(function(event) {
+               event.preventDefault();
+               window.location.href = route('client.showCart');
+            });
         });
     </script>
 @endsection

@@ -55,7 +55,7 @@
                     </a>
                 </li>
 
-                <h3 class="menu-title">{{ __('Manager Bill') }}</h3>
+                <h3 class="menu-title">{{ __('message.order') }}</h3>
                 <li>
                     <a href="{{ route('admin.order.index') }}">
                         <i class="menu-icon fa fa-user"></i>{{ __('Manager Bill') }}

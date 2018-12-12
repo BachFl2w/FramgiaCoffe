@@ -39,8 +39,6 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::with('category')->get();
-
         // sau khi chuyen sang ajax, dung luon doan nay`
         // if (!Redis::get('product:all')) {
         //     // $key, load() from repository
@@ -53,20 +51,9 @@ class ProductController extends Controller
         // đoạn này ở giao diện gọi ajax ra
         // truyền thẳng data ra giao diện hoặc viết thêm func get json cũng được
         // return datatables($data)->make(true);
+        $categories = Category::pluck('name', 'id');
 
-        foreach ($products as $key => $product) {
-
-            $images = Image::where('product_id', $product->id)->orderBy('active', 'desc')->orderBy('id', 'desc')->get();
-            $image = null;
-            if (count($images) != 0) {
-
-                $image = $images[0]->name;
-            }
-
-            $products[$key]->image = $image;
-        }
-
-        return view('admin.product_list', compact('products'));
+        return view('admin.product_list', compact('categories'));
     }
 
     /**
@@ -91,44 +78,35 @@ class ProductController extends Controller
     public function store(ProductRequest $request)
     {
         // chuyen het code dung repository
-        $product = new Product();
+        $product = $this->productModel->create([
+            'name' => $request->name,
+            'price' => $request->price,
+            'quantity' => $request->quantity,
+            'category_id' => $request->category_id,
+            'brif' => $request->brif,
+            'description' => $request->description,
+            'discount' => $request->discount,
 
-        $product->name = $request->name;
-
-        $product->price = $request->price;
-
-        $product->quantity = $request->quantity;
-
-        $product->category_id = $request->category_id;
-
-        $product->description = $request->description;
-
-        $product->save();
-
+        ]);
+        //save image
         $image = $request->file('image');
 
         $filename = $product->name . '_' . $image->getClientOriginalName();
 
-        $path = public_path('images/product/' . $filename);
+        $path = public_path(config('asset.image_path.product') . $filename);
 
-        $image_resize = Images::make($image->getRealPath())->resize(600, 348)->save($path);
+        Images::make($image->getRealPath())->resize(600, 600)->save($path);
 
-        $img = new Image();
-
-        $img->name = $filename;
-
-        $img->product_id = $product->id;
-
-        $img->save();
+        $img = $this->imageModel->create([
+            'name' => $filename,
+            'product_id' => $product->id,
+            'active' => 1,
+        ]);
 
         // $key, $with
         // $this->productModel->setRedisAll('product:all', ['categories', 'image']);
         // $key + $id, $data du lieu sau khi duoc update
         // $this->productModel->setRedisById('product:' . $product->id, $data);
-
-        toast()->success(__('message.success.create'), 'success');
-
-        return route('admin.product.index');
     }
 
     /**
@@ -139,7 +117,11 @@ class ProductController extends Controller
      */
     public function show($id)
     {
+        $product = Product::with('category')->with(['images' => function($query) {
+            $query->where('active', 1)->get();
+        }])->findOrFail($id);
 
+        return $product;
     }
 
     /**
@@ -150,27 +132,27 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        $product = Product::findOrFail($id);
+        // $product = Product::findOrFail($id);
 
-        $categories = Category::pluck('name', 'id');
+        // $categories = Category::pluck('name', 'id');
 
-        return view('admin.product_update', compact('product', 'categories'));
+        // return view('admin.product_update', compact('product', 'categories'));
     }
 
     public function productJson($id)
     {
-        $product = Product::findOrFail($id);
+        // $product = Product::findOrFail($id);
 
-        $images = Image::where('product_id', $product->id)->orderBy('active', 'desc')->orderBy('id', 'desc')->get();
-        $image = null;
-        if (count($images) != 0) {
+        // $images = Image::where('product_id', $product->id)->orderBy('active', 'desc')->orderBy('id', 'desc')->get();
+        // $image = null;
+        // if (count($images) != 0) {
 
-            $image = $images[0]->name;
-        }
+        //     $image = $images[0]->name;
+        // }
 
-        $product->image = $image;
+        // $product->image = $image;
 
-        return $product;
+        // return $product;
     }
 
     /**
@@ -182,43 +164,35 @@ class ProductController extends Controller
      */
     public function update(ProductRequest $request, $id)
     {
-        $product = Product::findOrFail($id);
-
-        $product->name = $request->name;
-
-        $product->price = $request->price;
-
-        $product->quantity = $request->quantity;
-
-        $product->category_id = $request->category_id;
-
-        $product->description = $request->description;
-
-        $product->save();
+        $product = $this->productModel->update([
+            'name' => $request->name,
+            'price' => $request->price,
+            'quantity' => $request->quantity,
+            'category_id' => $request->category_id,
+            'brif' => $request->brif,
+            'description' => $request->description,
+            'discount' => $request->discount,
+        ], $id);
 
         $image = $request->file('image');
 
         if ($image != null) {
 
-            $filename = $product->name . '_' . $image->getClientOriginalName();
+            $filename = $request->name . '_' . $image->getClientOriginalName();
 
             $path = public_path('images/products/' . $filename);
 
-            Images::make($image->getRealPath())->resize(600, 348)->save($path);
+            Images::make($image->getRealPath())->resize(600, 600)->save($path);
 
-            $img = new Image();
+            $img = $this->imageModel->create([
+                'name' => $filename,
+                'product_id' => $id,
+                'active' => 1,
+            ]);
 
-            $img->name = $filename;
-
-            $img->product_id = $product->id;
-
-            $img->save();
+            Image::where('product_id', '=', $id)->whereNotIn('id', [$img->id])->update(['active' => 0]);
 
         }
-
-        toast()->success(__('message.success.update'), 'success');
-
-        return redirect()->route('admin.product.index');
 
         // $key, $with
         // $this->productModel->setRedisAll('product:all', ['category', 'image']);
@@ -242,11 +216,6 @@ class ProductController extends Controller
         // xóa tất thì truyền product:all vào
 
         $product->delete();
-
-        toast()->success(__('message.success.delete'), 'success');
-
-        return redirect()->route('admin.product.index');
-
     }
 
     public function getAllData()
@@ -262,10 +231,10 @@ class ProductController extends Controller
         // return datatables($data)->make(true);
 
         // order by co the truyen tham so vao` datatable luc khoi tao var table
-        $product = Product::all()->with(['images' => function($query) {
-            $query->orderBy('');
-        }]);
+        $products = Product::with(['images' => function($query) {
+            $query->where('active', 1)->get();
+        }])->with('category')->orderBy('id', 'desc')->get();
 
-        return $product;
+        return $products;
     }
 }

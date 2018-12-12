@@ -63,15 +63,12 @@ class CategoryController extends Controller
         $category->name = $request->name;
 
         $category->save();
-
-        toast()->success(__('message.success.create'), 'success');
-
         // // $name, $with
         // $this->categoryModel->setRedisAll('category:all', []);
         // // $name, $id, $data
         // $this->categoryModel->setRedisById('category:' . $category->id, $category);
 
-        return redirect()->route('admin.category.index');
+//        return redirect()->route('admin.category.index');
     }
 
     /**
@@ -105,9 +102,9 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(CategoryRequest $request, $id)
+    public function update(CategoryRequest $request)
     {
-        $category =  Category::findOrFail($id);
+        $category =  Category::findOrFail($request->id);
 
         $category->name = $request->name;
 
@@ -118,7 +115,7 @@ class CategoryController extends Controller
         // $this->categoryModel->setRedisAll('category:all', []);
         // $this->categoryModel->setRedisById('category:' . $category->id, $data);
 
-        return redirect()->route('admin.category.index');
+//        return redirect()->route('admin.category.index');
     }
 
     /**
@@ -131,14 +128,10 @@ class CategoryController extends Controller
     {
         $category = Category::findOrFail($id);
 
-        $this->categoryModel->setRedisAll('category:all', ['role']);
-        $this->categoryModel->deleteRedis('category:' . $category->id);
+        // $this->categoryModel->setRedisAll('category:all', []);
+        // $this->categoryModel->deleteRedis('category:' . $category->id);
 
         $category->delete();
-
-        toast()->success(__('message.success.delete'), 'success');
-
-        return redirect()->route('admin.category.index');
     }
 
     public function getCategoryJson()

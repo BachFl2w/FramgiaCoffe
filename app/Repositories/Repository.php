@@ -22,8 +22,7 @@ class Repository implements RepositoryInterface
         return $this->model->all();
     }
 
-    public function setRedisAll($key, array $load)
-    {
+    public function setRedisAll($key, array $load) {
         if (!empty($load)) {
             $data = $this->model->all()->load($load);
         } else {

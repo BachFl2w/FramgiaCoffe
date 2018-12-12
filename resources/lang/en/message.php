@@ -97,15 +97,18 @@ return [
     'avatar' => 'Avatar',
     'email' => 'E-Mail Address',
     'address' => 'Address',
-    'phone' => 'Phone',
     'password' => [
         'password' => 'Password',
         'change' => 'Change password',
         'confirm' => 'Confirm Password',
         'forgot' => 'Forgot Your Password ?',
         'reset' => 'Reset Password',
-        'send.reset' => 'Send Password Reset Link',
+        'send' => 'Send Password Reset Link',
     ],
+    'password.password' => 'Password',
+    'password.forgot' => 'Forgot ?',
+    'phone' => 'Phone',
+    
     'remember' => 'Remember Me',
     'verify' => [
         'verify' => 'Verify Your Email Address',
@@ -129,6 +132,8 @@ return [
         'create' => 'Create Size',
         'update' => 'Update Size',
     ],
+    'size' => 'Size',
+    'percent' => 'Percent',
 
     //Order
     'order_title' => [
@@ -169,6 +174,9 @@ return [
     'topping' => 'Topping',
     'all' => 'All',
     'add_cart' => 'Add Cart',
+    'discount' => 'Discount',
+    'brief' => 'Brief',
+    'description' => 'Description',
 
     'image' => 'Image',
     //Feedback

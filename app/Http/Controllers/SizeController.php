@@ -2,11 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SizeRequest;
 use App\Size;
-use Illuminate\Http\Request;
+use App\Repositories\Repository;
 
 class SizeController extends Controller
 {
+    protected $sizeModel;
+
+    public function __construct(Size $sizeModel)
+    {
+        $this->sizeModel = new Repository($sizeModel);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -32,24 +40,21 @@ class SizeController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SizeRequest $request)
     {
-        $size = new Size();
-        $size->name = $request->name;
-        $size->percent = $request->percent;
-        $size->save();
-        toast()->success(__('message.success.create'), 'success');
-
-        return redirect()->route('admin.size.index');
+        $this->sizeModel->create([
+            'name' => $request->name,
+            'percent' => $request->percent,
+        ]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -60,46 +65,46 @@ class SizeController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
         $size = Size::findorFail($id);
-        
+
         return view('admin.size_update', compact('size'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(SizeRequest $request, $id)
     {
-        $size = Size::findOrFail($id);
-        $size->name= $request->name;
-        $size->percent = $request->percent;
-        $size->save();
-        toast()->success(__('message.success.update'), 'success');
-
-        return redirect()->route('admin.size.index');
+        $this->sizeModel->update([
+            'name' => $request->name,
+            'percent' => $request->percent,
+        ], $id);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        $size = Size::findOrFail($id);
-        $size->delete();
-        toast()->success(__('message.success.delete'), 'success');
+        $this->sizeModel->delete($id);
+    }
 
-        return redirect()->route('admin.size.index');
+    public function getDataJson()
+    {
+        $sizes = $this->sizeModel->all();
+
+        return $sizes;
     }
 }

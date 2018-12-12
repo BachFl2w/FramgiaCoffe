@@ -11,6 +11,17 @@ class Product extends Model
 
     protected $table = 'products';
 
+    protected $fillable = [
+        'id',
+        'name',
+        'brief',
+        'description',
+        'price',
+        'discount',
+        'category_id',
+        'quantity',
+    ];
+
     protected $dates = ['deleted_at'];
 
     public function feedbacks()

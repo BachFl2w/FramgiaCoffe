@@ -88,7 +88,7 @@
             $('#register').click(function (event) {
                 event.preventDefault();
                 $.ajax({
-                    url: route('client.registerPost'),
+                    url: route('register'),
                     type: 'post',
                     processData: false,
                     contentType: false,
