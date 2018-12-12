@@ -5,23 +5,22 @@
             <div class="header-left">
                 <div class="dropdown for-notification">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="notification" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fa fa-bell"></i>
-                    <span class="count bg-danger">5</span>
+                        <i class="fa fa-bell"></i>
+                        <span class="count bg-danger" id="count_user">{{ count($data['active']) }}</span>
                     </button>
-                    <div class="dropdown-menu" aria-labelledby="notification">
-                        <p class="red">You have 3 Notification</p>
-                        <a class="dropdown-item media bg-flat-color-1" href="#">
-                            <i class="fa fa-check"></i>
-                            <p>Server #1 overloaded.</p>
-                        </a>
-                        <a class="dropdown-item media bg-flat-color-4" href="#">
-                            <i class="fa fa-info"></i>
-                            <p>Server #2 overloaded.</p>
-                        </a>
-                        <a class="dropdown-item media bg-flat-color-5" href="#">
-                            <i class="fa fa-warning"></i>
-                            <p>Server #3 overloaded.</p>
-                        </a>
+                    <div class="dropdown-menu append_active" aria-labelledby="notification">
+                        @foreach ($data['active'] as $d)
+                            <div class="dropdown-item active_item" data-id="{{ $d->id }}">
+                                <a class="text-primary btn-link btn_active_user" href="#">
+                                    @if ($d->image)
+                                        <img class="user-avatar rounded-circle avatar-header" src="{{ asset(config('asset.image_path.avatar') . $d->image) }}" height="20px" alt="User Avatar">
+                                        @else
+                                            <img class="user-avatar rounded-circle avatar-header" src="{{ asset('images/default.jpeg') }}" alt="User Avatar" height="20px">
+                                        @endif
+                                    &nbsp{{ $d->name }}
+                                </a>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
                 <div class="dropdown for-message">
@@ -73,7 +72,7 @@
             <div class="user-area dropdown float-right">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     @if (Auth::user()->image)
-                        <img class="user-avatar rounded-circle avatar-header" src="{{ asset(config('asset.image_path.avatar') . $currentUser->image) }}" alt="User Avatar">
+                        <img class="user-avatar rounded-circle avatar-header" src="{{ asset(config('asset.image_path.avatar') . $data['currentUser']->image) }}" alt="User Avatar">
                     @else
                         <img class="user-avatar rounded-circle avatar-header" src="{{ asset('images/default.jpeg') }}" alt="User Avatar">
                     @endif
@@ -102,3 +101,54 @@
     </div>
 </header><!-- /header -->
 <!-- Header-->
+
+@section('scriptHeader')
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+        }
+    });
+
+    $('.btn_active_user').click(function(event) {
+        event.preventDefault();
+
+        var id = $(this).parents().data('id');
+
+        swal({
+            title: 'Are you sure?',
+            text: 'You will active this user',
+            icon: 'warning',
+            buttons: true,
+            dangerMode: false,
+        })
+        .then((willDelete) => {
+            if (willDelete) {
+                $.ajax({
+                    url: route('admin.user.active', id),
+                    type: 'GET',
+                })
+                .done(function(data) {
+                    if (data == 'actived') {
+                        $('#count_user').text($('#count_user').text() - 1);
+                        $('div.active_item[data-id="' + id + '"]').remove();
+                        $("#user_list tr td:contains(7)").text();
+                        console.log("success");
+                    } else {
+                        swal(data, {icon: 'error'});
+                    }
+                })
+                .fail(function() {
+                    swal('Something wrong !', {icon: 'error'});
+                    console.log("error");
+                })
+                .always(function() {
+                    console.log("complete");
+                });
+            }
+        });
+    });
+});
+</script>
+@endsection

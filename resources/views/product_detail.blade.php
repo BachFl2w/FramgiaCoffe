@@ -282,7 +282,6 @@
 
         <!-- Related Slider -->
         <div class="related-pro">
-
             <div class="slider-items-products">
                 <div class="related-block">
                     <div id="related-products-slider" class="product-flexslider hidden-buttons">

@@ -63,7 +63,8 @@ class UserController extends Controller
     public function store(UserStoreRequest $request)
     {
         if (Auth::user()->role_id != 1) {
-            return __('message.fail.create');
+            // return __('message.fail.create');
+            abort(403);
         }
 
         if ($request->hasFile('avatar')) {
@@ -126,11 +127,11 @@ class UserController extends Controller
 
         if ($currentUser->role_id == 1) {
             if ($user->role_id == 1 && $currentUser->email != $user->email) {
-                return 'fail';
+                abort(403);
             }
         } else {
             if ($currentUser->email != $user->email) {
-                return 'fail';
+                abort(403);
             }
         }
 
@@ -183,18 +184,24 @@ class UserController extends Controller
 
         if ($currentUser->role_id == 1) {
             if ($user->role_id == 1 && $user->active == 1) {
-                return __('message.fail.update');
+                abort(403);
             } else {
                 $data = $this->userModel->update(['active' => $user->active == 1 ? 0 : 1], $user->id);
 
                 $this->userModel->setRedisAll('user:all', ['role']);
                 $this->userModel->setRedisById('user' . $user->id, User::where('id', $user->id)->get());
 
-                return 'success';
+                $check = ($user->active == 1 ? 0 : 1);
+
+                if ($check == 0) {
+                    return response()->json($user);
+                }
+
+                return 'actived';
             }
         }
 
-        return __('message.fail.update');
+        abort(403);
     }
 
     /**
@@ -216,7 +223,7 @@ class UserController extends Controller
             return __('message.success.delete');
         }
 
-        return 'fail';
+        abort(403);
     }
 
     public function login(Request $request)
@@ -250,5 +257,12 @@ class UserController extends Controller
         Auth::logout();
 
         return redirect(route('client.index'));
+    }
+
+    public function show($id)
+    {
+        $user = User::findOrFail($id);
+
+        return $user;
     }
 }

@@ -3,35 +3,29 @@
 @section('content')
     <div class="container margin_60_35">
         <div class="row">
-            {!! Form::open(['method' => 'post', 'route' => ['user.update', $user->id], 'files' => true]) !!}
-            <div class="col-md-4">
-                <div class="box_style_2 hidden-xs" id="help">
-                    <label for="avatar">
-                        @if ($user->image)
-                            <img class="img-circle" height="200px"
-                                 src="{{ asset(config('asset.image_path.avatar') . $user->image) }}">
-                        @else
-                            <img class="img-circle" height="200px" src="{{ asset('images/default.jpeg') }}">
-                        @endif
-                    </label>
-                    <p>{!! Form::file('avatar', ['id' => 'avatar', 'class' => 'hidden']) !!}</p>
-                    {!! Form::submit(__('message.update'), ['class' => 'btn']) !!}
+            {!! Form::open(['method' => 'post', 'id' => 'form_update', 'files' => true]) !!}
+            <div class="col-md-4 col-sm-4">
+                <div class="indent_title_in">
+                    <h3></h3>
                 </div>
-
-                <div class="box_style_2 hidden-xs" id="help">
-                    <i class="icon_lifesaver"></i>
-                    <h4><span>{{ __('message.help') }}</span></h4>
-                    <a href="tel://004542344599" class="phone">{{ config('asset.constaint.phone') }}</a>
-                </div>
-
+                <label for="avatar">
+                    @if ($user->image)
+                        <img class="img-circle img-avatar" height="300px"
+                            src="{{ asset(config('asset.image_path.avatar') . $user->image) }}">
+                    @else
+                        <img class="img-circle img-avatar" height="300px" src="{{ asset('images/default.jpeg') }}">
+                    @endif
+                </label>
+                {!! Form::file('avatar', ['id' => 'avatar', 'class' => 'hidden d-none']) !!}
             </div>
-            <div class="col-md-8 col-sm-8 add_bottom_15 box_style_2">
+            <div class="col-md-8 col-sm-8">
                 <div class="indent_title_in">
                     <h3><i class="icon-user"></i> {{ __('message.info') }}</h3>
                 </div>
                 <div class="wrapper_indent">
                     <div class="form-group">
                         {!! Form::label('name', __('message.name')) !!}
+                        {!! Form::hidden('id', $user->id, ['d-none', 'id' => 'id']) !!}
                         {!! Form::text('name', $user->name, ['class' => 'form-control']) !!}
                         @if ($errors->has('name'))
                             <span class="text-danger" role="alert">
@@ -66,7 +60,7 @@
                         </span>
                         @endif
                     </div>
-                    {!! Form::submit(__('message.update'), ['class' => 'btn']) !!}
+                    {!! Form::button(__('message.update'), ['class' => 'btn btnSubmit']) !!}
                 </div><!-- End wrapper_indent -->
                 <hr>
                 <div class="indent_title_in">
@@ -91,10 +85,65 @@
                         </span>
                         @endif
                     </div>
-                    {!! Form::submit(__('message.update'), ['class' => 'btn']) !!}
+                    {!! Form::button(__('message.update'), ['class' => 'btn btnSubmit']) !!}
                 </div>
             </div>
             {!! Form::close() !!}
         </div>
     </div>
+@endsection
+
+
+@section('js')
+
+<script type="text/javascript">
+
+$(document).ready(function() {
+    var id = $('#id').val();
+
+    function funtionAjax() {
+        $.ajax({
+            url: route('user.update', id),
+            type: 'POST',
+            cache: false,
+            contentType: false,
+            processData: false,
+            data: new FormData($('form#form_update')[0]),
+        })
+        .done(function(data) {
+            swal(data, {icon: 'success'});
+            console.log("success");
+        })
+        .fail(function() {
+            swal('Something wrong !', {icon: 'error'});
+            console.log("error");
+        })
+        .always(function() {
+            console.log("complete");
+        });
+    };
+
+    $('#avatar').change(function(e) {
+        if (this.files && this.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                $('.img-avatar').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(this.files[0]);
+            event.preventDefault();
+
+            funtionAjax();
+        }
+    })
+
+
+
+    $('.btnSubmit').click(function(event) {
+        event.preventDefault();
+
+        funtionAjax();
+    });
+});
+</script>
+
 @endsection

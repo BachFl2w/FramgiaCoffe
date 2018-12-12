@@ -48,7 +48,7 @@ class User extends Authenticatable
 
     public function potential()
     {
-        return $this->hasOne(Potential::class);
+        return $this->belongsTo(Potential::class);
     }
 
     public function products()

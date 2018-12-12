@@ -1,6 +1,6 @@
 <?php
 
-use App\OrderDetail;
+use App\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,8 +17,8 @@ use App\OrderDetail;
 Auth::routes();
 
 // login with google
-Route::get('/auth/{provider}', 'SocialAuthController@redirectToProvider');
-Route::get('/auth/{provide}/callback', 'SocialAuthController@handleProviderCallback');
+// Route::get('/auth/{provider}', 'SocialAuthController@redirectToProvider');
+// Route::get('/auth/{provide}/callback', 'SocialAuthController@handleProviderCallback');
 
 // Route::get('change-language/{language}', 'HomeController@changeLanguage')->name('user.change-language');
 
@@ -175,6 +175,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin'], function () {
 Route::group(['prefix' => 'user', 'middleware' => 'userLogin'], function () {
     Route::get('profile/{user}', 'UserController@edit')->name('user.edit');
     Route::post('update/{user}', 'UserController@update')->name('user.update');
+    ROute::get('show/{id}', 'UserController@show')->name('user.show');
 });
 
 
@@ -232,7 +233,7 @@ Route::get('profile', 'ClientController@profile')->name('client.profile');
 
 Route::get('client/login', 'ClientController@login')->name('client.login');
 
-Route::get('register', 'ClientController@register')->name('client.register');
+Route::get('registerGet', 'ClientController@register')->name('client.register');
 
 Route::post('registerPost', 'ClientController@registerPost')->name('client.registerPost');
 
@@ -241,3 +242,10 @@ Route::get('filter', 'ClientController@filter')->name('client.filter');
 Route::post('favorite', 'ClientController@favorite')->name('client.favorite');
 
 Route::post('checkout', 'ClientController@checkout')->name('client.checkout');
+
+Route::get('mail', function () {
+    return view('mail.order_mail');
+});
+
+Route::get('send', 'MailController@send');
+// Route::post('send', 'MailController@send')->name('send.mail');

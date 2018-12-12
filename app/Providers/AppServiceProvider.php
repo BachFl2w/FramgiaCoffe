@@ -8,6 +8,7 @@ use App\Category;
 use App\Size;
 use App\Topping;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -21,8 +22,9 @@ class AppServiceProvider extends ServiceProvider
     {
         view()->composer('layouts/header', function ($view) {
             if (Auth::check()) {
-                $currentUser = Auth::user();
-                $view->with('currentUser', $currentUser);
+                $data['currentUser'] = Auth::user();
+                $data['active'] = User::where('active', 0)->get();
+                $view->with('data', $data);
             }
         });
         view()->composer('index', function ($view) {
@@ -46,9 +48,18 @@ class AppServiceProvider extends ServiceProvider
             $view->with('category_with_product', $category);
         });
 
-        view()->composer('filter', function($view) {
+        view()->composer('filter', function ($view) {
             $categories = Category::all();
             $view->with('categories', $categories);
+        });
+
+        view()->composer('cart', function ($view) {
+            if (Auth::check()) {
+                $user = User::with('potential')->findOrFail(Auth::user()->id);
+            } else {
+                $user = '';
+            }
+            $view->with('user', $user);
         });
     }
 
