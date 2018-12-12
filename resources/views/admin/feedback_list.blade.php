@@ -36,6 +36,12 @@
 <script type="text/javascript">
 
 $(document).ready(function() {
+    var notificationsWrapper = $('.for-feedback');
+    var notificationsToggle = notificationsWrapper.find('button[data-toggle]');
+    var notificationsCountElem = notificationsToggle.find('span[data-count]');
+    var notificationsCount = parseInt(notificationsCountElem.data('count'));
+    var notifications = notificationsWrapper.find('.feedback-dropdown');
+
     var table = $('#feedback').DataTable({
         ajax: {
             processing: true,
@@ -73,6 +79,29 @@ $(document).ready(function() {
             type: 'GET',
         })
         .done(function(data) {
+            if (data == 1) {
+                notificationsCount -= 1;
+                notificationsCountElem.attr('data-count', notificationsCount);
+                notificationsWrapper.find('#count_feedback').text(notificationsCount);
+                $('#feedback' + id).remove();
+            } else {
+                var avatar = (data.avatar ? 'avatars/' + data.avatar : 'default.jpeg');
+                notificationsCount += 1;
+                notificationsCountElem.attr('data-count', notificationsCount);
+                notificationsWrapper.find('#count_feedback').text(notificationsCount);
+                $('.feedback-dropdown').show( `
+                    <a class="dropdown-item media bg-flat-color-1" id="feedback${data.id}" href="#">
+                        <span class="photo media-left">
+                            <img alt="avatar" class="user-avatar rounded-circle" src="http://127.0.0.1:8000/images/${avatar}">
+                        </span>
+                        <span class="message media-body">
+                            <span class="name float-left">${data.user.name}</span>
+                            <p>${data.content}</p>
+                        </span>
+                    </a>
+                `);
+            }
+
             table.ajax.reload();
             console.log("success");
         })
@@ -85,7 +114,6 @@ $(document).ready(function() {
         });
     });
 });
-
 </script>
 
 @endsection

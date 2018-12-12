@@ -357,6 +357,46 @@ jQuery(document).ready(function($) {
             console.log("complete");
         });
     });
+
+    $('.btn_active_user').click(function(event) {
+        event.preventDefault();
+
+        var id = $(this).parents().data('id');
+
+        swal({
+            title: 'Are you sure?',
+            text: 'You will active this user',
+            icon: 'warning',
+            buttons: true,
+            dangerMode: false,
+        })
+        .then((willDelete) => {
+            if (willDelete) {
+                $.ajax({
+                    url: route('admin.user.active', id),
+                    type: 'GET',
+                })
+                .done(function(data) {
+                    if (data == 'actived') {
+                        $('#count_user').text($('#count_user').text() - 1);
+                        $('div.active_item[data-id="' + id + '"]').remove();
+                        console.log("success");
+
+                        tableTest.ajax.reload();
+                    } else {
+                        swal(data, {icon: 'error'});
+                    }
+                })
+                .fail(function() {
+                    swal('Something wrong !', {icon: 'error'});
+                    console.log("error");
+                })
+                .always(function() {
+                    console.log("complete");
+                });
+            }
+        });
+    });
 });
 </script>
 

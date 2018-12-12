@@ -216,6 +216,8 @@ Route::get('cart-delete/{key}', 'Cart1Controller@delete')->name('user.cart.delet
 
 Route::get('cart-remove-all', 'Cart1Controller@removeAll')->name('user.cart.remove');
 
+Route::post('clien-feedback', 'FeedbackController@store')->name('feedback.store');
+
 Route::get('order', 'ClientController@orders')->name('client.orders');
 
 Route::get('order_detail/{order_id}', 'ClientController@order_details')->name('client.order.order_detail');

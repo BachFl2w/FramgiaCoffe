@@ -9,7 +9,9 @@ use Redis;
 use App\User;
 use App\Role;
 use App\Repositories\Repository;
+
 use Yajra\Datatables\Datatables;
+use Pusher\Pusher;
 
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;

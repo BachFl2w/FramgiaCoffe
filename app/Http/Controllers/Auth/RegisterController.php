@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use Pusher\Pusher;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -84,7 +85,7 @@ class RegisterController extends Controller
             $data['active'] = 1;
         }
 
-        return User::create([
+        $user = User::create([
             'name'     => $data['name'],
             'email'    => $data['email'],
             'password' => Hash::make($data['password']),
@@ -93,5 +94,35 @@ class RegisterController extends Controller
             'role_id'  => $data['role'],
             'active'   => $data['active'],
         ]);
+
+        $options = array(
+            'cluster' => 'ap1',
+            'encrypted' => true
+        );
+
+        $pusher = new Pusher(
+            env('PUSHER_APP_KEY'),
+            env('PUSHER_APP_SECRET'),
+            env('PUSHER_APP_ID'),
+            $options
+        );
+
+        $data = [
+            'id' => $user->id,
+            'user_avatar' => null,
+            'user_name' => $data['name'],
+            'active' => $data['active'],
+        ];
+        try {
+            $pusher->trigger(
+                'UserEvent',
+                'send-user',
+                $data
+            );
+        } catch (\Exception $e) {
+            dd($e);
+        }
+
+        return $user;
     }
 }

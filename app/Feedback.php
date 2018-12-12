@@ -8,7 +8,13 @@ class Feedback extends Model
 {
     protected $table = 'feedbacks';
 
-    protected $fillable = ['status'];
+    protected $fillable = [
+        'id',
+        'user_id',
+        'product_id',
+        'content',
+        'status',
+    ];
 
     public function user()
     {

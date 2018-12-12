@@ -10,17 +10,14 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class FeedbackEvent
+class UserEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $id;
-    public $userId;
     public $userAvatar;
     public $userName;
-    public $productId;
-    public $content;
-    public $status;
+    public $active;
 
     /**
      * Create a new event instance.
@@ -30,12 +27,9 @@ class FeedbackEvent
     public function __construct($data)
     {
         $this->$id = $data['id'];
-        $this->$userId = $data['user_id'];
         $this->$userAvatar = $data['user_avatar'];
         $this->$userName = $data['user_name'];
-        $this->$productId = $data['product_id'];
-        $this->$content = $data['content'];
-        $this->$status = $data['status'];
+        $this->$active = $data['active'];
     }
 
     /**
@@ -45,6 +39,6 @@ class FeedbackEvent
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('sendFeedback');
+        return new PrivateChannel('sendUser');
     }
 }
