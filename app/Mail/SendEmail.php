@@ -4,21 +4,24 @@ namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
+use Illuminate\Http\Request;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
 class SendEmail extends Mailable
 {
-    use Queueable, SerializesModels;
+    public $data;
+    public $toUser;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($data = null, $toUser = null)
     {
-
+        $this->data = $data;
+        $this->toUser = $toUser;
     }
 
     /**
@@ -28,6 +31,7 @@ class SendEmail extends Mailable
      */
     public function build()
     {
-        return $this->from('framgiacoffee@gmail.com')->view('admin.feedback_list');
+        // , ['data' => $data]
+        return $this->markdown('mail.order_mail')->to('bachfl2w@gmail.com');
     }
 }

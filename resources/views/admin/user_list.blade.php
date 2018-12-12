@@ -117,7 +117,7 @@
 @section('script')
 
 <script type="text/javascript">
-$(document).ready(function() {
+jQuery(document).ready(function($) {
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
@@ -325,19 +325,29 @@ $(document).ready(function() {
     $('#user_list tbody').on('click', '.active', function(event) {
         event.preventDefault();
         var id = $(this).closest('tr').find('td:eq(0)').text();
-        console.log(id);
+        var count = Number($('#count_user').text());
 
         $.ajax({
             url: route('admin.user.active', id),
             type: 'GET',
         })
         .done(function(data) {
-            if (data == 'success') {
-                tableTest.ajax.reload();
-                console.log("success");
+            if (data != 'actived') {
+                $('#count_user').text(count + 1); // set count unactive user
+                var img = data.image ? ('avatars/' + data.image) : 'default.jpeg';
+                $('.append_active').append(`
+                   <div class="dropdown-item active_item" data-id="${data.id}">
+                        <a class="text-primary btn-link btn_active_user" href="#">
+                           <img class="user-avatar rounded-circle avatar-header" src="http://127.0.0.1:8000/images/${img}" height="20px" alt="User Avatar"> &nbsp ${data.name}
+                        </a>
+                    </div>
+               `);
             } else {
-                swal(data, {icon: 'error'});
+                $('#count_user').text(count - 1);
+                $('div.active_item[data-id="' + id + '"]').remove();
             }
+            tableTest.ajax.reload();
+            console.log("success");
         })
         .fail(function() {
             swal('Something wrong !', {icon: 'error'});

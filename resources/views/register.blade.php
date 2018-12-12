@@ -15,7 +15,7 @@
                             <ul class="form-list">
                                 <li>
                                     {!! Form::label('email', __('message.email')) !!}
-                                    {!! Form::text('email', null, ['class' => 'input-text', 'id' => 'email',
+                                    {!! Form::text('email', '', ['class' => 'input-text', 'id' => 'email',
                                      'autocomplete' => 'off', 'placeholder' => 'Email Address']) !!}
                                 </li>
                                 <li>
@@ -25,28 +25,28 @@
                                 </li>
                                 <li>
                                     {!! Form::label('re-pass', __('message.re_password')) !!}
-                                    {!! Form::password('password', ['class' => 'input-text', 'id' => 're-pass',
-                                     'placeholder' => 'Re-Password']) !!}
+                                    {!! Form::password('password_confirmation', ['class' => 'input-text', 'id' => 're-pass',
+                                     'placeholder' => 'Re-Password', 'id' => 'password-confirm']) !!}
                                 </li>
                                 <li>
                                     {!! Form::label('name', __('message.full_name')) !!}
-                                    {!! Form::text('name', null, ['class' => 'input-text', 'id' => 'name',
+                                    {!! Form::text('name', '', ['class' => 'input-text', 'id' => 'name',
                                      'placeholder' => 'Your name']) !!}
                                 </li>
                                 <li>
                                     {!! Form::label('address', __('message.address')) !!}
-                                    {!! Form::text('address', null, ['class' => 'input-text', 'id' => 'address',
+                                    {!! Form::text('address', '', ['class' => 'input-text', 'id' => 'address',
                                      'placeholder' => 'Your Address']) !!}
                                 </li>
                                 <li>
                                     {!! Form::label('phone', __('message.phone')) !!}
-                                    {!! Form::text('phone', null, ['class' => 'input-text', 'id' => 'phone',
+                                    {!! Form::number('phone', '', ['class' => 'input-text', 'id' => 'phone',
                                      'placeholder' => 'Your Phone']) !!}
                                 </li>
                             </ul>
                             <div class="buttons-set">
                                 <button id="register" name="send" type="submit" class="button login">
-                                    <span>{{ __('message.login') }}</span>
+                                    <span>{{ __('message.register') }}</span>
                                 </button>
                             </div>
                         </div>
@@ -62,6 +62,7 @@
                                 </div>
                             </div>
                             {!! Form::file('avatar', ['class' => 'd-none', 'id' => 'avatar_client', 'class' => 'form-control-']) !!}
+                            {!! Form::hidden('role', 3) !!}
                         </div>
                     </div>
                     {!! Form::close() !!}
@@ -88,7 +89,7 @@
             $('#register').click(function (event) {
                 event.preventDefault();
                 $.ajax({
-                    url: route('client.registerPost'),
+                    url: route('register'),
                     type: 'post',
                     processData: false,
                     contentType: false,

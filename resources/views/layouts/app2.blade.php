@@ -66,5 +66,6 @@
 
     @yield('script')
 
+    @yield('scriptHeader')
 </body>
 </html>

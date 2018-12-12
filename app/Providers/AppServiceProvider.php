@@ -8,6 +8,7 @@ use App\Category;
 use App\Size;
 use App\Topping;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -21,8 +22,9 @@ class AppServiceProvider extends ServiceProvider
     {
         view()->composer('layouts/header', function ($view) {
             if (Auth::check()) {
-                $currentUser = Auth::user();
-                $view->with('currentUser', $currentUser);
+                $data['currentUser'] = Auth::user();
+                $data['active'] = User::where('active', 0)->get();
+                $view->with('data', $data);
             }
         });
         view()->composer('index', function ($view) {

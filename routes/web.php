@@ -15,8 +15,8 @@
 Auth::routes();
 
 // login with google
-Route::get('/auth/{provider}', 'SocialAuthController@redirectToProvider');
-Route::get('/auth/{provide}/callback', 'SocialAuthController@handleProviderCallback');
+// Route::get('/auth/{provider}', 'SocialAuthController@redirectToProvider');
+// Route::get('/auth/{provide}/callback', 'SocialAuthController@handleProviderCallback');
 
 // Route::get('change-language/{language}', 'HomeController@changeLanguage')->name('user.change-language');
 
@@ -226,7 +226,7 @@ Route::get('profile', 'ClientController@profile')->name('client.profile');
 
 Route::get('client/login', 'ClientController@login')->name('client.login');
 
-Route::get('register', 'ClientController@register')->name('client.register');
+Route::get('registerGet', 'ClientController@register')->name('client.register');
 
 Route::post('registerPost', 'ClientController@registerPost')->name('client.registerPost');
 
@@ -236,3 +236,9 @@ Route::post('favorite', 'ClientController@favorite')->name('client.favorite');
 
 Route::post('checkout', 'ClientController@checkout')->name('client.checkout');
 
+Route::get('mail', function() {
+    return view('mail.order_mail');
+});
+
+Route::get('send', 'MailController@send');
+// Route::post('send', 'MailController@send')->name('send.mail');
