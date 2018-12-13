@@ -149,7 +149,7 @@
 
                             </div>
                         </div>
-                        <div class="custom-slider">
+                        {{-- <div class="custom-slider">
                             <div>
                                 <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
                                     <ol class="carousel-indicators">
@@ -188,7 +188,7 @@
                                     </a> <a class="right carousel-control" href="#" data-slide="next"> <span
                                                 class="sr-only">Next</span> </a></div>
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="block block-cart">
                             <div class="block-title ">My Cart</div>
                             <div class="block-content">

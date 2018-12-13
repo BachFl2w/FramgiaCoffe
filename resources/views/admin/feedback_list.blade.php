@@ -9,7 +9,7 @@
     <div class="container-fluid">
         <div class="card">
             <div class="card-header">
-                Quản Lý Phản Hồi
+                {{ __('message.feedback') }}
             </div>
 
             <div class="card-body">
@@ -17,10 +17,10 @@
                     <thead>
                         <tr>
                             <th scope="col">ID</th>
-                            <th scope="col">Người dùng</th>
-                            <th scope="col">Sản phẩm </th>
-                            <th scope="col">Nội dung</th>
-                            <th scope="col">Trạng thái</th>
+                            <th scope="col">{{ __('message.user') }}</th>
+                            <th scope="col">{{ __('message.product') }}</th>
+                            <th scope="col">{{ __('message.content') }}</th>
+                            <th scope="col">{{ __('message.status') }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -69,6 +69,21 @@ $(document).ready(function() {
             },
         ],
     });
+
+    Pusher.logToConsole = true;
+
+    var pusher = new Pusher('{{ env('PUSHER_APP_KEY') }}', {
+        cluster: 'ap1',
+        encrypted: true
+    });
+
+    // Subscribe to the channel we specified in our Laravel Event
+    var channel = pusher.subscribe('FeedbackEvent');
+
+    // Bind a function to a Event (the full Laravel class)
+    channel.bind('send-feedback', function(data) {
+        table.ajax.reload();
+    })
 
     $('#feedback tbody').on('click', '.active', function(event) {
         event.preventDefault();

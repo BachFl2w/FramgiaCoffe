@@ -145,7 +145,7 @@
                         </form>
                     </div>
                 </div>
-                <div class="crosssel bounceInUp animated">
+                {{-- <div class="crosssel bounceInUp animated">
                     <div class="also-like">
                         <div class="new_title">
                             <h2>you may be interested</h2>
@@ -221,7 +221,7 @@
                             </ul>
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
     </section>

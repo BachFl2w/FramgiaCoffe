@@ -21,7 +21,7 @@
             <div class="container">
                 <a class="navbar-brand" href="{{ route('client.index') }}">
                     {{-- {{ config('app.name', 'Laravel') }} --}}
-                    <img src="{{ asset('images/framgia-logo.png') }}" height="39px">
+                    <img src="{{ asset('images/framgia.png') }}" height="39px">
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>

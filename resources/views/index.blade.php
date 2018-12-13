@@ -3,7 +3,7 @@
     <div id="thmsoft-slideshow" class="thmsoft-slideshow">
         <div class="container">
             <div class="row">
-                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div id='rev_slider_4_wrapper' class='rev_slider_wrapper fullwidthbanner-container'>
                         <div id='rev_slider_4' class='rev_slider fullwidthabanner'>
                             <ul>
@@ -23,34 +23,11 @@
                         </div>
                     </div>
                 </div>
-                <div class=" col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                    <div class="RHS-block">
-                        <img alt="Retis lapen casen"
-                             src="http://htmldemo.themessoft.com/freshia/version3/images/home_banner_1.jpg">
-                    </div>
-                </div>
+
             </div>
         </div>
     </div>
-    <div class="banner">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                    <a href="#" title="Banner 1">
-                        <img src="http://htmldemo.themessoft.com/freshia/version3/images/banner1-1.png" alt="Banner 1">
-                    </a>
-                </div>
-                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12"><a href="#" title="Banner 2">
-                        <img src="http://htmldemo.themessoft.com/freshia/version3/images/banner2-1.png" alt="Banner 2">
-                    </a>
-                </div>
-                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12"><a href="#" title="Banner 3">
-                        <img src="http://htmldemo.themessoft.com/freshia/version3/images/banner3-1.png" alt="Banner 3">
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
+
     <div class="content-page">
         <div class="bestsellers1">
             <div class="bestseller">
@@ -599,13 +576,13 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                        <img src="http://htmldemo.themessoft.com/freshia/version3/images/sub-banner-1.jpg">
+                        <img src="http://overthehillandundertheradar.com/wp-content/uploads/2017/05/coffee-2242265_1920.jpg">
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                        <img src="http://htmldemo.themessoft.com/freshia/version3/images/sub-banner-3.jpg">
+                        <img src="http://s1.1zoom.me/big7/493/Coffee_Strawberry_Breakfast_Cup_Plate_Spoon_544646_1920x1280.jpg">
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                        <img src="http://htmldemo.themessoft.com/freshia/version3/images/sub-banner-2.jpg">
+                        <img src="https://amiowealth.com/wp-content/uploads/2017/05/coffee-841425_1920.jpg">
                     </div>
                 </div>
             </div>

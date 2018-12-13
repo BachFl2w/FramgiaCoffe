@@ -175,6 +175,21 @@ jQuery(document).ready(function($) {
         ],
     });
 
+    Pusher.logToConsole = true;
+
+    var pusher = new Pusher('{{ env('PUSHER_APP_KEY') }}', {
+        cluster: 'ap1',
+        encrypted: true
+    });
+
+    // Subscribe to the channel we specified in our Laravel Event
+    var channel = pusher.subscribe('UserEvent');
+
+    // Bind a function to a Event (the full Laravel class)
+    channel.bind('send-user', function(data) {
+        tableTest.ajax.reload();
+    })
+
     $('#show-modal').click(function(event) {
         $('#imageSrc').addClass('d-none');
         $('.action_button').addClass('create_user').removeClass('edit_user');

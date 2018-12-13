@@ -27,7 +27,7 @@
                                     {!! Form::text('email', null, ['class' => 'input-text required-entry', 'id' => 'email', 'autofocus', 'autocomplete' => 'off']) !!}
                                 </li>
                                 <li>
-                                   {!! Form::label('pass', __('language.password')) !!}
+                                   {!! Form::label('pass', __('message.password')) !!}
                                    {!! Form::password('password', ['class' => 'input-text required-entry validate-password', 'id' => 'pass', 'autocomplete' => 'off']) !!}
                                 </li>
                             </ul>

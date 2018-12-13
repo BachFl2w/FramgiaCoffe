@@ -50,11 +50,6 @@
                       <li class="level2 first"><a href="{{ route('client.filter') }}"><span>Filter</span></a> </li>
                     </ul>
                   </li>
-                <li id="nav-menu-item-3566" class=" pull-right">
-                    <a href="#" class="">
-                        <span>Winter Sale! <em class="tip hot">HOT<i class="tip-arrow"></i></em></span>
-                    </a>
-                </li>
             </ul>
         </div>
     </div>
