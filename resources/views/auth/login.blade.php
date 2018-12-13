@@ -25,7 +25,7 @@
                         </div>
 
                         <div class="form-group row">
-                            {{ Form::label('password', __('message.password.password'), ['class' => 'col-sm-4 col-form-label text-md-right']) }}
+                            {{ Form::label('password', __('message.password'), ['class' => 'col-sm-4 col-form-label text-md-right']) }}
                             <div class="col-md-6">
                                 {{ Form::password('password', old('password'), ['required', 'class' => 'form-control' . $errors->has('email') ? ' is-invalid' : '']) }}
 

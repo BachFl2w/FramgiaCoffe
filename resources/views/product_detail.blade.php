@@ -130,29 +130,11 @@
                                                 <fieldset>
                                                     <h4>How do you rate this product? <em class="required">*</em>
                                                     </h4>
-                                                    <div class="review1">
-                                                        <ul class="form-list">
-                                                            <li>
-                                                                <br>
-                                                                <label class="required"
-                                                                       for="email">Email<em>*</em></label>
-                                                                <div class="input-box">
-                                                                    <input type="text" readonly="" class="input-text"
-                                                                        @if (Auth::check())
-                                                                            value="{{ Auth::user()->email }}"
-                                                                        @endif
-                                                                       id="email" name="email">
-                                                                </div>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                    <div class="review2">
+                                                    {{-- <div class="review1"> --}}
                                                         <ul>
                                                             <li>
-                                                                <label class="required "
-                                                                       for="content">Content<em>*</em></label>
                                                                 <div class="input-box">
-                                                                    <textarea rows="3" cols="5" id="content"
+                                                                    <textarea rows="3" style="width: 100%; max-width: 100%" id="content"
                                                                               name="content"></textarea>
                                                                 </div>
                                                             </li>
@@ -167,7 +149,7 @@
                                                                 <span>Submit Review</span>
                                                             </button>
                                                         </div>
-                                                    </div>
+                                                    {{-- </div> --}}
                                                 </fieldset>
                                             </form>
                                         </div>
@@ -363,7 +345,7 @@ jQuery(document).ready(function($) {
             console.log("success");
         })
         .fail(function() {
-            swal({ icon: "error" });
+            swal('Content cannot empty or login first !', { icon: "error" });
             console.log("error");
         })
         .always(function() {

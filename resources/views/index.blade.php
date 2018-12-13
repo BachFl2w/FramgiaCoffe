@@ -3,7 +3,7 @@
     <div id="thmsoft-slideshow" class="thmsoft-slideshow">
         <div class="container">
             <div class="row">
-                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div id='rev_slider_4_wrapper' class='rev_slider_wrapper fullwidthbanner-container'>
                         <div id='rev_slider_4' class='rev_slider fullwidthabanner'>
                             <ul>
@@ -12,98 +12,22 @@
                                     <img src="{{ asset('images/image_background1.jpg') }}"
                                          alt="slide-img" data-bgposition='left top' data-bgfit='cover'
                                          data-bgrepeat='no-repeat'/>
-                                    <div class="info">
-                                        <div class='tp-caption ExtraLargeTitle sft  tp-resizeme ' data-endspeed='500'
-                                             data-speed='500' data-start='1100' data-easing='Linear.easeNone'
-                                             data-splitin='none' data-splitout='none' data-elementdelay='0.1'
-                                             data-endelementdelay='0.1' style='z-index:2;white-space:nowrap;'>
-                                            <span>Freshia DEAL</span>
-                                        </div>
-                                        <div class='tp-caption LargeTitle sfl  tp-resizeme ' data-endspeed='500'
-                                             data-speed='500' data-start='1300' data-easing='Linear.easeNone'
-                                             data-splitin='none' data-splitout='none' data-elementdelay='0.1'
-                                             data-endelementdelay='0.1' style='z-index:3;white-space:nowrap;'>
-                                            <span>DIGITAL TIME</span>
-                                        </div>
-                                        <div class='tp-caption Title sft  tp-resizeme ' data-endspeed='500'
-                                             data-speed='500' data-start='1450' data-easing='Power2.easeInOut'
-                                             data-splitin='none' data-splitout='none' data-elementdelay='0.1'
-                                             data-endelementdelay='0.1' style='z-index:4;white-space:nowrap;'>LOREM
-                                            IPSUM DOLOR SIT AMET, <br>
-                                            CONSECTETUR ELIT.
-                                        </div>
-                                        <div class='tp-caption sfb  tp-resizeme ' data-endspeed='500' data-speed='500'
-                                             data-start='1500' data-easing='Linear.easeNone' data-splitin='none'
-                                             data-splitout='none' data-elementdelay='0.1' data-endelementdelay='0.1'
-                                             style='z-index:4;white-space:nowrap;'>
-
-                                        </div>
-                                    </div>
                                 </li>
                                 <li data-transition='random' data-slotamount='7' data-masterspeed='1000'
                                     data-thumb="{{ asset('images/image_background2.jpg') }}">
                                     <img src="{{ asset('images/image_background2.jpg') }}"
                                          alt="slide-img" data-bgposition='left top' data-bgfit='cover'
                                          data-bgrepeat='no-repeat'/>
-                                    <div class="info">
-                                        <div class='tp-caption ExtraLargeTitle sft slide2  tp-resizeme '
-                                             data-endspeed='500' data-speed='500' data-start='1100'
-                                             data-easing='Linear.easeNone' data-splitin='none' data-splitout='none'
-                                             data-elementdelay='0.1' data-endelementdelay='0.1'
-                                             style='z-index:2;white-space:nowrap;padding-right:0px'>
-                                            <span>SPRING 2018</span></div>
-                                        <div class='tp-caption LargeTitle sfl  tp-resizeme ' data-endspeed='500'
-                                             data-speed='500' data-start='1300' data-easing='Linear.easeNone'
-                                             data-splitin='none' data-splitout='none' data-elementdelay='0.1'
-                                             data-endelementdelay='0.1' style='z-index:3;white-space:nowrap;'>FAIRY
-                                            STYLE
-                                        </div>
-                                        <div class='tp-caption Title sft  tp-resizeme ' data-endspeed='500'
-                                             data-speed='500' data-start='1500' data-easing='Power2.easeInOut'
-                                             data-splitin='none' data-splitout='none' data-elementdelay='0.1'
-                                             data-endelementdelay='0.1' style='z-index:4;white-space:nowrap;'>Lorem
-                                            ipsum dolor sit amet, <br>
-                                            consectetur elit.
-                                        </div>
-                                        <div class='tp-caption sfb  tp-resizeme ' data-endspeed='500' data-speed='500'
-                                             data-start='1500' data-easing='Linear.easeNone' data-splitin='none'
-                                             data-splitout='none' data-elementdelay='0.1' data-endelementdelay='0.1'
-                                             style='z-index:4;white-space:nowrap;'>
-                                        </div>
-                                    </div>
                                 </li>
                             </ul>
                         </div>
                     </div>
                 </div>
-                <div class=" col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                    <div class="RHS-block">
-                        <img alt="Retis lapen casen"
-                             src="http://htmldemo.themessoft.com/freshia/version3/images/home_banner_1.jpg">
-                    </div>
-                </div>
+
             </div>
         </div>
     </div>
-    <div class="banner">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                    <a href="#" title="Banner 1">
-                        <img src="http://htmldemo.themessoft.com/freshia/version3/images/banner1-1.png" alt="Banner 1">
-                    </a>
-                </div>
-                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12"><a href="#" title="Banner 2">
-                        <img src="http://htmldemo.themessoft.com/freshia/version3/images/banner2-1.png" alt="Banner 2">
-                    </a>
-                </div>
-                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12"><a href="#" title="Banner 3">
-                        <img src="http://htmldemo.themessoft.com/freshia/version3/images/banner3-1.png" alt="Banner 3">
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
+
     <div class="content-page">
         <div class="bestsellers1">
             <div class="bestseller">
@@ -650,13 +574,13 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                        <img src="http://htmldemo.themessoft.com/freshia/version3/images/sub-banner-1.jpg">
+                        <img src="http://overthehillandundertheradar.com/wp-content/uploads/2017/05/coffee-2242265_1920.jpg">
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                        <img src="http://htmldemo.themessoft.com/freshia/version3/images/sub-banner-3.jpg">
+                        <img src="http://s1.1zoom.me/big7/493/Coffee_Strawberry_Breakfast_Cup_Plate_Spoon_544646_1920x1280.jpg">
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                        <img src="http://htmldemo.themessoft.com/freshia/version3/images/sub-banner-2.jpg">
+                        <img src="https://amiowealth.com/wp-content/uploads/2017/05/coffee-841425_1920.jpg">
                     </div>
                 </div>
             </div>
@@ -750,8 +674,8 @@
                                                             <li>
                                                                 <a class="add_to_wishlist link-wishlist favorite" data-id="{{ $product->id }}"></a>
                                                                  </li>
-                                                            <li> 
-                                                                <a href="#" class="link-compare add_to_compare compare"></a> 
+                                                            <li>
+                                                                <a href="#" class="link-compare add_to_compare compare"></a>
                                                             </li>
                                                         </ul>
                                                     </div>

@@ -17,7 +17,7 @@
     <div class="container-fluid">
         <div class="card">
             <div class="card-header">
-                <strong class="card-title">Quản Lý Vai Trò</strong>
+                <strong class="card-title">{{ __('message.role') }}</strong>
             </div>
 
             <div class="card-body">

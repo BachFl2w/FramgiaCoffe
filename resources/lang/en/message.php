@@ -71,12 +71,20 @@ return [
     ],
 
     'create' => 'Create',
+    'size' => 'Size',
+    'percent' => 'Percent',
+    'product_description' => 'Description',
+    'reviews' => 'Reviews',
+    'content' => 'Content',
+    'status' => 'Status',
+    'brief' => 'Brief',
     'update' => 'Update',
     'delete' => 'Delete',
     'action' => 'Action',
     'submit' => 'Submit',
     'cancel' => 'Cancel',
     'reset' => 'Reset',
+    'active' => 'Active',
     'id' => 'ID',
     'name' => 'Name',
     'price' => 'Price',
@@ -195,6 +203,6 @@ return [
     'new_customer' => 'New Customers',
     'create_account' => 'Create an Account',
     'login_or_create_account' => 'Login or Create an Account',
-    'client_login_text' => 'By creating an account with our store, you will be able to move through the checkout 
+    'client_login_text' => 'By creating an account with our store, you will be able to move through the checkout
         process faster, store multiple shipping addresses, view and track your orders in your account and more',
 ];
