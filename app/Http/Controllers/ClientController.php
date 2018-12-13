@@ -117,9 +117,7 @@ class ClientController extends Controller
             ->whereNotIn('id', [$product->id])
             ->limit(3)->get();
 
-        $feedback = Product::with(['feedbacks' => function ($query) {
-            $query->where('status', 1)->orderBy('id', 'desc')->get();
-        }])->findOrFail($id);
+        $feedback = Feedback::where('product_id', $id)->with('user')->get();
 
         //revent_view
         $arr = Session::get('recent_view', []);
