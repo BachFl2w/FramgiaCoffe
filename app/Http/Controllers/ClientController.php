@@ -86,9 +86,7 @@ class ClientController extends Controller
             ->whereNotIn('id', [$product->id])
             ->limit(3)->get();
 
-        $feedback = Product::with(['feedbacks' => function ($query) {
-            $query->where('status', 1)->orderBy('id', 'desc')->get();
-        }])->findOrFail($id);
+        $feedback = Feedback::where('product_id', $id)->with('user')->get();
 
         return view('product_detail', compact('product', 'feedback', 'products'));
     }
@@ -218,6 +216,6 @@ class ClientController extends Controller
 
     public function checkout(Request $request)
     {
-        
+
     }
 }
