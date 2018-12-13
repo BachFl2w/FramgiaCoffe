@@ -82,8 +82,7 @@
                                                     </h2>
                                                 </td>
                                                 <td class="a-center">
-                                                    <a title="Edit item parameters" class="edit-bnt"
-                                                       href="#configure/id/15945/">
+                                                    <a title="Edit item parameters" class="edit-bnt" href="">
                                                     </a>
                                                 </td>
 
@@ -91,7 +90,8 @@
                                                     <input type="text" maxlength="12" min="1" max="10"
                                                            class="input-text qty"
                                                            size="4" pattern="\d*"
-                                                           value="{{ $cart['item']['quantity'] }}">
+                                                           value="{{ $cart['item']['quantity'] }}" id="quantity-cart"
+                                                           data-id="{{ $cart['key'] }}">
                                                 </td>
                                                 <td class="a-right movewishlist">
                                             <span class="cart-price">
@@ -225,77 +225,4 @@
             </div>
         </div>
     </section>
-@endsection
-
-@section('js')
-    <script type="text/javascript"
-            src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-    <script type="text/javascript">
-        jQuery(document).ready(function ($) {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            var nf = new Intl.NumberFormat();
-            $('#checkout').click(function (event) {
-                event.preventDefault();
-                var user_current = $(this).attr('data-user');
-                $.ajax({
-                    url: route('client.cart'),
-                    type: 'get',
-                    dataType: '',
-                    data: {},
-                })
-                .done(function (res) {
-                    if (res.length !== 0) {
-                        var total_price = 0;
-                        res.forEach(function (element) {
-                            total_price += element.item_price;
-                        });
-                        if (user_current !== '') {
-                            var user = JSON.parse(user_current)
-                            $('#checkout-receiver').val(user.name);
-                            $('#checkout-place').val(user.address);
-                            $('#checkout-phone').val(user.phone);
-                            total_price = total_price * (1 - user.potential.discount/100);
-                            console.log(total_price)
-                            $('.price_cart').html(nf.format(Math.ceil(total_price)));
-                        }
-                    }
-                })
-                
-                $('#div-check-out').fadeIn();
-            });
-
-            $('#btn_checkout').click(function (event) {
-                event.preventDefault();
-                $.ajax({
-                    url: route('client.checkout'),
-                    type: 'post',
-                    dataType: '',
-                    contentType: false,
-                    processData: false,
-                    cache: false,
-                    data: new FormData($('form#form-checkout')[0]),
-                })
-                    .done(function () {
-                        swal({
-                            title: "Success",
-                            icon: "success",
-                            timer: 2000,
-                        });
-                        $('#box-cart').html('<h2>Nothing here</h2>');
-                        $('#div-check-out').fadeOut();
-                    })
-                    .fail(function (xhr, status, error) {
-                        var err = JSON.parse(xhr.responseText);
-                        var errors = Object.entries(err.errors);
-                        errors.forEach(function (value, index) {
-                            toastr.error(value[1][0], 'Error!');
-                        });
-                    })
-            });
-        });
-    </script>
 @endsection

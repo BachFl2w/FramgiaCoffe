@@ -160,21 +160,21 @@
                     dangerMode: true,
                 })
                     .then((willDelete) => {
-                        if (willDelete) {
-                            $.ajax({
-                                type: 'get',
-                                url: route('admin.category.destroy', {id: id}),
-                                success: function (res) {
-                                    category_table.ajax.reload();
-                                    swal({
-                                        title: "Success",
-                                        icon: "success",
-                                        timer: 2000,
-                                    });
-                                }
-                            });
-                        }
-                    })
+                    if (willDelete) {
+                        $.ajax({
+                            type: 'get',
+                            url: route('admin.category.destroy', {id: id}),
+                            success: function (res) {
+                                category_table.ajax.reload();
+                                swal({
+                                    title: "Success",
+                                    icon: "success",
+                                    timer: 2000,
+                                });
+                            }
+                        });
+                    }
+                })
             });
         });
     </script>

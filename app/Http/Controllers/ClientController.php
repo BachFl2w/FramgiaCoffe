@@ -50,7 +50,20 @@ class ClientController extends Controller
             ->whereNotIn('order_details.product_id', [$best_discount_product->id])
             ->get();
 
-        return view('index', compact('products', 'best_discount_product'));
+        //recent view
+        $arr = Session::get('recent_view', []);
+
+        $product_revent_view = [];
+
+        if ($arr) {
+            $product_revent_view = Product::with(['images' => function ($query) {
+                $query->where('active', 1)->get();
+            }])->findOrFail(array_reverse($arr));
+            $product_revent_view = $product_revent_view->take(6);
+        }
+
+
+        return view('index', compact('products', 'best_discount_product', 'product_revent_view'));
     }
 
     public function listProduct()
@@ -107,6 +120,17 @@ class ClientController extends Controller
         $feedback = Product::with(['feedbacks' => function ($query) {
             $query->where('status', 1)->orderBy('id', 'desc')->get();
         }])->findOrFail($id);
+
+        //revent_view
+        $arr = Session::get('recent_view', []);
+
+        $key = in_array($id, $arr);
+
+        if (!$key) {
+            $arr[] = $id;
+        }
+
+        Session::put('recent_view', $arr);
 
         return view('product_detail', compact('product', 'feedback', 'products'));
     }

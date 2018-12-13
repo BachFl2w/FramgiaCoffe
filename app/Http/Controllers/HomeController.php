@@ -31,10 +31,10 @@ class HomeController extends Controller
         $bestproducts = OrderDetail::with('product.images')
             ->orderBy('id', 'desc')
             ->limit(6)
-            ->toSql();
+            ->get();
 
-        return $bestproducts;
-        // return view('admin.index', compact('successOrder', 'canceledOrder'));
+//        return $bestproducts;
+         return view('admin.index', compact('successOrder', 'canceledOrder', 'bestproducts'));
     }
 
     public function changeLanguage($language)

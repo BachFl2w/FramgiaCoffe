@@ -66,33 +66,25 @@ class Cart1
         Session::put('cart', $this->cart);
     }
 
-    public function reduceQuantity($keyCart)
+    public function updateQuantity($keyCart, $quantity)
     {
+        $item_price = 0;
+        $index = 0;
         for ($i = 0; $i < count($this->cart); $i++) {
             if ($this->cart[$i]['key'] == $keyCart) {
-                $this->cart[$i]['item']['quantity'] -= 1;
-                $this->cart[$i]['item']['item_price'] = $this->cart[$i]['item_price']
-                    - $this->cart[$i]['item']['product_price']
-                    * (1 + $this->cart[$i]['item']['size']->percent)
-                    * (1 - $this->cart[$i]['item']['product_discount']);
-                break;
+                $index = $i;
+                $this->cart[$i]['item_price'] = $this->cart[$i]['item_price']
+                    + ($quantity - $this->cart[$i]['item']['quantity'])
+                    * ($this->cart[$i]['item']['product_price']
+                        * (1 + $this->cart[$i]['item']['size']->percent)
+                        * (1 - $this->cart[$i]['item']['product_discount']));
+                $this->cart[$i]['item']['quantity'] = $quantity;
             }
+            $item_price +=  $this->cart[$i]['item_price'];
         }
-        Session::put('cart', $this->cart);
-    }
 
-    public function increaseQuantity($keyCart)
-    {
-        for ($i = 0; $i < count($this->cart); $i++) {
-            if ($this->cart[$i]['key'] == $keyCart) {
-                $this->cart[$i]['item']['quantity'] += 1;
-                $this->cart[$i]['item']['item_price'] = $this->cart[$i]['item_price']
-                    + $this->cart[$i]['item']['product_price']
-                    * (1 + $this->cart[$i]['item']['size']->percent)
-                    * (1 - $this->cart[$i]['item']['product_discount']);
-                break;
-            }
-        }
+        $this->cart[$index]['item_price'] = $item_price;
+
         Session::put('cart', $this->cart);
     }
 
@@ -106,9 +98,9 @@ class Cart1
         }
         $data = [];
         foreach ($this->cart as $cart) {
-           $data[] = $cart;
+            $data[] = $cart;
         }
-        
+
         Session::put('cart', $data);
     }
 

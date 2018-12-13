@@ -60,6 +60,15 @@ class Cart1Controller extends Controller
         $cart->addProduct($product, $toppings, $size);
     }
 
+    public function updateQuantity(Request $request)
+    {
+        $cart = new Cart1();
+
+        $cart->updateQuantity($request->key, $request->quantity);
+
+        return redirect()->route('client.showCart');
+    }
+
     public function delete(Request $request)
     {
         $cart = new Cart1();

@@ -11,7 +11,7 @@
                 <div class="dropdown-menu append_active" aria-labelledby="notification">
                     @foreach ($data['active'] as $d)
                         <div class="dropdown-item active_item" data-id="{{ $d->id }}">
-                            <a class="text-primary btn-link btn_active_user" href="#">
+                            <a class="text-primary btn-link btn_active_user" href="{{ route('admin.user.index') }}">
                                 @if ($d->image)
                                     <img class="user-avatar rounded-circle avatar-header" src="{{ asset(config('asset.image_path.avatar') . $d->image) }}" height="20px" alt="User Avatar">
                                     @else
@@ -32,7 +32,7 @@
                 </button>
                 <div class="dropdown-menu feedback-dropdown" aria-labelledby="message">
                     @foreach ($data['feedback'] as $f)
-                        <a class="dropdown-item media bg-flat-color-1" id="feedback{{ $f->id }}" href="#">
+                        <a class="dropdown-item media bg-flat-color-1" id="feedback{{ $f->id }}" href="{{ route('admin.feedback.index') }}">
                             <span class="photo media-left">
                                 <img alt="avatar" class="user-avatar rounded-circle" src="{{ asset('images/default.jpeg') }}">
                             </span>
@@ -109,7 +109,7 @@ jQuery(document).ready(function($) {
         var existingNotifications = notifications.html();
         var avatar = (data.user_avatar ? 'avatars/' + data.user_avatar : 'default.jpeg');
         var newNotificationHtml = `
-            <a class="dropdown-item media bg-flat-color-1" id="feedback${data.id}" href="#">
+            <a class="dropdown-item media bg-flat-color-1" id="feedback${data.id}" href="{!! route('admin.feedback.index') !!}">
                 <span class="photo media-left">
                     <img alt="avatar" class="user-avatar rounded-circle" src="http://127.0.0.1:8000/images/${avatar}">
                 </span>
@@ -143,7 +143,7 @@ jQuery(document).ready(function($) {
         var avatar = (data.user_avatar ? 'avatars/' + data.image : 'default.jpeg');
         var newNotificationHtmlUser = `
             <div class="dropdown-item active_item" data-id="${data.id}">
-                <a class="text-primary btn-link btn_active_user" href="#">
+                <a class="text-primary btn-link btn_active_user" href="{!! route('admin.feedback.index') !!}">
                     <img class="user-avatar rounded-circle avatar-header" src="http://127.0.0.1:8000/images/${avatar}" alt="User Avatar" height="20px">
                     &nbsp${data.user_name}
                 </a>

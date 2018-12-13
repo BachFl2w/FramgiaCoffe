@@ -222,6 +222,8 @@ Route::get('cart', 'ClientController@cart')->name('client.showCart');
 
 Route::post('cart-add', 'Cart1Controller@add')->name('user.cart.add');
 
+Route::post('cart-update', 'Cart1Controller@updateQuantity')->name('user.cart.update');
+
 Route::get('cart-delete/{key}', 'Cart1Controller@delete')->name('user.cart.delete');
 
 Route::get('cart-remove-all', 'Cart1Controller@removeAll')->name('user.cart.remove');
@@ -249,32 +251,8 @@ Route::post('favorite', 'ClientController@favorite')->name('client.favorite');
 Route::post('checkout', 'ClientController@checkout')->name('client.checkout');
 
 Route::get('demo', function () {
-    $order =  \App\Order::with('orderDetails.product')->with('orderDetails.size')->with('orderDetails.toppings')
-        ->where('id', '=', '1')
-        ->orderBy('created_at', 'desc')
-        ->first();
-
-        return view('mail.order_mail', compact('order'));
+    return  Session('cart');
 });
-Route::get('demo1', function () {
-    $order_new = Order::with('orderDetails.product')
-            ->with('orderDetails.size')->with('orderDetails.toppings')
-            ->where('id', '=', '1')
-            ->orderBy('created_at', 'desc')
-            ->first();
-             $index = 0;
-             $price = 0;
-    foreach($order_new->orderDetails as $detail) {
-            $priceProduct = $detail->product_price * $detail->quantity;
-            $priceTopping = 0;
-            foreach ($detail->toppings as $topping) {
-                $priceTopping += $topping->pivot->topping_price;
-            }
-            $price += $priceProduct + $priceTopping;
-    }
-    $order_new['price'] = $price;
-    return $order_new;
+Route::get('remove', function () {
+    return Session::forget('cart');
 });
-
-Route::get('send', 'MailController@send');
-// Route::post('send', 'MailController@send')->name('send.mail');
