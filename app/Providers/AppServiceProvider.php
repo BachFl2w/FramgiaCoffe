@@ -7,6 +7,7 @@ use App\Product;
 use App\Category;
 use App\Size;
 use App\Topping;
+use App\Feedback;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
@@ -24,6 +25,7 @@ class AppServiceProvider extends ServiceProvider
             if (Auth::check()) {
                 $data['currentUser'] = Auth::user();
                 $data['active'] = User::where('active', 0)->get();
+                $data['feedback'] = Feedback::where('status', 0)->with('user')->get();
                 $view->with('data', $data);
             }
         });

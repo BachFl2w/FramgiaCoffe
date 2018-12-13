@@ -64,9 +64,9 @@
 
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/sweetalert.min.js') }}"></script>
+    <script src="https://js.pusher.com/4.3/pusher.min.js"></script>
 
+    @yield('pusher')
     @yield('script')
-
-    @yield('scriptHeader')
 </body>
 </html>

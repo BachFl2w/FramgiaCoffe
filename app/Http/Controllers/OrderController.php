@@ -132,4 +132,13 @@ class OrderController extends Controller
 
         return redirect()->route('admin.order.index');
     }
+
+    public function confirm($id)
+    {
+        $this->orderModel->update([
+            'status' => 1,
+        ], $id);
+
+        
+    }
 }

@@ -12,65 +12,12 @@
                                     <img src="{{ asset('images/image_background1.jpg') }}"
                                          alt="slide-img" data-bgposition='left top' data-bgfit='cover'
                                          data-bgrepeat='no-repeat'/>
-                                    <div class="info">
-                                        <div class='tp-caption ExtraLargeTitle sft  tp-resizeme ' data-endspeed='500'
-                                             data-speed='500' data-start='1100' data-easing='Linear.easeNone'
-                                             data-splitin='none' data-splitout='none' data-elementdelay='0.1'
-                                             data-endelementdelay='0.1' style='z-index:2;white-space:nowrap;'>
-                                            <span>Freshia DEAL</span>
-                                        </div>
-                                        <div class='tp-caption LargeTitle sfl  tp-resizeme ' data-endspeed='500'
-                                             data-speed='500' data-start='1300' data-easing='Linear.easeNone'
-                                             data-splitin='none' data-splitout='none' data-elementdelay='0.1'
-                                             data-endelementdelay='0.1' style='z-index:3;white-space:nowrap;'>
-                                            <span>DIGITAL TIME</span>
-                                        </div>
-                                        <div class='tp-caption Title sft  tp-resizeme ' data-endspeed='500'
-                                             data-speed='500' data-start='1450' data-easing='Power2.easeInOut'
-                                             data-splitin='none' data-splitout='none' data-elementdelay='0.1'
-                                             data-endelementdelay='0.1' style='z-index:4;white-space:nowrap;'>LOREM
-                                            IPSUM DOLOR SIT AMET, <br>
-                                            CONSECTETUR ELIT.
-                                        </div>
-                                        <div class='tp-caption sfb  tp-resizeme ' data-endspeed='500' data-speed='500'
-                                             data-start='1500' data-easing='Linear.easeNone' data-splitin='none'
-                                             data-splitout='none' data-elementdelay='0.1' data-endelementdelay='0.1'
-                                             style='z-index:4;white-space:nowrap;'>
-
-                                        </div>
-                                    </div>
                                 </li>
                                 <li data-transition='random' data-slotamount='7' data-masterspeed='1000'
                                     data-thumb="{{ asset('images/image_background2.jpg') }}">
                                     <img src="{{ asset('images/image_background2.jpg') }}"
                                          alt="slide-img" data-bgposition='left top' data-bgfit='cover'
                                          data-bgrepeat='no-repeat'/>
-                                    <div class="info">
-                                        <div class='tp-caption ExtraLargeTitle sft slide2  tp-resizeme '
-                                             data-endspeed='500' data-speed='500' data-start='1100'
-                                             data-easing='Linear.easeNone' data-splitin='none' data-splitout='none'
-                                             data-elementdelay='0.1' data-endelementdelay='0.1'
-                                             style='z-index:2;white-space:nowrap;padding-right:0px'>
-                                            <span>SPRING 2018</span></div>
-                                        <div class='tp-caption LargeTitle sfl  tp-resizeme ' data-endspeed='500'
-                                             data-speed='500' data-start='1300' data-easing='Linear.easeNone'
-                                             data-splitin='none' data-splitout='none' data-elementdelay='0.1'
-                                             data-endelementdelay='0.1' style='z-index:3;white-space:nowrap;'>FAIRY
-                                            STYLE
-                                        </div>
-                                        <div class='tp-caption Title sft  tp-resizeme ' data-endspeed='500'
-                                             data-speed='500' data-start='1500' data-easing='Power2.easeInOut'
-                                             data-splitin='none' data-splitout='none' data-elementdelay='0.1'
-                                             data-endelementdelay='0.1' style='z-index:4;white-space:nowrap;'>Lorem
-                                            ipsum dolor sit amet, <br>
-                                            consectetur elit.
-                                        </div>
-                                        <div class='tp-caption sfb  tp-resizeme ' data-endspeed='500' data-speed='500'
-                                             data-start='1500' data-easing='Linear.easeNone' data-splitin='none'
-                                             data-splitout='none' data-elementdelay='0.1' data-endelementdelay='0.1'
-                                             style='z-index:4;white-space:nowrap;'>
-                                        </div>
-                                    </div>
                                 </li>
                             </ul>
                         </div>
@@ -192,18 +139,18 @@
                                                                              class="product-cartitem">0
                                                                         </div>
                                                                         <a class="product-image"
-                                                                           title="{{ $product['product']->name }}"
-                                                                           href="{{ route('client.product.detail', ['id' => $product['product']->id]) }}">
+                                                                           title="{{ $product->name }}"
+                                                                           href="{{ route('client.product.detail', ['id' => $product->id]) }}">
                                                                             <img alt="{{ $product->name }}"
-                                                                                 src="{{ asset('images/products/' . $product['product']['images'][0]->name) }}">
+                                                                                 src="{{ asset('images/products/' . $product->image) }}">
                                                                         </a>
                                                                     </div>
                                                                     <div class="item-info">
                                                                         <div class="info-inner">
                                                                             <div class="item-title">
                                                                                 <a title="{{ $product->name }}"
-                                                                                   href="{{ route('client.product.detail', ['id' => $product['product']->id]) }}">
-                                                                                    {{ $product['product']->name }}
+                                                                                   href="{{ route('client.product.detail', ['id' => $product->id]) }}">
+                                                                                    {{ $product->name }}
                                                                                 </a>
                                                                             </div>
                                                                             <div class="rating">
@@ -219,7 +166,7 @@
                                                                                     <div class="price-box">
                                                                                         <span class="regular-price">
                                                                                             <span
-                                                                                                class="price">{{ number_format($product['product']->price) . ' ₫'}}</span>
+                                                                                                class="price">{{ number_format($product->price) . ' ₫'}}</span>
                                                                                         </span>
                                                                                     </div>
                                                                                 </div>
@@ -233,7 +180,7 @@
                                                 </div>
                                             </div>
                                             <!-- tab product -->
-                                            <div class="tab-panel" id="tab-2">
+                                            {{-- <div class="tab-panel" id="tab-2">
                                                 <div class="category-products">
                                                     <ul class="products-grid">
                                                         <li class="item col-lg-6 col-md-6 col-sm-6 col-xs-12">
@@ -430,7 +377,7 @@
                                                         </li>
                                                     </ul>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                             <div class="tab-panel" id="tab-3">
                                                 <div class="category-products">
                                                     <div class="category-products">
@@ -679,45 +626,6 @@
                 </div>
             </div>
         </section>
-       {{--  <section class="brand-logo-section">
-            <div class="container">
-                <div class="row">
-                    <h3 class="widget-heading">Best of Brands</h3>
-                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 brand-box"><a href="#">
-                            <img class="loaded"
-                                 src="http://htmldemo.themessoft.com/freshia/version3/images/b-logo1.png">
-                        </a></div>
-                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 brand-box"><a href="#">
-                            <img class="loaded"
-                                 src="http://htmldemo.themessoft.com/freshia/version3/images/b-logo2.png">
-                        </a></div>
-                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 brand-box"><a href="#">
-                            <img class="loaded"
-                                 src="http://htmldemo.themessoft.com/freshia/version3/images/b-logo7.png">
-                        </a></div>
-                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 brand-box"><a href="#">
-                            <img class="loaded"
-                                 src="http://htmldemo.themessoft.com/freshia/version3/images/b-logo3.png">
-                        </a></div>
-                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 brand-box"><a href="#">
-                            <img class="loaded"
-                                 src="http://htmldemo.themessoft.com/freshia/version3/images/b-logo4.png">
-                        </a></div>
-                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 brand-box"><a href="#">
-                            <img class="loaded"
-                                 src="http://htmldemo.themessoft.com/freshia/version3/images/b-logo5.png">
-                        </a></div>
-                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 brand-box"><a href="#">
-                            <img class="loaded"
-                                 src="http://htmldemo.themessoft.com/freshia/version3/images/b-logo6.png">
-                        </a></div>
-                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 brand-box"><a href="#">
-                            <img class="loaded"
-                                 src="http://htmldemo.themessoft.com/freshia/version3/images/b-logo8.png">
-                        </a></div>
-                </div>
-            </div>
-        </section> --}}
         <div class="container">
             <div class="bestsell-pro">
                 <div class="slider-items-products">

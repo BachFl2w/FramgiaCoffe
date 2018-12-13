@@ -14,8 +14,8 @@ use App\Repositories\Repository;
 use Yajra\Datatables\Datatables;
 use Pusher\Pusher;
 
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class FeedbackController extends Controller
 {
@@ -60,25 +60,55 @@ class FeedbackController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, User $user, Product $product)
+    public function store(Request $request)
     {
-        if ($request == '') {
-            return back()->with('fail', __('message.fail.feedback'));
+        if ($request->product_id == '' || $request->content == '' && !Auth::check()) {
+            abort(403);
         }
 
-        $data = $this->feedbackModel->create([
+        $user = Auth::user();
+
+        $data = [
             'user_id' => $user->id,
-            'product_id' => $product->id,
-            'content' => $request->contents,
+            'user_id' => $user->id,
+            'user_avatar' => $user->image,
+            'user_name' => $user->name,
+            'product_id' => $request->product_id,
+            'content' => $request->content,
             'status' => 0,
-        ]);
+        ];
 
-        // $name, $with
+        // create feedback
+        $feedback = $this->feedbackModel->create($data);
         $this->feedbackModel->setRedisAll('feedback:all', ['user', 'product']);
-        // $name, $id, $data
-        $this->feedbackModel->setRedisById('feedback:' . $data->id, $data);
 
-        return back()->with('success', __('message.success.send'));
+        $options = array(
+            'cluster' => 'ap1',
+            'encrypted' => true
+        );
+
+        $pusher = new Pusher(
+            env('PUSHER_APP_KEY'),
+            env('PUSHER_APP_SECRET'),
+            env('PUSHER_APP_ID'),
+            $options
+        );
+
+        $data[] = ['id' => $feedback->id];
+
+        try {
+            $pusher->trigger(
+                'FeedbackEvent',
+                'send-feedback',
+                $data
+            );
+        } catch (\Exception $e) {
+            dd($e);
+        }
+
+        $feedbackWith = $feedback->with('user', 'product')->get();
+
+        return $feedbackWith;
     }
 
 
@@ -102,5 +132,15 @@ class FeedbackController extends Controller
         $this->feedbackModel->setRedisAll('feedback:all', ['user', 'product']);
         // $name, $id, $data
         $this->feedbackModel->setRedisById('feedback:' . $feedback->id, Feedback::where('id', $feedback->id));
+
+        $check = $feedback->status == 1 ? 0 : 1;
+
+        if ($check == 1) {
+            return 1;
+        }
+
+        $feed = Feedback::where('id', $feedback->id);
+
+        return $feed;
     }
 }

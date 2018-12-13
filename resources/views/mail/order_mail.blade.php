@@ -1,32 +1,26 @@
 <p><img src="https://framgia.com/wp-content/themes/frg-framgia/images/framgia-logo-black.png"></p>
-
-<p>{{ __('message.order.confirm') }}</p>
-
-{{-- @component('mail::table') --}}
-<table border="1" style="border-collapse: collapse">
-    <thead>
+{{-- {{ dd($order) }} --}}
+<p>{{ __('Order ID: ') . $order->id }}</p>
+<table border="1">
+    <tr>
+        <td>{{ __('Product') }}</td>
+        <td>{{ __('Size') }}</td>
+        <td>{{ __('Quantity') }}</td>
+        <td>{{ __('Topping') }}</td>
+    </tr>
+    @foreach ($order->orderDetails as $detail)
         <tr>
-            <th>{{ __('message.id') }}</th>
-            <th>{{ __('message.order_title.receiver') }}</th>
-            <th>{{ __('message.order_title.time_order') }}</th>
-            <th>{{ __('message.order_title.address_order') }}</th>
-            <th>{{ __('message.order_title.phone_order') }}</th>
-            <th>{{ __('message.order_title.status') }}</th>
-            <th>{{ __('message.order_title.note') }}</th>
+            <td>
+                <h3>{{ $detail->product->name }}</h3>
+                <h4>{{ __('message.order_detai_title.price') . ': ' . number_format($detail->product_price) . ' vnđ' }}</h4>
+            </td>
+            <td>{{ $detail->size->name }}</td>
+            <td>{{ $detail->quantity }}</td>
+            <td>
+                @foreach ($detail->toppings as $topping)
+                    <p>{{ $topping->name }}</p>
+                @endforeach
+            </td>
         </tr>
-    </thead>
-    <tbody>
-        @for($i = 0; $i < 10; $i++)
-            <tr>
-                <td>{{ $i }}</td>
-                <td>Doe</td>
-                <td>john@example.com</td>
-                <td>john@example.com</td>
-                <td>john@example.com</td>
-                <td>john@example.com</td>
-                <td>Here</td>
-            </tr>
-        @endfor
-    </tbody>
+    @endforeach
 </table>
-{{-- @endcomponent --}}

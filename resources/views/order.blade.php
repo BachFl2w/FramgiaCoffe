@@ -167,8 +167,6 @@
 <script type="text/javascript">
         jQuery(document).ready(function ($) {
 
-            $('#order_list').DataTable();
-
             $('#order_list tbody').on('click', '#edit_order', function (event) {
                 event.preventDefault();
                 var row = $(this).closest('tr');

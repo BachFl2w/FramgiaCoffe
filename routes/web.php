@@ -1,6 +1,7 @@
 <?php
 
 use App\User;
+use App\Order;
 
 /*
 |--------------------------------------------------------------------------
@@ -169,6 +170,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin'], function () {
         Route::post('update/{id}', 'OrderController@update')->name('admin.order.update');
 
         Route::get('delete/{id}', 'OrderController@destroy')->name('admin.order.destroy');
+
+        Route::get('active/{id}', 'OrderController@confirm')->name('admin.order.confirm');
     });
 });
 
@@ -223,6 +226,8 @@ Route::get('cart-delete/{key}', 'Cart1Controller@delete')->name('user.cart.delet
 
 Route::get('cart-remove-all', 'Cart1Controller@removeAll')->name('user.cart.remove');
 
+Route::post('clien-feedback', 'FeedbackController@store')->name('feedback.store');
+
 Route::get('order', 'ClientController@orders')->name('client.orders');
 
 Route::get('order_detail/{order_id}', 'ClientController@order_details')->name('client.order.order_detail');
@@ -243,8 +248,32 @@ Route::post('favorite', 'ClientController@favorite')->name('client.favorite');
 
 Route::post('checkout', 'ClientController@checkout')->name('client.checkout');
 
-Route::get('mail', function () {
-    return view('mail.order_mail');
+Route::get('demo', function () {
+    $order =  \App\Order::with('orderDetails.product')->with('orderDetails.size')->with('orderDetails.toppings')
+        ->where('id', '=', '1')
+        ->orderBy('created_at', 'desc')
+        ->first();
+
+        return view('mail.order_mail', compact('order'));
+});
+Route::get('demo1', function () {
+    $order_new = Order::with('orderDetails.product')
+            ->with('orderDetails.size')->with('orderDetails.toppings')
+            ->where('id', '=', '1')
+            ->orderBy('created_at', 'desc')
+            ->first();
+             $index = 0;
+             $price = 0;
+    foreach($order_new->orderDetails as $detail) {
+            $priceProduct = $detail->product_price * $detail->quantity;
+            $priceTopping = 0;
+            foreach ($detail->toppings as $topping) {
+                $priceTopping += $topping->pivot->topping_price;
+            }
+            $price += $priceProduct + $priceTopping;
+    }
+    $order_new['price'] = $price;
+    return $order_new;
 });
 
 Route::get('send', 'MailController@send');

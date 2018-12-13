@@ -16,6 +16,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/app_client.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/custom.css') }}">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css">
+    
     @yield('css')
 </head>
 
@@ -178,7 +179,7 @@
             })
             .done(function (res) {
                 $('.modal-title').html(res.name);
-                $('#product_id').val(res.id);
+                $('#product_id_modal').val(res.id);
             })
             .fail(function () {
                 console.log("error");

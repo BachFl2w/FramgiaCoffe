@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Feedback;
 use App\Http\Requests\CheckoutRequest;
 use App\Http\Requests\Client_UserRequest;
+use App\Mail\InforOrder;
 use App\Order;
 use App\OrderDetail;
 use App\Product;
@@ -12,6 +13,8 @@ use App\User;
 use App\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Redis;
 use Cache;
@@ -31,15 +34,20 @@ class ClientController extends Controller
     public function index()
     {
         $best_discount_product = Product::with(['images' => function ($query) {
-            $query->orderBy('id', 'desc')->limit(1);
+            $query->where('active', 1)->get();
         }])
             ->orderBy('discount', 'desc')
             ->orderBy('id', 'desc')
             ->first();
 
-        $products = OrderDetail::with('product.images')
-            ->orderBy('id', 'desc')
-            ->limit(6)
+        $products = DB::table('order_details')
+            ->join('products', 'order_details.product_id', '=', 'products.id')
+            ->join('images', 'products.id', '=', 'images.product_id')
+            ->select('products.*', 'images.name as image', 'order_details.quantity as soluong')
+            ->selectRaw('sum(order_details.quantity) as total')
+            ->groupBy('order_details.product_id')
+            ->orderBy('total', 'desc')
+            ->whereNotIn('order_details.product_id', [$best_discount_product->id])
             ->get();
 
         return view('index', compact('products', 'best_discount_product'));
@@ -268,6 +276,14 @@ class ClientController extends Controller
                 }
             }
         }
+        //send mail
+        $order_new = Order::with('orderDetails.product')
+            ->with('orderDetails.size')->with('orderDetails.toppings')
+            ->where('id', '=', '1')
+            ->orderBy('created_at', 'desc')
+            ->first();
+        if (Auth::check())
+            Mail::send(new InforOrder($order_new, Auth::user()->email));
         session()->forget('cart');
     }
 }
