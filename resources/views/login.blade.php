@@ -20,19 +20,36 @@
                     </div>
                     <div class="col-2 registered-users"><strong>{{ __('message.login') }}</strong>
                         <div class="content">
-                            {!! Form::open(['method' => 'POST', 'route' => 'postLogin' ]) !!}
+                            {{ Form::open(['method' => 'POST', 'route' => 'postLogin']) }}
+                            @csrf
                             <ul class="form-list">
                                 <li>
                                     {!! Form::label('email', __('message.email')) !!}
-                                    {!! Form::text('email', null, ['class' => 'input-text required-entry', 'id' => 'email', 'autofocus', 'autocomplete' => 'off']) !!}
+                                    {!! Form::text('email', '', ['class' => 'input-text required-entry', 'autofocus', 'autocomplete' => 'off']) !!}
+                                    @if ($errors->has('email'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('email') }}</strong>
+                                        </span>
+                                    @endif
                                 </li>
                                 <li>
-                                   {!! Form::label('pass', __('message.password')) !!}
-                                   {!! Form::password('password', ['class' => 'input-text required-entry validate-password', 'id' => 'pass', 'autocomplete' => 'off']) !!}
+                                   {!! Form::label('password', __('message.password')) !!}
+                                   {!! Form::password('password', ['class' => 'input-text required-entry validate-password', 'autocomplete' => 'off']) !!}
+                                   @if ($errors->has('password'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('password') }}</strong>
+                                        </span>
+                                    @endif
                                 </li>
                             </ul>
                             <div class="buttons-set">
-                                {!! Form::submit(__('message.login'), ['class' => 'button login']) !!}
+                                {!! Form::submit(__('message.login'), ['class' => 'button login loginUser']) !!}
+                                @if ($errors->any())
+                                    <br>
+                                    <span class="text-danger">
+                                        {{ $errors->first() }}
+                                    </span>
+                                @endif
                             </div>
                             {!! Form::close() !!}
                         </div>
@@ -44,11 +61,15 @@
 @endsection
 
 @section('js')
-    <script type="text/javascript">
-        jQuery(document).ready(function($) {
-            $('#login-create-account').click(function(event) {
-                window.location.href = route('client.register');
-            });
-        });
-    </script>
+
+<script type="text/javascript">
+
+jQuery(document).ready(function($) {
+    $('#login-create-account').click(function(event) {
+        window.location.href = route('client.register');
+    });
+});
+
+</script>
+
 @endsection

@@ -419,5 +419,6 @@
 </script>
 {{-- <script src="{{ asset('js/app_client.js') }}" type="text/javascript" charset="utf-8" async defer></script> --}}
 @yield('js')
+
 </body>
 </html>

@@ -45,13 +45,15 @@ class UserController extends Controller
 
     public function json()
     {
-        if (!Redis::get('user:all')) {
-            // $name, $with from repository
-            $this->userModel->setRedisAll('user:all', ['role']);
-        }
+        // if (!Redis::get('user:all')) {
+        //     // $name, $with from repository
+        //     $this->userModel->setRedisAll('user:all', ['role']);
+        // }
 
-        // set true to return array
-        $data = json_decode(Redis::get('user:all'), true);
+        // // set true to return array
+        // $data = json_decode(Redis::get('user:all'), true);
+
+        $data = User::all()->load('role');
 
         return datatables($data)->make(true);
     }
@@ -65,7 +67,6 @@ class UserController extends Controller
     public function store(UserStoreRequest $request)
     {
         if (Auth::user()->role_id != 1) {
-            // return __('message.fail.create');
             abort(403);
         }
 
@@ -96,10 +97,10 @@ class UserController extends Controller
             'image' => $image,
         ]);
 
-        // $name, $with
-        $this->userModel->setRedisAll('user:all', ['role']);
-        // $name, $id, $data
-        $this->userModel->setRedisById('user:' . $user->id, $user);
+        // // $name, $with
+        // $this->userModel->setRedisAll('user:all', ['role']);
+        // // $name, $id, $data
+        // $this->userModel->setRedisById('user:' . $user->id, $user);
 
         return 'success';
     }
@@ -174,8 +175,8 @@ class UserController extends Controller
             $user->id
         );
 
-        $this->userModel->setRedisAll('user:all', ['role']);
-        $this->userModel->setRedisById('user:' . $user->id, $data);
+        // $this->userModel->setRedisAll('user:all', ['role']);
+        // $this->userModel->setRedisById('user:' . $user->id, $data);
 
         return __('message.success.update');
     }
@@ -217,8 +218,8 @@ class UserController extends Controller
         $currentUser = Auth::user();
 
         if ($currentUser->role_id == 1 && $user->role_id != 1) {
-            $this->userModel->setRedisAll('user:all', ['role']);
-            $this->userModel->deleteRedis('user' . $user->id);
+            // $this->userModel->setRedisAll('user:all', ['role']);
+            // $this->userModel->deleteRedis('user' . $user->id);
 
             $user->delete();
 
@@ -243,7 +244,7 @@ class UserController extends Controller
             return redirect()->route('admin.index');
         }
 
-        return back()->with('fail', __('message.fail.login'));
+        return redirect()->back()->withErrors(['User name or password not true']);
     }
 
     public function logoutAdmin()

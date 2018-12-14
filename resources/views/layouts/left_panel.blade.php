@@ -6,8 +6,8 @@
                     aria-controls="main-menu" aria-expanded="false" aria-label="Toggle navigation">
                 <i class="fa fa-bars"></i>
             </button>
-            <a class="navbar-brand" href="./"><img src="{{ asset('images/framgia-logo.png') }}" alt="Logo"></a>
-            <a class="navbar-brand hidden" href="./"><img src="{{ asset('images/framgia2.png') }}" alt="Logo"></a>
+            <a class="navbar-brand" href="{{ route('admin.index') }}"><img src="{{ asset('images/framgia-logo.png') }}" alt="Logo"></a>
+            <a class="navbar-brand hidden" href=".{{ route('admin.index') }}"><img src="{{ asset('images/framgia2.png') }}" alt="Logo"></a>
         </div>
 
         <div id="main-menu" class="main-menu collapse navbar-collapse">
@@ -17,7 +17,7 @@
                         <i class="menu-icon fa fa-dashboard"></i>{{ __('Dashboard') }}
                     </a>
                 </li>
-                
+
                 <h3 class="menu-title">{{ __('Manager System') }}</h3>
                 <li>
                     <a href="{{ route('admin.user.index') }}">

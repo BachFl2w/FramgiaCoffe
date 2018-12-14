@@ -18,6 +18,7 @@ class OrdersTableSeeder extends Seeder
                 'order_time' => '2018-11-01 09:39:12',
                 'order_place' => 'Handico',
                 'order_phone' => '0123456789',
+                'order_email' => 'abc@gmail.com',
                 'status' => 0,
                 'Note' => 'Giao hàng sớm',
             ], [
@@ -26,6 +27,7 @@ class OrdersTableSeeder extends Seeder
                 'order_time' => '2018-11-02 09:39:12',
                 'order_place' => 'Handico',
                 'order_phone' => '0123456789',
+                'order_email' => 'abc@gmail.com',
                 'status' => -1,
                 'Note' => 'Giao hàng muộn',
             ], [
@@ -34,6 +36,7 @@ class OrdersTableSeeder extends Seeder
                 'order_time' => '2018-11-05 09:39:12',
                 'order_place' => 'Handico',
                 'order_phone' => '0123456789',
+                'order_email' => 'abc@gmail.com',
                 'status' => 1,
                 'Note' => 'Giao hàng muộn 1',
             ], [
@@ -42,6 +45,7 @@ class OrdersTableSeeder extends Seeder
                 'order_time' => '2018-11-02 09:39:12',
                 'order_place' => 'Handico ABCXYZ',
                 'order_phone' => '0123456789',
+                'order_email' => 'abc@gmail.com',
                 'status' => 1,
                 'Note' => 'Van chuyen can than',
             ],

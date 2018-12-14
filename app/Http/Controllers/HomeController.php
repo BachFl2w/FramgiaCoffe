@@ -28,13 +28,13 @@ class HomeController extends Controller
     {
         $successOrder = Order::where('status', 1)->get();
         $canceledOrder = Order::where('status', -1)->get();
-        $bestproducts = OrderDetail::with('product.images')
+        $popularProduct = OrderDetail::with('product.images')
             ->orderBy('id', 'desc')
             ->limit(6)
             ->get();
 
 //        return $bestproducts;
-         return view('admin.index', compact('successOrder', 'canceledOrder', 'bestproducts'));
+         return view('admin.index', compact('successOrder', 'canceledOrder', 'popularProduct'));
     }
 
     public function changeLanguage($language)
