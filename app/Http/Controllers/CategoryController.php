@@ -101,8 +101,8 @@ class CategoryController extends Controller
 
     public function getCategoryJson()
     {
-        $categories_data = Category::withCount('products')->get();
+        $categories = Category::withCount('products')->get();
 
-        return datatables($categories_data)->make(true);
+        return datatables($categories)->make(true);
     }
 }

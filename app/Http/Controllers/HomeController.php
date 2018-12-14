@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Order;
 use App\OrderDetail;
-use DateTime;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class HomeController extends Controller
 {
@@ -33,12 +33,5 @@ class HomeController extends Controller
             ->limit(6)
             ->get();
         return view('admin.index', compact('successOrder', 'canceledOrder', 'popularProduct'));
-    }
-
-    public function changeLanguage($language)
-    {
-        \Session::put('website_language', $language);
-
-        return redirect()->back();
     }
 }

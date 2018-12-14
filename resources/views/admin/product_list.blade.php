@@ -137,6 +137,7 @@
             var product_table = $('#admin_product_list').DataTable({
                 processing: true,
                 serverSide: true,
+                order: ['0', 'desc'],
                 ajax: {
                     url: route('admin.product.json'),
                 },
@@ -144,51 +145,43 @@
                     {
                         data: 'id',
                         name: 'id'
-                     },
-                    {
+                    }, {
                         data: 'name',
                         name: 'name'
-                     },
-                    {
+                    }, {
                         data: 'category.name', 
                         name: 'category.name'
-                    },
-                    {
+                    }, {
                         data: 'images',
                         name: 'images',
                         render: function (data, type, row) {
                             return `<img src="http://127.0.0.1:8000/images/products/${data[0]['name']}">`
                         }
-                    },
-                    {
+                    }, {
                         data: 'brief',
                         name: 'brief',
                         render: function (data, type, row) {
                             return data.substr(0, 20) + "...";
                         }
-                    },
-                    {
+                    }, {
                         data: 'description',
                         name: 'description',
                         render: function (data, type, row) {
                             return data.substr(0, 20) + "...";
                         }
-                    },
-                    {
+                    }, {
                         data: 'discount',
                         name: 'discount',
                         render: function (data) {
                             return nf.format(data) + ' %';
                         }
-                    },
-                    {
+                    }, {
                         data: 'price',
                         name: 'price',
                         render: function (data) {
                             return nf.format(data) + ' ₫';
                         }
-                    },
-                    {
+                    }, {
                         data: null,
                         name: null,
                         defaultContent: [
@@ -259,22 +252,22 @@
                     buttons: true,
                     dangerMode: true,
                 })
-                    .then((willDelete) => {
-                        if (willDelete) {
-                            $.ajax({
-                                type: 'get',
-                                url: route('admin.product.destroy', {id: id}),
-                                success: function (data) {
-                                    swal({
-                                        title: "Success",
-                                        icon: "success",
-                                        timer: 2000,
-                                    });
-                                    product_table.ajax.reload();
-                                },
-                            });
-                        }
-                    })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        $.ajax({
+                            type: 'get',
+                            url: route('admin.product.destroy', {id: id}),
+                            success: function (data) {
+                                swal({
+                                    title: "Success",
+                                    icon: "success",
+                                    timer: 2000,
+                                });
+                                product_table.ajax.reload();
+                            },
+                        });
+                    }
+                })
             });
 
             $('#image').change(function () {

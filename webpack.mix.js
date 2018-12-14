@@ -22,8 +22,8 @@ mix.js([
 ], 'public/js/app.js')
     .styles([
         'public/css/app.css',
+        'node_modules/datatables.net-bs4/css/dataTables.bootstrap4.css',
         'resources/asset/admin/css/admin.css',
-        'resources/asset/admin/css/custom.css',
     ], 'public/css/admin_style.css')
     .copyDirectory('node_modules/ckeditor/', 'public/ckeditor/');
 /**

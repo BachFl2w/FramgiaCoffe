@@ -31,6 +31,13 @@ class ClientController extends Controller
         $this->orderDetailModel = new Repository($orderDetailModel);
     }
 
+    public function changeLanguage($language)
+    {
+        Session::put('website_language', $language);
+
+        return redirect()->back();
+    }
+
     public function index()
     {
         $best_discount_product = Product::with(['images' => function ($query) {
@@ -53,13 +60,14 @@ class ClientController extends Controller
         //recent view
         $arr = Session::get('recent_view', []);
 
-        $product_revent_view = [];
-
         if ($arr) {
             $product_revent_view = Product::with(['images' => function ($query) {
                 $query->where('active', 1)->get();
-            }])->findOrFail(array_reverse($arr));
+            }])
+                ->findOrFail(array_reverse($arr));
             $product_revent_view = $product_revent_view->take(6);
+        } else {
+            $product_revent_view = [];
         }
 
         return view('index', compact('products', 'best_discount_product', 'product_revent_view'));

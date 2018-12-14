@@ -14,7 +14,7 @@ return [
     */
     // title
     'title' => [
-        'dashboard' => 'Dashboard',
+        'dashboard' => 'Phan tich',
         'system' => 'System',
         'business' => 'Business',
         'topping' => 'Topping',
@@ -31,7 +31,7 @@ return [
     ],
 
     'index' => [
-        'statistics' => 'Statistics',
+        'statistics' => 'Phan Tich',
         'method' => 'How we work',
         'search' => 'Easy to search',
         'search_placeholder' => 'Enter product or category ...',

@@ -4,20 +4,38 @@
             <div clashref="#" s="row">
                 <div class="col-xs-12 col-sm-6">
                     <div class="dropdown block-language-wrapper">
-                        <a role="button" data-toggle="dropdown" data-target="#"
-                           class="block-language dropdown-toggle"
-                           href="#">
-                            <img src="{{ asset('images/vn_flat.png') }}" alt="language">
-                            {{ __('message.vn') }}
-                        </a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li role="presentation">
-                                <a href="#">
-                                    <img src="{{ asset('images/en_flat.png') }}" alt="language">
-                                    {{ __('message.en') }}
-                                </a>
-                            </li>
-                        </ul>
+                        @if(Session::get('website_language') == 'vi')
+                            <a role="button" data-toggle="dropdown" data-target="#"
+                               class="block-language dropdown-toggle"
+                               href="{{ route('user.change-language', ['vi']) }}">
+                                <img src="{{ asset('images/vn_flat.png') }}">
+                                {{ __('message.vn') }}
+                            </a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li role="presentation">
+                                    <a href="{{ route('user.change-language', ['en']) }}">
+                                        <img src="{{ asset('images/en_flat.png') }}">
+                                        {{ __('message.en') }}
+                                    </a>
+                                </li>
+                            </ul>
+                        @else
+                            <a role="button" data-toggle="dropdown" data-target="#"
+                               class="block-language dropdown-toggle"
+                               href="{{ route('user.change-language', ['en']) }}">
+                                <img src="{{ asset('images/en_flat.png') }}">
+                                {{ __('message.en') }}
+                            </a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li role="presentation">
+                                    <a href="{{ route('user.change-language', ['vi']) }}">
+                                        <img src="{{ asset('images/vn_flat.png') }}">
+                                        
+                                        {{ __('message.vn') }}
+                                    </a>
+                                </li>
+                            </ul>
+                        @endif
                     </div>
                 </div>
                 <div class="col-sm-6 col-xs-12">

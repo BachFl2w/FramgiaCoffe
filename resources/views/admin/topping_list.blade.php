@@ -89,20 +89,16 @@
                     {
                         data: 'id',
                         name: 'id',
-                    },
-                    {
+                    }, {
                         data: 'name',
                         name: 'name',
-                    },
-                    {
+                    }, {
                         data: 'price',
                         name: 'price',
-                    },
-                    {
+                    }, {
                         data: 'quantity',
                         name: 'quantity',
-                    },
-                    {
+                    }, {
                         data: null,
                         name: null,
                         defaultContent: [

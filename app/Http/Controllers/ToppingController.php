@@ -101,8 +101,8 @@ class TopingController extends Controller
 
     public function getDataJson()
     {
-        $data_topping = $this->toppingModel->all();
+        $toppings = $this->toppingModel->all();
 
-        return datatables($data_topping)->make(true);
+        return datatables($toppings)->make(true);
     }
 }
