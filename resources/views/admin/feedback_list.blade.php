@@ -84,7 +84,7 @@ $(document).ready(function() {
 
     // Bind a function to a Event (the full Laravel class)
     channel.bind('send-feedback', function(data) {
-        table.ajax.reload();
+        table.ajax.reload(null, false);
         notificationsCount += 1;
     })
 
@@ -120,7 +120,7 @@ $(document).ready(function() {
                 `);
             }
 
-            table.ajax.reload();
+            table.ajax.reload(null, false);
             console.log("success");
         })
         .fail(function() {

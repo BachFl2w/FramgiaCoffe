@@ -187,7 +187,7 @@ jQuery(document).ready(function($) {
 
     // Bind a function to a Event (the full Laravel class)
     channel.bind('send-user', function(data) {
-        tableTest.ajax.reload();
+        tableTest.ajax.reload(null, false);
     })
 
     $('#show-modal').click(function(event) {
@@ -215,7 +215,7 @@ jQuery(document).ready(function($) {
         })
         .done(function(data) {
             if (data == 'success') {
-                tableTest.ajax.reload();
+                tableTest.ajax.reload(null, false);
                 $('#modal_create').modal('hide');
                 swal({icon: 'success'});
                 console.log("success");
@@ -258,7 +258,7 @@ jQuery(document).ready(function($) {
                         swal(data, {
                             icon: "success",
                         });
-                        tableTest.ajax.reload();
+                        tableTest.ajax.reload(null, false);
                         console.log("success");
                     }
                 })
@@ -318,14 +318,11 @@ jQuery(document).ready(function($) {
                 data: new FormData($('form#form_create_user')[0]),
             })
             .done(function(data) {
-                if (data != 'fail') {
-                    tableTest.ajax.reload();
-                    $('#modal_create').modal('hide');
-                    swal(data, {icon: 'success'});
-                    console.log("success");
-                } else {
-                    swal('You dont have permission !', {icon: 'error'});
-                }
+                console.log(data);
+                tableTest.ajax.reload(null, false);
+                $('#modal_create').modal('hide');
+                swal(data, {icon: 'success'});
+                console.log("success");
             })
             .fail(function() {
                 swal('Something wrong !', {icon: 'error'});
@@ -361,7 +358,7 @@ jQuery(document).ready(function($) {
                 $('#count_user').text(count - 1);
                 $('div.active_item[data-id="' + id + '"]').remove();
             }
-            tableTest.ajax.reload();
+            tableTest.ajax.reload(null, false);
             console.log("success");
         })
         .fail(function() {
@@ -397,7 +394,7 @@ jQuery(document).ready(function($) {
                         $('div.active_item[data-id="' + id + '"]').remove();
                         console.log("success");
 
-                        tableTest.ajax.reload();
+                        tableTest.ajax.reload(null, false);
                     } else {
                         swal(data, {icon: 'error'});
                     }
