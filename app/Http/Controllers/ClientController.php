@@ -62,7 +62,6 @@ class ClientController extends Controller
             $product_revent_view = $product_revent_view->take(6);
         }
 
-
         return view('index', compact('products', 'best_discount_product', 'product_revent_view'));
     }
 

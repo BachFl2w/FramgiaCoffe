@@ -11,8 +11,10 @@
             <div class="card-header">
                 <strong class="card-title">{{ __('message.category') }}</strong>
                 <div class="float-right">
-                    <a href="{{ route('admin.category.create') }}" class="btn btn-outline-info" id="create-category"
-                       title="show" data-toggle="modal" data-target="#modal-category">{{ __('message.create') }}</a>
+                    <a href="#" class="btn btn-outline-info" id="create-category"
+                       title="show" data-toggle="modal" data-target="#modal-category">
+                        {{ __('message.create') }}
+                    </a>
                 </div>
             </div>
             <div class="card-body">
@@ -21,6 +23,7 @@
                     <tr>
                         <th>{{ __('message.id') }}</th>
                         <th>{{ __('message.category') }}</th>
+                        <th>{{ __('message.number_product') }}</th>
                         <th>{{ __('message.action') }}</th>
                     </tr>
                     </thead>
@@ -66,16 +69,19 @@
                 }
             });
             var category_table = $('#admin_category_list').DataTable({
+                processing: true,
+                serverSide: true,
+                order: ['0', 'desc'],
                 ajax: {
                     url: route('admin.category.json'),
-                    dataSrc: '',
-                    type: 'get',
                 },
                 columns: [
-                    {data: 'id'},
-                    {data: 'name'},
+                    {data: 'id', name: 'id'},
+                    {data: 'name', name: 'name'},
+                    {data: 'products_count', name: 'products_count'},
                     {
                         data: null,
+                        name: null,
                         defaultContent: [
                             '<button class="btn btn-outline-primary" title="Update" data-toggle="modal" data-target="#modal-category" id="btnUpdateCategory"><i class="fa fa-edit"></i></button> ' +
                             '<button class="btn btn-outline-danger" title="Delete" id="btnDeleteCategory"><i class="fa fa-trash-o"></i></button> '
@@ -132,7 +138,7 @@
                     processData: false,
                     data: new FormData($('form#form-category')[0]),
                     success: function (res) {
-                        category_table.ajax.reload();
+                        category_table.ajax.reload(null, false);
                         $('#modal-category').modal('hide');
                         swal({
                             title: "Success",
@@ -165,7 +171,7 @@
                             type: 'get',
                             url: route('admin.category.destroy', {id: id}),
                             success: function (res) {
-                                category_table.ajax.reload();
+                                category_table.ajax.reload(null, false);
                                 swal({
                                     title: "Success",
                                     icon: "success",

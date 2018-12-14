@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Cache;
+use Illuminate\Support\Facades\Response;
 use Redis;
 
 use App\Product;
@@ -39,20 +40,6 @@ class ProductController extends Controller
      */
     public function index()
     {
-        // sau khi chuyen sang ajax, dung luon doan nay`
-        // if (!Redis::get('product:all')) {
-        //     // $key, load() from repository
-        //     $this->productModel->setRedisAll('product:all', ['categories', 'images']);
-        // }
-
-        // set true to return array
-        // $data = json_decode(Redis::get('user:all'), true);
-
-        // đoạn này ở giao diện gọi ajax ra
-        // truyền thẳng data ra giao diện hoặc viết thêm func get json cũng được
-        // return datatables($data)->make(true);
-        $categories = Category::pluck('name', 'id');
-
         return view('admin.product_list', compact('categories'));
     }
 
@@ -64,9 +51,6 @@ class ProductController extends Controller
     public function create()
     {
 
-        $categories = Category::pluck('name', 'id');
-
-        return view('admin.product_create', compact('categories'));
     }
 
     /**
@@ -97,16 +81,11 @@ class ProductController extends Controller
 
         Images::make($image->getRealPath())->resize(600, 600)->save($path);
 
-        $img = $this->imageModel->create([
+        $this->imageModel->create([
             'name' => $filename,
             'product_id' => $product->id,
             'active' => 1,
         ]);
-
-        // $key, $with
-        // $this->productModel->setRedisAll('product:all', ['categories', 'image']);
-        // $key + $id, $data du lieu sau khi duoc update
-        // $this->productModel->setRedisById('product:' . $product->id, $data);
     }
 
     /**
@@ -117,11 +96,11 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        $product = Product::with('category')->with(['images' => function($query) {
+        $product = Product::with('category')->with(['images' => function ($query) {
             $query->where('active', 1)->get();
         }])->findOrFail($id);
 
-        return $product;
+        return response($product, 200);
     }
 
     /**
@@ -132,27 +111,7 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        // $product = Product::findOrFail($id);
-
-        // $categories = Category::pluck('name', 'id');
-
-        // return view('admin.product_update', compact('product', 'categories'));
-    }
-
-    public function productJson($id)
-    {
-        // $product = Product::findOrFail($id);
-
-        // $images = Image::where('product_id', $product->id)->orderBy('active', 'desc')->orderBy('id', 'desc')->get();
-        // $image = null;
-        // if (count($images) != 0) {
-
-        //     $image = $images[0]->name;
-        // }
-
-        // $product->image = $image;
-
-        // return $product;
+        //
     }
 
     /**
@@ -164,12 +123,12 @@ class ProductController extends Controller
      */
     public function update(ProductRequest $request, $id)
     {
-        $product = $this->productModel->update([
+        $this->productModel->update([
             'name' => $request->name,
             'price' => $request->price,
             'quantity' => $request->quantity,
             'category_id' => $request->category_id,
-            'brif' => $request->brif,
+            'brief' => $request->brief,
             'description' => $request->description,
             'discount' => $request->discount,
         ], $id);
@@ -193,11 +152,6 @@ class ProductController extends Controller
             Image::where('product_id', '=', $id)->whereNotIn('id', [$img->id])->update(['active' => 0]);
 
         }
-
-        // $key, $with
-        // $this->productModel->setRedisAll('product:all', ['category', 'image']);
-        // $key + $id, $data du lieu sau khi duoc update
-        // $this->productModel->setRedisById('product:' . $product->id, $data);
     }
 
     /**
@@ -209,32 +163,22 @@ class ProductController extends Controller
     public function destroy($id)
     {
         $product = Product::findOrFail($id);
-        // $key, $with
-        // $this->productModel->setRedisAll('product:all', ['category', 'image']);
-        // $key + $id, $data du lieu sau khi duoc update
-        // $this->productModel->deleteRedis('product:' . $product->id);
-        // xóa tất thì truyền product:all vào
-
         $product->delete();
     }
 
     public function getAllData()
     {
-        // // get all product
-        // if (!Redis::get('product:all')) {
-        //     // $name, $with from repository
-        //     $this->userModel->setRedisAll('product:all', ['categories', 'images']);
-        // }
-
-        // // set true to return array
-        // $data = json_decode(Redis::get('product:all'), true);
-        // return datatables($data)->make(true);
-
-        // order by co the truyen tham so vao` datatable luc khoi tao var table
-        $products = Product::with(['images' => function($query) {
+        $products = Product::with(['images' => function ($query) {
             $query->where('active', 1)->get();
-        }])->with('category')->orderBy('id', 'desc')->get();
+        }])->with('category')->get();
 
-        return $products;
+        return Datatables::of($products)->make(true);
+    }
+
+    public function getCategorySelect()
+    {
+        $categories = Category::pluck('name', 'id');
+
+        return Response::json($categories, 200);
     }
 }

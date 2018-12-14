@@ -132,6 +132,7 @@ return [
 
     // Category
     'category' => 'Category',
+    'number_product' => 'Nunmber Product',
     'category_action' => [
         'create' => 'Create Category',
         'update' => 'Update Category',

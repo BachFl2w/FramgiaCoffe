@@ -113,9 +113,6 @@
                                 <div id="car_list">
                                 </div>
                                 <div class="actions" id="action_order">
-                                    <button class="btn-checkout" title="Checkout" type="button">
-                                        <span>{{ __('message.checkout') }}</span>
-                                    </button>
                                     <a href="{{ route('client.showCart') }}" class="view-cart">
                                         <span>{{ __('message.view_cart') }}</span>
                                     </a>

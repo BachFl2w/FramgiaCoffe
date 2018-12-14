@@ -33,7 +33,6 @@ class HomeController extends Controller
             ->limit(6)
             ->get();
 
-//        return $bestproducts;
          return view('admin.index', compact('successOrder', 'canceledOrder', 'bestproducts'));
     }
 

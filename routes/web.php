@@ -90,13 +90,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin'], function () {
 
         Route::get('index', 'ProductController@index')->name('admin.product.index');
 
-        Route::get('create', 'ProductController@create')->name('admin.product.create');
-
         Route::get('show/{id}', 'ProductController@show')->name('admin.product.show');
 
         Route::post('store', 'ProductController@store')->name('admin.product.store');
-
-        Route::get('edit/{id}', 'ProductController@edit')->name('admin.product.edit');
 
         Route::post('update/{product}', 'ProductController@update')->name('admin.product.update');
 
@@ -104,17 +100,14 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin'], function () {
 
         Route::get('json', 'ProductController@getAllData')->name('admin.product.json');
 
+        Route::get('category-select', 'ProductController@getCategorySelect')->name('admin.product.category_select');
     });
 
     Route::group(['prefix' => 'category'], function () {
 
         Route::get('index', 'CategoryController@index')->name('admin.category.index');
 
-        Route::get('create', 'CategoryController@create')->name('admin.category.create');
-
         Route::post('store', 'CategoryController@store')->name('admin.category.store');
-
-        Route::get('edit/{id}', 'CategoryController@edit')->name('admin.category.edit');
 
         Route::post('update/{category}', 'CategoryController@update')->name('admin.category.update');
 
@@ -129,15 +122,12 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin'], function () {
 
         Route::get('index', 'TopingController@index')->name('admin.topping.index');
 
-        Route::get('create', 'TopingController@create')->name('admin.topping.create');
-
         Route::post('store', 'TopingController@store')->name('admin.topping.store');
 
         Route::post('update/{topping}', 'TopingController@update')->name('admin.topping.update');
 
         Route::get('destroy/{id}', 'TopingController@destroy')->name('admin.topping.destroy');
 
-        Route::get('edit/{id}', 'TopingController@edit')->name('admin.topping.edit');
     });
 
     Route::group(['prefix' => 'size'], function () {
@@ -146,17 +136,11 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin'], function () {
 
         Route::get('json', 'SizeController@getDataJson')->name('admin.size.json');
 
-        Route::get('create', 'SizeController@create')->name('admin.size.create');
-
         Route::post('store', 'SizeController@store')->name('admin.size.store');
 
         Route::post('update/{size}', 'SizeController@update')->name('admin.size.update');
 
         Route::get('destroy/{id}', 'SizeController@destroy')->name('admin.size.destroy');
-
-        Route::get('edit/{id}', 'SizeController@edit')->name('admin.size.edit');
-
-
     });
 
     Route::group(['prefix' => 'order'], function () {
@@ -186,29 +170,11 @@ Route::group(['middleware' => 'userLogin'], function () {
     Route::get('edit/{user}', 'UserController@edit')->name('user.edit');
 });
 
-//Route::group(['prefix' => 'cart'], function() {
-//
-//    Route::post('add', 'CartController@add')->name('user.cart.add');
-//
-//    Route::get('plus/{cart}', 'CartController@plus')->name('user.cart.plus');
-//    Route::get('minus/{cart}', 'CartController@minus')->name('user.cart.minus');
-//
-//    Route::get('delete/{cartId}', 'CartController@deleteOne')->name('user.cart.delete');
-//
-//    Route::get('destroy', 'CartController@destroy')->name('user.cart.destroy');
-//});
-
-// Route::post('checkout', 'Cart1Controller@checkout')->name('user.checkout');
-
 Route::get('/', 'ClientController@index')->name('client.index');
-
-Route::get('/list-product', 'ClientController@listProduct')->name('client.list_product');
 
 Route::post('live-search', 'ClientController@liveSearch')->name('client.live_search');
 
 Route::get('search', 'ClientController@search')->name('client.search');
-
-Route::get('list-product/filter', 'ClientController@filterProductByCategory')->name('client.list_product.filter');
 
 Route::get('product/{id}', 'ClientController@detailProduct')->name('client.product.detail');
 
@@ -249,10 +215,3 @@ Route::get('filter', 'ClientController@filter')->name('client.filter');
 Route::post('favorite', 'ClientController@favorite')->name('client.favorite');
 
 Route::post('checkout', 'ClientController@checkout')->name('client.checkout');
-
-Route::get('demo', function () {
-    return  Session('cart');
-});
-Route::get('remove', function () {
-    return Session::forget('cart');
-});

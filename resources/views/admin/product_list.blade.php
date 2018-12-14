@@ -15,7 +15,9 @@
                         <div class="float-right">
                             <a href="#" id="create-product"
                                class="btn btn-outline-info" data-toggle="modal"
-                               data-target="#modal-product">{{ __('message.create') }}</a>
+                               data-target="#modal-product">
+                                {{ __('message.create') }}
+                            </a>
                         </div>
                     </div>
                     <div class="card-body">
@@ -133,47 +135,62 @@
             var nf = new Intl.NumberFormat();
             CKEDITOR.replace('description')
             var product_table = $('#admin_product_list').DataTable({
+                processing: true,
+                serverSide: true,
                 ajax: {
                     url: route('admin.product.json'),
-                    dataSrc: '',
-                    type: 'get',
                 },
                 columns: [
-                    {data: 'id'},
-                    {data: 'name'},
-                    {data: 'category.name'},
+                    {
+                        data: 'id',
+                        name: 'id'
+                     },
+                    {
+                        data: 'name',
+                        name: 'name'
+                     },
+                    {
+                        data: 'category.name', 
+                        name: 'category.name'
+                    },
                     {
                         data: 'images',
+                        name: 'images',
                         render: function (data, type, row) {
                             return `<img src="http://127.0.0.1:8000/images/products/${data[0]['name']}">`
                         }
                     },
                     {
                         data: 'brief',
+                        name: 'brief',
                         render: function (data, type, row) {
                             return data.substr(0, 20) + "...";
                         }
                     },
                     {
                         data: 'description',
+                        name: 'description',
                         render: function (data, type, row) {
                             return data.substr(0, 20) + "...";
                         }
                     },
                     {
                         data: 'discount',
+                        name: 'discount',
                         render: function (data) {
                             return nf.format(data) + ' %';
                         }
                     },
                     {
                         data: 'price',
+                        name: 'price',
                         render: function (data) {
                             return nf.format(data) + ' ₫';
                         }
                     },
                     {
                         data: null,
+                        name: null,
                         defaultContent: [
                             '<button class="btn btn-outline-primary" title="Update" data-toggle="modal" data-target="#modal-product" id="btnUpdateProduct"><i class="fa fa-edit"></i></button> ' +
                             '<button class="btn btn-outline-danger" title="Delete" id="btnDeleteProduct"><i class="fa fa-trash-o"></i></button> '
@@ -185,15 +202,16 @@
             function loadSelectCategory() {
                 $.ajax({
                     type: 'get',
-                    url: route('admin.category.json'),
+                    url: route('admin.product.category_select'),
                     dataType: 'json',
                     success: function (data) {
+                        
                         var arr = Object.entries(data);
                         var option = '<option value="" hidden>Choose Category</option>';;
                         arr.forEach(function (element, index) {
-                            option += '<option value="' + element[1].id + '">' + element[1].name + '</option>';
+                            option += '<option value="' + element[0] + '">' + element[1] + '</option>';
                         });
-                        $('#category_id').append(option);
+                        $('#category_id').html(option);
                     },
                 });
             }
@@ -287,13 +305,14 @@
                     processData: false,
                     cache: false,
                     success: function (res) {
-                        product_table.ajax.reload();
+                        product_table.ajax.reload(null, false);
                         $('#modal-product').modal('hide');
                         swal({
                             title: "Success",
                             icon: "success",
                             timer: 2000,
                         });
+                        CKEDITOR.instances['description'].setData('');
                     },
                     error: function (xhr, status, error) {
                         var err = JSON.parse(xhr.responseText);

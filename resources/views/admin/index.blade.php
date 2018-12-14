@@ -30,7 +30,7 @@
         <div class="card text-white bg-flat-color-1">
             <div class="card-body pb-0">
                 <h4 class="mb-0">
-                    <span class="count">{{ count($popularProduct) }}</span>
+                    <span class="count">{{ count($bestproducts) }}</span>
                 </h4>
                 <p class="text-light">Best Product</p>
             </div>

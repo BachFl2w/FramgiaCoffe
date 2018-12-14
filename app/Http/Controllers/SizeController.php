@@ -22,9 +22,7 @@ class SizeController extends Controller
      */
     public function index()
     {
-        $sizes = Size::all();
-
-        return view('admin.size_list', compact('sizes'));
+        return view('admin.size_list');
     }
 
     /**
@@ -59,7 +57,7 @@ class SizeController extends Controller
      */
     public function show($id)
     {
-        //
+
     }
 
     /**
@@ -70,9 +68,7 @@ class SizeController extends Controller
      */
     public function edit($id)
     {
-        $size = Size::findorFail($id);
-
-        return view('admin.size_update', compact('size'));
+       
     }
 
     /**
@@ -105,6 +101,6 @@ class SizeController extends Controller
     {
         $sizes = $this->sizeModel->all();
 
-        return $sizes;
+        return datatables($sizes)->make(true);
     }
 }

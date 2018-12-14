@@ -28,20 +28,6 @@
                     </tr>
                     </thead>
                     <tbody>
-                    {{-- @foreach ($toppings as $topping)
-                        <tr>
-                            <td>{{ $topping->id }}</td>
-                            <td>{{ $topping->name }}</td>
-                            <td>{{ $topping->price }}</td>
-                            <td>{{ $topping->quantity }}</td>
-                            <td>
-                                <a href="{{ route('admin.topping.edit', ['id' => $topping->id]) }}"
-                                   class="btn btn-outline-primary"><i class="fa fa-edit"></i></a>
-                                <a href="{{ route('admin.topping.destroy', ['id' => $topping->id]) }}"
-                                   onclick="return confirm('Delete this one? ')" class="btn btn-outline-danger"><i
-                                        class="fa fa-trash"></i></a>
-                        </tr>
-                    @endforeach --}}
                     </tbody>
                 </table>
             </div>
@@ -94,18 +80,31 @@
             });
             var nf = new Intl.NumberFormat();
             var topping_table = $('#admin_topping_list').DataTable({
+                processing: true,
+                serverSide: true,
                 ajax: {
                     url: route('admin.topping.json'),
-                    dataSrc: '',
-                    type: 'get',
                 },
                 columns: [
-                    {data: 'id'},
-                    {data: 'name'},
-                    {data: 'price'},
-                    {data: 'quantity'},
+                    {
+                        data: 'id',
+                        name: 'id',
+                    },
+                    {
+                        data: 'name',
+                        name: 'name',
+                    },
+                    {
+                        data: 'price',
+                        name: 'price',
+                    },
+                    {
+                        data: 'quantity',
+                        name: 'quantity',
+                    },
                     {
                         data: null,
+                        name: null,
                         defaultContent: [
                             '<button class="btn btn-outline-primary" title="Update" data-toggle="modal" data-target="#modal-topping" id="btnUpdatetopping"><i class="fa fa-edit"></i></button> ' +
                             '<button class="btn btn-outline-danger" title="Delete" id="btnDeletetopping"><i class="fa fa-trash"></i></button> '
@@ -154,7 +153,7 @@
                                     icon: "success",
                                     timer: 2000,
                                 });
-                                topping_table.ajax.reload();
+                                topping_table.ajax.reload(null, false);
                             },
                         });
                     }
@@ -176,7 +175,7 @@
                     processData: false,
                     data: new FormData($('form#form-topping')[0]),
                     success: function (res) {
-                        topping_table.ajax.reload();
+                        topping_table.ajax.reload(null, false);
                         $('#modal-topping').modal('hide');
                         swal({
                             title: "Success",
