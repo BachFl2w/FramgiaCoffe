@@ -18,15 +18,15 @@ class ToppingsTableSeeder extends Seeder
                 'quantity' => 130,
             ], [
                 'name' => 'Thạch trái cây',
-                'price' => 234434,
+                'price' => 5000,
                 'quantity' => 100,
             ], [
                 'name' => 'Hạt thủy tinh',
-                'price' => 23434,
+                'price' => 1500,
                 'quantity' => 150,
             ], [
                 'name' => 'Thạch pudding',
-                'price' => 1023384,
+                'price' => 12000,
                 'quantity' => 100,
             ],
         ];

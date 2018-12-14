@@ -45,15 +45,15 @@ class UserController extends Controller
 
     public function json()
     {
-        // if (!Redis::get('user:all')) {
-        //     // $name, $with from repository
-        //     $this->userModel->setRedisAll('user:all', ['role']);
-        // }
+        if (!Redis::get('user:all')) {
+            // $name, $with from repository
+            $this->userModel->setRedisAll('user:all', ['role']);
+        }
 
         // // set true to return array
-        // $data = json_decode(Redis::get('user:all'), true);
+        $data = json_decode(Redis::get('user:all'), true);
 
-        $data = User::all()->load('role');
+        // $data = User::all()->load('role');
 
         return datatables($data)->make(true);
     }
@@ -175,7 +175,7 @@ class UserController extends Controller
             $user->id
         );
 
-        // $this->userModel->setRedisAll('user:all', ['role']);
+        $this->userModel->setRedisAll('user:all', ['role']);
         // $this->userModel->setRedisById('user:' . $user->id, $data);
 
         return __('message.success.update');
