@@ -51,13 +51,15 @@ $(document).ready(function() {
             type: 'get',
         },
         columns: [
-            { data: 'id' },
-            { data: 'user.name' },
-            { data: 'product.name' },
-            { data: 'content' },
+            { data: 'id', name: 'id' },
+            { data: 'user.name', name: 'user.name' },
+            { data: 'product.name', name: 'product.name' },
+            { data: 'content', name: 'content' },
             {
                 data: 'status',
+                name: 'status',
                 render: function(data, type, row) {
+                    console.log(data);
                     var checked = (data == 1) ? 'checked' : '';
                     return `<a href="#" class="active">
                         <label class="switch switch-3d switch-primary mr-3">
@@ -83,6 +85,7 @@ $(document).ready(function() {
     // Bind a function to a Event (the full Laravel class)
     channel.bind('send-feedback', function(data) {
         table.ajax.reload();
+        notificationsCount += 1;
     })
 
     $('#feedback tbody').on('click', '.active', function(event) {
@@ -94,7 +97,7 @@ $(document).ready(function() {
             type: 'GET',
         })
         .done(function(data) {
-            if (data == 1) {
+            if (data == 'actived') {
                 notificationsCount -= 1;
                 notificationsCountElem.attr('data-count', notificationsCount);
                 notificationsWrapper.find('#count_feedback').text(notificationsCount);
@@ -104,13 +107,13 @@ $(document).ready(function() {
                 notificationsCount += 1;
                 notificationsCountElem.attr('data-count', notificationsCount);
                 notificationsWrapper.find('#count_feedback').text(notificationsCount);
-                $('.feedback-dropdown').show( `
+                $('.feedback-dropdown').append( `
                     <a class="dropdown-item media bg-flat-color-1" id="feedback${data.id}" href="#">
                         <span class="photo media-left">
                             <img alt="avatar" class="user-avatar rounded-circle" src="http://127.0.0.1:8000/images/${avatar}">
                         </span>
                         <span class="message media-body">
-                            <span class="name float-left">${data.user.name}</span>
+                            <span class="name float-left"></span>
                             <p>${data.content}</p>
                         </span>
                     </a>

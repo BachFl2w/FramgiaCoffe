@@ -70,7 +70,6 @@ class FeedbackController extends Controller
 
         $data = [
             'user_id' => $user->id,
-            'user_id' => $user->id,
             'user_avatar' => $user->image,
             'user_name' => $user->name,
             'product_id' => $request->product_id,
@@ -94,21 +93,19 @@ class FeedbackController extends Controller
             $options
         );
 
-        $data[] = ['id' => $feedback->id];
+        $d = ($data[] = ['id' => $feedback->id]);
 
         try {
             $pusher->trigger(
                 'FeedbackEvent',
                 'send-feedback',
-                $data
+                $d
             );
         } catch (\Exception $e) {
             dd($e);
         }
 
-        $feedbackWith = $feedback->with('user', 'product')->get();
-
-        return $feedbackWith;
+        return $data;
     }
 
 
@@ -131,16 +128,14 @@ class FeedbackController extends Controller
         // $name, $with
         $this->feedbackModel->setRedisAll('feedback:all', ['user', 'product']);
         // $name, $id, $data
-        $this->feedbackModel->setRedisById('feedback:' . $feedback->id, Feedback::where('id', $feedback->id));
+        // $this->feedbackModel->setRedisById('feedback:' . $feedback->id, Feedback::where('id', $feedback->id));
 
-        $check = $feedback->status == 1 ? 0 : 1;
+        $check = ($feedback->status == 1 ? 0 : 1);
 
-        if ($check == 1) {
-            return 1;
+        if ($check == 0) {
+            return response()->json($feedback);
         }
 
-        $feed = Feedback::where('id', $feedback->id);
-
-        return $feed;
+        return 'actived';
     }
 }
