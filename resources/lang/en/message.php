@@ -165,7 +165,7 @@ return [
         'topping' => 'Topping',
         'price' => 'Price',
         'total' => 'Total',
-        'description' => 'Description', 
+        'description' => 'Description',
     ],
 
     'review' => 'Image Review',
@@ -214,4 +214,5 @@ return [
     'login_or_create_account' => 'Login or Create an Account',
     'client_login_text' => 'By creating an account with our store, you will be able to move through the checkout
         process faster, store multiple shipping addresses, view and track your orders in your account and more',
+    'product_no_match' => 'No products matched',
 ];

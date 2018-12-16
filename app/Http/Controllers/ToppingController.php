@@ -81,6 +81,9 @@ class TopingController extends Controller
      */
     public function update(ToppingRequest $request, $id)
     {
+        if (Auth::user()->role_id == 2) {
+            return Response::json(__('You are not admin'), 403);
+        }
         $this->toppingModel->update([
             'name' => $request->name,
             'price' => $request->price,
@@ -96,6 +99,9 @@ class TopingController extends Controller
      */
     public function destroy($id)
     {
+        if (Auth::user()->role_id == 2) {
+            return Response::json(__('You are not admin'), 403);
+        }
         $this->toppingModel->delete($id);
     }
 

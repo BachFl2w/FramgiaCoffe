@@ -41,6 +41,7 @@
 <script src="http://htmldemo.themessoft.com/freshia/version3/js/countdown.js"></script>
 <script src="{{ asset('js/js_cloud-zoom.js') }}"></script>
 <script src="{{ asset('js/sweetalert.min.js') }}"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
 <script>
     jQuery(document).ready(function () {
@@ -341,6 +342,7 @@
                         var user = JSON.parse(user_current)
                         $('#checkout-receiver').val(user.name);
                         $('#checkout-place').val(user.address);
+                        $('#checkout-email').val(user.email);
                         $('#checkout-phone').val(user.phone);
                         total_price = total_price * (1 - user.potential.discount / 100);
                         $('.price_cart').html(nf.format(Math.ceil(total_price)));
@@ -415,7 +417,7 @@
         });
     });
 </script>
-{{-- <script src="{{ asset('js/app_client.js') }}" type="text/javascript" charset="utf-8" async defer></script> --}}
+
 @yield('js')
 
 </body>

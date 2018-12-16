@@ -148,9 +148,15 @@
                     },
                     error: function (xhr, status, error) {
                         var err = JSON.parse(xhr.responseText);
-                        err.errors.name.forEach(function (element) {
-                            toastr.error(element, 'Error!')
-                        })
+                        if (xhr.status == 403) {
+                            toastr.error(err, 'Error!');
+                        }
+                        else { 
+                            var errors = Object.entries(err.errors);
+                            errors.forEach(function (value, index) {
+                                toastr.error(value[1][0], 'Error!');
+                            });
+                        }
                     },
                 });
             });
@@ -177,7 +183,19 @@
                                     icon: "success",
                                     timer: 2000,
                                 });
-                            }
+                            },
+                            error: function (xhr, status, error) {
+                                var err = JSON.parse(xhr.responseText);
+                                if (xhr.status == 403) {
+                                    toastr.error(err, 'Error!');
+                                }
+                                else { 
+                                    var errors = Object.entries(err.errors);
+                                    errors.forEach(function (value, index) {
+                                        toastr.error(value[1][0], 'Error!');
+                                    });
+                                }
+                            },
                         });
                     }
                 })

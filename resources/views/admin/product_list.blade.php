@@ -265,6 +265,9 @@
                                 });
                                 product_table.ajax.reload();
                             },
+                            error: function(xhr, status, error) {
+                                toastr.error(JSON.parse(xhr.responseText), 'Error!');
+                            }
                         });
                     }
                 })
@@ -309,10 +312,15 @@
                     },
                     error: function (xhr, status, error) {
                         var err = JSON.parse(xhr.responseText);
-                        var errors = Object.entries(err.errors);
-                        errors.forEach(function (value, index) {
-                            toastr.error(value[1][0], 'Error!');
-                        });
+                        if (xhr.status == 403) {
+                            toastr.error(err, 'Error!');
+                        }
+                        else { 
+                            var errors = Object.entries(err.errors);
+                            errors.forEach(function (value, index) {
+                                toastr.error(value[1][0], 'Error!');
+                            });
+                        }
                     },
                 });
             });

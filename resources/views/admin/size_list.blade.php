@@ -134,7 +134,7 @@
                         $.ajax({
                             type: 'get',
                             url: route('admin.size.destroy', {id: id}),
-                            success: function (data) {
+                            success: function (data, res) {
                                 swal({
                                     title: "Success",
                                     icon: "success",
@@ -142,6 +142,9 @@
                                 });
                                 size_table.ajax.reload(null, false);
                             },
+                            error: function(xhr, status, error) {
+                                toastr.error(JSON.parse(xhr.responseText), 'Error!');
+                            }
                         });
                     }
                 })
@@ -172,10 +175,15 @@
                     },
                     error: function (xhr, status, error) {
                         var err = JSON.parse(xhr.responseText);
-                        var errors = Object.entries(err.errors);
-                        errors.forEach(function (value, index) {
-                            toastr.error(value[1][0], 'Error!');
-                        });
+                        if (xhr.status == 403) {
+                            toastr.error(err, 'Error!');
+                        }
+                        else { 
+                            var errors = Object.entries(err.errors);
+                            errors.forEach(function (value, index) {
+                                toastr.error(value[1][0], 'Error!');
+                            });
+                        }
                     },
                 });
             });

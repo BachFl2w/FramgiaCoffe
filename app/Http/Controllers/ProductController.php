@@ -2,23 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use Cache;
-use Illuminate\Support\Facades\Response;
-use Redis;
-
 use App\Product;
 use App\Category;
 use App\Image;
 use App\Http\Requests\ProductRequest;
 use App\Repositories\Repository;
-
 use Yajra\Datatables\Datatables;
-
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-
 use Intervention\Image\ImageManagerStatic as Images;
+use Illuminate\Support\Facades\Response;
 
 class ProductController extends Controller
 {
@@ -61,7 +53,6 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request)
     {
-        // chuyen het code dung repository
         $product = $this->productModel->create([
             'name' => $request->name,
             'price' => $request->price,
@@ -123,6 +114,9 @@ class ProductController extends Controller
      */
     public function update(ProductRequest $request, $id)
     {
+        if (Auth::user()->role_id == 2) {
+            return Response::json(__('You are not admin'), 403);
+        }
         $this->productModel->update([
             'name' => $request->name,
             'price' => $request->price,
@@ -162,8 +156,10 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        $product = Product::findOrFail($id);
-        $product->delete();
+        if (Auth::user()->role_id == 2) {
+            return Response::json(__('You are not admin'), 403);
+        }
+       $this->productModel->delete($id);
     }
 
     public function getAllData()

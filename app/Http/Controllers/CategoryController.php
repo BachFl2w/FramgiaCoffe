@@ -5,9 +5,8 @@ namespace App\Http\Controllers;
 use App\Category;
 use App\Repositories\Repository;
 use App\Http\Requests\CategoryRequest;
-use Illuminate\Http\Request;
-
-use RealRashid\SweetAlert\Facades\Aler;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Response;
 
 class CategoryController extends Controller
 {
@@ -15,7 +14,6 @@ class CategoryController extends Controller
 
     public function __construct(Category $categoryModel)
     {
-        // set the model
         $this->categoryModel = new Repository($categoryModel);
     }
 
@@ -83,6 +81,9 @@ class CategoryController extends Controller
      */
     public function update(CategoryRequest $request, $id)
     {
+        if (Auth::user()->role_id == 2) {
+            return Response::json(__('You are not admin'), 403);
+        }
         $this->categoryModel->update([
             'name' => $request->name,
         ], $id);
@@ -96,6 +97,9 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
+        if (Auth::user()->role_id == 2) {
+            return Response::json(__('You are not admin'), 403);
+        }
         $this->categoryModel->delete($id);
     }
 

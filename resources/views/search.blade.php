@@ -1,5 +1,7 @@
 @extends('layouts.app_client')
-
+@section('css')
+    <link rel='stylesheet' href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+@endsection
 @section('content')
     <div class="breadcrumbs">
         <div class="container">
@@ -52,18 +54,18 @@
                 </div>
                 <div class="col-left sidebar col-sm-3 col-xs-12 col-sm-pull-9">
                     <aside class="col-left sidebar">
-                        
+
                         <div class="side-nav-categories">
                             <div class="block-title">{{ __('message.category') }}</div>
                             <div class="box-content box-category">
-                                 <div class="radio" style="padding-left: 8px">
-                                        <label>
-                                            <input type="radio" name="category_id" class="category-filter" value="0" checked="">
-                                            <span style="font-size: 18px;padding-left: 4px">
+                                <div class="radio" style="padding-left: 8px">
+                                    <label>
+                                        <input type="radio" name="category_id" class="category-filter" value="0" checked="">
+                                        <span style="font-size: 18px;padding-left: 4px">
                                                 {{ __('All') }}
                                             </span>
-                                        </label>
-                                    </div>
+                                    </label>
+                                </div>
                                 @foreach ($categories as $c)
                                     <div class="radio" style="padding-left: 8px">
                                         <label>
@@ -149,6 +151,8 @@
 @endsection
 
 @section('js')
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="{{ asset('js/jquery-ui.js') }}"></script>
     <script type="text/javascript">
         jQuery(document).ready(function ($) {
             $('.button-checkout').click(function (event) {
@@ -156,42 +160,6 @@
                 window.location.href = route('client.showCart');
             });
 
-            var keyword = window.location.search.substring(1).split('keyword=')[1];
-
-            $('body').on('click', '.pagination a', function(event) {
-                event.preventDefault();
-                var page = $(this).attr('href').split('page=')[1];
-                loadData(page);
-            });
-
-            function loadData(page) {
-                $.ajax({
-                    url: route('client.filter'),
-                    type: 'get',
-                    dataType: '',
-                    data: {
-                        page: page,
-                        category_id: $('input[name=category_id]:checked').val(),
-                        price: $('input[name=price]:checked').val(),
-                        keyword: keyword,
-                    },
-                })
-                .done(function(res) {
-                    $('.show-products').html(res);
-                    location.hash = page;
-                })
-                .fail(function() {
-                    console.log("error");
-                })
-            }
-            
-            $('.category-filter').click(function(event) {
-                loadData(1);
-            });
-
-            $('.price-filter').click(function(event) {
-                loadData(1);
-            });
         });
     </script>
 @endsection

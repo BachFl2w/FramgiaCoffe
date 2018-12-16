@@ -19,7 +19,7 @@ mix.js([
     'node_modules/bootstrap/dist/js/bootstrap.js',
     'node_modules/datatables.net-bs4/js/dataTables.bootstrap4.js',
     'node_modules/toastr/toastr.js',
-], 'public/js/app.js')
+], 'public/js/app_admin.js')
     .styles([
         'public/css/app.css',
         'node_modules/datatables.net-bs4/css/dataTables.bootstrap4.css',
@@ -62,7 +62,6 @@ mix.styles([
         'resources/asset/client/js/countdown.js',
         'resources/asset/client/js/js_cloud-zoom.js',
         'node_modules/toastr/toastr.js',
-        'resources/asset/client/js/custom.js',
     ], 'public/js/app_client.js');
 
 mix.copyDirectory('node_modules/simple-line-icons/fonts/', 'public/fonts/');
