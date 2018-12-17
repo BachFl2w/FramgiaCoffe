@@ -289,6 +289,8 @@ class ClientController extends Controller
 
     public function checkout(CheckoutRequest $request)
     {
+        session()->forget('status-cart');
+
         $cart = session('cart');
 
         $id = null;

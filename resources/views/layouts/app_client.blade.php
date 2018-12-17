@@ -459,9 +459,9 @@
                 })
                 .done(function () {
                     swal({
-                        title: "Success",
+                        title: "Order send !",
                         icon: "success",
-                        timer: 2000,
+                        timer: 3000,
                     });
                     $('#div-check-out').fadeOut();
                 })

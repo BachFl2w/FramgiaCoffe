@@ -224,8 +224,4 @@ Route::group(['middleware' => 'locale'], function() {
     Route::post('favorite', 'ClientController@favorite')->name('client.favorite');
 
     Route::post('checkout', 'ClientController@checkout')->name('client.checkout');
-
-    Route::get('demo', function() {
-        return Session::get('cart');
-    });
 });
