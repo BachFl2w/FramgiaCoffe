@@ -44,10 +44,10 @@
                             </ul>
                             <div class="buttons-set">
                                 {!! Form::submit(__('message.login'), ['class' => 'button login loginUser']) !!}
-                                @if ($errors->any())
+                                @if (session('fail'))
                                     <br>
                                     <span class="text-danger">
-                                        {{ $errors->first() }}
+                                        {{ session('fail') }}
                                     </span>
                                 @endif
                             </div>
