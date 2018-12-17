@@ -25,7 +25,7 @@
                     <thead>
                     <tr>
                         <th scope="col">ID</th>
-                        <th scope="col">Role</th>
+                        <th scope="col">{{ __('message.role') }}</th>
                     </tr>
                     </thead>
                     <tbody>

@@ -84,7 +84,7 @@
                     <div class="col-2 registered-users">
                         <div class="content">
                             <br>
-                            <h4>Avatar</h4>
+                            <h4>{{ __('message.avatar') }}</h4>
                             <div class="buttons-set">
                                 <div id="" class="img-fluid">
                                     <img id="image_review_create" src="{{ asset('images/default.jpeg') }}"

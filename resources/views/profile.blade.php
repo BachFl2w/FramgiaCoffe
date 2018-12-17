@@ -77,7 +77,7 @@
                         @endif
                     </div>
                     <div class="form-group">
-                        {!! Form::label('re_password', __('message.password.change')) !!}
+                        {!! Form::label('re_password', __('message.password.confirm')) !!}
                         {!! Form::password('re_password', ['class' => 'form-control', 'id' => 'password2']) !!}
                         @if ($errors->has('re_password'))
                             <span class="text-danger" role="alert">

@@ -12,7 +12,7 @@
                 <h4 class="mb-0">
                     <span class="count">{{ count($successOrder) }}</span>
                 </h4>
-                <p class="text-light">Order Success</p>
+                <p class="text-light">{{ __('message.order.success') }}</p>
             </div>
         </div>
     </div>
@@ -22,7 +22,7 @@
                 <h4 class="mb-0">
                     <span class="count">{{ count($canceledOrder) }}</span>
                 </h4>
-                <p class="text-light">Order Canceled</p>
+                <p class="text-light">{{ __('message.order.canceled') }}</p>
             </div>
         </div>
     </div>
@@ -32,9 +32,9 @@
                 <h4 class="mb-0">
                     <span class="count">{{ count($popularProduct) }}</span>
                 </h4>
-                <p class="text-light">Popular Product</p>
+                <p class="text-light">{{ __('message.index.popular') }}</p>
             </div>
         </div>
     </div>
-            
+
 @endsection

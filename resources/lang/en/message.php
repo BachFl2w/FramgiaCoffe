@@ -12,7 +12,17 @@ return [
     | these language lines according to your application's requirements.
     |
     */
-    // title
+
+    'manager' => 'Manager',
+    'bill' => 'Bill',
+    'order.success' => 'Order Success',
+    'order.canceled' => 'Order Canceled',
+    'close' => 'Close',
+    'permission' => 'Permission',
+
+    'page' => 'Page',
+    'filter' => 'Filter',
+
     'title' => [
         'dashboard' => 'Dashboard',
         'system' => 'System',
@@ -113,10 +123,12 @@ return [
         'reset' => 'Reset Password',
         'send' => 'Send Password Reset Link',
     ],
+    'password.change' => 'Change password',
     'password.password' => 'Password',
+    'password.confirm' => 'Confirm Password',
     'password.forgot' => 'Forgot ?',
     'phone' => 'Phone',
-    
+
     'remember' => 'Remember Me',
     'verify' => [
         'verify' => 'Verify Your Email Address',

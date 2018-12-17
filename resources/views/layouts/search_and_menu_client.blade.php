@@ -9,7 +9,7 @@
         <div class="nav-inner">
             <ul id="nav" class="hidden-xs">
                 <li class="level0 nav-6 level-top noDropdown active"><a class="level-top" href="{{ route('client.index') }}">
-                        <span>Home</span> </a>
+                        <span>{{ __('message.title.home') }}</span> </a>
                 <li class="mega-menu">
                     <a class="level-top" href="">
                         <span>{{ __('message.product') }}</span>
@@ -45,9 +45,9 @@
                         </div>
                     </div>
                 </li>
-                 <li class="level0 nav-6 level-top drop-menu aaa"> <a class="level-top" href="#"> <span>Pages</span> </a>
+                 <li class="level0 nav-6 level-top drop-menu aaa"> <a class="level-top" href="#"> <span>{{ __('message.page') }}</span> </a>
                     <ul class="level1">
-                      <li class="level2 first"><a href="{{ route('client.filter') }}"><span>Filter</span></a> </li>
+                      <li class="level2 first"><a href="{{ route('client.filter') }}"><span>{{ __('message.filter') }}</span></a> </li>
                     </ul>
                   </li>
             </ul>
