@@ -340,7 +340,10 @@ jQuery(document).ready(function($) {
             data: new FormData($('form#form_feedback')[0]),
         })
         .done(function() {
-            swal({ icon: 'success' });
+            swal(
+                'Your feedback is pending approval !',
+                { icon: 'success' }
+            );
             console.log("success");
         })
         .fail(function() {

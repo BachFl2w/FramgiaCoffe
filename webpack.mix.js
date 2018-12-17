@@ -26,6 +26,10 @@ mix.js([
         'resources/asset/admin/css/admin.css',
     ], 'public/css/admin_style.css')
     .copyDirectory('node_modules/ckeditor/', 'public/ckeditor/');
+
+mix.js([
+    'resources/js/sweetalert.min.js'
+], 'public/js/');
 /**
  *  Mix Admin
  **/

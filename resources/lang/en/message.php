@@ -13,6 +13,9 @@ return [
     |
     */
     // title
+    'page' => 'Page',
+    'filter' => 'Filter',
+
     'title' => [
         'dashboard' => 'Dashboard',
         'system' => 'System',
@@ -113,10 +116,12 @@ return [
         'reset' => 'Reset Password',
         'send' => 'Send Password Reset Link',
     ],
+    'password.change' => 'Change password',
     'password.password' => 'Password',
+    'password.confirm' => 'Confirm Password',
     'password.forgot' => 'Forgot ?',
     'phone' => 'Phone',
-    
+
     'remember' => 'Remember Me',
     'verify' => [
         'verify' => 'Verify Your Email Address',
