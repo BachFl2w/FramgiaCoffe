@@ -12,7 +12,14 @@ return [
     | these language lines according to your application's requirements.
     |
     */
-    // title
+
+    'manager' => 'Manager',
+    'bill' => 'Bill',
+    'order.success' => 'Order Success',
+    'order.canceled' => 'Order Canceled',
+    'close' => 'Close',
+    'permission' => 'Permission',
+
     'page' => 'Page',
     'filter' => 'Filter',
 

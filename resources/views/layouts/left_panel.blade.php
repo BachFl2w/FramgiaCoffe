@@ -14,51 +14,51 @@
             <ul class="nav navbar-nav">
                 <li class="active">
                     <a href="{{ route('admin.index') }}">
-                        <i class="menu-icon fa fa-dashboard"></i>{{ __('Dashboard') }}
+                        <i class="menu-icon fa fa-dashboard"></i>{{ __('message.title.dashboard') }}
                     </a>
                 </li>
 
-                <h3 class="menu-title">{{ __('Manager System') }}</h3>
+                <h3 class="menu-title"> {{ __('message.manager') }} {{ __('message.title.system') }}</h3>
                 <li>
                     <a href="{{ route('admin.user.index') }}">
-                        <i class="menu-icon fa fa-user"></i> {{ __('Manager User') }}</a>
+                        <i class="menu-icon fa fa-user"></i> {{ __('message.manager') }} {{ __('message.user') }}</a>
                 </li>
                 <li>
                     <a href="{{ route('admin.role.index') }}">
-                        <i class="menu-icon fa fa-user"></i> {{ __('Manager Role') }}</a>
+                        <i class="menu-icon fa fa-user"></i> {{ __('message.manager') }} {{ __('message.role') }}</a>
                 </li>
                 <li>
                     <a href="{{ route('admin.feedback.index')}}">
-                        <i class="menu-icon fa fa-user"></i> {{ __('Manager Feedback') }}
+                        <i class="menu-icon fa fa-user"></i> {{ __('message.manager') }} {{ __('message.feedback') }}
                     </a>
                 </li>
 
-                <h3 class="menu-title">{{ __('Manager Business') }}</h3>
+                <h3 class="menu-title"> {{ __('message.manager') }} {{ __('message.title.business') }}</h3>
                 <li>
                     <a href="{{ route('admin.category.index') }}">
-                        <i class="menu-icon fa fa-user"></i>{{ __('Manager Category') }}
+                        <i class="menu-icon fa fa-user"></i> {{ __('message.manager') }} {{ __('message.category') }}
                     </a>
                 </li>
                 <li>
                     <a href="{{ route('admin.product.index') }}">
-                        <i class="menu-icon fa fa-user"></i> {{ __('Manager Product') }}
+                        <i class="menu-icon fa fa-user"></i> {{ __('message.manager') }} {{ __('message.product') }}
                     </a>
                 </li>
                 <li>
                     <a href="{{ route('admin.size.index') }}">
-                        <i class="menu-icon fa fa-user"></i>{{ __('Manager Size') }}
+                        <i class="menu-icon fa fa-user"></i> {{ __('message.manager') }} {{ __('message.size') }}
                     </a>
                 </li>
                 <li>
                     <a href="{{ route('admin.topping.index') }}">
-                        <i class="menu-icon fa fa-user"></i>{{ __('Manager Topping') }}
+                        <i class="menu-icon fa fa-user"></i> {{ __('message.manager') }} {{ __('message.topping') }}
                     </a>
                 </li>
 
                 <h3 class="menu-title">{{ __('message.order') }}</h3>
                 <li>
                     <a href="{{ route('admin.order.index') }}">
-                        <i class="menu-icon fa fa-user"></i>{{ __('Manager Bill') }}
+                        <i class="menu-icon fa fa-user"></i> {{ __('message.manager') }} {{ __('message.bill') }}
                     </a>
                 </li>
             </ul>

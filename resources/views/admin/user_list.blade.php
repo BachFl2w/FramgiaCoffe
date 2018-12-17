@@ -66,36 +66,36 @@
                     <div class="form-group">
                         {!! Form::hidden('_token', csrf_token(), ['id' => '_token']) !!}
                         {!! Form::hidden('id', '', ['id' => 'id']) !!}
-                        {!! Form::label('name', __('Name'), ['class' => 'pr-1 form-control-label']) !!}
+                        {!! Form::label('name', __('message.name'), ['class' => 'pr-1 form-control-label']) !!}
                         {!! Form::text('name', '', ['class' => 'form-control']) !!}
                     </div>
                     <div class="form-group">
-                        {!! Form::label('email', __('Email'), ['class' => 'pr-1 form-control-label']) !!}
+                        {!! Form::label('email', __('message.email'), ['class' => 'pr-1 form-control-label']) !!}
                         {!! Form::text('email', '', ['class' => 'form-control', 'readonly']) !!}
                     </div>
                     <div class="form-group">
-                        {!! Form::label('password', __('Password'), ['class' => 'pr-1 form-control-label']) !!}
+                        {!! Form::label('password', __('message.password'), ['class' => 'pr-1 form-control-label']) !!}
                         {!! Form::password('password', ['class' => 'form-control']) !!}
                     </div>
                     <div class="form-group">
-                        {!! Form::label('re_password', __('Re-Password'), ['class' => 'pr-1 form-control-label']) !!}
+                        {!! Form::label('re_password', __('message.re_password'), ['class' => 'pr-1 form-control-label']) !!}
                         {!! Form::password('re_password', ['class' => 'form-control']) !!}
                     </div>
                     <div class="form-group">
-                        {!! Form::label('address', __('Addess'), ['class' => 'pr-1 form-control-label']) !!}
+                        {!! Form::label('address', __('message.address'), ['class' => 'pr-1 form-control-label']) !!}
                         {!! Form::text('address', '', ['class' => 'form-control']) !!}
                     </div>
                     <div class="form-group">
-                        {!! Form::label('phone', __('Phone'), ['class' => 'pr-1 form-control-label']) !!}
+                        {!! Form::label('phone', __('message.phone'), ['class' => 'pr-1 form-control-label']) !!}
                         {!! Form::number('phone', '', ['class' => 'form-control']) !!}
                     </div>
                     <div class="form-group">
-                        {!! Form::label('avatar', __('Avatar'), ['class' => 'pr-1 form-control-label']) !!}
+                        {!! Form::label('avatar', __('message.avatar'), ['class' => 'pr-1 form-control-label']) !!}
                         {!! Form::file('avatar', ['id' => 'avatar', 'name' => 'avatar']) !!}
                         <p><img src="#" id="imageSrc" height="80px" class="d-none"></p>
                     </div>
                     <div class="form-group">
-                        {!! Form::label('role', __('Permission'), ['class' => 'pr-1 form-control-label']) !!}
+                        {!! Form::label('role', __('message.permission'), ['class' => 'pr-1 form-control-label']) !!}
                         <select name="role" id="role" class="form-control">
                             @foreach ($roles as $r)
                                 <option value="{{$r->id}}">{{ $r->name }}</option>

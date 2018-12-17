@@ -13,13 +13,20 @@ return [
     |
     */
 
+    'manager' => 'Quản lý',
+    'bill' => 'Hóa đơn',
+    'order.success' => 'Đơn hàng đã thanh toán',
+    'order.canceled' => 'Đơn hàng đã hủy',
+    'close' => 'Đóng',
+    'permission' => 'Vai trò',
+
     'page' => 'Trang',
     'filter' => 'Bộ lọc',
 
     'title' => [
-        'dashboard' => 'Dashboard',
+        'dashboard' => 'Quản trị',
         'system' => 'Hệ thống',
-        'business' => 'Business',
+        'business' => 'Kinh doanh',
         'topping' => 'Topping',
         'feedback' => 'Phản hồi',
         'home' => 'Trang chủ',
