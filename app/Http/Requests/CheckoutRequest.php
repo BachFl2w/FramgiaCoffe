@@ -27,7 +27,7 @@ class CheckoutRequest extends FormRequest
             'receiver' => 'required|max:100',
             'email' => 'required|email',
             'place' => 'required|max:300',
-            'phone' => 'required|regex:/(0)[0-9]{9,10}/',
+            'phone' => 'required|digits_between:9,11',
             'note' => 'max:300',
         ];
     }
@@ -41,7 +41,7 @@ class CheckoutRequest extends FormRequest
             'email.email' => 'Email is wrong',
             'place.required' => 'Place is empty!',
             'place.max' => 'Address must smaller 300 character',
-            'phone.regex' => 'Your phone is wrong !',
+            'phone.digits_between' => 'Your phone is wrong !',
             'phone.required' => 'Phone is empty',
             'note.max' => 'Note must smaller 300 character',
         ];

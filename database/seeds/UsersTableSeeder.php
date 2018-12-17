@@ -18,7 +18,8 @@ class UsersTableSeeder extends Seeder
                 'phone' => '123456789',
                 'password' => bcrypt('123456'),
                 'address' => strtolower(str_random(20)),
-                'role_id' => 1
+                'role_id' => 1,
+                'active' => 1
             ],
             [
                 'name' => 'Bach Nguyen',
@@ -26,7 +27,8 @@ class UsersTableSeeder extends Seeder
                 'phone' => '123456789',
                 'password' => bcrypt('123456'),
                 'address' => strtolower(str_random(20)),
-                'role_id' => 1
+                'role_id' => 1,
+                'active' => 1
             ]
         ];
 
@@ -37,7 +39,8 @@ class UsersTableSeeder extends Seeder
                 'email' => strtolower(str_random(6)).'@gmail.com',
                 'password' => bcrypt('123456'),
                 'address' => strtolower(str_random(20)),
-                'role_id' => rand(2,3)
+                'role_id' => rand(2,3),
+                'active' => 1
             ];
             $data[] = $user;
         }
