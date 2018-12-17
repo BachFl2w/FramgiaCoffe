@@ -425,8 +425,7 @@
                                                     <div class="item-img-info">
                                                         <a href="#" title="Woo Logo" class="product-image">
                                                             <figure class="img-responsive">
-                                                                <img alt="Woo Logo"
-                                                                     src="{{ asset('images/products/' . $product->images[0]->name) }}">
+                                                                <img src="{{ asset('images/products/' . $product->images[0]->name) }}">
                                                             </figure>
                                                         </a>
                                                         <div class="box-hover">

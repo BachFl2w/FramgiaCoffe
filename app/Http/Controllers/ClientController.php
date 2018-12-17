@@ -332,14 +332,18 @@ class ClientController extends Controller
             }
         }
         //send mail
-        $order_new = Order::with('orderDetails.product')
+        $order_new = Order::with(['orderDetails.product' => function ($query) {
+            $query->with(['images' => function ($query1) {
+                $query1->where('active', 1);
+            }]);
+        }])
             ->with('orderDetails.size')->with('orderDetails.toppings')
-            ->where('id', '=', '1')
+            ->where('id', '=', $order->id)
             ->orderBy('created_at', 'desc')
             ->first();
-        
+
         Mail::send(new InforOrder($order_new, $request->email));
-        
+
         session()->put('status-cart', true);
     }
 }

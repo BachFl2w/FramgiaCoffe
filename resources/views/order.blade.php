@@ -27,7 +27,7 @@
                                 <td>{{ $order->receiver }}</td>
                                 <td>{{ $order->order_place }}</td>
                                 <td>{{ $order->order_phone }}</td>
-                                <td>{{ $order->order_time }}</td>
+                                <td>{{ date('d/m/Y h:i:sa', strtotime($order->order_time)) }}</td>
                                 <td width="8%">
                                     @switch ($order->status)
                                         @case(-1)
@@ -194,7 +194,7 @@
                     res.forEach(function (element) {
                         html += '<tr>' +
                             '<td width="20%">' +
-                            '<img class="img-thumbnail" src="{{ asset('images/products/2.jpg') }}">' +
+                            '<img class="img-thumbnail" src="{{ asset(config('asset.image_path.product'). '2.jpg') }}">' +
                             '</td>' +
                             '<td><p>' + element.product.name + '</p><p> Size: '+ element.size.name +'</p></td>' +
                             '<td width="46%">';

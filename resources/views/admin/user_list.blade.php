@@ -140,8 +140,8 @@ jQuery(document).ready(function($) {
                 name: 'image',
                 render: function(data) {
                     return data ?
-                        `<img data-image="${data}" src="http://127.0.0.1:8000/images/avatars/${data}" height="80px">`
-                        : `<img src="http://127.0.0.1:8000/images/default.jpeg" height="80px">`;
+                        `<img data-image="${data}" src="` + {{ asset(config('asset.image_path.avatar')) }} + `${data}" height="80px">`
+                        : `<img src="` + {{ asset(config('asset.image_path.default')) }} + `" height="80px">`;
                 }
             },
             {
@@ -350,7 +350,7 @@ jQuery(document).ready(function($) {
                 $('.append_active').append(`
                    <div class="dropdown-item active_item" data-id="${data.id}">
                         <a class="text-primary btn-link btn_active_user" href="#">
-                           <img class="user-avatar rounded-circle avatar-header" src="http://127.0.0.1:8000/images/${img}" height="20px" alt="User Avatar"> &nbsp ${data.name}
+                           <img class="user-avatar rounded-circle avatar-header" src="` + {{ asset(config('asset.image_path.public')) }} + `${img}" height="20px" alt="User Avatar"> &nbsp ${data.name}
                         </a>
                     </div>
                `);

@@ -1,8 +1,9 @@
 <p><img src="https://framgia.com/wp-content/themes/frg-framgia/images/framgia-logo-black.png"></p>
 {{-- {{ dd($order) }} --}}
 <p>{{ __('Order ID: ') . $order->id }}</p>
-<table border="1">
+<table border="1" width="100%">
     <tr>
+        <td>{{ __('Image') }}</td>
         <td>{{ __('Product') }}</td>
         <td>{{ __('Size') }}</td>
         <td>{{ __('Quantity') }}</td>
@@ -10,6 +11,9 @@
     </tr>
     @foreach ($order->orderDetails as $detail)
         <tr>
+            <td>
+                <h3><img src="{{ asset(config('asset.image_path') . $detail->product->image[0]->name) }}"></h3>
+            </td>
             <td>
                 <h3>{{ $detail->product->name }}</h3>
                 <h4>{{ __('message.order_detai_title.price') . ': ' . number_format($detail->product_price) . ' vnđ' }}</h4>

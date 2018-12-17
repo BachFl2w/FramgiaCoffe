@@ -155,7 +155,8 @@
                         data: 'images',
                         name: 'images',
                         render: function (data, type, row) {
-                            return `<img src="http://127.0.0.1:8000/images/products/${data[0]['name']}">`
+                            var base_url_image = {{ asset(config('asset.image_path.product')) }};
+                            return `<img src="` + base_url_image + `${data[0]['name']}">`
                         }
                     }, {
                         data: 'brief',
@@ -237,7 +238,8 @@
                         $('#quantity').val(data.quantity);
                         $('#category_id').val(data.category_id);
                         CKEDITOR.instances['description'].setData(data.description);
-                        $('#image_review_create').attr('src', 'http://127.0.0.1:8000/images/products/' + data.images[0].name);
+                        var base_url_image = {{ asset(config('asset.image_path.product')) }};
+                        $('#image_review_create').attr('src', base_url_image + data.images[0].name);
                     },
                 });
             });
@@ -292,7 +294,7 @@
                     url = route('admin.product.update', id);
                 }
                 var form = new FormData($('form#form-product')[0]);
-                form.append('description', CKEDITOR.instances['description'].getData());
+                form.append('description', CKEDITOR.instances['description'].document.getBody().getText());
                 $.ajax({
                     method: 'post',
                     data: form,

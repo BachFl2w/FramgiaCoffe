@@ -145,7 +145,7 @@
                         $('.price_cart').html(nf.format(Math.round($total_price)));
                         var count_cart = res.length < 3 ? res.length : 3;
                         for (var i = 0; i < count_cart; i++) {
-                            var url_image = 'http://127.0.0.1:8000/images/products/';
+                            var url_image = {{ asset(config('asset.image_path.product')) }};
                             var item = '' +
                                 '<li class="item first">' +
                                 '<div class="item-inner">' +
@@ -290,7 +290,6 @@
                 if (request_value == '') {
                     $('#box_search').hide();
                 }
-                var url_image = 'http://127.0.0.1:8000/images/products/';
                 $('#box_search').show();
                 $('#box_search').empty();
                 var result = '';

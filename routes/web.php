@@ -1,8 +1,6 @@
 <?php
 
-use App\User;
 use App\Order;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,9 +11,6 @@ use App\Order;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-
-
 
 // login with google
 // Route::get('/auth/{provider}', 'SocialAuthController@redirectToProvider');
@@ -51,7 +46,6 @@ Route::group(['middleware' => 'locale'], function() {
             Route::post('update/{id}', 'RoleController@update')->name('admin.role.update');
 
             Route::get('destroy/{id}', 'RoleController@destroy')->name('admin.role.destroy');
-
         });
 
         Route::group(['prefix' => 'user'], function () {
@@ -129,7 +123,6 @@ Route::group(['middleware' => 'locale'], function() {
             Route::post('update/{topping}', 'TopingController@update')->name('admin.topping.update');
 
             Route::get('destroy/{id}', 'TopingController@destroy')->name('admin.topping.destroy');
-
         });
 
         Route::group(['prefix' => 'size'], function () {
@@ -169,7 +162,7 @@ Route::group(['middleware' => 'locale'], function() {
 
     Route::post('update/{user}', 'UserController@update')->name('user.update');
 
-    ROute::get('show/{id}', 'UserController@show')->name('user.show');
+    Route::get('show/{id}', 'UserController@show')->name('user.show');
     });
 
     Route::group(['middleware' => 'userLogin'], function () {
@@ -224,4 +217,16 @@ Route::group(['middleware' => 'locale'], function() {
     Route::post('favorite', 'ClientController@favorite')->name('client.favorite');
 
     Route::post('checkout', 'ClientController@checkout')->name('client.checkout');
+
+    Route::get('demo', function() {
+        return  Order::with(['orderDetails.product' => function($query) {
+            $query->with(['images' => function($query1) {
+                $query1->where('active', 1);
+            }]);
+        }])
+            ->with('orderDetails.size')->with('orderDetails.toppings')
+            ->where('id', '=', 1)
+            ->orderBy('created_at', 'desc')
+            ->first();
+    });
 });

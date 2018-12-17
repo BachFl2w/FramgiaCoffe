@@ -110,7 +110,7 @@ $(document).ready(function() {
                 $('.feedback-dropdown').append( `
                     <a class="dropdown-item media bg-flat-color-1" id="feedback${data.id}" href="#">
                         <span class="photo media-left">
-                            <img alt="avatar" class="user-avatar rounded-circle" src="http://127.0.0.1:8000/images/${avatar}">
+                            <img alt="avatar" class="user-avatar rounded-circle" src="http://coffee.mathemes.info/images/${avatar}">
                         </span>
                         <span class="message media-body">
                             <span class="name float-left"></span>

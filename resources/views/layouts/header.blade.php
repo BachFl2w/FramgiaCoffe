@@ -125,7 +125,7 @@ jQuery(document).ready(function($) {
         var newNotificationHtml = `
             <a class="dropdown-item media bg-flat-color-1" id="feedback${data.id}" href="{!! route('admin.feedback.index') !!}">
                 <span class="photo media-left">
-                    <img alt="avatar" class="user-avatar rounded-circle" src="http://127.0.0.1:8000/images/${avatar}">
+                    <img alt="avatar" class="user-avatar rounded-circle" src="{{ asset(config('asset.image_path.public')) }}${avatar}">
                 </span>
                 <span class="message media-body">
                     <span class="name float-left">${data.user_name}</span>
@@ -158,7 +158,7 @@ jQuery(document).ready(function($) {
         var newNotificationHtmlUser = `
             <div class="dropdown-item active_item" data-id="${data.id}">
                 <a class="text-primary btn-link btn_active_user" href="{!! route('admin.feedback.index') !!}">
-                    <img class="user-avatar rounded-circle avatar-header" src="http://127.0.0.1:8000/images/${avatar}" alt="User Avatar" height="20px">
+                    <img class="user-avatar rounded-circle avatar-header" src="{{ asset(config('asset.image_path.public')) }}${avatar}" alt="User Avatar" height="20px">
                     &nbsp${data.user_name}
                 </a>
             </div>

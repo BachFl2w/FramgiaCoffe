@@ -24,7 +24,7 @@
                             <th>{{ __('message.order_title.address_order') }}</th>
                             <th>{{ __('message.order_title.phone_order') }}</th>
                             <th>{{ __('message.order_title.status') }}</th>
-                            <th>{{ __('message.order_title.note') }}</th>
+                            <th width="15%">{{ __('message.order_title.note') }}</th>
                             <th>{{ __('message.action') }}</th>
                         </tr>
                     </thead>
@@ -96,6 +96,9 @@
                     {
                         data: 'order_time',
                         name: 'order_time',
+                        render: function(data) {
+                            return new Date(data).toLocaleString();
+                        }
                     },
                     {
                         data: 'order_place',
@@ -154,7 +157,7 @@
                     var html = '';
                     var totals = 0;
                     res.forEach(function (element) {
-                        var base_url_image = 'http://127.0.0.1:8000/images/products/';
+                        var base_url_image = {{ asset(config('asset.image_path.product')) }};
                         var image = element.product.images[0].name;
                         html += '<tr>' +
                             '<td width="15%">' +
