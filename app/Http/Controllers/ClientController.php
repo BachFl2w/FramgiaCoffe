@@ -335,11 +335,8 @@ class ClientController extends Controller
             ->where('id', '=', '1')
             ->orderBy('created_at', 'desc')
             ->first();
-        if (Auth::check())
-            Mail::send(new InforOrder($order_new, Auth::user()->email));
-        else {
-            Mail::send(new InforOrder($order_new, $request->email));
-        }
+        
+        Mail::send(new InforOrder($order_new, $request->email));
         
         session()->put('status-cart', true);
     }
