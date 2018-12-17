@@ -205,6 +205,7 @@
                         })
                         .done(function() {
                             $('#modal-order_detail').modal('hide');
+                            order_table.ajax.reload(null, false);
                             swal({
                                 title: "Success",
                                 icon: "success",

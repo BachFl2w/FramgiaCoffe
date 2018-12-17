@@ -35,15 +35,15 @@ class CheckoutRequest extends FormRequest
     public function messages()
     {
         return [
-            'receiver.required' => 'Name is not empty',
-            'receiver.max' => 'Name must smaller 100 character !',
-            'email.required' => 'Email is not empty',
+            'receiver.required' => 'Name is empty',
+            'receiver.max' => 'Name must smaller 100 character',
+            'email.required' => 'Email is empty',
             'email.email' => 'Email is wrong',
-            'place.required' => 'Enter user address !',
-            'place.max' => 'Address must smaller 300 character !',
+            'place.required' => 'Place is empty!',
+            'place.max' => 'Address must smaller 300 character',
             'phone.regex' => 'Your phone is wrong !',
-            'phone.required' => 'Must enter number phone !',
-            'note.max' => 'Enter smaller than 300 character',
+            'phone.required' => 'Phone is empty',
+            'note.max' => 'Note must smaller 300 character',
         ];
     }
 }

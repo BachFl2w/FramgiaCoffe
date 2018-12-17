@@ -17,6 +17,15 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/custom.css') }}">
     <link rel="stylesheet" type="text/css"
           href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css">
+    <style type="text/css" media="screen">
+        label.error {
+            display: inline-block;
+            color:red;
+            width: 200px;
+        }
+    </style>
+        
+    </style>
 
     @yield('css')
 </head>
@@ -42,6 +51,7 @@
 <script src="{{ asset('js/js_cloud-zoom.js') }}"></script>
 <script src="{{ asset('js/sweetalert.min.js') }}"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js"></script>
 
 <script>
     jQuery(document).ready(function () {
@@ -132,7 +142,7 @@
                             $count_product += Number(element.item.quantity);
                         });
                         $('.count_cart').html($count_product);
-                        $('.price_cart').html(nf.format($total_price));
+                        $('.price_cart').html(nf.format(Math.round($total_price)));
                         var count_cart = res.length < 3 ? res.length : 3;
                         for (var i = 0; i < count_cart; i++) {
                             var url_image = 'http://127.0.0.1:8000/images/products/';
@@ -189,29 +199,49 @@
             })
         });
 
+        $('#form_order').validate({
+            rules: {
+                size: 'required',
+            },
+            messages: {
+                size:{
+                    required: 'Choose Size',
+                },
+            },
+            errorPlacement: function(error, element) {
+                if (element.is(':radio')) {
+                    $("#error-size-index-add-cart").html( error );  
+                } else {
+                    error.insertAfter( element );
+                }
+            }
+        });
+
         $('#btnSubmitOrder').click(function (event) {
             event.preventDefault();
-            $.ajax({
-                url: route('user.cart.add'),
-                type: 'post',
-                dataType: '',
-                data: $('#form_order').serialize(),
-            })
-            .done(function () {
-                swal({
-                    title: "Add to cart successfully",
-                    icon: "success",
-                    timer: 2000,
+            if ($('#form_order').valid()) {
+                $.ajax({
+                    url: route('user.cart.add'),
+                    type: 'post',
+                    dataType: '',
+                    data: $('#form_order').serialize(),
+                })
+                .done(function () {
+                    swal({
+                        title: "Add to cart successfully",
+                        icon: "success",
+                        timer: 2000,
+                    });
+                    loadCart();
+                })
+                .fail(function () {
+                    console.log("error");
+                })
+                .always(function () {
+                    $('#form_order')[0].reset();
+                    $('#order').modal('hide');
                 });
-                loadCart();
-            })
-            .fail(function () {
-                console.log("error");
-            })
-            .always(function () {
-                $('#form_order')[0].reset();
-                $('#order').modal('hide');
-            });
+            }
         });
 
         $('#empty_cart_button').click(function (event) {
@@ -352,11 +382,11 @@
             $('#div-check-out').fadeIn();
         });
 
-        $('#quantity-cart').keyup(function (event) {
+        $('.reduce_quantity').click(function (event) {
             event.preventDefault();
             var key = $(this).attr('data-id');
-            var quantity = $(this).val();
-            if (quantity == 0) {
+            var quantity = $(this).attr('data-quantity');
+            if (quantity == 1) {
                 swal({
                     title: "Number must be lagre than 0",
                     icon: "error",
@@ -364,22 +394,22 @@
                 });
             } else {
                 $.ajax({
-                    url: route('user.cart.update'),
+                    url: route('user.cart.reduce'),
                     type: 'post',
                     dataType: '',
                     cache: false,
                     data: {
                         'key': key,
-                        'quantity': quantity
                     },
                 })
                 .done(function () {
-                    swal({
-                        title: "Update Success",
-                        icon: "success",
-                        timer: 2000,
-                    });
+                    // swal({
+                    //     title: "Update Success",
+                    //     icon: "success",
+                    //     timer: 2000,
+                    // });
                     loadCart();
+                    location.reload();
                 })
                 .fail(function () {
                     console.log("error");
@@ -387,9 +417,39 @@
             }
         });
 
+        $('.increase_quantity').click(function (event) {
+            event.preventDefault();
+            var key = $(this).attr('data-id');
+            var quantity = $(this).attr('data-quantity');
+            $.ajax({
+                url: route('user.cart.increase'),
+                type: 'post',
+                dataType: '',
+                cache: false,
+                data: {
+                    'key': key,
+                },
+            })
+            .done(function () {
+                // swal({
+                //     title: "Update Success",
+                //     icon: "success",
+                //     timer: 2000,
+                // });
+                loadCart();
+                location.reload();
+            })
+            .fail(function () {
+                console.log("error");
+            })
+        });
+
+        //check out cart
         $('#btn_checkout').click(function (event) {
             event.preventDefault();
-            $.ajax({
+
+            if ($('#form-checkout').valid()) {
+                $.ajax({
                 url: route('client.checkout'),
                 type: 'post',
                 dataType: '',
@@ -397,14 +457,13 @@
                 processData: false,
                 cache: false,
                 data: new FormData($('form#form-checkout')[0]),
-            })
+                })
                 .done(function () {
                     swal({
                         title: "Success",
                         icon: "success",
                         timer: 2000,
                     });
-                    $('#box-cart').html('<h2>Nothing here</h2>');
                     $('#div-check-out').fadeOut();
                 })
                 .fail(function (xhr, status, error) {
@@ -414,6 +473,58 @@
                         toastr.error(value[1][0], 'Error!');
                     });
                 })
+            }  
+        });
+
+        $('#form-checkout').validate({
+            rules: {
+                receiver: {
+                    required: true,
+                    maxlength: 100,
+                    minlength: 0,
+                },
+                email: {
+                    required: true,
+                    email: true,
+                },
+                place: {
+                    required: true,
+                    maxlength: 300,
+                },
+                phone: {
+                    required: true,
+                    regex: '/(0)[0-9]{9,10}/',
+                },
+                note: {
+                    maxlength: 300,
+                },
+            },
+            messages: {
+                receiver:{
+                    required: 'Name is empty',
+                    maxlength: 'Name must smaller 100 character !',
+                },
+                email: {
+                    required: 'Email is empty',
+                    email: 'Email is wrong',
+                },
+                place: {
+                    required: 'Place is empty',
+                    maxlength: 'Place must smaller 300 character',
+                },
+                phone: {
+                    required: 'Phone is empty',
+                    regex: 'Your phone is wrong',
+                },
+                note: {
+                    maxlength: 'Note must smaller 300 character',
+                },
+            },
+        })
+
+        $('.btn-continue').click(function(event) {
+            event.preventDefault();
+            location.href = route('client.filter');
         });
     });
 </script>

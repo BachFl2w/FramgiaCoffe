@@ -195,7 +195,9 @@ Route::group(['middleware' => 'locale'], function() {
 
     Route::post('cart-add', 'Cart1Controller@add')->name('user.cart.add');
 
-    Route::post('cart-update', 'Cart1Controller@updateQuantity')->name('user.cart.update');
+    Route::post('cart-reduce', 'Cart1Controller@reduce_quantity')->name('user.cart.reduce');
+
+    Route::post('cart-increase', 'Cart1Controller@increase_quantity')->name('user.cart.increase');
 
     Route::get('cart-delete/{key}', 'Cart1Controller@delete')->name('user.cart.delete');
 
@@ -222,4 +224,8 @@ Route::group(['middleware' => 'locale'], function() {
     Route::post('favorite', 'ClientController@favorite')->name('client.favorite');
 
     Route::post('checkout', 'ClientController@checkout')->name('client.checkout');
+
+    Route::get('demo', function() {
+        return Session::get('cart');
+    });
 });

@@ -151,6 +151,17 @@
 @section('js')
     <script type="text/javascript">
         jQuery(document).ready(function ($) {
+
+            var category_id = window.location.search.substring(1).split('category_id=')[1];
+
+            category_checked();
+
+            function category_checked() {
+                if (typeof category_id !== 'undefined') {
+                    $("input[name=category_id][value=" + Number(category_id) + "]").attr('checked', 'checked');
+                }
+            }
+
             $('.button-checkout').click(function (event) {
                 event.preventDefault();
                 window.location.href = route('client.showCart');

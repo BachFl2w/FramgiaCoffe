@@ -300,6 +300,7 @@
                             {{ $size->name }}
                         </label>
                     @endforeach
+                    <p id="error-size-index-add-cart" style="font-size: 20px;color: red;font-family: initial;padding-left: 10px;"></p>
                     <h3>Topping</h3>
                     @foreach($toppings as $topping)
                         <label style="padding: 2px 15px;margin-left: 5px;border-radius: 15px;font-size: 20px;background-color: #ADFF2F">

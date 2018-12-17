@@ -227,21 +227,36 @@
                 event.preventDefault();
                 var row = $(this).closest('tr');
                 var order_id = row.find('td:eq(0)').text();
-                $.ajax({
-                    url: route('client.order.cancel_order', { order_id: order_id }),
-                    type: 'get',
-                    dataType: '',
-                    data: {},
+                swal({
+                    title: "Are you sure?",
+                    text: "Once deleted, you will not be able to recover this imaginary file!",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
                 })
-                .done(function() {
-                    alert('Order is cancel');
-                    row.find('td:eq(5)').text('Canceled ');
-                    row.find('#cancel_order').remove();
+                .then((willDelete) => {
+                    if (willDelete) {
+                        $.ajax({
+                            url: route('client.order.cancel_order', { order_id: order_id }),
+                            type: 'get',
+                            dataType: '',
+                            data: {},
+                        })
+                        .done(function() {
+                            row.find('td:eq(5)').text('Canceled ');
+                            row.find('#cancel_order').remove();
+                            swal({
+                                title: "Order is canceled",
+                                icon: "success",
+                                timer: 2000,
+                            });
+                        })
+                        .fail(function() {
+                            alert('Error when process');
+                        })
+                    }
                 })
-                .fail(function() {
-                    alert('Error when process');
-                })
-            });
+            })
         });
     </script>
 @endsection

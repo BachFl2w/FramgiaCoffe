@@ -36,7 +36,7 @@ class Cart1
             'product_price' => $product->price,
             'product_discount' => $product->discount,
         ];
-        $item_new_price = $product->price * (1 + $size->percent) * (1 - $product->discount) + $toppings_price;
+        $item_new_price = $product->price * (1 + $size->percent) * (1 - $product->discount/100) + $toppings_price;
         if (empty($this->cart)) {
             $this->cart[] = [
                 'key' => $key,
@@ -66,19 +66,37 @@ class Cart1
         Session::put('cart', $this->cart);
     }
 
-    public function updateQuantity($keyCart, $quantity)
-    {
+    public function reduce_quantity($keyCart) {
         $item_price = 0;
         $index = 0;
         for ($i = 0; $i < count($this->cart); $i++) {
             if ($this->cart[$i]['key'] == $keyCart) {
                 $index = $i;
                 $this->cart[$i]['item_price'] = $this->cart[$i]['item_price']
-                    + ($quantity - $this->cart[$i]['item']['quantity'])
-                    * ($this->cart[$i]['item']['product_price']
+                    - ($this->cart[$i]['item']['product_price']
                         * (1 + $this->cart[$i]['item']['size']->percent)
                         * (1 - $this->cart[$i]['item']['product_discount']));
-                $this->cart[$i]['item']['quantity'] = $quantity;
+                $this->cart[$i]['item']['quantity']--;
+            }
+            $item_price +=  $this->cart[$i]['item_price'];
+        }
+
+        $this->cart[$index]['item_price'] = $item_price;
+
+        Session::put('cart', $this->cart);
+    }
+
+    public function increase_quantity($keyCart) {
+        $item_price = 0;
+        $index = 0;
+        for ($i = 0; $i < count($this->cart); $i++) {
+            if ($this->cart[$i]['key'] == $keyCart) {
+                $index = $i;
+                $this->cart[$i]['item_price'] = $this->cart[$i]['item_price']
+                    + ($this->cart[$i]['item']['product_price']
+                        * (1 + $this->cart[$i]['item']['size']->percent)
+                        * (1 - $this->cart[$i]['item']['product_discount']));
+                $this->cart[$i]['item']['quantity']++;
             }
             $item_price +=  $this->cart[$i]['item_price'];
         }

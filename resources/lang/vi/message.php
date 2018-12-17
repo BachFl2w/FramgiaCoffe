@@ -194,7 +194,7 @@ return [
     'order' => 'Order',
 
     //Client new
-    'vn' => 'Viet Nam',
+    'vn' => 'VietNam',
     'en' => 'English',
     'support' => 'Support +0123 456 789',
     'email_help' => 'Email: info@freshia.com',

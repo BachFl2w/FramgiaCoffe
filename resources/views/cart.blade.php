@@ -1,4 +1,48 @@
 @extends('layouts.app_client')
+
+@section('css')
+   <style type="text/css" media="screen">
+       .increase_quantity {
+            height: 30px;
+            width: 25px;
+            border: 1px #c8c8c8 solid;
+            background-color: #ffffff;
+            border-radius:0px 4px 4px 0px;
+            color: #999;
+            padding: 1px;
+       }
+       .reduce_quantity {
+            height: 30px;
+            width: 25px;
+            border: 1px #c8c8c8 solid;
+            background-color: #ffffff;
+            
+            border-radius:4px 0px 0px 4px;
+            color: #999;
+            padding: 1px;
+       }
+       .input_quantity {
+            height: 30px;
+            border: 1px #c8c8c8 solid;
+            width: 35px;
+            margin: 0px !important;
+            padding-left: 10px;
+       }
+       .topping-element {
+            padding: 5px 15px;
+            margin-left: 5px;
+            border-radius: 5px;
+            font-size: 15px;
+            background-color: #f0f0f0;
+            display: inline-block;
+       }
+       .empty-cart-image {
+        display: block;
+        margin: auto;
+       }
+   </style>
+@endsection
+
 @section('content')
     <section class="main-container col1-layout">
         <div class="main container">
@@ -13,104 +57,99 @@
                                 <input type="hidden" value="Vwww7itR3zQFe86m" name="form_key">
                                 <fieldset>
                                     <table class="data-table cart-table" id="shopping-cart-table">
-                                        <colgroup>
-                                            <col width="1">
-                                            <col>
-                                            <col width="1">
-                                            <col width="1">
-                                            <col width="1">
-                                            <col width="1">
-                                            <col width="1">
-                                        </colgroup>
                                         <thead>
-                                        <tr class="first last">
-                                            <th rowspan="1">&nbsp;</th>
-                                            <th rowspan="1"><span class="nobr">Product</span></th>
-                                            <th rowspan="1"></th>
-                                            <th class="a-center" rowspan="1">Qty</th>
-                                            <th colspan="1" class="a-center">Subtotal</th>
-                                            <th class="a-center" rowspan="1">&nbsp;</th>
-                                        </tr>
+                                            <tr class="first last">
+                                                <th>&nbsp;</th>
+                                                <th><span class="nobr">Product</span></th>
+                                                <th>Qty</th>
+                                                <th>Subtotal</th>
+                                                <th>&nbsp;</th>
+                                            </tr>
                                         </thead>
                                         <tfoot>
-                                        <tr class="first last">
-                                            <td class="a-right last" colspan="50">
+                                            <tr>
+                                                <td class="a-right last" colspan="50">
 
-                                                <button class="button btn-continue" type="button">
-                                                    <span>Continue Shopping</span>
-                                                </button>
-                                                <button class="button btn-empty" id="checkout"
-                                                        data-user="{{ $user }}">
-                                                    <span>Check out</span>
-                                                </button>
-                                                <button id="empty_cart_button" class="button btn-empty">
-                                                    <span>Clear Cart</span>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr class="first">
-                                            <td>
-                                                <p class="" style="font-size: 25px;display: ruby;">
-                                                    Totals: <span class="price_cart" id="price_cart"
-                                                                  style="color: red;font-weight: 400;"></span>
-                                                    ₫</p>
-                                            </td>
-                                        </tr>
-                                        </tfoot>
-                                        <tbody>
-                                        @foreach($carts as $cart)
-                                            <tr class="first odd">
-                                                <td class="image">
-                                                    <a class="product-image"
-                                                       href="{{ route('client.product.detail', ['id' => $cart['item']['product']->id]) }}">
-                                                        <img width="75"
-                                                             src="{{ asset('images/products/' . $cart['item']['product']->image) }}">
-                                                    </a>
-                                                </td>
-                                                <td>
-                                                    <h2 class="product-name">
-                                                        <a style="font-size: 20px;margin-bottom: 20px"
-                                                           href="{{ route('client.product.detail', ['id' => $cart['item']['product']->id]) }}">
-                                                            {{ $cart['item']['product']->name }}
-                                                        </a>
-                                                        <p>
-                                                            @foreach($cart['item']['toppings'] as $topping)
-                                                                <span style="padding: 2px 15px;margin-left: 5px;border-radius: 15px;font-size: 15px;background-color: #ADFF2F
-                                                            ">{{ $topping->name }}</span>
-                                                            @endforeach
-                                                        </p>
-                                                    </h2>
-                                                </td>
-                                                <td class="a-center">
-                                                    <a title="Edit item parameters" class="edit-bnt" href="">
-                                                    </a>
-                                                </td>
-
-                                                <td class="a-center movewishlist">
-                                                    <input type="text" maxlength="12" min="1" max="10"
-                                                           class="input-text qty"
-                                                           size="4" pattern="\d*"
-                                                           value="{{ $cart['item']['quantity'] }}" id="quantity-cart"
-                                                           data-id="{{ $cart['key'] }}">
-                                                </td>
-                                                <td class="a-right movewishlist">
-                                            <span class="cart-price">
-                                                <span class="price">{{ number_format($cart['item_price']) . ' ₫' }}</span>
-                                            </span>
-                                                </td>
-                                                <td class="a-center last">
-                                                    <a class="button remove-item"
-                                                       data-id={{ $cart['key'] }} href="{{ route('user.cart.delete', ['key' => $cart['key']]) }}">
-                                                    </a>
+                                                    <button class="button btn-continue">
+                                                        <span>Continue Shopping</span>
+                                                    </button>
+                                                    <button class="button btn-empty" id="checkout"
+                                                            data-user="{{ $user }}">
+                                                        <span>Check out</span>
+                                                    </button>
+                                                    <button id="empty_cart_button" class="button btn-empty">
+                                                        <span>Clear Cart</span>
+                                                    </button>
                                                 </td>
                                             </tr>
-                                        @endforeach
+                                            <tr class="first">
+                                                <td>
+                                                    <p class="" style="font-size: 25px;display: ruby;">
+                                                        Totals: <span class="price_cart" id="price_cart"
+                                                                      style="color: red;font-weight: 400;"></span>
+                                                        ₫</p>
+                                                </td>
+                                            </tr>
+                                        </tfoot>
+                                        <tbody>
+                                            @foreach($carts as $cart)
+                                                <tr>
+                                                    <td width="20%" align="center">
+                                                        <a class="product-image"
+                                                           href="{{ route('client.product.detail', ['id' => $cart['item']['product']->id]) }}">
+                                                            <img width="75"
+                                                                 src="{{ asset('images/products/' . $cart['item']['product']->image) }}">
+                                                        </a>
+                                                    </td>
+                                                    <td>
+                                                        <h2 class="product-name">
+                                                            <a style="font-size: 20px;margin-bottom: 20px"
+                                                               href="{{ route('client.product.detail', ['id' => $cart['item']['product']->id]) }}">
+                                                                {{ $cart['item']['product']->name }}
+                                                            </a>
+                                                            <p>
+                                                                @foreach($cart['item']['toppings'] as $topping)
+                                                                    <span class="topping-element">{{ $topping->name }}</span>
+                                                                @endforeach
+                                                            </p>
+                                                        </h2>
+                                                    </td>
+                                                    <td width="15%">
+                                                        <div class="input-group">
+                                                            <span style="display: table-cell;">
+                                                                <button class="reduce_quantity" data-quantity="{{ $cart['item']['quantity'] }}" data-id="{{ $cart['key'] }}">-</button>
+                                                            </span>
+                                                            
+                                                            <input type="text" maxlength="12" min="1" max="10"
+                                                                   class="input_quantity"
+                                                                   size="4" pattern="\d*"
+                                                                   value="{{ $cart['item']['quantity'] }}" id="quantity-cart"
+                                                                   data-id="{{ $cart['key'] }}" disabled>
+                                                            <span style="display: table-cell;" >
+                                                                <button class="increase_quantity" data-quantity="{{ $cart['item']['quantity'] }}" data-id="{{ $cart['key'] }}">+</button>
+                                                            </span>
+                                                        </div>
+                                                    </td>
+                                                    <td width="10%">
+                                                        <span class="cart-price">
+                                                            <span class="price">{{ number_format($cart['item_price']) . ' ₫' }}</span>
+                                                        </span>
+                                                    </td>
+                                                    <td width="5%">
+                                                        <a class="button remove-item"
+                                                           data-id={{ $cart['key'] }} href="{{ route('user.cart.delete', ['key' => $cart['key']]) }}">
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
                                         </tbody>
                                     </table>
                                 </fieldset>
                             </div>
                         @else
-                            <h2>Nothing here</h2>
+                            <div>
+                                <img class="empty-cart-image" src="{{ asset(config('asset.image_path.public') . 'empty-cart.png') }}" alt="Your Cart Is Empty">
+                            </div>
                         @endif
                     </div>
                 </div>
@@ -119,7 +158,7 @@
                         <h2>Checkout</h2>
                     </div>
                     <div class="col-md-7">
-                        <form id="form-checkout" action="{{ route('client.checkout') }}" method="post">
+                        <form id="form-checkout">
                             @csrf
                             <div class="form-group">
                                 <label for="receiver">Receiver:</label>

@@ -11,6 +11,11 @@ class Category extends Model
 
     protected $table = 'categories';
 
+    protected $fillable = [
+        'id',
+        'name'
+    ];
+
     protected $dates = ['deleted_at'];
 
     public function products()

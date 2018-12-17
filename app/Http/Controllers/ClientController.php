@@ -242,17 +242,17 @@ class ClientController extends Controller
                 switch ($price) {
                     case 1:
                         {
-                            $query->whereBetween('price', [0, 30000])->get();
+                            $query->whereBetween('price', [0, 30000])->orderBy('price')->get();
                             break;
                         }
                     case 2:
                         {
-                            $query->whereBetween('price', [30000, 50000])->get();
+                            $query->whereBetween('price', [30000, 50000])->orderBy('price')->get();
                             break;
                         }
                     case 3:
                         {
-                            $query->whereBetween('price', [50000, 70000])->get();
+                            $query->whereBetween('price', [50000, 70000])->orderBy('price')->get();
                             break;
                         }
                     case 4:
@@ -337,6 +337,10 @@ class ClientController extends Controller
             ->first();
         if (Auth::check())
             Mail::send(new InforOrder($order_new, Auth::user()->email));
-        session()->forget('cart');
+        else {
+            Mail::send(new InforOrder($order_new, $request->email));
+        }
+        
+        session()->put('status-cart', true);
     }
 }
