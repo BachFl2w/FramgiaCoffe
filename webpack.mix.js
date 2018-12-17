@@ -70,4 +70,4 @@ mix.styles([
 
 mix.copyDirectory('node_modules/simple-line-icons/fonts/', 'public/fonts/');
 mix.copyDirectory('node_modules/font-awesome/fonts/', 'public/fonts/');
-mix.copyDirectory('resources/asset/client/css/image/', 'public/images/');
+mix.copyDirectory('resources/asset/image/', 'public/images/');

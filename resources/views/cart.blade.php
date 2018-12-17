@@ -69,7 +69,7 @@
                                         <tfoot>
                                             <tr>
                                                 <td class="a-right last" colspan="50">
-
+                                                    @if(Session::get('status-cart') == false)
                                                     <button class="button btn-continue">
                                                         <span>Continue Shopping</span>
                                                     </button>
@@ -77,11 +77,13 @@
                                                             data-user="{{ $user }}">
                                                         <span>Check out</span>
                                                     </button>
+                                                    @endif
                                                     <button id="empty_cart_button" class="button btn-empty">
                                                         <span>Clear Cart</span>
                                                     </button>
                                                 </td>
                                             </tr>
+                                           
                                             <tr class="first">
                                                 <td>
                                                     <p class="" style="font-size: 25px;display: ruby;">

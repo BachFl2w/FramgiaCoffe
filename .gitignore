@@ -3,7 +3,7 @@
 /public/ckeditor
 /public/js
 /public/storage
-/public/images/avatars
+/public/images/
 /storage/*.key
 /vendor
 /.idea

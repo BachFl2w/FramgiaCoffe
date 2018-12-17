@@ -8,6 +8,11 @@ class Potential extends Model
 {
     protected $table = 'potentials';
 
+    protected $fillable = [
+        'id',
+        'discount',
+    ];
+
     public function user()
     {
         return $this->hasMany(User::class);

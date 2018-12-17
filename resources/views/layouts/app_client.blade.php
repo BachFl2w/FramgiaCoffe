@@ -447,7 +447,6 @@
         //check out cart
         $('#btn_checkout').click(function (event) {
             event.preventDefault();
-
             if ($('#form-checkout').valid()) {
                 $.ajax({
                 url: route('client.checkout'),
@@ -460,9 +459,9 @@
                 })
                 .done(function () {
                     swal({
-                        title: "Success",
+                        title: "Order send !",
                         icon: "success",
-                        timer: 2000,
+                        timer: 3000,
                     });
                     $('#div-check-out').fadeOut();
                 })
@@ -493,7 +492,9 @@
                 },
                 phone: {
                     required: true,
-                    regex: '/(0)[0-9]{9,10}/',
+                    number: true,
+                    maxlength: 10,
+                    minlength: 10,
                 },
                 note: {
                     maxlength: 300,
@@ -514,13 +515,15 @@
                 },
                 phone: {
                     required: 'Phone is empty',
-                    regex: 'Your phone is wrong',
+                    number: 'Not a phone',
+                    maxlength: 'Phone too long',
+                    minlength: 'Phone too short',
                 },
                 note: {
                     maxlength: 'Note must smaller 300 character',
                 },
             },
-        })
+        });
 
         $('.btn-continue').click(function(event) {
             event.preventDefault();
