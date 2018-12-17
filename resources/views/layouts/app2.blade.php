@@ -62,7 +62,7 @@
 
     @include('sweetalert::alert')
 
-    <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/app_admin.js') }}"></script>
     <script src="{{ asset('js/sweetalert.min.js') }}"></script>
     <script src="https://js.pusher.com/4.3/pusher.min.js"></script>
 

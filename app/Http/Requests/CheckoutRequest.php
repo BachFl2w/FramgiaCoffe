@@ -25,6 +25,7 @@ class CheckoutRequest extends FormRequest
     {
         return [
             'receiver' => 'required|max:100',
+            'email' => 'required|email',
             'place' => 'required|max:300',
             'phone' => 'required|regex:/(0)[0-9]{9,10}/',
             'note' => 'max:300',
@@ -36,6 +37,8 @@ class CheckoutRequest extends FormRequest
         return [
             'receiver.required' => 'Name is not empty',
             'receiver.max' => 'Name must smaller 100 character !',
+            'email.required' => 'Email is not empty',
+            'email.email' => 'Email is wrong',
             'place.required' => 'Enter user address !',
             'place.max' => 'Address must smaller 300 character !',
             'phone.regex' => 'Your phone is wrong !',

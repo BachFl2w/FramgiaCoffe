@@ -10,7 +10,7 @@
     <div class="container-fluid">
         <div class="card">
             <div class="card-header">
-                {{ __('message.order_detail' ) }}
+                {{ __('message.order_title.detail' ) }}
             </div>
 
             <div class="card-body card-block">
@@ -75,25 +75,25 @@
                 <div class="row">
                     <div class="form-group  col-12">
                         {!! Form::label('note', __('message.order_title.status'), ['class' => 'row col-12']) !!}
-                        <div class="form-check-inline">
+                        <div class="form-check-inline" >
                             <label class="form-check-label">
-                            {!! Form::radio('status', 1, ($order->status == 1), ['class' => 'form-check-input']) !!}{{ __('message.order_title.processed') }}
+                            {!! Form::radio('status', 1, ($order->status == 1), ['class' => 'form-check-input', $order->status == 1 ? 'disabled' : '']) !!}
+                            {{ __('message.order_title.processed') }}
                             </label>
                         </div>
                         <div class="form-check-inline">
                             <label class="form-check-label">
-                            {!! Form::radio('status', 0, ($order->status == 0), ['class' => 'form-check-input']) !!}{{ __('message.order_title.unprocessed') }}
+                            {!! Form::radio('status', 0, ($order->status == 0), ['class' => 'form-check-input', $order->status == 1 ? 'disabled' : '']) !!}
+                            {{ __('message.order_title.unprocessed') }}
                             </label>
                         </div>
                         <div class="form-check-inline disabled">
                             <label class="form-check-label">
-                            {!! Form::radio('status', -1, ($order->status == -1), ['class' => 'form-check-input']) !!}{{ __('message.order_title.canceled') }}
+                            {!! Form::radio('status', -1, ($order->status == -1), ['class' => 'form-check-input', $order->status == 1 ? 'disabled' : '']) !!}
+                            {{ __('message.order_title.canceled') }}
                             </label>
                         </div> 
                     </div>
-                </div>
-                <div class="row col-12">
-                    {!! Form::submit(__('message.update'), ['class' => 'form-control col-1 btn btn-outline-info offset-11']) !!}
                 </div>
                 {!! Form::close() !!}
                 <div class="card-block">

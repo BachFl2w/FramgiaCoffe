@@ -10,7 +10,6 @@ use App\Order;
 use App\OrderDetail;
 use App\Product;
 use App\User;
-use App\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -29,6 +28,13 @@ class ClientController extends Controller
     {
         $this->orderModel = new Repository($orderModel);
         $this->orderDetailModel = new Repository($orderDetailModel);
+    }
+
+    public function changeLanguage($language)
+    {
+        Session::put('website_language', $language);
+
+        return redirect()->back();
     }
 
     public function index()
@@ -53,31 +59,17 @@ class ClientController extends Controller
         //recent view
         $arr = Session::get('recent_view', []);
 
-        $product_revent_view = [];
-
         if ($arr) {
             $product_revent_view = Product::with(['images' => function ($query) {
                 $query->where('active', 1)->get();
-            }])->findOrFail(array_reverse($arr));
+            }])
+                ->findOrFail(array_reverse($arr));
             $product_revent_view = $product_revent_view->take(6);
+        } else {
+            $product_revent_view = [];
         }
-
 
         return view('index', compact('products', 'best_discount_product', 'product_revent_view'));
-    }
-
-    public function listProduct()
-    {
-        if (!Redis::get('products')) {
-            $products = Product::with(['category' => function ($query) {
-                $query->get();
-            }])->paginate(4);
-            Redis::set('products', json_encode($products));
-        } else {
-            $products = json_decode(Redis::get('products'));
-        }
-
-        return view('list_product', compact('products'));
     }
 
     public function liveSearch(Request $request)
@@ -100,7 +92,11 @@ class ClientController extends Controller
             $products = Product::where('name', 'like', '%' . $keyword . '%')->paginate(5);
         }
 
-        return view('filter', compact('products', 'category', 'keyword'));
+        if ($request->ajax()) {
+            return view('product_list', ['products' => $products, 'keyword' => $keyword])->render();
+        }
+
+        return view('filter', compact('products'));
     }
 
     public function detailProduct($id)
@@ -233,18 +229,53 @@ class ClientController extends Controller
 
     public function filter(Request $request)
     {
-        $keyword = null;
-        $category_id = $request->input('category_id') ? $request->input('category_id') : 0;
-        $category = Category::find($category_id);
+        $category_id = $request->category_id;
+        $price = $request->price;
+        $keyword = $request->keyword;
         $products = Product::with(['images' => function ($query) {
             $query->where('active', 1)->get();
         }])->with('category')->orderBy('id', 'desc')
             ->when($category_id, function ($query, $category_id) {
                 return $category_id != 0 ? $query->where('category_id', '=', $category_id) : $query->get();
             })
+            ->when($price, function ($query, $price) {
+                switch ($price) {
+                    case 1:
+                        {
+                            $query->whereBetween('price', [0, 30000])->get();
+                            break;
+                        }
+                    case 2:
+                        {
+                            $query->whereBetween('price', [30000, 50000])->get();
+                            break;
+                        }
+                    case 3:
+                        {
+                            $query->whereBetween('price', [50000, 70000])->get();
+                            break;
+                        }
+                    case 4:
+                        {
+                            $query->where('price', '>=', 70000)->get();
+                            break;
+                        }
+                    default:
+                        {
+                            $query->get();
+                        }
+                }
+            })
+            ->when($keyword, function ($query, $keyword) {
+                $query->where('name', 'like', '%' . $keyword . '%')->get();
+            })
             ->paginate(6);
 
-        return view('filter', compact('products', 'category', 'keyword'));
+        if ($request->ajax()) {
+            return view('product_list', ['products' => $products])->render();
+        }
+
+        return view('filter', compact('products'));
     }
 
     public function favorite(Request $request)

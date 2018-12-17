@@ -22,9 +22,7 @@ class TopingController extends Controller
      */
     public function index()
     {
-        $toppings = Topping::all();
-
-        return view('admin.topping_list', compact('toppings'));
+        return view('admin.topping_list');
     }
 
     /**
@@ -34,7 +32,7 @@ class TopingController extends Controller
      */
     public function create()
     {
-        return view('admin.topping_create');
+
     }
 
     /**
@@ -45,7 +43,7 @@ class TopingController extends Controller
      */
     public function store(ToppingRequest $request)
     {
-        $topping = $this->toppingModel->create([
+        $this->toppingModel->create([
             'name' => $request->name,
             'price' => $request->price,
             'quantity' => $request->quantity,
@@ -71,9 +69,7 @@ class TopingController extends Controller
      */
     public function edit($id)
     {
-        $topping = Topping::findOrFail($id);
 
-        return view('admin.topping_update', compact('topping'));
     }
 
     /**
@@ -85,7 +81,10 @@ class TopingController extends Controller
      */
     public function update(ToppingRequest $request, $id)
     {
-        $topping = $this->toppingModel->update([
+        if (Auth::user()->role_id == 2) {
+            return Response::json(__('You are not admin'), 403);
+        }
+        $this->toppingModel->update([
             'name' => $request->name,
             'price' => $request->price,
             'quantity' => $request->quantity,
@@ -100,13 +99,16 @@ class TopingController extends Controller
      */
     public function destroy($id)
     {
-        $topping = $this->toppingModel->delete($id);
+        if (Auth::user()->role_id == 2) {
+            return Response::json(__('You are not admin'), 403);
+        }
+        $this->toppingModel->delete($id);
     }
 
     public function getDataJson()
     {
-        $data_topping = $this->toppingModel->all();
+        $toppings = $this->toppingModel->all();
 
-        return $data_topping;
+        return datatables($toppings)->make(true);
     }
 }

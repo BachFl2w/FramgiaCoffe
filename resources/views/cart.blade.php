@@ -124,15 +124,20 @@
                             <div class="form-group">
                                 <label for="receiver">Receiver:</label>
                                 <input type="text" class="form-control" id="checkout-receiver" name="receiver"
-                                       placeholder="Name Receirver">
+                                       placeholder="Receirver">
                             </div>
                             <div class="form-group">
-                                <label for="place">Order Place:</label>
+                                <label for="place">Place:</label>
                                 <input type="text" class="form-control" id="checkout-place" name="place"
-                                       placeholder="Place Order">
+                                       placeholder="Place">
                             </div>
                             <div class="form-group">
-                                <label for="phone">Order Phone:</label>
+                                <label for="email">Email:</label>
+                                <input type="text" class="form-control" id="checkout-email" name="email"
+                                       placeholder="Email">
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Phone:</label>
                                 <input type="text" class="form-control" name="phone" id="checkout-phone"
                                        placeholder="Phone">
                             </div>
@@ -145,83 +150,6 @@
                         </form>
                     </div>
                 </div>
-                {{-- <div class="crosssel bounceInUp animated">
-                    <div class="also-like">
-                        <div class="new_title">
-                            <h2>you may be interested</h2>
-                        </div>
-                        <div class="category-products">
-                            <ul class="products-grid">
-                                <li class="item col-lg-3 col-md-3 col-sm-4 col-xs-6">
-                                    <div class="item-inner">
-                                        <div class="item-img">
-                                            <div class="item-img-info">
-                                                <figure class="img-responsive">
-                                                    <a class="product-image" title="Retis lapen casen" href="">
-                                                        <img alt="Retis lapen casen"
-                                                             src="http://htmldemo.themessoft.com/freshia/version3/product-images/product10.jpg">
-                                                    </a>
-                                                </figure>
-                                                <div class="box-hover">
-                                                    <ul class="add-to-links">
-                                                        <li>
-                                                            <a class="detail-bnt yith-wcqv-button link-quickview">
-                                                                <i class="fa fa-search" aria-hidden="true"></i>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a title="favorite" href="#"
-                                                               class="add_to_wishlist link-wishlist"></a>
-                                                        </li>
-                                                        <li>
-                                                            <a title="like" href="#"
-                                                               class="link-compare add_to_compare compare"></a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="item-info">
-                                            <div class="info-inner">
-                                                <div class="item-title">
-                                                    <a href="">Retis lapen casen </a>
-                                                </div>
-                                                <div class="item-content">
-                                                    <div class="rating">
-                                                        <div class="ratings">
-                                                            <div class="rating-box">
-                                                                <div style="width:80%" class="rating"></div>
-                                                            </div>
-                                                            <p class="rating-links">
-                                                                <a href="#">1 Review(s)</a>
-                                                                <span class="separator">|</span>
-                                                                <a href="#">Add Review</a>
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="item-price">
-                                                        <div class="price-box">
-                                                            <span class="regular-price">
-                                                                <span class="price">$155.00</span>
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="action">
-                                                        <a href="#" class="button product_type_grouped btn-cart ">
-                                                            <span>View products</span>
-                                                        </a>
-                                                        <a href="#" class="button yith-wcqv-button"
-                                                           data-product_id="99">Quick View</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div> --}}
             </div>
         </div>
     </section>

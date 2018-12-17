@@ -63,17 +63,31 @@
             </div>
         </div>
         <div class="language-select dropdown" id="language-select">
-            <a class="dropdown-toggle" href="#" data-toggle="dropdown" id="language" aria-haspopup="true" aria-expanded="true">
-                {{-- <i class="flag-icon flag-icon-vn"></i> --}}
-                <img src="{{ asset('images/en_flat.png') }}" class="img-fluid">
-            </a>
-            <div class="dropdown-menu" aria-labelledby="language" >
-                <div class="dropdown-item">
-                    <a href="">
-                        <img src="{{ asset('images/vn_flat.png') }}" class="img-fluid">
-                    </a>
+            @if(Session::get('website_language') == 'vi')
+                <a class="dropdown-toggle" href="#" data-toggle="dropdown" id="language" aria-haspopup="true" aria-expanded="true">
+                    {{-- <i class="flag-icon flag-icon-vn"></i> --}}
+                    <img src="{{ asset('images/vn_flat.png') }}" class="img-fluid">
+                </a>
+                <div class="dropdown-menu" aria-labelledby="language" >
+                    <div class="dropdown-item">
+                        <a href="{{ route('user.change-language', ['en']) }}">
+                            <img src="{{ asset('images/en_flat.png') }}" class="img-fluid">
+                        </a>
+                    </div>
                 </div>
-            </div>
+            @else
+                <a class="dropdown-toggle" href="#" data-toggle="dropdown" id="language" aria-haspopup="true" aria-expanded="true">
+                    {{-- <i class="flag-icon flag-icon-vn"></i> --}}
+                    <img src="{{ asset('images/en_flat.png') }}" class="img-fluid">
+                </a>
+                <div class="dropdown-menu" aria-labelledby="language" >
+                    <div class="dropdown-item">
+                        <a href="{{ route('user.change-language', ['vi']) }}">
+                            <img src="{{ asset('images/vn_flat.png') }}" class="img-fluid">
+                        </a>
+                    </div>
+                </div>
+            @endif
         </div>
     </div>
 </div>

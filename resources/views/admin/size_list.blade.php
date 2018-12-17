@@ -72,17 +72,27 @@
                 }
             });
             var size_table = $('#admin_size_list').DataTable({
+                processing: true,
+                serverSide: true,
                 ajax: {
                     url: route('admin.size.json'),
-                    dataSrc: '',
-                    type: 'get',
                 },
                 columns: [
-                    {data: 'id'},
-                    {data: 'name'},
-                    {data: 'percent'},
+                    {
+                        data: 'id',
+                        name: 'id',
+                    },
+                    {
+                        data: 'name',
+                        name: 'name',
+                    },
+                    {
+                        data: 'percent',
+                        name: 'percent',
+                    },
                     {
                         data: null,
+                        name: null,
                         defaultContent: [
                             '<button class="btn btn-outline-primary" title="Update" data-toggle="modal" data-target="#modal-size" id="btnUpdateSize"><i class="fa fa-edit"></i></button> ' +
                             '<button class="btn btn-outline-danger" title="Delete" id="btnDeleteSize"><i class="fa fa-trash"></i></button> '
@@ -124,14 +134,17 @@
                         $.ajax({
                             type: 'get',
                             url: route('admin.size.destroy', {id: id}),
-                            success: function (data) {
+                            success: function (data, res) {
                                 swal({
                                     title: "Success",
                                     icon: "success",
                                     timer: 2000,
                                 });
-                                size_table.ajax.reload();
+                                size_table.ajax.reload(null, false);
                             },
+                            error: function(xhr, status, error) {
+                                toastr.error(JSON.parse(xhr.responseText), 'Error!');
+                            }
                         });
                     }
                 })
@@ -152,7 +165,7 @@
                     processData: false,
                     data: new FormData($('form#form-size')[0]),
                     success: function (res) {
-                        size_table.ajax.reload();
+                        size_table.ajax.reload(null, false);
                         $('#modal-size').modal('hide');
                         swal({
                             title: "Success",
@@ -162,10 +175,15 @@
                     },
                     error: function (xhr, status, error) {
                         var err = JSON.parse(xhr.responseText);
-                        var errors = Object.entries(err.errors);
-                        errors.forEach(function (value, index) {
-                            toastr.error(value[1][0], 'Error!');
-                        });
+                        if (xhr.status == 403) {
+                            toastr.error(err, 'Error!');
+                        }
+                        else { 
+                            var errors = Object.entries(err.errors);
+                            errors.forEach(function (value, index) {
+                                toastr.error(value[1][0], 'Error!');
+                            });
+                        }
                     },
                 });
             });

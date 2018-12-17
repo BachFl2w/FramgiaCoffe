@@ -215,10 +215,9 @@
                 <div id="related-products-slider" class="product-flexslider hidden-buttons">
                     <div class="home-block-inner">
                         <div class="block-title">
-                            <h2>RELATED PRODUCTS</h2>
+                            <h2>Relate</h2>
                         </div>
-                        <img alt="Retis lapen casen"
-                             src="http://htmldemo.themessoft.com/freshia/version3/images/banner-img.jpg">
+                        <img src="{{ asset(config('asset.image_path.public') . 'relate-image.png') }}">
                     </div>
                     <div class="slider-items slider-width-col4 products-grid block-content">
                         @foreach ($products as $product)

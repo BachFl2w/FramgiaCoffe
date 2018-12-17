@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\SizeRequest;
 use App\Size;
 use App\Repositories\Repository;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Response;
 
 class SizeController extends Controller
 {
@@ -22,9 +24,7 @@ class SizeController extends Controller
      */
     public function index()
     {
-        $sizes = Size::all();
-
-        return view('admin.size_list', compact('sizes'));
+        return view('admin.size_list');
     }
 
     /**
@@ -59,7 +59,7 @@ class SizeController extends Controller
      */
     public function show($id)
     {
-        //
+
     }
 
     /**
@@ -70,9 +70,7 @@ class SizeController extends Controller
      */
     public function edit($id)
     {
-        $size = Size::findorFail($id);
-
-        return view('admin.size_update', compact('size'));
+       
     }
 
     /**
@@ -84,6 +82,9 @@ class SizeController extends Controller
      */
     public function update(SizeRequest $request, $id)
     {
+        if (Auth::user()->role_id == 2) {
+            return Response::json(__('You are not admin'), 403);
+        }
         $this->sizeModel->update([
             'name' => $request->name,
             'percent' => $request->percent,
@@ -98,6 +99,9 @@ class SizeController extends Controller
      */
     public function destroy($id)
     {
+        if (Auth::user()->role_id == 2) {
+            return Response::json(__('You are not admin'), 403);
+        }
         $this->sizeModel->delete($id);
     }
 
@@ -105,6 +109,6 @@ class SizeController extends Controller
     {
         $sizes = $this->sizeModel->all();
 
-        return $sizes;
+        return datatables($sizes)->make(true);
     }
 }

@@ -51,15 +51,28 @@ class OrderController extends Controller
         //
     }
 
+    public function show($id)
+    {
+        $order = Order::findOrFail($id);
+
+        return $order;
+    }
+
     /**
      * Display the specified resource.
      *
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function showDetail($id)
     {
+        $orderDetails = OrderDetail::with(['product.images' => function($query) {
+            $query->where('active', 1)->get();
+        }])->with('size', 'toppings')
+        ->where('order_id', $id)
+        ->get();
 
+        return $orderDetails;
     }
 
     /**
@@ -70,30 +83,7 @@ class OrderController extends Controller
      */
     public function edit($id)
     {
-        $order = Order::findOrFail($id);
-        $orderDetails = OrderDetail::with('product', 'size', 'toppings')->where('order_id', $id)->get();
-        $index = 0;
-        $images = [];
-        foreach ($orderDetails as $orderDetail) {
-            $product_id = $orderDetail->product->id;
-            $image = Image::where('product_id', $product_id)->where('active', 1)->first();
-            if ($image != null) {
-                $orderDetails[$index]->image = $image->name;
-            } else {
-                $image = Image::where('product_id', $product_id)->orderBy('id', 'DESC')->first();
-                $orderDetails[$index]->image = $image->name;
-            }
-            $priceProduct = $orderDetail->product_price * $orderDetail->quantity;
-            $priceTopping = 0;
-            foreach ($orderDetail->toppings as $topping) {
-                $priceTopping += $topping->pivot->topping_price;
-            }
-            $orderDetails[$index]->price = $priceProduct + $priceTopping;
-            $orderDetails[$index]->status = $order->status;
-            $index++;
-        }
-
-        return view('admin.order_detail', compact('orderDetails', 'order'));
+        
     }
 
     /**
@@ -124,21 +114,29 @@ class OrderController extends Controller
      */
     public function destroy($id)
     {
-        if(Auth::user()->role_id == 2)
-        {
-            return response()->json(['errors' => 'Not authorized.'],403);
+        if (Auth::user()->role_id == 2) {
+            return response()->json(['errors' => 'Not authorized.'], 403);
         }
         $this->orderModel->delete($id);
 
         return redirect()->route('admin.order.index');
     }
 
-    public function confirm($id)
+    public function getALl()
     {
-        $this->orderModel->update([
-            'status' => 1,
-        ], $id);
+        $orders = $this->orderModel->all();
 
-        
+        return datatables($orders)->make(true);
+    }
+
+    public function changStatus(Request $request)
+    {
+        $order = Order::findOrFail($request->id);
+        if ($order->status == 1 || $order->status == -1) {
+            return Response::json(__('Order can not be change'), 500);
+        }
+        $this->orderModel->update([
+            'status' => $request->status,
+        ], $request->id);
     }
 }

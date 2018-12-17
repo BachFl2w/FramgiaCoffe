@@ -41,6 +41,7 @@
 <script src="http://htmldemo.themessoft.com/freshia/version3/js/countdown.js"></script>
 <script src="{{ asset('js/js_cloud-zoom.js') }}"></script>
 <script src="{{ asset('js/sweetalert.min.js') }}"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
 <script>
     jQuery(document).ready(function () {
@@ -130,7 +131,6 @@
                             $total_price += element.item_price;
                             $count_product += Number(element.item.quantity);
                         });
-                        console.log($count_product)
                         $('.count_cart').html($count_product);
                         $('.price_cart').html(nf.format($total_price));
                         var count_cart = res.length < 3 ? res.length : 3;
@@ -172,6 +172,7 @@
         loadCart();
 
         $('.btnBuy').click(function (event) {
+            event.preventDefault();
             var id_sp = $(this).attr("data-id");
             $.ajax({
                 url: route('client.product.detail.json', {id: id_sp}),
@@ -301,7 +302,6 @@
         $('.favorite').click(function (event) {
             event.preventDefault();
             var id_product = $(this).attr('data-id');
-            console.log(id_product);
             $.ajax({
                 url: '{{ route('client.favorite') }}',
                 type: 'post',
@@ -342,9 +342,9 @@
                         var user = JSON.parse(user_current)
                         $('#checkout-receiver').val(user.name);
                         $('#checkout-place').val(user.address);
+                        $('#checkout-email').val(user.email);
                         $('#checkout-phone').val(user.phone);
                         total_price = total_price * (1 - user.potential.discount / 100);
-                        console.log(total_price)
                         $('.price_cart').html(nf.format(Math.ceil(total_price)));
                     }
                 }
@@ -417,7 +417,7 @@
         });
     });
 </script>
-{{-- <script src="{{ asset('js/app_client.js') }}" type="text/javascript" charset="utf-8" async defer></script> --}}
+
 @yield('js')
 
 </body>
