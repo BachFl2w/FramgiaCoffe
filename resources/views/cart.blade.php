@@ -16,7 +16,7 @@
             width: 25px;
             border: 1px #c8c8c8 solid;
             background-color: #ffffff;
-            
+
             border-radius:4px 0px 0px 4px;
             color: #999;
             padding: 1px;
@@ -83,7 +83,7 @@
                                                     </button>
                                                 </td>
                                             </tr>
-                                           
+
                                             <tr class="first">
                                                 <td>
                                                     <p class="" style="font-size: 25px;display: ruby;">
@@ -121,7 +121,7 @@
                                                             <span style="display: table-cell;">
                                                                 <button class="reduce_quantity" data-quantity="{{ $cart['item']['quantity'] }}" data-id="{{ $cart['key'] }}">-</button>
                                                             </span>
-                                                            
+
                                                             <input type="text" maxlength="12" min="1" max="10"
                                                                    class="input_quantity"
                                                                    size="4" pattern="\d*"
@@ -139,7 +139,7 @@
                                                     </td>
                                                     <td width="5%">
                                                         <a class="button remove-item"
-                                                           data-id={{ $cart['key'] }} href="{{ route('user.cart.delete', ['key' => $cart['key']]) }}">
+                                                           data-id="{{ $cart['key'] }}" href="{{ route('user.cart.delete', ['key' => $cart['key']]) }}">
                                                         </a>
                                                     </td>
                                                 </tr>

@@ -59,7 +59,7 @@
                         <div class="col-lg-8">
                             <div class="form-group" id="form-group-id">
                                 {!! Form::label('id', __('message.id'), ['class' => 'form-control-label']) !!}
-                                {!! Form::text('id', null, ['class' => 'form-control col-md-10', 
+                                {!! Form::text('id', null, ['class' => 'form-control col-md-10',
                                 'required' => 'required', 'placeholder' => 'ID Product', 'readonly']) !!}
                             </div>
                             <div class="form-group">
@@ -149,13 +149,13 @@
                         data: 'name',
                         name: 'name'
                     }, {
-                        data: 'category.name', 
+                        data: 'category.name',
                         name: 'category.name'
                     }, {
                         data: 'images',
                         name: 'images',
                         render: function (data, type, row) {
-                            var base_url_image = {{ asset(config('asset.image_path.product')) }};
+                            var base_url_image = '{{ asset(config('asset.image_path.product')) }}/';
                             return `<img src="` + base_url_image + `${data[0]['name']}">`
                         }
                     }, {
@@ -199,7 +199,7 @@
                     url: route('admin.product.category_select'),
                     dataType: 'json',
                     success: function (data) {
-                        
+
                         var arr = Object.entries(data);
                         var option = '<option value="" hidden>Choose Category</option>';;
                         arr.forEach(function (element, index) {
@@ -238,7 +238,7 @@
                         $('#quantity').val(data.quantity);
                         $('#category_id').val(data.category_id);
                         CKEDITOR.instances['description'].setData(data.description);
-                        var base_url_image = {{ asset(config('asset.image_path.product')) }};
+                        var base_url_image = '{{ asset(config('asset.image_path.product')) }}';
                         $('#image_review_create').attr('src', base_url_image + data.images[0].name);
                     },
                 });
@@ -317,7 +317,7 @@
                         if (xhr.status == 403) {
                             toastr.error(err, 'Error!');
                         }
-                        else { 
+                        else {
                             var errors = Object.entries(err.errors);
                             errors.forEach(function (value, index) {
                                 toastr.error(value[1][0], 'Error!');

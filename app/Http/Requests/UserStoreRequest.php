@@ -29,7 +29,7 @@ class UserStoreRequest extends FormRequest
             'password'    => 'required|min:6|max:50',
             're_password' => 'same:password',
             'address'     => 'required|max:191',
-            'phone'       => 'required|min:10|max:11',
+            'phone'       => 'required|min:9|max:11',
             'role'        => 'required',
             'avatar'      => 'mimes:jpg,png,jpeg|nullable',
         ];

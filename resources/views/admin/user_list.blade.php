@@ -116,7 +116,7 @@
 
 @section('script')
 
-<script type="text/javascript">
+<script type="text/javascript" async>
 jQuery(document).ready(function($) {
     $.ajaxSetup({
         headers: {
@@ -139,9 +139,7 @@ jQuery(document).ready(function($) {
                 data: 'image',
                 name: 'image',
                 render: function(data) {
-                    return data ?
-                        `<img data-image="${data}" src="` + {{ asset(config('asset.image_path.avatar')) }} + `${data}" height="80px">`
-                        : `<img src="` + {{ asset(config('asset.image_path.default')) }} + `" height="80px">`;
+                    return data ? `<img data-image="${data}" src="{{ asset(config('asset.image_path.avatar')) }}/${data}" height="80px">` : `<img src="{{ asset(config('asset.image_path.default')) }}" height="80px">`;
                 }
             },
             {
@@ -175,11 +173,11 @@ jQuery(document).ready(function($) {
         ],
     });
 
-    Pusher.logToConsole = true;
+    Pusher.logToConsole = false;
 
-    var pusher = new Pusher('{{ env('PUSHER_APP_KEY') }}', {
+    var pusher = new Pusher('{{env('PUSHER_APP_KEY')}}', {
         cluster: 'ap1',
-        encrypted: true
+        forceTLS: true
     });
 
     // Subscribe to the channel we specified in our Laravel Event
@@ -190,7 +188,9 @@ jQuery(document).ready(function($) {
         tableTest.ajax.reload(null, false);
     })
 
-    $('#show-modal').click(function(event) {
+    $('body').on('click', '#show-modal', function(event) {
+        event.preventDefault()
+        console.log('ok')
         $('#imageSrc').addClass('d-none');
         $('.action_button').addClass('create_user').removeClass('edit_user');
         $('#id').val('');
@@ -215,12 +215,11 @@ jQuery(document).ready(function($) {
         })
         .done(function(data) {
             if (data == 'success') {
-                tableTest.ajax.reload(null, false);
-                $('#modal_create').modal('hide');
-                swal({icon: 'success'});
-                console.log("success");
+                tableTest.ajax.reload(null, false)
+                $('#modal_create').modal('hide')
+                swal({icon: 'success'})
             } else {
-                swal(data, {icon: 'error'});
+                swal(data, {icon: 'error'})
             }
         })
         .fail(function() {
@@ -350,7 +349,8 @@ jQuery(document).ready(function($) {
                 $('.append_active').append(`
                    <div class="dropdown-item active_item" data-id="${data.id}">
                         <a class="text-primary btn-link btn_active_user" href="#">
-                           <img class="user-avatar rounded-circle avatar-header" src="` + {{ asset(config('asset.image_path.public')) }} + `${img}" height="20px" alt="User Avatar"> &nbsp ${data.name}
+                           <img class="user-avatar rounded-circle avatar-header" src="{{ asset(config('asset.image_path.public')) }}${img}" height="20px" alt="User Avatar"> &nbsp ${data.name}
+
                         </a>
                     </div>
                `);

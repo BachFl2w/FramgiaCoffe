@@ -18,6 +18,7 @@
     <link rel="shortcut icon" href="favicon.ico">
 
     <link href="{{ asset('css/admin_style.css') }}" rel="stylesheet">
+    <script src="https://js.pusher.com/4.4/pusher.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.css">
 
     {{-- <link rel="stylesheet" href="{{ asset('admin_template/assets/css/themify-icons.css') }}"> --}}
@@ -65,7 +66,6 @@
     <script src="{{ asset('js/app_admin.js') }}"></script>
     <script src="{{ asset('js/sweetalert.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js" type="text/javascript"></script>
-    <script src="https://js.pusher.com/4.3/pusher.min.js"></script>
 
     @yield('pusher')
     @yield('script')

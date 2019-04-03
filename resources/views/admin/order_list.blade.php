@@ -157,7 +157,7 @@
                     var html = '';
                     var totals = 0;
                     res.forEach(function (element) {
-                        var base_url_image = {{ asset(config('asset.image_path.product')) }};
+                        var base_url_image = '{{ asset(config('asset.image_path.product')) }}' + '/';
                         var image = element.product.images[0].name;
                         html += '<tr>' +
                             '<td width="15%">' +
@@ -175,7 +175,7 @@
                         html += '</td>' +
                             '<td width="20%"> Price: ' + nf.format(price) + ' ₫' + '</td>' +
                             '</tr>';
-                        
+
                         $('#order_detail tbody').html(html);
                         totals += price;
                     });
@@ -217,7 +217,7 @@
                         })
                         .fail(function() {
                             console.log("error");
-                        }) 
+                        })
                     }
                 })
             });

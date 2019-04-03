@@ -6,6 +6,8 @@ frejQuery(document).ready(function($) {
         },
     });
 
+    var urlOrigin = window.location.origin;
+
     var nf = new Intl.NumberFormat();
 
     /**
@@ -492,7 +494,7 @@ frejQuery(document).ready(function($) {
 
                 var image = data[0].images;
 
-                $('#image_review_create').attr('src', 'http://127.0.0.1:8000/images/products/' + data.main_image);
+                $('#image_review_create').attr('src', urlOrigin + '/images/products/' + data.main_image);
             },
         });
 
@@ -587,7 +589,7 @@ frejQuery(document).ready(function($) {
 
                     arr.forEach(function(element, index) {
 
-                        var url_image = "http://127.0.0.1:8000/images/products/" + element[1].name;
+                        var url_image = urlOrigin + "/images/products/" + element[1].name;
 
                         div_images += '<div class="mySlides">' +
                             '<div class="numbertext">' + (index + 1) + ' / ' + arr.length + '</div>' +

@@ -24,7 +24,7 @@
             width: 200px;
         }
     </style>
-        
+
     </style>
 
     @yield('css')
@@ -145,7 +145,7 @@
                         $('.price_cart').html(nf.format(Math.round($total_price)));
                         var count_cart = res.length < 3 ? res.length : 3;
                         for (var i = 0; i < count_cart; i++) {
-                            var url_image = {{ asset(config('asset.image_path.product')) }};
+                            var url_image = '{{ asset(config('asset.image_path.product')) }}';
                             var item = '' +
                                 '<li class="item first">' +
                                 '<div class="item-inner">' +
@@ -210,7 +210,7 @@
             },
             errorPlacement: function(error, element) {
                 if (element.is(':radio')) {
-                    $("#error-size-index-add-cart").html( error );  
+                    $("#error-size-index-add-cart").html( error );
                 } else {
                     error.insertAfter( element );
                 }
@@ -373,7 +373,8 @@
                         $('#checkout-place').val(user.address);
                         $('#checkout-email').val(user.email);
                         $('#checkout-phone').val(user.phone);
-                        total_price = total_price * (1 - user.potential.discount / 100);
+                        var discount = user.potential ? user.potentials.discount : 0;
+                        total_price = total_price * (1 - discount / 100);
                         $('.price_cart').html(nf.format(Math.ceil(total_price)));
                     }
                 }
@@ -471,7 +472,7 @@
                         toastr.error(value[1][0], 'Error!');
                     });
                 })
-            }  
+            }
         });
 
         $('#form-checkout').validate({

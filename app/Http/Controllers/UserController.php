@@ -98,9 +98,9 @@ class UserController extends Controller
         ]);
 
         // // $name, $with
-        // $this->userModel->setRedisAll('user:all', ['role']);
+        $this->userModel->setRedisAll('user:all', ['role']);
         // // $name, $id, $data
-        // $this->userModel->setRedisById('user:' . $user->id, $user);
+        $this->userModel->setRedisById('user:' . $user->id, $user);
 
         return 'success';
     }
@@ -218,10 +218,10 @@ class UserController extends Controller
         $currentUser = Auth::user();
 
         if ($currentUser->role_id == 1 && $user->role_id != 1) {
-            // $this->userModel->setRedisAll('user:all', ['role']);
-            // $this->userModel->deleteRedis('user' . $user->id);
-
             $user->delete();
+            $this->userModel->setRedisAll('user:all', ['role']);
+
+            $this->userModel->deleteRedis('user' . $user->id);
 
             return __('message.success.delete');
         }

@@ -32,6 +32,8 @@ class ProductController extends Controller
      */
     public function index()
     {
+        $categories = $this->categoryModel->all();
+
         return view('admin.product_list', compact('categories'));
     }
 

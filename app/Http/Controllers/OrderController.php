@@ -48,7 +48,6 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
     }
 
     public function show($id)
@@ -83,7 +82,7 @@ class OrderController extends Controller
      */
     public function edit($id)
     {
-        
+
     }
 
     /**

@@ -19,6 +19,7 @@ mix.js([
     'node_modules/bootstrap/dist/js/bootstrap.js',
     'node_modules/datatables.net-bs4/js/dataTables.bootstrap4.js',
     'node_modules/toastr/toastr.js',
+    'node_modules/jquery/dist/jquery.min.js',
 ], 'public/js/app_admin.js')
     .styles([
         'public/css/app.css',

@@ -96,7 +96,7 @@
 
 
 @section('pusher')
-<script type="text/javascript">
+<script type="text/javascript" async="">
 jQuery(document).ready(function($) {
 
     var notificationsWrapper = $('.for-feedback');
@@ -105,7 +105,7 @@ jQuery(document).ready(function($) {
     var notificationsCount = parseInt(notificationsCountElem.data('count'));
     var notifications = notificationsWrapper.find('.feedback-dropdown');
 
-        // Enable pusher logging - don't include this in production
+    // Enable pusher logging - don't include this in production
     Pusher.logToConsole = true;
 
     var pusher = new Pusher('{{ env('PUSHER_APP_KEY') }}', {
