@@ -153,7 +153,7 @@ return [
          */
         Collective\Html\HtmlServiceProvider::class,
         Tightenco\Ziggy\ZiggyServiceProvider::class,
-        Barryvdh\Debugbar\ServiceProvider::class,
+        // Barryvdh\Debugbar\ServiceProvider::class,
         Unisharp\Ckeditor\ServiceProvider::class,
         RealRashid\SweetAlert\SweetAlertServiceProvider::class,
         Yajra\DataTables\DataTablesServiceProvider::class,
@@ -218,7 +218,7 @@ return [
         'View'         => Illuminate\Support\Facades\View::class,
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
-        'Debugbar'     => Barryvdh\Debugbar\Facade::class,
+        // 'Debugbar'     => Barryvdh\Debugbar\Facade::class,
         'Image'        => Intervention\Image\Facades\Image::class,
         'Alert'        => RealRashid\SweetAlert\Facades\Alert::class,
         'DataTables'   => Yajra\DataTables\Facades\DataTables::class,
