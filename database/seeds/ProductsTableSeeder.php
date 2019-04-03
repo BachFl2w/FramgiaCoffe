@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use Faker\Generator as Faker;
 use App\Category;
 
 class ProductsTableSeeder extends Seeder
@@ -17,62 +16,62 @@ class ProductsTableSeeder extends Seeder
         $limit = 15;
         for ($i = 0; $i < $limit; $i++) {
             $data[] = [
-                'name' => 'Trà ' . $faker->word,
-                'price' => $faker->numberBetween(10000, 40000),
-                'brief' => $faker->text(300),
-                'description' => $faker->text($maxNbChars = 2000),
+                'name' => 'Trà ' . $i,
+                'price' => rand(10000, 40000),
+                'brief' => 'this is brief',
+                'description' => 'this is description' . rand(10000, 40000) . $i,
                 'category_id' => 2,
-                'quantity' => $faker->numberBetween(50, 150),
+                'quantity' => rand(50, 150),
             ];
         }
         for ($i = 0; $i < $limit; $i++) {
             $data[] = [
-                'name' => 'Cà Phê ' . $faker->word,
-                'price' => $faker->numberBetween(10000, 4000),
-                'brief' => $faker->text(300),
-                'description' => $faker->text($maxNbChars = 2000),
+                'name' => 'Cafe ' . $i,
+                'price' => rand(10000, 40000),
+                'brief' => 'this is brief',
+                'description' => 'this is description' . rand(10000, 40000) . $i,
                 'category_id' => 1,
-                'quantity' => $faker->numberBetween(50, 150),
+                'quantity' => rand(50, 150),
             ];
         }
         for ($i = 0; $i < $limit; $i++) {
             $data[] = [
-                'name' => 'Sinh tố ' . $faker->word,
-                'price' => $faker->numberBetween(10000, 4000),
-                'brief' => $faker->text(300),
-                'description' => $faker->text($maxNbChars = 2000),
+                'name' => 'Soda - Daxo ' . $i,
+                'price' => rand(10000, 40000),
+                'brief' => 'this is brief',
+                'description' => 'this is description' . rand(10000, 40000) . $i,
                 'category_id' => 3,
-                'quantity' => $faker->numberBetween(50, 150),
+                'quantity' => rand(50, 150),
             ];
         }
         for ($i = 0; $i < $limit; $i++) {
             $data[] = [
-                'name' => 'Soda - Mijito ' . $faker->word,
-                'price' => $faker->numberBetween(10000, 4000),
-                'brief' => $faker->text(300),
-                'description' => $faker->text($maxNbChars = 2000),
+                'name' => 'Soda - Mizito ' . $i,
+                'price' => rand(10000, 40000),
+                'brief' => 'this is brief',
+                'description' => 'this is description' . rand(10000, 40000) . $i,
                 'category_id' => 4,
-                'quantity' => $faker->numberBetween(50, 150),
+                'quantity' => rand(50, 150),
             ];
         }
         for ($i = 0; $i < $limit; $i++) {
             $data[] = [
-                'name' => 'Nước ép ' . $faker->word,
-                'price' => $faker->numberBetween(10000, 4000),
-                'brief' => $faker->text(300),
-                'description' => $faker->text($maxNbChars = 2000),
+                'name' => 'nước ép ' . $i,
+                'price' => rand(10000, 40000),
+                'brief' => 'this is brief',
+                'description' => 'this is description' . rand(10000, 40000) . $i,
                 'category_id' => 5,
-                'quantity' => $faker->numberBetween(50, 150),
+                'quantity' => rand(50, 150),
             ];
         }
         for ($i = 0; $i < $limit; $i++) {
             $data[] = [
-                'name' => 'Đồ đá xay ' . $faker->word,
-                'price' => $faker->numberBetween(10000, 4000),
-                'brief' => $faker->text(300),
-                'description' => $faker->text($maxNbChars = 2000),
+                'name' => 'trà sữa ' . $i,
+                'price' => rand(10000, 40000),
+                'brief' => 'this is brief',
+                'description' => 'this is description' . rand(10000, 40000) . $i,
                 'category_id' => 6,
-                'quantity' => $faker->numberBetween(50, 150),
+                'quantity' => rand(50, 150),
             ];
         }
         DB::table('products')->insert($data);
