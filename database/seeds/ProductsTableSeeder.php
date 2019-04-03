@@ -12,7 +12,6 @@ class ProductsTableSeeder extends Seeder
      */
     public function run()
     {
-        $faker = Faker::create();
         $limit = 15;
         for ($i = 0; $i < $limit; $i++) {
             $data[] = [

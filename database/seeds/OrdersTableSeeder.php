@@ -20,7 +20,7 @@ class OrdersTableSeeder extends Seeder
                 'order_phone' => '0123456789',
                 'order_email' => 'abc@gmail.com',
                 'status' => 0,
-                'Note' => 'Giao hàng sớm',
+                'note' => 'Giao hàng sớm',
             ], [
                 'receiver' => 'Nguyen Van B',
                 'user_id' => 1,
@@ -29,7 +29,7 @@ class OrdersTableSeeder extends Seeder
                 'order_phone' => '0123456789',
                 'order_email' => 'abc@gmail.com',
                 'status' => -1,
-                'Note' => 'Giao hàng muộn',
+                'note' => 'Giao hàng muộn',
             ], [
                 'receiver' => 'Nguyen Van A',
                 'user_id' => 1,
@@ -38,7 +38,7 @@ class OrdersTableSeeder extends Seeder
                 'order_phone' => '0123456789',
                 'order_email' => 'abc@gmail.com',
                 'status' => 1,
-                'Note' => 'Giao hàng muộn 1',
+                'note' => 'Giao hàng muộn 1',
             ], [
                 'receiver' => 'Nguyen Van C',
                 'user_id' => 2,
@@ -47,7 +47,7 @@ class OrdersTableSeeder extends Seeder
                 'order_phone' => '0123456789',
                 'order_email' => 'abc@gmail.com',
                 'status' => 1,
-                'Note' => 'Van chuyen can than',
+                'note' => 'Van chuyen can than',
             ],
         ];
 
