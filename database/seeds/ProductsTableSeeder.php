@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use Faker\Factory as Faker;
+use Faker\Generator as Faker;
 use App\Category;
 
 class ProductsTableSeeder extends Seeder
